@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" x:Class="HIPER.MainPage">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Color x:Key="hiperPeach">#ff7562</Color>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <StackLayout VerticalOptions="CenterAndExpand" Margin="20">
+        <!-- Place new controls here -->
+        <Label Text="HIPER" FontSize="60" FontFamily="FUTURA BOOK" TextColor="{StaticResource hiperPeach}"
+               HorizontalOptions="Center" />
+        <Entry x:Name="loginNameEntry"
+               Placeholder="USER NAME"
+               Keyboard="Email"
+               TextColor="{StaticResource hiperPeach}"></Entry>
+        <Entry x:Name="passwordEntry"
+               Placeholder="PASSWORD"
+               IsPassword="True"
+               TextColor="{StaticResource hiperPeach}"></Entry>
+        <Button x:Name="loginButton"
+               Text="LOGIN"
+               FontSize="Large"
+               TextColor="WhiteSmoke"
+               BackgroundColor="{StaticResource hiperPeach}"
+               Clicked="loginButton_Clicked"></Button>
+        <Button x:Name="createUserButton"
+                Text="CREATE USER"
+                FontSize="Large"
+                TextColor="WhiteSmoke"
+                BackgroundColor="{StaticResource hiperPeach}"
+                Clicked="createUserButton_Clicked"></Button>
+    </StackLayout>
+</ContentPage>
