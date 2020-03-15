@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="HIPER.EditGoalPage">
+    <!--
+    <ContentPage.ToolbarItems>
+        <ToolbarItem x:Name="saveGoal" Text="Save" Clicked="saveGoal_Clicked"></ToolbarItem>
+
+    </ContentPage.ToolbarItems>
+    -->
+    <StackLayout Margin="20">
+
+        <Label Text="EDIT GOAL" Style="{StaticResource Header}"></Label>
+
+     <!--   <Entry x:Name="goalNameEntry" Placeholder="TITLE" MaxLength="20"></Entry>
+        <Entry x:Name="goalDescriptionEntry" Placeholder="DESCRIPTION" MaxLength="200"></Entry>
+        <Entry x:Name="goalTargetEntry" Placeholder="TARGET"></Entry>
+        <Entry x:Name="goalCurrentEntry" Placeholder="CURRENT VALUE"></Entry>
+        -->
+            
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="40" />
+                <RowDefinition Height="40" />
+                <RowDefinition Height="40" />
+                <RowDefinition Height="40" />
+                <RowDefinition Height="40" />
+                <RowDefinition Height="40" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Label VerticalOptions="Center" Grid.Row="0" Grid.Column="0" Text="TITLE"/>
+            <Entry x:Name="goalNameEntry" Grid.Row="0" Grid.Column="1" Placeholder="TITLE" MaxLength="20"></Entry>
+            <Label VerticalOptions="Center" Grid.Row="1" Grid.Column="0" Text="DESCRIPTION"/>
+            <Entry x:Name="goalDescriptionEntry" Grid.Row="1" Grid.Column="1" Placeholder="DESCRIPTION" MaxLength="200"></Entry>
+            <Label VerticalOptions="Center" Grid.Row="2" Grid.Column="0" Text="TARGET"/>
+
+            <Entry x:Name="goalTargetEntry" Grid.Row="2" Grid.Column="1" Placeholder="TARGET"></Entry>
+            <Label VerticalOptions="Center" Grid.Row="3" Grid.Column="0" Text="CURRENT"/>
+            <Entry x:Name="goalCurrentEntry" Grid.Row="3" Grid.Column="1" Placeholder="CURRENT VALUE"></Entry>
+            <Label VerticalOptions="Center" Grid.Row="4" Grid.Column="0" Text="PRIVATE GOAL"/>
+            <CheckBox VerticalOptions="Center" HorizontalOptions="Center" Grid.Row="4" Grid.Column="1" x:Name="privateGoalCheckbox" Color="{StaticResource hiperPeach}"></CheckBox>
+            <Label VerticalOptions="Center" Grid.Row="5" Grid.Column="0" Text="DEADLINE"></Label>
+            <DatePicker VerticalOptions="Center" Grid.Row="5" Grid.Column="1" x:Name="goalDeadlineEntry"></DatePicker>
+        </Grid>
+
+        <Button x:Name="updateGoal" Text="UPDATE" Clicked="updateGoal_Clicked"></Button>
+        <Button x:Name="deleteGoal" Text="DELETE" Clicked="deleteGoal_Clicked"></Button>
+        <Button x:Name="completeGoal" Text="COMPLETED" Clicked="completeGoal_Clicked"></Button>
+
+    </StackLayout>
+</ContentPage>

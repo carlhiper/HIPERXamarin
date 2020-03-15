@@ -1,9 +1,21 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="HIPER.TeamPage">
     <ContentPage.Content>
-        <StackLayout>
+        <StackLayout Margin="20,0">
+            <Label Text="TEAM" Style="{StaticResource Header}"></Label>
+            <Label Text="YOUR PROFILE" FontFamily="FUTURA BOOK" TextColor="{StaticResource hiperPeach}" HorizontalOptions="Center" Margin="5"></Label>
+            <Label x:Name="firstName" Text="FIRST NAME"></Label>
+            <Label x:Name="lastName" Text="LAST NAME"></Label>
+            <Label x:Name="email" Text="EMAIL"></Label>
+            <Label x:Name="password" Text="PASSWORD"></Label>
 
-            <Label Text="Welcome to Team page!"></Label>
+            <Button x:Name="editProfileButton" Text="EDIT PROFILE" Clicked="editProfileButton_Clicked"></Button>
+
+            <Label Text="YOUR TEAM MATES" FontFamily="FUTURA BOOK" TextColor="{StaticResource hiperPeach}" HorizontalOptions="Center" Margin="0,25,0,0"></Label>
+
+            <ListView>
+
+            </ListView>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

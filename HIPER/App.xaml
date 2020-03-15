@@ -1,5 +1,32 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Application xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:d="http://xamarin.com/schemas/2014/forms/design" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d" x:Class="HIPER.App">
     <Application.Resources>
+
+        <Color x:Key="hiperPeach">#ff7562</Color>
+        <Color x:Key="hiperWhite">#ffffff</Color>
+
+        <Style TargetType="Button">
+            <Setter Property="BackgroundColor" Value="{StaticResource hiperPeach}"></Setter>
+            <Setter Property="TextColor" Value="{StaticResource hiperWhite}"></Setter>
+            <Setter Property="FontFamily" Value="FUTURA BOOK"></Setter>
+            <Setter Property="FontSize" Value="Large"></Setter>
+        </Style>
+        <Style TargetType="Entry">
+            <Setter Property="TextColor" Value="Black" ></Setter>
+            <Setter Property="FontFamily" Value="FUTURA BOOK"></Setter>
+        </Style>
+        <Style TargetType="Label">
+            <Setter Property="TextColor" Value="Black" ></Setter>
+            <Setter Property="FontFamily" Value="FUTURA BOOK"></Setter>
+        </Style>
+
+        <Style x:Key="Header" TargetType="Label">
+            <Setter Property="TextColor" Value="{StaticResource hiperPeach}" ></Setter>
+            <Setter Property="FontFamily" Value="FUTURA BOOK"></Setter>
+            <Setter Property="FontSize" Value="Large"></Setter>
+            <Setter Property="Margin" Value="20"></Setter>
+            <Setter Property="HorizontalOptions" Value="Center"></Setter>
+        </Style>
+
     </Application.Resources>
 </Application>

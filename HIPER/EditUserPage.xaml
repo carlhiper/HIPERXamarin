@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="HIPER.EditUserPage">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem x:Name="saveProfile" Text="Save" Clicked="saveProfile_Clicked">
+
+        </ToolbarItem>
+    </ContentPage.ToolbarItems>
+
+    <StackLayout Margin="20,0">
+        <Label Text="EDIT YOUR PROFILE" Style="{StaticResource Header}"></Label>
+        <Entry x:Name="firstNameEntry"></Entry>
+        <Entry x:Name="lastNameEntry"></Entry>
+        <Entry x:Name="emailEntry"></Entry>
+        <Entry x:Name="passwordEntry"></Entry>
+       <!-- <Button x:Name="updateUserButton" Text="UPDATE" Clicked="updateUserButton_Clicked"></Button> -->
+      </StackLayout>
+</ContentPage>

@@ -7,5 +7,4 @@
     <local:ScoreboardPage Title="SCOREBOARD"></local:ScoreboardPage>
     <local:TeamPage Title="TEAM"></local:TeamPage>
 
-
 </TabbedPage>

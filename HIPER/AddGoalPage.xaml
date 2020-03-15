@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="HIPER.AddGoalPage">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem x:Name="saveGoal" Text="Save" Clicked="saveGoal_Clicked">
+        </ToolbarItem>
+    </ContentPage.ToolbarItems>
+    <ContentPage.Content>
+        <StackLayout Margin="20">
+            <Label Style="{StaticResource Header}" Text="ADD GOAL"></Label>
+            <Entry x:Name="goalNameEntry" Placeholder="TITLE" MaxLength="20"></Entry>
+            <Entry x:Name="goalDescriptionEntry" Placeholder="DESCRIPTION" MaxLength="200"></Entry>
+            <Entry x:Name="goalTargetEntry" Placeholder="NUMERICAL TARGET"></Entry>
+            
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="40" />
+                    <RowDefinition Height="40" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Label VerticalOptions="Center" Grid.Row="0" Grid.Column="0" Text="PRIVATE GOAL"/>
+                <CheckBox VerticalOptions="Center" HorizontalOptions="Center" Grid.Row="0" Grid.Column="1" x:Name="privateGoalCheckbox" Color="{StaticResource hiperPeach}"></CheckBox>
+                <Label VerticalOptions="Center" Grid.Row="1" Grid.Column="0" Text="DEADLINE"></Label>
+                <DatePicker VerticalOptions="Center" Grid.Row="1" Grid.Column="1" x:Name="goalDeadlineEntry"></DatePicker>
+
+            </Grid>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

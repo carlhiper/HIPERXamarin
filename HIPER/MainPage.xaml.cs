@@ -4,6 +4,8 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using HIPER.Model;
+using SQLite;
 using Xamarin.Forms;
 
 namespace HIPER
@@ -32,6 +34,13 @@ namespace HIPER
             }
             else
             {
+                using (SQLiteConnection conn = new SQLiteConnection(App.DatabaseLocation))
+                {
+                    conn.CreateTable<User>();
+                    var user = conn.Table<User>().ToArray();
+                    
+                }
+
                 Navigation.PushAsync(new HomePage());
             }
         }

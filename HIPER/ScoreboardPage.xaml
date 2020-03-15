@@ -1,8 +1,81 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="HIPER.ScoreboardPage">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem x:Name="addGoal" Text="Add goal" Clicked="addGoal_Clicked">
+        </ToolbarItem>
+    </ContentPage.ToolbarItems>
     <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Welcome to Scoreboard page"></Label>
+  
+        <StackLayout Margin="20">
+            <Label Text="SCOREBOARD" Style="{StaticResource Header}"></Label>
+            <Grid Padding="20">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="40" />
+                </Grid.RowDefinitions>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <Button Text="ACTIVE" IsEnabled="True" Grid.Column="0"></Button>
+                <Button Text="COMPLETED" IsEnabled="False" Grid.Column="1"></Button>
+                
+            </Grid>
+
+            <CollectionView
+                x:Name="goalCollectionView"
+                SelectionMode="Single"
+                SelectionChanged="goalCollectionView_SelectionChanged">
+                
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid Padding="10">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="200" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+              
+                            <Label Grid.Row="0"
+                                Grid.Column="0" 
+                                Text="{Binding title}" 
+                                FontAttributes="Bold" />
+                            
+                            <ProgressBar
+                                VerticalOptions="Center"
+                                Grid.Column="1"
+                                Grid.Row="0"
+                                Progress="{Binding progress}"
+                                ProgressColor="{StaticResource hiperPeach}" ></ProgressBar>
+
+                            <Label Grid.Row="1"
+                                Grid.Column="0" 
+                                Text="{Binding description}"
+                                FontAttributes="Italic" 
+                                VerticalOptions="End" />
+                            <Label Grid.Row="2"
+                                Grid.Column="0" 
+                                Text="{Binding deadline}"
+                                FontAttributes="Italic" 
+                                VerticalOptions="End" /> 
+                        </Grid>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView> 
+
+       <!--     <ListView x:Name="goalListView">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <TextCell Text="{Binding title}" Detail="{Binding description}"></TextCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView> -->
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
