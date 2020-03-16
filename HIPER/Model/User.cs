@@ -8,6 +8,8 @@ namespace HIPER.Model
         [PrimaryKey, AutoIncrement]
         public int id { get; set; }
 
+        public double teamId { get; set; }
+
         [MaxLength(20)]
         public string firstName { get; set; }
 
@@ -19,6 +21,8 @@ namespace HIPER.Model
 
         [MaxLength(20)]
         public string password { get; set; }
+
+        public DateTime createdDate { get; set; }
 
         public User()
         {

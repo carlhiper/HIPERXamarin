@@ -15,9 +15,29 @@ namespace HIPER
     [DesignTimeVisible(false)]
     public partial class MainPage : ContentPage
     {
+        User selectedUser;
+        
         public MainPage()
         {
             InitializeComponent();
+        }
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+
+            using (SQLiteConnection conn = new SQLiteConnection(App.DatabaseLocation))
+            {
+                conn.CreateTable<User>();
+                var x = conn.Table<User>().Count();
+                if (x > 0) {
+                    
+                    var user = conn.Table<User>().ToArray();
+                    selectedUser = user.GetValue(0) as User;
+                    loginNameEntry.Text = selectedUser.email;
+                    passwordEntry.Text = selectedUser.password;
+                    //createUserButton.IsEnabled = false;
+                }
+            }
         }
         void createUserButton_Clicked(System.Object sender, System.EventArgs e)
         {
@@ -34,14 +54,18 @@ namespace HIPER
             }
             else
             {
-                using (SQLiteConnection conn = new SQLiteConnection(App.DatabaseLocation))
+                if (loginNameEntry.Text == selectedUser.email &&
+                    passwordEntry.Text == selectedUser.password)
                 {
-                    conn.CreateTable<User>();
-                    var user = conn.Table<User>().ToArray();
-                    
+                    Navigation.PushAsync(new HomePage());
+                }
+                else
+                {
+                    DisplayAlert("Failed to login", "Wrong email or password", "Ok");
                 }
 
-                Navigation.PushAsync(new HomePage());
+
+                
             }
         }
 

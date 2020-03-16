@@ -11,7 +11,7 @@
         <Label Text="HIPER" FontSize="60" FontFamily="FUTURA BOOK" TextColor="{StaticResource hiperPeach}"
                HorizontalOptions="Center" />
         <Entry x:Name="loginNameEntry"
-               Placeholder="USER NAME"
+               Placeholder="EMAIL"
                Keyboard="Email"></Entry>
         <Entry x:Name="passwordEntry"
                Placeholder="PASSWORD"
@@ -21,6 +21,7 @@
                Clicked="loginButton_Clicked"></Button>
         <Button x:Name="createUserButton"
                 Text="CREATE USER"
-                Clicked="createUserButton_Clicked"></Button>
+                Clicked="createUserButton_Clicked"
+                ></Button>
     </StackLayout>
 </ContentPage>

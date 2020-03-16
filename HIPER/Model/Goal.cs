@@ -8,7 +8,9 @@ namespace HIPER.Model
         [PrimaryKey, AutoIncrement]
         public int id { get; set; }
 
-        public int userId { get; set; }
+        public double userId { get; set; }
+
+        public double teamId { get; set; }
 
         [MaxLength(20)]
         public string title { get; set; }
@@ -34,7 +36,7 @@ namespace HIPER.Model
                     var isTargetValueNumerical = float.TryParse(targetValue, out float d);
                     if (isCurrentValueNumerical && isTargetValueNumerical && (d > 0.0f))
                     { return n / d; }
-                    else { return 0f; }
+                    else { return 0.0f; }
                 }
             set {; }
         }

@@ -33,14 +33,15 @@ namespace HIPER
                     firstName = firstNameEntry.Text,
                     lastName = lastNameEntry.Text,
                     email = emailEntry.Text,
-                    password = passwordEntry.Text
+                    password = passwordEntry.Text,
+                    createdDate = DateTime.Now
                 };
 
+                // Save locally
                 using (SQLiteConnection conn = new SQLiteConnection(App.DatabaseLocation)) { 
                     conn.CreateTable<User>();
                     int rows = conn.Insert(user);
-                 
-
+     
                     if (rows > 0)
                     {
                         DisplayAlert("User successfully saved!", "Return to login page to login", "Ok");
