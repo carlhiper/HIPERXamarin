@@ -22,54 +22,9 @@ namespace HIPER
         {
             base.OnAppearing();
 
-            using (SQLiteConnection conn = new SQLiteConnection(App.DatabaseLocation))
-            {
-                conn.CreateTable<Goal>();
-                var goals = conn.Table<Goal>().ToList();
-                
-                List<Goal> activeGoals = new List<Goal>();
-                List<Goal> closedGoals = new List<Goal>();
-
-
-                if (showCompletedSwitch.IsToggled)
-                {
-                    foreach (var item in goals)
-                    {
-                        if (item.completed)
-                        {
-                            closedGoals.Add(item);
-                        }
-                    }
-                    goalCollectionView.ItemsSource = closedGoals;
-                }
-                else
-                {
-                    foreach (var item in goals)
-                    {
-                        if (!item.completed)
-                        {
-                            activeGoals.Add(item);
-                        }
-                    }
-                    goalCollectionView.ItemsSource = activeGoals;
-                }
-
-
-                //foreach (var item in goals)
-                //{
-                //    if (showCompletedSwitch.IsToggled)
-                //    {
-                //        goalCollectionView.IsVisible = item.completed;
-                //        goalCollectionView.ItemsSource = goals;
-
-                //    }
-                //    else
-                //    {
-                //        goalCollectionView.IsVisible = !item.completed;
-                //    }
-                //}
-            }
+            createGoalsList();
         }
+        
 
         void goalCollectionView_SelectionChanged(System.Object sender, Xamarin.Forms.SelectionChangedEventArgs e)
         {
@@ -79,6 +34,11 @@ namespace HIPER
         }
 
         private void showCompletedSwitch_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            createGoalsList();
+        }
+
+        private void createGoalsList()
         {
             using (SQLiteConnection conn = new SQLiteConnection(App.DatabaseLocation))
             {

@@ -10,10 +10,29 @@
 
     <StackLayout Margin="20,0">
         <Label Text="EDIT YOUR PROFILE" Style="{StaticResource Header}"></Label>
-        <Entry x:Name="firstNameEntry"></Entry>
-        <Entry x:Name="lastNameEntry"></Entry>
-        <Entry x:Name="emailEntry"></Entry>
-        <Entry x:Name="passwordEntry"></Entry>
-       <!-- <Button x:Name="updateUserButton" Text="UPDATE" Clicked="updateUserButton_Clicked"></Button> -->
+
+               <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="40" />
+                <RowDefinition Height="40" />
+                <RowDefinition Height="40" />
+                <RowDefinition Height="40" />
+                <RowDefinition Height="40" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Label VerticalOptions="Center" Grid.Row="0" Grid.Column="0" Text="FIRST NAME"/>
+            <Entry x:Name="firstNameEntry" Grid.Row="0" Grid.Column="1" Placeholder="FIRST NAME" MaxLength="20"></Entry>
+            <Label VerticalOptions="Center" Grid.Row="1" Grid.Column="0" Text="LAST NAME"/>
+            <Entry x:Name="lastNameEntry" Grid.Row="1" Grid.Column="1" Placeholder="LAST NAME" MaxLength="20"></Entry>
+            <Label VerticalOptions="Center" Grid.Row="2" Grid.Column="0" Text="COMPANY"/>
+            <Entry x:Name="companyEntry" Grid.Row="2" Grid.Column="1" Placeholder="COMPANY" MaxLength="40"></Entry>
+            <Label VerticalOptions="Center" Grid.Row="3" Grid.Column="0" Text="EMAIL"/>
+            <Entry x:Name="emailEntry" Grid.Row="3" Grid.Column="1" Placeholder="EMAIL" MaxLength="40"></Entry>
+            <Label VerticalOptions="Center" Grid.Row="4" Grid.Column="0" Text="PASSWORD"/>
+            <Entry x:Name="passwordEntry" Grid.Row="4" Grid.Column="1" Placeholder="PASSWORD" IsPassword="True" MaxLength="20"></Entry>
+        </Grid>
       </StackLayout>
 </ContentPage>

@@ -8,6 +8,7 @@
             <Label  Style="{StaticResource Header}" Text="CREATE USER"></Label>
             <Entry x:Name="firstNameEntry" Placeholder="FIRST NAME"></Entry>
             <Entry x:Name="lastNameEntry" Placeholder="LAST NAME"></Entry>
+            <Entry x:Name="companyEntry" Placeholder="COMPANY"></Entry>
             <Entry x:Name="emailEntry" Keyboard="Email" Placeholder="EMAIL"></Entry>
             <Entry x:Name="passwordEntry" IsPassword="True" Placeholder="PASSWORD"></Entry>
          </StackLayout>

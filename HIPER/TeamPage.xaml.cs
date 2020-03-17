@@ -25,8 +25,9 @@ namespace HIPER
                 
                 firstName.Text = selectedUser.firstName;
                 lastName.Text = selectedUser.lastName;
+                company.Text = selectedUser.company;
                 email.Text = selectedUser.email;
-                password.Text = selectedUser.password;
+                //password.Text = selectedUser.password;
             }
         }
 

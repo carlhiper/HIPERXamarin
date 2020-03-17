@@ -9,7 +9,7 @@ namespace HIPER
     public partial class EditGoalPage : ContentPage
     {
         Goal selectedGoal;
-
+ 
         public EditGoalPage(Goal selectedGoal)
         {
             InitializeComponent();
@@ -22,6 +22,27 @@ namespace HIPER
             goalTargetEntry.Text = selectedGoal.targetValue;
             goalCurrentEntry.Text = selectedGoal.currentValue;
             privateGoalCheckbox.IsChecked = selectedGoal.privateGoal;
+
+            goalNameEntry.IsEnabled = !selectedGoal.completed;
+            goalDescriptionEntry.IsEnabled = !selectedGoal.completed;
+            goalDeadlineEntry.IsEnabled = !selectedGoal.completed;
+            goalTargetEntry.IsEnabled = !selectedGoal.completed;
+            goalCurrentEntry.IsEnabled = !selectedGoal.completed;
+            privateGoalCheckbox.IsEnabled = !selectedGoal.completed;
+
+            deleteGoal.IsVisible = !selectedGoal.completed;
+            updateGoal.IsVisible = !selectedGoal.completed;
+            completeGoal.IsVisible = !selectedGoal.completed;
+
+            if (selectedGoal.completed)
+            {
+                headerText.Text = "COMPLETED GOAL";
+            }
+            else
+            {
+                headerText.Text = "EDIT GOAL";
+            }
+            
         }
 
       /*  void saveGoal_Clicked(System.Object sender, System.EventArgs e)

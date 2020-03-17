@@ -8,13 +8,7 @@
     -->
     <StackLayout Margin="20">
 
-        <Label Text="EDIT GOAL" Style="{StaticResource Header}"></Label>
-
-     <!--   <Entry x:Name="goalNameEntry" Placeholder="TITLE" MaxLength="20"></Entry>
-        <Entry x:Name="goalDescriptionEntry" Placeholder="DESCRIPTION" MaxLength="200"></Entry>
-        <Entry x:Name="goalTargetEntry" Placeholder="TARGET"></Entry>
-        <Entry x:Name="goalCurrentEntry" Placeholder="CURRENT VALUE"></Entry>
-        -->
+        <Label x:Name="headerText" Text="EDIT GOAL" Style="{StaticResource Header}"></Label>
             
         <Grid>
             <Grid.RowDefinitions>
@@ -26,13 +20,13 @@
                 <RowDefinition Height="40" />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
             <Label VerticalOptions="Center" Grid.Row="0" Grid.Column="0" Text="TITLE"/>
             <Entry x:Name="goalNameEntry" Grid.Row="0" Grid.Column="1" Placeholder="TITLE" MaxLength="20"></Entry>
             <Label VerticalOptions="Center" Grid.Row="1" Grid.Column="0" Text="DESCRIPTION"/>
-            <Entry x:Name="goalDescriptionEntry" Grid.Row="1" Grid.Column="1" Placeholder="DESCRIPTION" MaxLength="200"></Entry>
+            <Entry x:Name="goalDescriptionEntry" HeightRequest="100" Grid.Row="1" Grid.Column="1" Placeholder="DESCRIPTION" MaxLength="200"></Entry>
             <Label VerticalOptions="Center" Grid.Row="2" Grid.Column="0" Text="TARGET"/>
 
             <Entry x:Name="goalTargetEntry" Grid.Row="2" Grid.Column="1" Placeholder="TARGET"></Entry>

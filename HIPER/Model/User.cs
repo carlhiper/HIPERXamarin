@@ -22,6 +22,9 @@ namespace HIPER.Model
         [MaxLength(20)]
         public string password { get; set; }
 
+        [MaxLength(40)]
+        public string company { get; set; }
+
         public DateTime createdDate { get; set; }
 
         public User()

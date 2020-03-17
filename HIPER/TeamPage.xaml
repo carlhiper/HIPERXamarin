@@ -6,8 +6,9 @@
             <Label Text="YOUR PROFILE" FontFamily="FUTURA BOOK" TextColor="{StaticResource hiperPeach}" HorizontalOptions="Center" Margin="5"></Label>
             <Label x:Name="firstName" Text="FIRST NAME"></Label>
             <Label x:Name="lastName" Text="LAST NAME"></Label>
+            <Label x:Name="company" Text="COMPANY"></Label>
             <Label x:Name="email" Text="EMAIL"></Label>
-            <Label x:Name="password" Text="PASSWORD"></Label>
+            <!--<Label x:Name="password" Text="PASSWORD"></Label>-->
 
             <Button x:Name="editProfileButton" Text="EDIT PROFILE" Clicked="editProfileButton_Clicked"></Button>
 

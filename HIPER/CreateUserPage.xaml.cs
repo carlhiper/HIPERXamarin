@@ -32,6 +32,7 @@ namespace HIPER
                 {
                     firstName = firstNameEntry.Text,
                     lastName = lastNameEntry.Text,
+                    company = companyEntry.Text,
                     email = emailEntry.Text,
                     password = passwordEntry.Text,
                     createdDate = DateTime.Now

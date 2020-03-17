@@ -27,33 +27,13 @@ namespace HIPER
 
                 firstNameEntry.Text = selectedUser.firstName;
                 lastNameEntry.Text = selectedUser.lastName;
+                companyEntry.Text = selectedUser.company;
                 emailEntry.Text = selectedUser.email;
                 passwordEntry.Text = selectedUser.password;
             }
         }
 
-   /*     void updateUserButton_Clicked(System.Object sender, System.EventArgs e)
-        {
-            using (SQLiteConnection conn = new SQLiteConnection(App.DatabaseLocation))
-            {
-                selectedUser.firstName = firstNameEntry.Text;
-                selectedUser.lastName = lastNameEntry.Text;
-                selectedUser.email = emailEntry.Text;
-                selectedUser.password = passwordEntry.Text;
-                
-                conn.CreateTable<User>();
-                int rows = conn.Update(selectedUser);
 
-                if (rows > 0)
-                {
-                    DisplayAlert("Success!", "Profile updated", "Ok");
-                }
-                else
-                {
-                    DisplayAlert("Failure!", "Something went wrong, please try again", "Ok");
-                }
-            }
-        }*/
 
         void saveProfile_Clicked(System.Object sender, System.EventArgs e)
         {
@@ -61,6 +41,7 @@ namespace HIPER
             {
                 selectedUser.firstName = firstNameEntry.Text;
                 selectedUser.lastName = lastNameEntry.Text;
+                selectedUser.company = companyEntry.Text;
                 selectedUser.email = emailEntry.Text;
                 selectedUser.password = passwordEntry.Text;
 
