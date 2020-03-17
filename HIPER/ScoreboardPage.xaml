@@ -17,10 +17,9 @@
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
-
-                <Button Text="ACTIVE" IsEnabled="True" Grid.Column="0"></Button>
-                <Button Text="COMPLETED" IsEnabled="False" Grid.Column="1"></Button>
-                
+                <Label Grid.Column="0" Text="Show completed goals" VerticalOptions="End"></Label>
+                <Switch Grid.Column="1" x:Name="showCompletedSwitch"></Switch> 
+               
             </Grid>
 
             <CollectionView
