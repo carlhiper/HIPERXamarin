@@ -26,20 +26,48 @@ namespace HIPER
             {
                 conn.CreateTable<Goal>();
                 var goals = conn.Table<Goal>().ToList();
-                //goalListView.ItemsSource = goals;
-                //Not sure if I will use this -> List<Goal> selectedGoals = new List<Goal>;
-                goalCollectionView.ItemsSource = goals;
-                foreach (var item in goals)
+                
+                List<Goal> activeGoals = new List<Goal>();
+                List<Goal> closedGoals = new List<Goal>();
+
+
+                if (showCompletedSwitch.IsToggled)
                 {
-                    if (showCompletedSwitch.IsToggled)
+                    foreach (var item in goals)
                     {
-                        goalCollectionView.IsVisible = item.completed;
+                        if (item.completed)
+                        {
+                            closedGoals.Add(item);
+                        }
                     }
-                    else
-                    {
-                        goalCollectionView.IsVisible = !item.completed;
-                    }
+                    goalCollectionView.ItemsSource = closedGoals;
                 }
+                else
+                {
+                    foreach (var item in goals)
+                    {
+                        if (!item.completed)
+                        {
+                            activeGoals.Add(item);
+                        }
+                    }
+                    goalCollectionView.ItemsSource = activeGoals;
+                }
+
+
+                //foreach (var item in goals)
+                //{
+                //    if (showCompletedSwitch.IsToggled)
+                //    {
+                //        goalCollectionView.IsVisible = item.completed;
+                //        goalCollectionView.ItemsSource = goals;
+
+                //    }
+                //    else
+                //    {
+                //        goalCollectionView.IsVisible = !item.completed;
+                //    }
+                //}
             }
         }
 
@@ -56,18 +84,30 @@ namespace HIPER
             {
                 conn.CreateTable<Goal>();
                 var goals = conn.Table<Goal>().ToList();
+                List<Goal> activeGoals = new List<Goal>();
+                List<Goal> closedGoals = new List<Goal>();
 
-                goalCollectionView.ItemsSource = goals;
-                foreach (var item in goals)
+                if (showCompletedSwitch.IsToggled)
                 {
-                    if (showCompletedSwitch.IsToggled)
+                    foreach (var item in goals)
                     {
-                        goalCollectionView.IsVisible = item.completed;
+                        if (item.completed)
+                        {
+                            closedGoals.Add(item);
+                        }
                     }
-                    else
+                    goalCollectionView.ItemsSource = closedGoals;
+                }
+                else
+                {
+                    foreach (var item in goals)
                     {
-                        goalCollectionView.IsVisible = !item.completed;
+                        if (!item.completed)
+                        {
+                            activeGoals.Add(item);
+                        }
                     }
+                    goalCollectionView.ItemsSource = activeGoals;
                 }
             }
         }

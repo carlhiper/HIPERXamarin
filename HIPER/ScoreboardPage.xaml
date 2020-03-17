@@ -15,10 +15,12 @@
 
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="50" />
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
-                <Label Grid.Column="0" Text="Show completed goals" VerticalOptions="End"></Label>
-                <Switch Grid.Column="1" x:Name="showCompletedSwitch"  PropertyChanged="showCompletedSwitch_PropertyChanged"></Switch> 
+                <Label Grid.Column="0" Text="Active" VerticalOptions="End" HorizontalOptions="End"></Label>
+                <Switch Grid.Column="1" x:Name="showCompletedSwitch" OnColor="LightGray" ThumbColor="{StaticResource hiperPeach}" PropertyChanged="showCompletedSwitch_PropertyChanged" VerticalOptions="End"></Switch> 
+                <Label Grid.Column="2" Text="Completed" VerticalOptions="End" HorizontalOptions="Start"></Label>
                
             </Grid>
 
