@@ -18,7 +18,7 @@
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
                 <Label Grid.Column="0" Text="Show completed goals" VerticalOptions="End"></Label>
-                <Switch Grid.Column="1" x:Name="showCompletedSwitch"></Switch> 
+                <Switch Grid.Column="1" x:Name="showCompletedSwitch"  PropertyChanged="showCompletedSwitch_PropertyChanged"></Switch> 
                
             </Grid>
 

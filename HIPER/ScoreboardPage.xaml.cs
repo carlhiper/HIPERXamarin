@@ -49,5 +49,27 @@ namespace HIPER
 
             Navigation.PushAsync(new EditGoalPage(selectedGoal));
         }
+
+        private void showCompletedSwitch_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            using (SQLiteConnection conn = new SQLiteConnection(App.DatabaseLocation))
+            {
+                conn.CreateTable<Goal>();
+                var goals = conn.Table<Goal>().ToList();
+
+                goalCollectionView.ItemsSource = goals;
+                foreach (var item in goals)
+                {
+                    if (showCompletedSwitch.IsToggled)
+                    {
+                        goalCollectionView.IsVisible = item.completed;
+                    }
+                    else
+                    {
+                        goalCollectionView.IsVisible = !item.completed;
+                    }
+                }
+            }
+        }
     }
 }
