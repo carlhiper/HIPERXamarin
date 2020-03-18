@@ -8,9 +8,9 @@ namespace HIPER
 {
     public partial class EditGoalPage : ContentPage
     {
-        Goal selectedGoal;
+        GoalModel selectedGoal;
  
-        public EditGoalPage(Goal selectedGoal)
+        public EditGoalPage(GoalModel selectedGoal)
         {
             InitializeComponent();
 
@@ -61,7 +61,7 @@ namespace HIPER
 
             using (SQLiteConnection conn = new SQLiteConnection(App.DatabaseLocation))
             {
-                conn.CreateTable<Goal>();
+                conn.CreateTable<GoalModel>();
                 int rows = conn.Update(selectedGoal);
 
                 if (rows > 0)
@@ -80,7 +80,7 @@ namespace HIPER
         {
             using (SQLiteConnection conn = new SQLiteConnection(App.DatabaseLocation))
             {
-                conn.CreateTable<Goal>();
+                conn.CreateTable<GoalModel>();
                 int rows = conn.Delete(selectedGoal);
                 if (rows > 0)
                 {
@@ -102,7 +102,7 @@ namespace HIPER
 
             using (SQLiteConnection conn = new SQLiteConnection(App.DatabaseLocation))
             {
-                conn.CreateTable<Goal>();
+                conn.CreateTable<GoalModel>();
                 int rows = conn.Update(selectedGoal);
 
                 if (rows > 0)

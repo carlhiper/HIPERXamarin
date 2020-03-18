@@ -8,7 +8,7 @@ namespace HIPER
 {
     public partial class EditUserPage : ContentPage
     {
-        User selectedUser;
+        UserModel selectedUser;
 
         public EditUserPage()
         {
@@ -21,15 +21,15 @@ namespace HIPER
 
             using (SQLiteConnection conn = new SQLiteConnection(App.DatabaseLocation))
             {
-                conn.CreateTable<User>();
-                var user = conn.Table<User>().ToArray();
-                selectedUser = user.GetValue(0) as User;
+                conn.CreateTable<UserModel>();
+                var user = conn.Table<UserModel>().ToArray();
+                selectedUser = user.GetValue(0) as UserModel;
 
                 firstNameEntry.Text = selectedUser.firstName;
                 lastNameEntry.Text = selectedUser.lastName;
                 companyEntry.Text = selectedUser.company;
                 emailEntry.Text = selectedUser.email;
-                passwordEntry.Text = selectedUser.password;
+                passwordEntry.Text = selectedUser.userPassword;
             }
         }
 
@@ -43,9 +43,9 @@ namespace HIPER
                 selectedUser.lastName = lastNameEntry.Text;
                 selectedUser.company = companyEntry.Text;
                 selectedUser.email = emailEntry.Text;
-                selectedUser.password = passwordEntry.Text;
+                selectedUser.userPassword = passwordEntry.Text;
 
-                conn.CreateTable<User>();
+                conn.CreateTable<UserModel>();
                 int rows = conn.Update(selectedUser);
 
                 if (rows > 0)

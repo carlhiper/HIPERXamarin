@@ -15,7 +15,7 @@ namespace HIPER
     [DesignTimeVisible(false)]
     public partial class MainPage : ContentPage
     {
-        User selectedUser;
+        UserModel selectedUser;
         
         public MainPage()
         {
@@ -27,14 +27,14 @@ namespace HIPER
 
             using (SQLiteConnection conn = new SQLiteConnection(App.DatabaseLocation))
             {
-                conn.CreateTable<User>();
-                var x = conn.Table<User>().Count();
+                conn.CreateTable<UserModel>();
+                var x = conn.Table<UserModel>().Count();
                 if (x > 0) {
                     
-                    var user = conn.Table<User>().ToArray();
-                    selectedUser = user.GetValue(0) as User;
+                    var user = conn.Table<UserModel>().ToArray();
+                    selectedUser = user.GetValue(0) as UserModel;
                     loginNameEntry.Text = selectedUser.email;
-                    passwordEntry.Text = selectedUser.password;
+                    passwordEntry.Text = selectedUser.userPassword;
                     //createUserButton.IsEnabled = false;
                 }else{
                     loginButton.IsEnabled = false;
@@ -57,7 +57,7 @@ namespace HIPER
             else
             {
                 if (loginNameEntry.Text == selectedUser.email &&
-                    passwordEntry.Text == selectedUser.password)
+                    passwordEntry.Text == selectedUser.userPassword)
                 {
                     Navigation.PushAsync(new HomePage());
                 }

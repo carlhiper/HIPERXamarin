@@ -28,7 +28,7 @@ namespace HIPER
 
         void goalCollectionView_SelectionChanged(System.Object sender, Xamarin.Forms.SelectionChangedEventArgs e)
         {
-            var selectedGoal = goalCollectionView.SelectedItem as Goal;
+            var selectedGoal = goalCollectionView.SelectedItem as GoalModel;
 
             Navigation.PushAsync(new EditGoalPage(selectedGoal));
         }
@@ -42,10 +42,10 @@ namespace HIPER
         {
             using (SQLiteConnection conn = new SQLiteConnection(App.DatabaseLocation))
             {
-                conn.CreateTable<Goal>();
-                var goals = conn.Table<Goal>().ToList();
-                List<Goal> activeGoals = new List<Goal>();
-                List<Goal> closedGoals = new List<Goal>();
+                conn.CreateTable<GoalModel>();
+                var goals = conn.Table<GoalModel>().ToList();
+                List<GoalModel> activeGoals = new List<GoalModel>();
+                List<GoalModel> closedGoals = new List<GoalModel>();
 
                 if (showCompletedSwitch.IsToggled)
                 {

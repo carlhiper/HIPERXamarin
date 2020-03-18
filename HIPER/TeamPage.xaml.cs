@@ -19,9 +19,9 @@ namespace HIPER
 
             using (SQLiteConnection conn = new SQLiteConnection(App.DatabaseLocation))
             {
-                conn.CreateTable<User>();
-                var user = conn.Table<User>().ToArray();
-                var selectedUser = user.GetValue(0) as User;
+                conn.CreateTable<UserModel>();
+                var user = conn.Table<UserModel>().ToArray();
+                var selectedUser = user.GetValue(0) as UserModel;
                 
                 firstName.Text = selectedUser.firstName;
                 lastName.Text = selectedUser.lastName;

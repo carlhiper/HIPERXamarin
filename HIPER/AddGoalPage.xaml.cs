@@ -24,7 +24,7 @@ namespace HIPER
             }
             else
             {
-                Goal goal = new Goal() {
+                GoalModel goal = new GoalModel() {
                     title = goalNameEntry.Text,
                     description = goalDescriptionEntry.Text,
                     deadline = goalDeadlineEntry.Date,
@@ -36,7 +36,7 @@ namespace HIPER
          
                 using( SQLiteConnection conn = new SQLiteConnection(App.DatabaseLocation))
                 {
-                    conn.CreateTable<Goal>();
+                    conn.CreateTable<GoalModel>();
                     int rows = conn.Insert(goal);
                     if (rows > 0)
                     {

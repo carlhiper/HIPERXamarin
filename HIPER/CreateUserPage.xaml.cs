@@ -28,19 +28,19 @@ namespace HIPER
             }
             else
             {
-                User user = new User()
+                UserModel user = new UserModel()
                 {
                     firstName = firstNameEntry.Text,
                     lastName = lastNameEntry.Text,
                     company = companyEntry.Text,
                     email = emailEntry.Text,
-                    password = passwordEntry.Text,
+                    userPassword = passwordEntry.Text,
                     createdDate = DateTime.Now
                 };
 
                 // Save locally
                 using (SQLiteConnection conn = new SQLiteConnection(App.DatabaseLocation)) { 
-                    conn.CreateTable<User>();
+                    conn.CreateTable<UserModel>();
                     int rows = conn.Insert(user);
      
                     if (rows > 0)

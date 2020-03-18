@@ -3,16 +3,16 @@ using SQLite;
 
 namespace HIPER.Model
 {
-    public class Goal
+    public class GoalModel
     {
         [PrimaryKey, AutoIncrement]
-        public int id { get; set; }
+        public double id { get; set; }
 
         public double userId { get; set; }
 
         public double teamId { get; set; }
 
-        [MaxLength(20)]
+        [MaxLength(40)]
         public string title { get; set; }
 
         [MaxLength(200)]
@@ -43,7 +43,9 @@ namespace HIPER.Model
 
         public bool completed { get; set; }
 
-        public Goal()
+        public int hipes { get; set; }
+
+        public GoalModel()
         {
 
         }
