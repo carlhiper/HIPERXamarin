@@ -17,18 +17,23 @@ namespace HIPER
         {
             base.OnAppearing();
 
-            using (SQLiteConnection conn = new SQLiteConnection(App.DatabaseLocation))
-            {
-                conn.CreateTable<UserModel>();
-                var user = conn.Table<UserModel>().ToArray();
-                var selectedUser = user.GetValue(0) as UserModel;
-                
-                firstName.Text = selectedUser.FirstName;
-                lastName.Text = selectedUser.LastName;
-                company.Text = selectedUser.Company;
-                email.Text = selectedUser.Email;
-                //password.Text = selectedUser.password;
-            }
+      
+            firstName.Text = App.loggedInUser.FirstName;
+            lastName.Text = App.loggedInUser.LastName;
+            company.Text = App.loggedInUser.Company;
+            email.Text = App.loggedInUser.Email;
+            /*
+                        using (SQLiteConnection conn = new SQLiteConnection(App.DatabaseLocation))
+                        {
+                            conn.CreateTable<UserModel>();
+                            var user = conn.Table<UserModel>().ToArray();
+                            var selectedUser = user.GetValue(0) as UserModel;
+
+                            firstName.Text = selectedUser.FirstName;
+                            lastName.Text = selectedUser.LastName;
+                            company.Text = selectedUser.Company;
+                            email.Text = selectedUser.Email;
+                        }*/
         }
 
         void editProfileButton_Clicked(System.Object sender, System.EventArgs e)

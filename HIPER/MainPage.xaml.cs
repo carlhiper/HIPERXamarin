@@ -15,7 +15,6 @@ namespace HIPER
     [DesignTimeVisible(false)]
     public partial class MainPage : ContentPage
     {
-        UserModel selectedUser;
         
         public MainPage()
         {
@@ -25,7 +24,8 @@ namespace HIPER
         {
             base.OnAppearing();
 
-            using (SQLiteConnection conn = new SQLiteConnection(App.DatabaseLocation))
+            // Local database
+        /*    using (SQLiteConnection conn = new SQLiteConnection(App.DatabaseLocation))
             {
                 conn.CreateTable<UserModel>();
                 var x = conn.Table<UserModel>().Count();
@@ -37,14 +37,17 @@ namespace HIPER
                     passwordEntry.Text = selectedUser.UserPassword;
                     //createUserButton.IsEnabled = false;
                 }
-            }
+            } */
         }
+
         void createUserButton_Clicked(System.Object sender, System.EventArgs e)
         {
             Navigation.PushAsync(new CreateUserPage());
         }
-        void loginButton_Clicked(System.Object sender, System.EventArgs e)
+
+        private async void loginButton_Clicked(System.Object sender, System.EventArgs e)
         {
+            
             bool isLoginNameEntryEmpty = string.IsNullOrEmpty(loginNameEntry.Text);
             bool isPasswordEntryEmpty = string.IsNullOrEmpty(passwordEntry.Text);
 
@@ -54,20 +57,25 @@ namespace HIPER
             }
             else
             {
-                if (loginNameEntry.Text == selectedUser.Email &&
-                    passwordEntry.Text == selectedUser.UserPassword)
-                {
-                    Navigation.PushAsync(new HomePage());
-                }
-                else
-                {
-                    DisplayAlert("Failed to login", "Wrong email or password", "Ok");
-                }
+                var user = (await App.client.GetTable<UserModel>().Where(u => u.Email == loginNameEntry.Text).ToListAsync()).FirstOrDefault();
 
-
-                
+                if (user != null)
+                {
+                    if (user.UserPassword == passwordEntry.Text)
+                    {
+                        App.loggedInUser = user;
+                        await Navigation.PushAsync(new HomePage());
+                    }
+                    else
+                    {
+                        await DisplayAlert("Error", "Email or password are incorrect", "Ok");
+                    }
+                }else
+                {
+                    await DisplayAlert("Error", "Failed to login", "Ok");
+                }
             }
         }
-
     }
 }
+∑

@@ -2,6 +2,7 @@
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using Microsoft.WindowsAzure.MobileServices;
+using HIPER.Model;
 
 namespace HIPER
 {
@@ -10,6 +11,8 @@ namespace HIPER
         public static string DatabaseLocation = string.Empty;
 
         public static MobileServiceClient client =new MobileServiceClient("https://hiper-app-webapp.azurewebsites.net");
+
+        public static UserModel loggedInUser = new UserModel();
 
         public App()
         {

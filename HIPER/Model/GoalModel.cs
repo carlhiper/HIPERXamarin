@@ -5,7 +5,7 @@ namespace HIPER.Model
 {
     public class GoalModel
     {
-        [PrimaryKey, AutoIncrement]
+        [PrimaryKey]
         public string Id { get; set; }
 
         public string UserId { get; set; }

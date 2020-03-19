@@ -5,7 +5,7 @@ namespace HIPER.Model
 {
     public class TeamModel
     {
-        [PrimaryKey, AutoIncrement]
+        [PrimaryKey]
         public string Id { get; set; }
 
         [MaxLength(40)]
