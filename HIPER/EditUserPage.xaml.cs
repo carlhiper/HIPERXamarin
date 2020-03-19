@@ -25,11 +25,11 @@ namespace HIPER
                 var user = conn.Table<UserModel>().ToArray();
                 selectedUser = user.GetValue(0) as UserModel;
 
-                firstNameEntry.Text = selectedUser.firstName;
-                lastNameEntry.Text = selectedUser.lastName;
-                companyEntry.Text = selectedUser.company;
-                emailEntry.Text = selectedUser.email;
-                passwordEntry.Text = selectedUser.userPassword;
+                firstNameEntry.Text = selectedUser.FirstName;
+                lastNameEntry.Text = selectedUser.LastName;
+                companyEntry.Text = selectedUser.Company;
+                emailEntry.Text = selectedUser.Email;
+                passwordEntry.Text = selectedUser.UserPassword;
             }
         }
 
@@ -39,11 +39,11 @@ namespace HIPER
         {
             using (SQLiteConnection conn = new SQLiteConnection(App.DatabaseLocation))
             {
-                selectedUser.firstName = firstNameEntry.Text;
-                selectedUser.lastName = lastNameEntry.Text;
-                selectedUser.company = companyEntry.Text;
-                selectedUser.email = emailEntry.Text;
-                selectedUser.userPassword = passwordEntry.Text;
+                selectedUser.FirstName = firstNameEntry.Text;
+                selectedUser.LastName = lastNameEntry.Text;
+                selectedUser.Company = companyEntry.Text;
+                selectedUser.Email = emailEntry.Text;
+                selectedUser.UserPassword = passwordEntry.Text;
 
                 conn.CreateTable<UserModel>();
                 int rows = conn.Update(selectedUser);

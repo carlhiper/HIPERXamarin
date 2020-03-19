@@ -25,11 +25,11 @@ namespace HIPER
             else
             {
                 GoalModel goal = new GoalModel() {
-                    title = goalNameEntry.Text,
-                    description = goalDescriptionEntry.Text,
-                    deadline = goalDeadlineEntry.Date,
-                    targetValue = goalTargetEntry.Text,
-                    privateGoal = privateGoalCheckbox.IsChecked,
+                    Title = goalNameEntry.Text,
+                    Description = goalDescriptionEntry.Text,
+                    Deadline = goalDeadlineEntry.Date,
+                    TargetValue = goalTargetEntry.Text,
+                    PrivateGoal = privateGoalCheckbox.IsChecked,
                     
                 };
 

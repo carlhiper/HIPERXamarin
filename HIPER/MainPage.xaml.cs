@@ -33,8 +33,8 @@ namespace HIPER
                     
                     var user = conn.Table<UserModel>().ToArray();
                     selectedUser = user.GetValue(0) as UserModel;
-                    loginNameEntry.Text = selectedUser.email;
-                    passwordEntry.Text = selectedUser.userPassword;
+                    loginNameEntry.Text = selectedUser.Email;
+                    passwordEntry.Text = selectedUser.UserPassword;
                     //createUserButton.IsEnabled = false;
                 }else{
                     loginButton.IsEnabled = false;
@@ -56,8 +56,8 @@ namespace HIPER
             }
             else
             {
-                if (loginNameEntry.Text == selectedUser.email &&
-                    passwordEntry.Text == selectedUser.userPassword)
+                if (loginNameEntry.Text == selectedUser.Email &&
+                    passwordEntry.Text == selectedUser.UserPassword)
                 {
                     Navigation.PushAsync(new HomePage());
                 }

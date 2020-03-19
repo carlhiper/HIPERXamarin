@@ -14,7 +14,7 @@ namespace HIPER
             InitializeComponent();
         }
 
-        void saveButton_Clicked(System.Object sender, System.EventArgs e)
+        private async void saveButton_Clicked(System.Object sender, System.EventArgs e)
         {
             bool isFirstNameEntryEmpty = string.IsNullOrEmpty(firstNameEntry.Text);
             bool isLastNameEntryEmpty = string.IsNullOrEmpty(lastNameEntry.Text);
@@ -24,22 +24,27 @@ namespace HIPER
             if (isFirstNameEntryEmpty || isLastNameEntryEmpty || isEmailEntryEmpty || isPasswordEntryEmpty) {
 
                 // Write code
-                DisplayAlert("Field missing input!", "Please fill in all fields and try again.", "Ok");
+                await DisplayAlert("Field missing input!", "Please fill in all fields and try again.", "Ok");
+            } else if(passwordEntry.Text != confirmPasswordEntry.Text) {
+                await DisplayAlert("Error", "Passwords don't match", "Ok");
             }
             else
             {
                 UserModel user = new UserModel()
                 {
-                    firstName = firstNameEntry.Text,
-                    lastName = lastNameEntry.Text,
-                    company = companyEntry.Text,
-                    email = emailEntry.Text,
-                    userPassword = passwordEntry.Text,
-                    createdDate = DateTime.Now
+                    FirstName = firstNameEntry.Text,
+                    LastName = lastNameEntry.Text,
+                    Company = companyEntry.Text,
+                    Email = emailEntry.Text,
+                    UserPassword = passwordEntry.Text,
+                    CreatedDate = DateTime.Now
                 };
 
+                // Save on Azure
+                await App.client.GetTable<UserModel>().InsertAsync(user);
+
                 // Save locally
-                using (SQLiteConnection conn = new SQLiteConnection(App.DatabaseLocation)) { 
+ /*               using (SQLiteConnection conn = new SQLiteConnection(App.DatabaseLocation)) { 
                     conn.CreateTable<UserModel>();
                     int rows = conn.Insert(user);
      
@@ -51,8 +56,8 @@ namespace HIPER
                     {
                         DisplayAlert("User not saved!", "Something went wrong, please try again", "Ok");
                     }
-                }
-                Navigation.PopAsync();
+                } */
+                Page x = await Navigation.PopAsync();
             }
         }
     }

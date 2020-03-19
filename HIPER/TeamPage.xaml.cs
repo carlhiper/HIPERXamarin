@@ -23,10 +23,10 @@ namespace HIPER
                 var user = conn.Table<UserModel>().ToArray();
                 var selectedUser = user.GetValue(0) as UserModel;
                 
-                firstName.Text = selectedUser.firstName;
-                lastName.Text = selectedUser.lastName;
-                company.Text = selectedUser.company;
-                email.Text = selectedUser.email;
+                firstName.Text = selectedUser.FirstName;
+                lastName.Text = selectedUser.LastName;
+                company.Text = selectedUser.Company;
+                email.Text = selectedUser.Email;
                 //password.Text = selectedUser.password;
             }
         }

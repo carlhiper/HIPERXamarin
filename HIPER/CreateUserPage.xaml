@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="HIPER.CreateUserPage">
     <ContentPage.ToolbarItems>
-        <ToolbarItem x:Name="saveButton" Text="Save" Clicked="saveButton_Clicked"></ToolbarItem> 
+        <ToolbarItem x:Name="saveButton" Text="Register" Clicked="saveButton_Clicked"></ToolbarItem> 
     </ContentPage.ToolbarItems>
     <ContentPage.Content>
         <StackLayout Margin="20">
@@ -11,6 +11,7 @@
             <Entry x:Name="companyEntry" Placeholder="COMPANY"></Entry>
             <Entry x:Name="emailEntry" Keyboard="Email" Placeholder="EMAIL"></Entry>
             <Entry x:Name="passwordEntry" IsPassword="True" Placeholder="PASSWORD"></Entry>
-         </StackLayout>
+            <Entry x:Name="confirmPasswordEntry" IsPassword="True" Placeholder="CONFIRM PASSWORD"></Entry>
+        </StackLayout>
     </ContentPage.Content>
 </ContentPage>

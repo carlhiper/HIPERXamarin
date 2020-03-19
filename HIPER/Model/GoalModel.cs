@@ -6,34 +6,34 @@ namespace HIPER.Model
     public class GoalModel
     {
         [PrimaryKey, AutoIncrement]
-        public double id { get; set; }
+        public string Id { get; set; }
 
-        public double userId { get; set; }
+        public string UserId { get; set; }
 
-        public double teamId { get; set; }
+        public string TeamId { get; set; }
 
         [MaxLength(40)]
-        public string title { get; set; }
+        public string Title { get; set; }
 
         [MaxLength(200)]
-        public string description { get; set; }
+        public string Description { get; set; }
 
-        public DateTime deadline { get; set; }
+        public DateTime Deadline { get; set; }
 
-        public DateTime createdDate { get; set; }
+        public DateTime CreatedDate { get; set; }
 
-        public DateTime closedDate { get; set; }
+        public DateTime ClosedDate { get; set; }
 
-        public string targetValue { get; set; }
+        public string TargetValue { get; set; }
 
-        public string currentValue { get; set; }
+        public string CurrentValue { get; set; }
 
-        public bool privateGoal { get; set; }
+        public bool PrivateGoal { get; set; }
 
-        public float progress {
+        public float Progress {
             get {
-                    var isCurrentValueNumerical = float.TryParse(currentValue, out float n);
-                    var isTargetValueNumerical = float.TryParse(targetValue, out float d);
+                    var isCurrentValueNumerical = float.TryParse(CurrentValue, out float n);
+                    var isTargetValueNumerical = float.TryParse(TargetValue, out float d);
                     if (isCurrentValueNumerical && isTargetValueNumerical && (d > 0.0f))
                     { return n / d; }
                     else { return 0.0f; }
@@ -41,9 +41,9 @@ namespace HIPER.Model
             set {; }
         }
 
-        public bool completed { get; set; }
+        public bool Completed { get; set; }
 
-        public int hipes { get; set; }
+        public int Hipes { get; set; }
 
         public GoalModel()
         {

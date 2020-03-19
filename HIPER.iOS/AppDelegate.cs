@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 
 using Foundation;
+using Microsoft.WindowsAzure.MobileServices;
 using UIKit;
 
 namespace HIPER.iOS
@@ -24,6 +25,7 @@ namespace HIPER.iOS
         public override bool FinishedLaunching(UIApplication app, NSDictionary options)
         {
             global::Xamarin.Forms.Forms.Init();
+            CurrentPlatform.Init(); 
 
             string dbName = "hiper_db.sqlite";
             string folderPath = Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal), "..", "Library");

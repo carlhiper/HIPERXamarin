@@ -16,25 +16,25 @@ namespace HIPER
 
             this.selectedGoal = selectedGoal;
 
-            goalNameEntry.Text = selectedGoal.title;
-            goalDescriptionEntry.Text = selectedGoal.description;
-            goalDeadlineEntry.Date = selectedGoal.deadline;
-            goalTargetEntry.Text = selectedGoal.targetValue;
-            goalCurrentEntry.Text = selectedGoal.currentValue;
-            privateGoalCheckbox.IsChecked = selectedGoal.privateGoal;
+            goalNameEntry.Text = selectedGoal.Title;
+            goalDescriptionEntry.Text = selectedGoal.Description;
+            goalDeadlineEntry.Date = selectedGoal.Deadline;
+            goalTargetEntry.Text = selectedGoal.TargetValue;
+            goalCurrentEntry.Text = selectedGoal.CurrentValue;
+            privateGoalCheckbox.IsChecked = selectedGoal.PrivateGoal;
 
-            goalNameEntry.IsEnabled = !selectedGoal.completed;
-            goalDescriptionEntry.IsEnabled = !selectedGoal.completed;
-            goalDeadlineEntry.IsEnabled = !selectedGoal.completed;
-            goalTargetEntry.IsEnabled = !selectedGoal.completed;
-            goalCurrentEntry.IsEnabled = !selectedGoal.completed;
-            privateGoalCheckbox.IsEnabled = !selectedGoal.completed;
+            goalNameEntry.IsEnabled = !selectedGoal.Completed;
+            goalDescriptionEntry.IsEnabled = !selectedGoal.Completed;
+            goalDeadlineEntry.IsEnabled = !selectedGoal.Completed;
+            goalTargetEntry.IsEnabled = !selectedGoal.Completed;
+            goalCurrentEntry.IsEnabled = !selectedGoal.Completed;
+            privateGoalCheckbox.IsEnabled = !selectedGoal.Completed;
 
-            deleteGoal.IsVisible = !selectedGoal.completed;
-            updateGoal.IsVisible = !selectedGoal.completed;
-            completeGoal.IsVisible = !selectedGoal.completed;
+            deleteGoal.IsVisible = !selectedGoal.Completed;
+            updateGoal.IsVisible = !selectedGoal.Completed;
+            completeGoal.IsVisible = !selectedGoal.Completed;
 
-            if (selectedGoal.completed)
+            if (selectedGoal.Completed)
             {
                 headerText.Text = "COMPLETED GOAL";
             }
@@ -52,12 +52,12 @@ namespace HIPER
 
         void updateGoal_Clicked(System.Object sender, System.EventArgs e)
         {
-            selectedGoal.title = goalNameEntry.Text;
-            selectedGoal.description = goalDescriptionEntry.Text;
-            selectedGoal.deadline = goalDeadlineEntry.Date;
-            selectedGoal.targetValue = goalTargetEntry.Text;
-            selectedGoal.privateGoal = privateGoalCheckbox.IsChecked;
-            selectedGoal.currentValue = goalCurrentEntry.Text;
+            selectedGoal.Title = goalNameEntry.Text;
+            selectedGoal.Description = goalDescriptionEntry.Text;
+            selectedGoal.Deadline = goalDeadlineEntry.Date;
+            selectedGoal.TargetValue = goalTargetEntry.Text;
+            selectedGoal.PrivateGoal = privateGoalCheckbox.IsChecked;
+            selectedGoal.CurrentValue = goalCurrentEntry.Text;
 
             using (SQLiteConnection conn = new SQLiteConnection(App.DatabaseLocation))
             {
@@ -98,7 +98,7 @@ namespace HIPER
         void completeGoal_Clicked(System.Object sender, System.EventArgs e)
         {
             
-            selectedGoal.completed = true;
+            selectedGoal.Completed = true;
 
             using (SQLiteConnection conn = new SQLiteConnection(App.DatabaseLocation))
             {

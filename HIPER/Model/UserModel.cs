@@ -5,34 +5,34 @@ namespace HIPER.Model
 {
     public class UserModel
     {
-        [PrimaryKey, AutoIncrement]
-        public double id { get; set; }
+        [PrimaryKey]
+        public string Id { get; set; }
 
-        public double teamId { get; set; }
-
-        [MaxLength(40)]
-        public string firstName { get; set; }
+        public string TeamId { get; set; }
 
         [MaxLength(40)]
-        public string lastName { get; set; }
+        public string FirstName { get; set; }
+
+        [MaxLength(40)]
+        public string LastName { get; set; }
 
         [MaxLength(100)]
-        public string email { get; set; }
+        public string Email { get; set; }
 
         [MaxLength(40)]
-        public string userPassword { get; set; }
+        public string UserPassword { get; set; }
 
         [MaxLength(40)]
-        public string company { get; set; }
+        public string Company { get; set; }
 
-        public DateTime createdDate { get; set; }
+        public DateTime CreatedDate { get; set; }
 
-        public int number_logins { get; set; }
+        public int Number_logins { get; set; }
 
         [MaxLength(100)]
-        public string picture_path { get; set; }
+        public string Picture_path { get; set; }
 
-        public float rating { get; set; }
+        public float Rating { get; set; }
 
         public UserModel()
         {

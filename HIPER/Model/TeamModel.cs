@@ -6,27 +6,27 @@ namespace HIPER.Model
     public class TeamModel
     {
         [PrimaryKey, AutoIncrement]
-        public double id { get; set; }
+        public string Id { get; set; }
 
         [MaxLength(40)]
-        public string name { get; set; }
+        public string Name { get; set; }
 
         [MaxLength(40)]
-        public string password { get; set; }
+        public string Password { get; set; }
 
         [MaxLength(40)]
-        public string company { get; set; }
+        public string Company { get; set; }
 
         [MaxLength(40)]
-        public string organisation_number { get; set; }
+        public string Organisation_number { get; set; }
 
-        public DateTime createdDate { get; set; }
+        public DateTime CreatedDate { get; set; }
 
-        public int max_number_users { get; set; }
+        public int Max_number_users { get; set; }
 
-        public int administrator_id { get; set; }
+        public int Administrator_id { get; set; }
 
-        public bool active { get; set; }
+        public bool Active { get; set; }
 
     }
 }
