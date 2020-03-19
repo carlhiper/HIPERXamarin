@@ -36,8 +36,6 @@ namespace HIPER
                     loginNameEntry.Text = selectedUser.Email;
                     passwordEntry.Text = selectedUser.UserPassword;
                     //createUserButton.IsEnabled = false;
-                }else{
-                    loginButton.IsEnabled = false;
                 }
             }
         }
