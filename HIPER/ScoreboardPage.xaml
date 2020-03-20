@@ -69,7 +69,7 @@
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView> 
-
+            
        <!--     <ListView x:Name="goalListView">
                 <ListView.ItemTemplate>
                     <DataTemplate>

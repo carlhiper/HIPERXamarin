@@ -27,22 +27,25 @@ namespace HIPER
                 var team = (await App.client.GetTable<TeamModel>().Where(t => t.Id == App.loggedInUser.TeamId).ToListAsync()).FirstOrDefault();
                 if (team != null) { 
                     var users = await App.client.GetTable<UserModel>().Where(u => u.TeamId == team.Id).ToListAsync();
-                    if (users != null) { 
+                    if (users != null) {
+
+                        users.RemoveAt(users.FindIndex(a => a.Id == App.loggedInUser.Id));
                         teamCollectionView.ItemsSource = users;
 
                         teamNameLabel.Text = "TEAM " + team.Name.ToUpper();
-                        teamIdentifierLabel.Text = team.Identifier;
+                        teamIdentifierLabel.Text = "Identifier: " + team.Identifier;
 
                         createTeam.IsVisible = false;
                         joinTeam.IsVisible = false;
-                        buttonGrid.IsVisible = false;
+                        editTeam.IsVisible = true;
+                      
                     }
                 }
                 else
                 {
                     createTeam.IsVisible = true;
                     joinTeam.IsVisible = true;
-                    buttonGrid.IsVisible = true;
+                    editTeam.IsVisible = false;
                 }
             }
             catch(NullReferenceException nre)

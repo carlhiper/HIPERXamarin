@@ -11,18 +11,23 @@
             <Label x:Name="email" Text="EMAIL"></Label>
             <!--<Label x:Name="password" Text="PASSWORD"></Label>-->
 
-            <Button x:Name="editProfileButton" Text="EDIT PROFILE" Clicked="editProfileButton_Clicked"></Button>
+            <!--<Button x:Name="editProfileButton" Text="EDIT PROFILE" Clicked="editProfileButton_Clicked"></Button>-->
+
             <Grid x:Name="buttonGrid" Padding="0">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="45" />
+                    <RowDefinition Height="40" />
+                    <RowDefinition Height="40" />
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
-                <Button x:Name="createTeam" Clicked="createTeam_Clicked" Grid.Column="0" Text="CREATE TEAM" HorizontalOptions="FillAndExpand"></Button>
-                <Button x:Name="joinTeam" Clicked="joinTeam_Clicked" Grid.Column="1" Text="JOIN TEAM" HorizontalOptions="FillAndExpand"></Button>
+                <Button x:Name="editProfileButton" Clicked="editProfileButton_Clicked" Grid.Column="0" Text="EDIT PROFILE" HorizontalOptions="FillAndExpand"></Button>
+                <Button x:Name="editTeam"  Grid.Column="1" Text="EDIT TEAM" HorizontalOptions="FillAndExpand"></Button>
+                <Button x:Name="createTeam" Clicked="createTeam_Clicked" Grid.Row="1" Grid.Column="0" Text="CREATE TEAM" HorizontalOptions="FillAndExpand"></Button>
+                <Button x:Name="joinTeam" Clicked="joinTeam_Clicked" Grid.Row="1" Grid.Column="1" Text="JOIN TEAM" HorizontalOptions="FillAndExpand"></Button>
             </Grid>
+     
             <Label Text="YOUR TEAM MATES" FontFamily="FUTURA BOOK" TextColor="{StaticResource hiperPeach}" HorizontalOptions="Center" Margin="0,25,0,0"></Label>
 
             <CollectionView
