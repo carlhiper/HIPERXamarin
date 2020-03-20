@@ -12,6 +12,9 @@ namespace HIPER.Model
         public string Name { get; set; }
 
         [MaxLength(40)]
+        public string Identifier { get; set; }
+
+        [MaxLength(40)]
         public string Password { get; set; }
 
         [MaxLength(40)]
@@ -24,9 +27,8 @@ namespace HIPER.Model
 
         public int Max_number_users { get; set; }
 
-        public int Administrator_id { get; set; }
+        public string Administrator_id { get; set; }
 
         public bool Active { get; set; }
-
     }
 }

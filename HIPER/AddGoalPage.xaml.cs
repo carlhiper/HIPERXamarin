@@ -38,24 +38,6 @@ namespace HIPER
                         Progress = 0
                     };
 
-
-
-                    /*
-                    using( SQLiteConnection conn = new SQLiteConnection(App.DatabaseLocation))
-                    {
-                        conn.CreateTable<GoalModel>();
-                        int rows = conn.Insert(goal);
-                        if (rows > 0)
-                        {
-                            DisplayAlert("Goal saved!", "", "Ok");
-                        }
-                        else
-                        {
-                            DisplayAlert("Goal not saved!", "Something went wrong, please try again", "Ok");
-                        }
-
-                    }*/
-
                     await App.client.GetTable<GoalModel>().InsertAsync(goal);
                     await DisplayAlert("Success", "Goal saved", "Ok");
                     await Navigation.PopAsync();

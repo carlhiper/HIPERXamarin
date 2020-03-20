@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="HIPER.CreateTeamPage">
+        <ContentPage.ToolbarItems>
+        <ToolbarItem x:Name="saveButton" Text="Create" Clicked="saveButton_Clicked"></ToolbarItem> 
+    </ContentPage.ToolbarItems>
+    <ContentPage.Content>
+        <StackLayout Margin="20">
+            <Label  Style="{StaticResource Header}" Text="CREATE TEAM"></Label>
+            <Entry x:Name="teamNameEntry" Placeholder="TEAM NAME"></Entry>
+            <Entry x:Name="companyEntry" Placeholder="COMPANY"></Entry>
+            <Entry x:Name="orgNumberEntry" Placeholder="ORGANISATION NUMBER"></Entry>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

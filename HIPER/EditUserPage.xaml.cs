@@ -19,44 +19,40 @@ namespace HIPER
         {
             base.OnAppearing();
 
-            using (SQLiteConnection conn = new SQLiteConnection(App.DatabaseLocation))
-            {
-                conn.CreateTable<UserModel>();
-                var user = conn.Table<UserModel>().ToArray();
-                selectedUser = user.GetValue(0) as UserModel;
-
-                firstNameEntry.Text = selectedUser.FirstName;
-                lastNameEntry.Text = selectedUser.LastName;
-                companyEntry.Text = selectedUser.Company;
-                emailEntry.Text = selectedUser.Email;
-                passwordEntry.Text = selectedUser.UserPassword;
-            }
+            firstNameEntry.Text = App.loggedInUser.FirstName;
+            lastNameEntry.Text = App.loggedInUser.LastName;
+            companyEntry.Text = App.loggedInUser.Company;
+            emailEntry.Text = App.loggedInUser.Email;
+            passwordEntry.Text = App.loggedInUser.UserPassword;
         }
 
 
 
-        void saveProfile_Clicked(System.Object sender, System.EventArgs e)
+        private async void saveProfile_Clicked(System.Object sender, System.EventArgs e)
         {
-            using (SQLiteConnection conn = new SQLiteConnection(App.DatabaseLocation))
-            {
-                selectedUser.FirstName = firstNameEntry.Text;
+            try { 
+                App.loggedInUser.FirstName = firstNameEntry.Text;
+                App.loggedInUser.LastName = lastNameEntry.Text;
+                App.loggedInUser.Company = companyEntry.Text;
+                App.loggedInUser.Email = emailEntry.Text;
+                App.loggedInUser.UserPassword = passwordEntry.Text;
+
+              /*  selectedUser.FirstName = firstNameEntry.Text;
                 selectedUser.LastName = lastNameEntry.Text;
                 selectedUser.Company = companyEntry.Text;
                 selectedUser.Email = emailEntry.Text;
-                selectedUser.UserPassword = passwordEntry.Text;
+                selectedUser.UserPassword = passwordEntry.Text;*/
 
-                conn.CreateTable<UserModel>();
-                int rows = conn.Update(selectedUser);
-
-                if (rows > 0)
-                {
-                    DisplayAlert("Success!", "Profile updated", "Ok");
-                }
-                else
-                {
-                    DisplayAlert("Failure!", "Something went wrong, please try again", "Ok");
-                }
-                Navigation.PopAsync();
+                await App.client.GetTable<UserModel>().UpdateAsync(App.loggedInUser);
+                await DisplayAlert("Success", "Profile updated", "Ok");
+                await Navigation.PopAsync();
+            }catch(NullReferenceException nre)
+            {
+                await DisplayAlert("Failure!", "Something went wrong, please try again", "Ok");
+            }
+            catch(Exception ex)
+            {
+                await DisplayAlert("Failure!", "Something went wrong, please try again", "Ok");
             }
         }
     }

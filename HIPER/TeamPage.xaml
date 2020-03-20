@@ -2,8 +2,9 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="HIPER.TeamPage">
     <ContentPage.Content>
         <StackLayout Margin="20,0">
-            <Label Text="TEAM" Style="{StaticResource Header}"></Label>
-            <Label Text="YOUR PROFILE" FontFamily="FUTURA BOOK" TextColor="{StaticResource hiperPeach}" HorizontalOptions="Center" Margin="5"></Label>
+            <Label x:Name="teamNameLabel" Margin="20,20,20,5" Text="TEAM" Style="{StaticResource Header}"></Label>
+            <Label x:Name="teamIdentifierLabel" HorizontalOptions="Center"></Label>
+            <Label Text="YOU" FontFamily="FUTURA BOOK" TextColor="{StaticResource hiperPeach}" HorizontalOptions="Center" Margin="0,10,0,0"></Label>
             <Label x:Name="firstName" Text="FIRST NAME"></Label>
             <Label x:Name="lastName" Text="LAST NAME"></Label>
             <Label x:Name="company" Text="COMPANY"></Label>
@@ -11,12 +12,57 @@
             <!--<Label x:Name="password" Text="PASSWORD"></Label>-->
 
             <Button x:Name="editProfileButton" Text="EDIT PROFILE" Clicked="editProfileButton_Clicked"></Button>
-
+            <Grid x:Name="buttonGrid" Padding="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="45" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Button x:Name="createTeam" Clicked="createTeam_Clicked" Grid.Column="0" Text="CREATE TEAM" HorizontalOptions="FillAndExpand"></Button>
+                <Button x:Name="joinTeam" Clicked="joinTeam_Clicked" Grid.Column="1" Text="JOIN TEAM" HorizontalOptions="FillAndExpand"></Button>
+            </Grid>
             <Label Text="YOUR TEAM MATES" FontFamily="FUTURA BOOK" TextColor="{StaticResource hiperPeach}" HorizontalOptions="Center" Margin="0,25,0,0"></Label>
 
-            <ListView>
+            <CollectionView
+                x:Name="teamCollectionView"
+                SelectionMode="Single"
+                SelectionChanged="teamCollectionView_SelectionChanged">
+                
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid Padding="10">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
 
-            </ListView>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="200" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+              
+                            <Label Grid.Row="0"
+                                Grid.Column="0" 
+                                Text="{Binding FirstName}" 
+                                FontAttributes="Bold" />
+
+                            <Label Grid.Row="1"
+                                Grid.Column="0" 
+                                Text="{Binding LastName}"
+                                FontAttributes="Italic" 
+                                VerticalOptions="End" />
+                            <Label Grid.Row="2"
+                                Grid.Column="0" 
+                                Text="{Binding Company}"
+                                FontAttributes="Italic" 
+                                VerticalOptions="End" /> 
+                        </Grid>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView> 
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

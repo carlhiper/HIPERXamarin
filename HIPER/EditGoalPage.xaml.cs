@@ -41,14 +41,8 @@ namespace HIPER
             else
             {
                 headerText.Text = "EDIT GOAL";
-            }
-            
+            }   
         }
-
-      /*  void saveGoal_Clicked(System.Object sender, System.EventArgs e)
-        {
-
-        }*/
 
         private async void updateGoal_Clicked(System.Object sender, System.EventArgs e)
         {
