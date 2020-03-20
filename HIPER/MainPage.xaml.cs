@@ -61,9 +61,10 @@ namespace HIPER
 
                 if (user != null)
                 {
+                    App.loggedInUser = user;
                     if (user.UserPassword == passwordEntry.Text)
                     {
-                        App.loggedInUser = user;
+                        
                         await Navigation.PushAsync(new HomePage());
                     }
                     else
