@@ -50,71 +50,83 @@ namespace HIPER
 
         }*/
 
-        void updateGoal_Clicked(System.Object sender, System.EventArgs e)
+        private async void updateGoal_Clicked(System.Object sender, System.EventArgs e)
         {
             selectedGoal.Title = goalNameEntry.Text;
             selectedGoal.Description = goalDescriptionEntry.Text;
-            selectedGoal.Deadline = goalDeadlineEntry.Date;
+            selectedGoal.Deadline = DateTime.Parse(goalDeadlineEntry.Date.ToString());
             selectedGoal.TargetValue = goalTargetEntry.Text;
             selectedGoal.PrivateGoal = privateGoalCheckbox.IsChecked;
             selectedGoal.CurrentValue = goalCurrentEntry.Text;
 
-            using (SQLiteConnection conn = new SQLiteConnection(App.DatabaseLocation))
-            {
-                conn.CreateTable<GoalModel>();
-                int rows = conn.Update(selectedGoal);
+            await App.client.GetTable<GoalModel>().UpdateAsync(selectedGoal);
+            await DisplayAlert("Success", "Goal updated", "Ok");
+            await Navigation.PopAsync();
 
-                if (rows > 0)
-                {
-                    DisplayAlert("Success", "Goal updated", "Ok");
-                }
-                else
-                {
-                    DisplayAlert("Failure", "Goal not update", "Ok");
-                }
-                Navigation.PopAsync();
-            }
+            //using (SQLiteConnection conn = new SQLiteConnection(App.DatabaseLocation))
+            //{
+            //    conn.CreateTable<GoalModel>();
+            //    int rows = conn.Update(selectedGoal);
+
+            //    if (rows > 0)
+            //    {
+            //        DisplayAlert("Success", "Goal updated", "Ok");
+            //    }
+            //    else
+            //    {
+            //        DisplayAlert("Failure", "Goal not update", "Ok");
+            //    }
+            //    Navigation.PopAsync();
+            //}
         }
 
-        void deleteGoal_Clicked(System.Object sender, System.EventArgs e)
+        private async void deleteGoal_Clicked(System.Object sender, System.EventArgs e)
         {
-            using (SQLiteConnection conn = new SQLiteConnection(App.DatabaseLocation))
-            {
-                conn.CreateTable<GoalModel>();
-                int rows = conn.Delete(selectedGoal);
-                if (rows > 0)
-                {
-                    DisplayAlert("Success", "Goal deleted", "Ok");
-            
-                }
-                else
-                {
-                    DisplayAlert("Failure", "Goal not deleted", "Ok") ;
-                }
-                Navigation.PopAsync();
-            }
+            await App.client.GetTable<GoalModel>().DeleteAsync(selectedGoal);
+            await DisplayAlert("Success", "Goal deleted", "Ok");
+            await Navigation.PopAsync();
+
+            //using (SQLiteConnection conn = new SQLiteConnection(App.DatabaseLocation))
+            //{
+            //    conn.CreateTable<GoalModel>();
+            //    int rows = conn.Delete(selectedGoal);
+            //    if (rows > 0)
+            //    {
+            //        DisplayAlert("Success", "Goal deleted", "Ok");
+
+            //    }
+            //    else
+            //    {
+            //        DisplayAlert("Failure", "Goal not deleted", "Ok") ;
+            //    }
+            //    Navigation.PopAsync();
+            //}
         }
 
-        void completeGoal_Clicked(System.Object sender, System.EventArgs e)
+        private async void completeGoal_Clicked(System.Object sender, System.EventArgs e)
         {
             
             selectedGoal.Completed = true;
 
-            using (SQLiteConnection conn = new SQLiteConnection(App.DatabaseLocation))
-            {
-                conn.CreateTable<GoalModel>();
-                int rows = conn.Update(selectedGoal);
+            await App.client.GetTable<GoalModel>().UpdateAsync(selectedGoal);
+            await DisplayAlert("Congratulations", "Goal goal completed", "Ok");
+            await Navigation.PopAsync();
 
-                if (rows > 0)
-                {
-                    DisplayAlert("Congratulations!", "Goal completed", "Ok");
-                }
-                else
-                {
-                    DisplayAlert("Failure", "Goal could not update", "Ok");
-                }
-                Navigation.PopAsync();
-            }
+            //using (SQLiteConnection conn = new SQLiteConnection(App.DatabaseLocation))
+            //{
+            //    conn.CreateTable<GoalModel>();
+            //    int rows = conn.Update(selectedGoal);
+
+            //    if (rows > 0)
+            //    {
+            //        DisplayAlert("Congratulations!", "Goal completed", "Ok");
+            //    }
+            //    else
+            //    {
+            //        DisplayAlert("Failure", "Goal could not update", "Ok");
+            //    }
+            //    Navigation.PopAsync();
+            //}
 
         }
     }

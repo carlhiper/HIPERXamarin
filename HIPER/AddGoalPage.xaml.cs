@@ -21,17 +21,21 @@ namespace HIPER
 
                 if (isGoalNameEmpty || isGoalDescriptionEmpty)
                 {
-                    DisplayAlert("Not filled", "All field needs to be entered", "Ok");
+                    await DisplayAlert("Not filled", "All field needs to be entered", "Ok");
                 }
                 else
                 {
                     GoalModel goal = new GoalModel() {
                         Title = goalNameEntry.Text,
                         Description = goalDescriptionEntry.Text,
-                        Deadline = goalDeadlineEntry.Date,
+                        Deadline = DateTime.Parse(goalDeadlineEntry.Date.ToString()),
                         TargetValue = goalTargetEntry.Text,
                         PrivateGoal = privateGoalCheckbox.IsChecked,
-                        UserId = App.loggedInUser.Id
+                        UserId = App.loggedInUser.Id,
+                        CurrentValue = "0",
+                        CreatedDate = DateTime.Now,
+                        ClosedDate = DateTime.MaxValue,
+                        Progress = 0
                     };
 
 
@@ -58,13 +62,13 @@ namespace HIPER
                 }
             
             }
-            catch (NullReferenceException nre)
+            catch(NullReferenceException nre)
             {
-                // DisplayAlert("Goal not saved!", "Something went wrong, please try again", "Ok");
+                await DisplayAlert("Goal not saved!", "Something went wrong, please try again", "Ok");
             }
             catch(Exception ex) 
             {
-                // DisplayAlert("Goal not saved!", "Something went wrong, please try again", "Ok");
+                await DisplayAlert("Goal not saved!", "Something went wrong, please try again", "Ok");
             }
 
 

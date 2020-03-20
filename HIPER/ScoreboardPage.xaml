@@ -45,24 +45,24 @@
               
                             <Label Grid.Row="0"
                                 Grid.Column="0" 
-                                Text="{Binding title}" 
+                                Text="{Binding Title}" 
                                 FontAttributes="Bold" />
                             
                             <ProgressBar
                                 VerticalOptions="Center"
                                 Grid.Column="1"
                                 Grid.Row="0"
-                                Progress="{Binding progress}"
+                                Progress="{Binding Progress}"
                                 ProgressColor="{StaticResource hiperPeach}" ></ProgressBar>
 
                             <Label Grid.Row="1"
                                 Grid.Column="0" 
-                                Text="{Binding description}"
+                                Text="{Binding Description}"
                                 FontAttributes="Italic" 
                                 VerticalOptions="End" />
                             <Label Grid.Row="2"
                                 Grid.Column="0" 
-                                Text="{Binding deadline}"
+                                Text="{Binding Deadline}"
                                 FontAttributes="Italic" 
                                 VerticalOptions="End" /> 
                         </Grid>

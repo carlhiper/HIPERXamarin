@@ -38,38 +38,65 @@ namespace HIPER
             createGoalsList();
         }
 
-        private void createGoalsList()
+        private async void createGoalsList()
         {
-            using (SQLiteConnection conn = new SQLiteConnection(App.DatabaseLocation))
-            {
-                conn.CreateTable<GoalModel>();
-                var goals = conn.Table<GoalModel>().ToList();
-                List<GoalModel> activeGoals = new List<GoalModel>();
-                List<GoalModel> closedGoals = new List<GoalModel>();
+            List<GoalModel> activeGoals = new List<GoalModel>();
+            List<GoalModel> closedGoals = new List<GoalModel>();
+            var goals = await App.client.GetTable<GoalModel>().Where(g => g.UserId == App.loggedInUser.Id).ToListAsync();
 
-                if (showCompletedSwitch.IsToggled)
+            if (showCompletedSwitch.IsToggled)
+            {
+                foreach (var item in goals)
                 {
-                    foreach (var item in goals)
+                    if (item.Completed)
                     {
-                        if (item.Completed)
-                        {
-                            closedGoals.Add(item);
-                        }
+                        closedGoals.Add(item);
                     }
-                    goalCollectionView.ItemsSource = closedGoals;
                 }
-                else
-                {
-                    foreach (var item in goals)
-                    {
-                        if (!item.Completed)
-                        {
-                            activeGoals.Add(item);
-                        }
-                    }
-                    goalCollectionView.ItemsSource = activeGoals;
-                }
+                goalCollectionView.ItemsSource = closedGoals;
             }
+            else
+            {
+                foreach (var item in goals)
+                {
+                    if (!item.Completed)
+                    {
+                        activeGoals.Add(item);
+                    }
+                }
+                goalCollectionView.ItemsSource = activeGoals;
+            }
+
+            /* using (SQLiteConnection conn = new SQLiteConnection(App.DatabaseLocation))
+             {
+                 conn.CreateTable<GoalModel>();
+                 var goals = conn.Table<GoalModel>().ToList();
+                 List<GoalModel> activeGoals = new List<GoalModel>();
+                 List<GoalModel> closedGoals = new List<GoalModel>();
+
+                 if (showCompletedSwitch.IsToggled)
+                 {
+                     foreach (var item in goals)
+                     {
+                         if (item.Completed)
+                         {
+                             closedGoals.Add(item);
+                         }
+                     }
+                     goalCollectionView.ItemsSource = closedGoals;
+                 }
+                 else
+                 {
+                     foreach (var item in goals)
+                     {
+                         if (!item.Completed)
+                         {
+                             activeGoals.Add(item);
+                         }
+                     }
+                     goalCollectionView.ItemsSource = activeGoals;
+                 }
+             }*/
         }
     }
 }
