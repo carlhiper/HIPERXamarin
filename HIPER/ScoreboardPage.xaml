@@ -47,7 +47,6 @@
                                 Grid.Column="0" 
                                 Text="{Binding Title}" 
                                 FontAttributes="Bold" />
-                            
                             <ProgressBar
                                 VerticalOptions="Center"
                                 Grid.Column="1"
@@ -69,14 +68,6 @@
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView> 
-            
-       <!--     <ListView x:Name="goalListView">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <TextCell Text="{Binding title}" Detail="{Binding description}"></TextCell>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView> -->
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
