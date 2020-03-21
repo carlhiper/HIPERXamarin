@@ -66,6 +66,10 @@ namespace HIPER
 
         void teamCollectionView_SelectionChanged(System.Object sender, Xamarin.Forms.SelectionChangedEventArgs e)
         {
+            if (App.loggedInUser.Id == team.Administrator_id) { 
+                var selectedUser = teamCollectionView.SelectedItem as UserModel;
+                Navigation.PushAsync(new UserDetailPage(selectedUser));
+            }
         }
 
         void joinTeam_Clicked(System.Object sender, System.EventArgs e)
@@ -110,8 +114,6 @@ namespace HIPER
                         await DisplayAlert("Success", "You have left the team", "Ok");
                     }
                 }
-
-                
 
             }catch(NullReferenceException nre)
             {

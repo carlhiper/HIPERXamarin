@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="HIPER.TeamPage">
     <ContentPage.Content>
-        <StackLayout Margin="20,0">
+        <StackLayout Margin="20">
             <Label x:Name="teamNameLabel" Margin="20,20,20,5" Text="TEAM" Style="{StaticResource Header}"></Label>
             <Label x:Name="teamIdentifierLabel" HorizontalOptions="Center"></Label>
             <Label Text="YOU" FontFamily="FUTURA BOOK" TextColor="{StaticResource hiperPeach}" HorizontalOptions="Center" Margin="0,10,0,0"></Label>
@@ -13,10 +13,10 @@
 
             <!--<Button x:Name="editProfileButton" Text="EDIT PROFILE" Clicked="editProfileButton_Clicked"></Button>-->
 
-            <Grid x:Name="buttonGrid" Padding="0">
+            <Grid x:Name="buttonGrid" Padding="0" Margin="5">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="40" />
-                    <RowDefinition Height="40" />
+                    <RowDefinition Height="38" />
+                    <RowDefinition Height="38" />
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
@@ -28,7 +28,7 @@
                 <Button x:Name="joinTeam" Clicked="joinTeam_Clicked" Grid.Row="1" Grid.Column="1" Text="JOIN TEAM" HorizontalOptions="FillAndExpand"></Button>
             </Grid>
      
-            <Label Text="YOUR TEAM MATES" FontFamily="FUTURA BOOK" TextColor="{StaticResource hiperPeach}" HorizontalOptions="Center" Margin="0,25,0,0"></Label>
+            <Label Text="YOUR TEAM" FontFamily="FUTURA BOOK" TextColor="{StaticResource hiperPeach}" HorizontalOptions="Center" Margin="0,10,0,0"></Label>
 
             <CollectionView
                 x:Name="teamCollectionView"

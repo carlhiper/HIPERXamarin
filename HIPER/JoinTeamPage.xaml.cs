@@ -24,9 +24,13 @@ namespace HIPER
             }
             else
             {
-                var team = (await App.client.GetTable<TeamModel>().Where(i => i.Identifier == identifierEntry.Text).ToListAsync()).FirstOrDefault();
+                
 
-                if (team != null)
+                var team = (await App.client.GetTable<TeamModel>().Where(i => i.Identifier == identifierEntry.Text).ToListAsync()).FirstOrDefault();
+                var users = await App.client.GetTable<UserModel>().Where(u => u.TeamId == team.Id).ToListAsync();
+
+
+                if (team != null && users.Count < team.Max_number_users)
                 {
                     if (team.Name.ToUpper() == teamNameEntry.Text.ToUpper())
                     {
@@ -41,7 +45,13 @@ namespace HIPER
                 }
                 else
                 {
-                    await DisplayAlert("Error", "Failed to join team", "Ok");
+                    if (users.Count < team.Max_number_users)
+                    {
+                        await DisplayAlert("Error", "Team already have max number of members", "Ok");
+                    }
+                    else { 
+                        await DisplayAlert("Error", "Failed to join team", "Ok");
+                    }
                 }
             }
         }

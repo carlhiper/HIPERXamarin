@@ -25,7 +25,6 @@ namespace HIPER
             createGoalsList();
         }
         
-
         void goalCollectionView_SelectionChanged(System.Object sender, Xamarin.Forms.SelectionChangedEventArgs e)
         {
             var selectedGoal = goalCollectionView.SelectedItem as GoalModel;
@@ -66,37 +65,6 @@ namespace HIPER
                 }
                 goalCollectionView.ItemsSource = activeGoals;
             }
-
-            /* using (SQLiteConnection conn = new SQLiteConnection(App.DatabaseLocation))
-             {
-                 conn.CreateTable<GoalModel>();
-                 var goals = conn.Table<GoalModel>().ToList();
-                 List<GoalModel> activeGoals = new List<GoalModel>();
-                 List<GoalModel> closedGoals = new List<GoalModel>();
-
-                 if (showCompletedSwitch.IsToggled)
-                 {
-                     foreach (var item in goals)
-                     {
-                         if (item.Completed)
-                         {
-                             closedGoals.Add(item);
-                         }
-                     }
-                     goalCollectionView.ItemsSource = closedGoals;
-                 }
-                 else
-                 {
-                     foreach (var item in goals)
-                     {
-                         if (!item.Completed)
-                         {
-                             activeGoals.Add(item);
-                         }
-                     }
-                     goalCollectionView.ItemsSource = activeGoals;
-                 }
-             }*/
         }
     }
 }

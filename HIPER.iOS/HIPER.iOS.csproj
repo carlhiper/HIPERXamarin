@@ -26,6 +26,7 @@
     <MtouchArch>x86_64</MtouchArch>
     <MtouchLink>None</MtouchLink>
     <MtouchDebug>true</MtouchDebug>
+    <CodesignKey>iPhone Developer</CodesignKey>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhoneSimulator' ">
     <DebugType>none</DebugType>
@@ -112,6 +113,18 @@
     <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon20.png">
       <Visible>false</Visible>
     </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\icon16.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\icon32.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\icon64.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\icon256.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\icon512.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\icon55.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\icon48.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\icon172.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\icon196.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\icon216.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\icon88.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\icon100.png" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -137,5 +150,9 @@
       <Project>{95EF0524-2664-48B3-AF22-5A469890F4E3}</Project>
       <Name>HIPER</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ITunesArtwork Include="iTunesArtwork" />
+    <ITunesArtwork Include="iTunesArtwork%402x" />
   </ItemGroup>
 </Project>

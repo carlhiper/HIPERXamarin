@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using HIPER.Model;
 using Xamarin.Forms;
+using HIPER.Helpers;
 
 namespace HIPER
 {
@@ -48,9 +49,9 @@ namespace HIPER
                         Name = teamNameEntry.Text,
                         Company = companyEntry.Text,
                         Organisation_number = orgNumberEntry.Text,
-                        Identifier = uniqueIdentifier(10),
+                        Identifier = uniqueIdentifier(Constants.UNIQUE_IDENTIFIER_LENGTH),
                         CreatedDate = DateTime.Now,
-                        Max_number_users = 10,
+                        Max_number_users = Constants.DEFAULT_NUMBER_TEAM_MEMBERS,
                         Administrator_id = App.loggedInUser.Id,
                         Active = true
                     };

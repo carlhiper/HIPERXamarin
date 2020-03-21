@@ -1,13 +1,9 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="HIPER.ScoreboardPage">
-    <ContentPage.ToolbarItems>
-        <ToolbarItem x:Name="addGoal" Text="Add goal" Clicked="addGoal_Clicked">
-        </ToolbarItem>
-    </ContentPage.ToolbarItems>
-    <ContentPage.Content>
-  
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="HIPER.UserDetailPage">
+
         <StackLayout Margin="20">
-            <Label Text="SCOREBOARD" Style="{StaticResource Header}"></Label>
+            <Label x:Name="titleLabel" Text="SCOREBOARD" Style="{StaticResource Header}"></Label>
+            <Button x:Name="addGoalButton" Text="ADD GOAL" Clicked="addGoalButton_Clicked"></Button>
             <Grid Padding="20">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="40" />
@@ -19,15 +15,14 @@
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
                 <Label Grid.Column="0" Text="Active" VerticalOptions="End" HorizontalOptions="End"></Label>
-                <Switch Grid.Column="1" x:Name="showCompletedSwitch" OnColor="LightGray" ThumbColor="{StaticResource hiperPeach}" PropertyChanged="showCompletedSwitch_PropertyChanged" VerticalOptions="End"></Switch> 
+                <Switch Grid.Column="1" x:Name="completedSwitch" PropertyChanged="completedSwitch_PropertyChanged" OnColor="LightGray" ThumbColor="{StaticResource hiperPeach}" VerticalOptions="End"></Switch> 
                 <Label Grid.Column="2" Text="Completed" VerticalOptions="End" HorizontalOptions="Start"></Label>
                
             </Grid>
 
             <CollectionView
-                x:Name="goalCollectionView"
-                SelectionMode="Single"
-                SelectionChanged="goalCollectionView_SelectionChanged">
+                x:Name="userDetailCollectionView"
+                SelectionMode="None">
                 
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
@@ -53,7 +48,6 @@
                                 Grid.Row="0"
                                 Progress="{Binding Progress}"
                                 ProgressColor="{StaticResource hiperPeach}" ></ProgressBar>
-
                             <Label Grid.Row="1"
                                 Grid.Column="0" 
                                 Text="{Binding Description}"
@@ -69,5 +63,4 @@
                 </CollectionView.ItemTemplate>
             </CollectionView> 
         </StackLayout>
-    </ContentPage.Content>
 </ContentPage>

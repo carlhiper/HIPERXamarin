@@ -8,10 +8,20 @@ namespace HIPER
 {
     public partial class AddGoalPage : ContentPage
     {
+        UserModel user;
+
         public AddGoalPage()
         {
             InitializeComponent();
+            this.user = App.loggedInUser;
         }
+
+        public AddGoalPage(UserModel user)
+        {
+            InitializeComponent();
+            this.user = user;
+        }
+
 
         private async void saveGoal_Clicked(System.Object sender, System.EventArgs e)
         {
@@ -31,7 +41,7 @@ namespace HIPER
                         Deadline = DateTime.Parse(goalDeadlineEntry.Date.ToString()),
                         TargetValue = goalTargetEntry.Text,
                         PrivateGoal = privateGoalCheckbox.IsChecked,
-                        UserId = App.loggedInUser.Id,
+                        UserId = user.Id,
                         CurrentValue = "0",
                         CreatedDate = DateTime.Now,
                         ClosedDate = DateTime.MaxValue,
