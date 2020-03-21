@@ -15,7 +15,7 @@ namespace HIPER
 
         private static string uniqueIdentifier(int length)
         {
-            var chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+            var chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
             var stringChars = new char[length];
             var random = new Random();
 
@@ -48,7 +48,7 @@ namespace HIPER
                         Name = teamNameEntry.Text,
                         Company = companyEntry.Text,
                         Organisation_number = orgNumberEntry.Text,
-                        Identifier = uniqueIdentifier(8),
+                        Identifier = uniqueIdentifier(10),
                         CreatedDate = DateTime.Now,
                         Max_number_users = 10,
                         Administrator_id = App.loggedInUser.Id,

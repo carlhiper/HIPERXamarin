@@ -28,11 +28,10 @@ namespace HIPER
 
                 if (team != null)
                 {
-                    if (team.Name == teamNameEntry.Text)
+                    if (team.Name.ToUpper() == teamNameEntry.Text.ToUpper())
                     {
                         App.loggedInUser.TeamId = team.Id;
-                        team.Administrator_id = App.loggedInUser.Id;
-                        await App.client.GetTable<TeamModel>().UpdateAsync(team);
+                        await App.client.GetTable<UserModel>().UpdateAsync(App.loggedInUser);
                         await Navigation.PopAsync();
                     }
                     else

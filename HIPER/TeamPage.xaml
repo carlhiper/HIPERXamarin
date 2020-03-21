@@ -23,7 +23,7 @@
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
                 <Button x:Name="editProfileButton" Clicked="editProfileButton_Clicked" Grid.Column="0" Text="EDIT PROFILE" HorizontalOptions="FillAndExpand"></Button>
-                <Button x:Name="editTeam"  Grid.Column="1" Text="EDIT TEAM" HorizontalOptions="FillAndExpand"></Button>
+                <Button x:Name="leaveTeam"  Clicked="leaveTeam_Clicked" Grid.Column="1" Text="LEAVE TEAM" HorizontalOptions="FillAndExpand"></Button>
                 <Button x:Name="createTeam" Clicked="createTeam_Clicked" Grid.Row="1" Grid.Column="0" Text="CREATE TEAM" HorizontalOptions="FillAndExpand"></Button>
                 <Button x:Name="joinTeam" Clicked="joinTeam_Clicked" Grid.Row="1" Grid.Column="1" Text="JOIN TEAM" HorizontalOptions="FillAndExpand"></Button>
             </Grid>

@@ -7,7 +7,7 @@
         <StackLayout Margin="20">
             <Label  Style="{StaticResource Header}" Text="JOIN TEAM"></Label>
             <Entry x:Name="teamNameEntry" Placeholder="TEAM NAME"></Entry>
-            <Entry x:Name="identifierEntry" Placeholder="IDENTIFIER"></Entry>
+            <Entry x:Name="identifierEntry" Placeholder="IDENTIFIER" ></Entry>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

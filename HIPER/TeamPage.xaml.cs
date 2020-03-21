@@ -9,6 +9,8 @@ namespace HIPER
 {
     public partial class TeamPage : ContentPage
     {
+        TeamModel team;
+   
         public TeamPage()
         {
             InitializeComponent();
@@ -24,7 +26,7 @@ namespace HIPER
                 company.Text = App.loggedInUser.Company;
                 email.Text = App.loggedInUser.Email;
 
-                var team = (await App.client.GetTable<TeamModel>().Where(t => t.Id == App.loggedInUser.TeamId).ToListAsync()).FirstOrDefault();
+                team = (await App.client.GetTable<TeamModel>().Where(t => t.Id == App.loggedInUser.TeamId).ToListAsync()).FirstOrDefault();
                 if (team != null) { 
                     var users = await App.client.GetTable<UserModel>().Where(u => u.TeamId == team.Id).ToListAsync();
                     if (users != null) {
@@ -35,17 +37,17 @@ namespace HIPER
                         teamNameLabel.Text = "TEAM " + team.Name.ToUpper();
                         teamIdentifierLabel.Text = "Identifier: " + team.Identifier;
 
-                        createTeam.IsVisible = false;
-                        joinTeam.IsVisible = false;
-                        editTeam.IsVisible = true;
+                        createTeam.IsEnabled = false;
+                        joinTeam.IsEnabled = false;
+                        leaveTeam.IsEnabled = true;
                       
                     }
                 }
                 else
                 {
-                    createTeam.IsVisible = true;
-                    joinTeam.IsVisible = true;
-                    editTeam.IsVisible = false;
+                    createTeam.IsEnabled = true;
+                    joinTeam.IsEnabled = true;
+                    leaveTeam.IsEnabled = false;
                 }
             }
             catch(NullReferenceException nre)
@@ -74,6 +76,50 @@ namespace HIPER
         void createTeam_Clicked(System.Object sender, System.EventArgs e)
         {
             Navigation.PushAsync(new CreateTeamPage());
+        }
+
+        private async void leaveTeam_Clicked(System.Object sender, System.EventArgs e)
+        {
+            try
+            {
+                if (team.Administrator_id == App.loggedInUser.Id)
+                {
+                    var users = await App.client.GetTable<UserModel>().Where(u => u.TeamId == team.Id).ToListAsync();
+                    if(users.Count > 1)
+                    {
+                        await DisplayAlert("Failure", "You are team administrator and can not leave as long as there are members in your team", "Ok");
+                    }
+                    else
+                    {
+                        // Remove team id from user
+                        App.loggedInUser.TeamId = null;
+                        await App.client.GetTable<UserModel>().UpdateAsync(App.loggedInUser);
+                        // Delete team from database
+                        await App.client.GetTable<TeamModel>().DeleteAsync(team);
+                        await DisplayAlert("Success", "You have left the team", "Ok");
+                    }
+                }
+                else
+                {
+                    bool leaveTeam = await DisplayAlert("Warning", "You are about to leave your team. Are you sure?", "Yes", "No");
+                    if (leaveTeam)
+                    {
+                        App.loggedInUser.TeamId = null;
+
+                        await App.client.GetTable<UserModel>().UpdateAsync(App.loggedInUser);
+                        await DisplayAlert("Success", "You have left the team", "Ok");
+                    }
+                }
+
+                
+
+            }catch(NullReferenceException nre)
+            {
+
+            }catch(Exception ex)
+            {
+
+            }
         }
     }
 }
