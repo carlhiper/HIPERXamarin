@@ -24,9 +24,7 @@
 
             <CollectionView
                 x:Name="feedCollectionView"
-                SelectionMode="None"
-                >
-                
+                SelectionMode="None">
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
                         <Grid Padding="10">

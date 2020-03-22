@@ -43,6 +43,7 @@ namespace HIPER
             List<GoalModel> closedGoals = new List<GoalModel>();
             var goals = await App.client.GetTable<GoalModel>().Where(g => g.UserId == App.loggedInUser.Id).ToListAsync();
 
+            
             if (showCompletedSwitch.IsToggled)
             {
                 foreach (var item in goals)
@@ -60,6 +61,7 @@ namespace HIPER
                 {
                     if (!item.Completed)
                     {
+                      
                         activeGoals.Add(item);
                     }
                 }

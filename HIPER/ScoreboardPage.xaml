@@ -7,7 +7,9 @@
     <ContentPage.Content>
   
         <StackLayout Margin="20">
+
             <Label Text="SCOREBOARD" Style="{StaticResource Header}"></Label>
+                    
             <Grid Padding="20">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="40" />
@@ -31,40 +33,49 @@
                 
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
-                        <Grid Padding="10">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                            </Grid.RowDefinitions>
+                        <ContentView>
+                            <Frame>
+                                <Grid Padding="10">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="Auto" />
+                                    </Grid.RowDefinitions>
 
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="200" />
-                                <ColumnDefinition Width="*" />
-                            </Grid.ColumnDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="200" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
               
-                            <Label Grid.Row="0"
-                                Grid.Column="0" 
-                                Text="{Binding Title}" 
-                                FontAttributes="Bold" />
-                            <ProgressBar
-                                VerticalOptions="Center"
-                                Grid.Column="1"
-                                Grid.Row="0"
-                                Progress="{Binding Progress}"
-                                ProgressColor="{StaticResource hiperPeach}" ></ProgressBar>
-
-                            <Label Grid.Row="1"
-                                Grid.Column="0" 
-                                Text="{Binding Description}"
-                                FontAttributes="Italic" 
-                                VerticalOptions="End" />
-                            <Label Grid.Row="2"
-                                Grid.Column="0" 
-                                Text="{Binding Deadline, StringFormat='Deadline: {0:yyyy-MM-dd}'}"
-                                FontAttributes="Italic" 
-                                VerticalOptions="End" /> 
-                        </Grid>
+                                    <Label Grid.Row="0"
+                                        Grid.Column="0" 
+                                        Text="{Binding Title}" 
+                                        FontAttributes="Bold" />
+                                    <ProgressBar
+                                        VerticalOptions="Center"
+                                        Grid.Column="1"
+                                        Grid.Row="0"
+                                        Progress="{Binding Progress}"
+                                        ProgressColor="{StaticResource hiperPeach}" ></ProgressBar>
+                                    <Image
+                                        x:Name="binGoalImage"
+                                        Grid.Column="1"
+                                        Grid.Row="1"
+                                        >
+                                    </Image>
+                                    <Label Grid.Row="1"
+                                        Grid.Column="0" 
+                                        Text="{Binding Description}"
+                                        FontAttributes="Italic" 
+                                        VerticalOptions="End" />
+                                    <Label Grid.Row="2"
+                                        Grid.Column="0" 
+                                        Text="{Binding Deadline, StringFormat='Deadline: {0:yyyy-MM-dd}'}"
+                                        FontAttributes="Italic" 
+                                        VerticalOptions="End" /> 
+                                </Grid>
+                            </Frame>
+                        </ContentView>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView> 

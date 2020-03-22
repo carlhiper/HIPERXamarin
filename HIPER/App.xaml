@@ -29,6 +29,14 @@
             <Setter Property="Margin" Value="20"></Setter>
             <Setter Property="HorizontalOptions" Value="Center"></Setter>
         </Style>
+        <Style TargetType="Frame">
+            <Setter Property="BorderColor" Value="{StaticResource hiperPeach}"></Setter>
+            <Setter Property="Padding" Value="5"></Setter>
+            <Setter Property="Margin" Value="3"></Setter>
+            <Setter Property="BackgroundColor" Value="GhostWhite"></Setter>
+            <Setter Property="CornerRadius" Value="15"></Setter>
+            <Setter Property="HasShadow" Value="False"></Setter>
+        </Style>
 
     </Application.Resources>
 </Application>

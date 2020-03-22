@@ -19,6 +19,7 @@ namespace HIPER
         public MainPage()
         {
             InitializeComponent();
+            
         }
         protected override void OnAppearing()
         {

@@ -20,9 +20,8 @@ namespace HIPER
         {
             base.OnAppearing();
 
-            try { 
-                firstName.Text = App.loggedInUser.FirstName;
-                lastName.Text = App.loggedInUser.LastName;
+            try {
+                userName.Text = App.loggedInUser.FirstName + " " + App.loggedInUser.LastName;
                 company.Text = App.loggedInUser.Company;
                 email.Text = App.loggedInUser.Email;
 
@@ -30,8 +29,8 @@ namespace HIPER
                 if (team != null) { 
                     var users = await App.client.GetTable<UserModel>().Where(u => u.TeamId == team.Id).ToListAsync();
                     if (users != null) {
-
                         users.RemoveAt(users.FindIndex(a => a.Id == App.loggedInUser.Id));
+         
                         teamCollectionView.ItemsSource = users;
 
                         teamNameLabel.Text = "TEAM " + team.Name.ToUpper();
@@ -40,7 +39,6 @@ namespace HIPER
                         createTeam.IsEnabled = false;
                         joinTeam.IsEnabled = false;
                         leaveTeam.IsEnabled = true;
-                      
                     }
                 }
                 else

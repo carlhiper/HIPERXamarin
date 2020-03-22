@@ -5,14 +5,13 @@
             <Label x:Name="teamNameLabel" Margin="20,20,20,5" Text="TEAM" Style="{StaticResource Header}"></Label>
             <Label x:Name="teamIdentifierLabel" HorizontalOptions="Center"></Label>
             <Label Text="YOU" FontFamily="FUTURA BOOK" TextColor="{StaticResource hiperPeach}" HorizontalOptions="Center" Margin="0,10,0,0"></Label>
-            <Label x:Name="firstName" Text="FIRST NAME"></Label>
-            <Label x:Name="lastName" Text="LAST NAME"></Label>
-            <Label x:Name="company" Text="COMPANY"></Label>
-            <Label x:Name="email" Text="EMAIL"></Label>
-            <!--<Label x:Name="password" Text="PASSWORD"></Label>-->
-
-            <!--<Button x:Name="editProfileButton" Text="EDIT PROFILE" Clicked="editProfileButton_Clicked"></Button>-->
-
+            <Frame>
+                <StackLayout Padding="5">
+                    <Label x:Name="userName" Text="NAME" FontAttributes="Bold"></Label>
+                    <Label x:Name="company" Text="COMPANY"></Label>
+                    <Label x:Name="email" Text="EMAIL"></Label>
+                 </StackLayout>
+            </Frame>
             <Grid x:Name="buttonGrid" Padding="0" Margin="5">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="38" />
@@ -45,7 +44,7 @@
                             </Grid.RowDefinitions>
 
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="200" />
+                                <ColumnDefinition Width="Auto" />
                                 <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
               
@@ -53,17 +52,23 @@
                                 Grid.Column="0" 
                                 Text="{Binding FirstName}" 
                                 FontAttributes="Bold" />
-
-                            <Label Grid.Row="1"
+                            <Label Grid.Row="0"
                                 Grid.Column="0" 
                                 Text="{Binding LastName}"
+                                FontAttributes="Bold" 
+                                VerticalOptions="End"
+                                   HorizontalOptions="End"/>
+                            <Label Grid.Row="1"
+                                Grid.Column="0" 
+                                Text="{Binding Company}"
                                 FontAttributes="Italic" 
                                 VerticalOptions="End" />
                             <Label Grid.Row="2"
                                 Grid.Column="0" 
-                                Text="{Binding Company}"
+                                Text="{Binding Email}"
                                 FontAttributes="Italic" 
-                                VerticalOptions="End" /> 
+                                VerticalOptions="End" />
+                            
                         </Grid>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
