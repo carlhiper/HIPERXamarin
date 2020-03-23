@@ -43,6 +43,8 @@ namespace HIPER.Model
 
         public bool Completed { get; set; }
 
+        public bool Closed { get; set; }
+
         public int Hipes { get; set; }
 
         public GoalModel()

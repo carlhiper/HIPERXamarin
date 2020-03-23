@@ -22,4 +22,8 @@
     <Folder Include="Assets\" />
     <Folder Include="Assets\Images\" />
   </ItemGroup>
+  <ItemGroup>
+    <None Remove="Assets\Images\check-mark.png" />
+    <None Remove="Assets\Images\icon_binary_goal.png" />
+  </ItemGroup>
 </Project>

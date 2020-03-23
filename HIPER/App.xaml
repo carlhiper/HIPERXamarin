@@ -5,6 +5,10 @@
         <Color x:Key="hiperPeach">#ff7562</Color>
         <Color x:Key="hiperWhite">#ffffff</Color>
 
+        <Image x:Key="completed" Source="ok.png"></Image>
+
+        <x:String x:Key="ok">ok.png</x:String>
+
         <Style TargetType="Button">
             <Setter Property="BackgroundColor" Value="{StaticResource hiperPeach}"></Setter>
             <Setter Property="TextColor" Value="{StaticResource hiperWhite}"></Setter>

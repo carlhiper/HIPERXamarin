@@ -3,6 +3,9 @@
             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
             xmlns:local="clr-namespace:HIPER"
             x:Class="HIPER.HomePage">
+    <TabbedPage.ToolbarItems>
+        <ToolbarItem ></ToolbarItem>
+    </TabbedPage.ToolbarItems>
     <local:FeedPage Title="FEED"></local:FeedPage>
     <local:ScoreboardPage Title="SCOREBOARD"></local:ScoreboardPage>
     <local:TeamPage Title="TEAM"></local:TeamPage>

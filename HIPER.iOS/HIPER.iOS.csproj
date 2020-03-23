@@ -155,4 +155,9 @@
     <ITunesArtwork Include="iTunesArtwork" />
     <ITunesArtwork Include="iTunesArtwork%402x" />
   </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\ok.png" />
+    <BundleResource Include="Resources\ok%402x.png" />
+    <BundleResource Include="Resources\ok%403x.png" />
+  </ItemGroup>
 </Project>

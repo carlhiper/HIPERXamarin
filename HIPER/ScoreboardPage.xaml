@@ -16,13 +16,14 @@
                 </Grid.RowDefinitions>
 
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="50" />
+                    <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
                 <Label Grid.Column="0" Text="Active" VerticalOptions="End" HorizontalOptions="End"></Label>
-                <Switch Grid.Column="1" x:Name="showCompletedSwitch" OnColor="LightGray" ThumbColor="{StaticResource hiperPeach}" PropertyChanged="showCompletedSwitch_PropertyChanged" VerticalOptions="End"></Switch> 
-                <Label Grid.Column="2" Text="Completed" VerticalOptions="End" HorizontalOptions="Start"></Label>
+                <Switch Grid.Column="1" x:Name="showClosedSwitch" OnColor="LightGray" ThumbColor="{StaticResource hiperPeach}" PropertyChanged="showClosedSwitch_PropertyChanged" VerticalOptions="End"></Switch> 
+                <Label Grid.Column="2" Text="Closed" VerticalOptions="End" HorizontalOptions="Start"></Label>
                
             </Grid>
 
@@ -58,10 +59,13 @@
                                         Progress="{Binding Progress}"
                                         ProgressColor="{StaticResource hiperPeach}" ></ProgressBar>
                                     <Image
-                                        x:Name="binGoalImage"
+                                        Source="{StaticResource ok}"
+                                        Aspect="AspectFit"
+                                        HorizontalOptions="End"
+                                        HeightRequest="20"
                                         Grid.Column="1"
-                                        Grid.Row="1"
-                                        >
+                                        Grid.Row="2"
+                                        IsVisible="{Binding Completed}">
                                     </Image>
                                     <Label Grid.Row="1"
                                         Grid.Column="0" 
@@ -72,7 +76,7 @@
                                         Grid.Column="0" 
                                         Text="{Binding Deadline, StringFormat='Deadline: {0:yyyy-MM-dd}'}"
                                         FontAttributes="Italic" 
-                                        VerticalOptions="End" /> 
+                                        VerticalOptions="End" />
                                 </Grid>
                             </Frame>
                         </ContentView>

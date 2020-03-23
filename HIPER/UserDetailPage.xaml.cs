@@ -46,7 +46,7 @@ namespace HIPER
                 {
                     foreach (var item in goals)
                     {
-                        if (item.Completed)
+                        if (item.Closed)
                         {
                             closedGoals.Add(item);
                         }
@@ -57,7 +57,7 @@ namespace HIPER
                 {
                     foreach (var item in goals)
                     {
-                        if (!item.Completed)
+                        if (!item.Closed)
                         {
                             activeGoals.Add(item);
                         }

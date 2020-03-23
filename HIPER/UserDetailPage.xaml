@@ -16,7 +16,7 @@
                 </Grid.ColumnDefinitions>
                 <Label Grid.Column="0" Text="Active" VerticalOptions="End" HorizontalOptions="End"></Label>
                 <Switch Grid.Column="1" x:Name="completedSwitch" PropertyChanged="completedSwitch_PropertyChanged" OnColor="LightGray" ThumbColor="{StaticResource hiperPeach}" VerticalOptions="End"></Switch> 
-                <Label Grid.Column="2" Text="Completed" VerticalOptions="End" HorizontalOptions="Start"></Label>
+                <Label Grid.Column="2" Text="Closed" VerticalOptions="End" HorizontalOptions="Start"></Label>
                
             </Grid>
 
@@ -59,7 +59,16 @@
                                         Grid.Column="0" 
                                         Text="{Binding Deadline, StringFormat='Deadline: {0:yyyy-MM-dd}'}"
                                         FontAttributes="Italic" 
-                                        VerticalOptions="End" /> 
+                                        VerticalOptions="End" />
+                                    <Image
+                                        Source="{StaticResource ok}"
+                                        Aspect="AspectFit"
+                                        HorizontalOptions="End"
+                                        HeightRequest="20"
+                                        Grid.Column="1"
+                                        Grid.Row="2"
+                                        IsVisible="{Binding Completed}">
+                                    </Image>
                                 </Grid>
                             </Frame>
                         </ContentView>

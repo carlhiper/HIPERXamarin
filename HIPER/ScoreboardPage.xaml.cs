@@ -11,6 +11,12 @@ namespace HIPER
         public ScoreboardPage()
         {
             InitializeComponent();
+
+          
+            var assembly = typeof(ScoreboardPage);
+            var url = ImageSource.FromResource("HIPER.Assets.Images.check-mark.png", assembly);
+            //completedGoalImage.Source = url;
+         
         }
 
         void addGoal_Clicked(System.Object sender, System.EventArgs e)
@@ -23,6 +29,7 @@ namespace HIPER
             base.OnAppearing();
 
             createGoalsList();
+
         }
         
         void goalCollectionView_SelectionChanged(System.Object sender, Xamarin.Forms.SelectionChangedEventArgs e)
@@ -32,7 +39,7 @@ namespace HIPER
             Navigation.PushAsync(new EditGoalPage(selectedGoal));
         }
 
-        private void showCompletedSwitch_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        private void showClosedSwitch_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
             createGoalsList();
         }
@@ -44,11 +51,11 @@ namespace HIPER
             var goals = await App.client.GetTable<GoalModel>().Where(g => g.UserId == App.loggedInUser.Id).ToListAsync();
 
             
-            if (showCompletedSwitch.IsToggled)
+            if (showClosedSwitch.IsToggled)
             {
                 foreach (var item in goals)
                 {
-                    if (item.Completed)
+                    if (item.Closed)
                     {
                         closedGoals.Add(item);
                     }
@@ -59,10 +66,11 @@ namespace HIPER
             {
                 foreach (var item in goals)
                 {
-                    if (!item.Completed)
+                    if (!item.Closed)
                     {
                       
                         activeGoals.Add(item);
+                        
                     }
                 }
                 goalCollectionView.ItemsSource = activeGoals;
