@@ -9,11 +9,9 @@
             <Label Style="{StaticResource Header}" Text="ADD GOAL"></Label>
             <Entry x:Name="goalNameEntry" Placeholder="TITLE" MaxLength="20"></Entry>
             <Entry x:Name="goalDescriptionEntry" Placeholder="DESCRIPTION" MaxLength="200"></Entry>
-            <Entry x:Name="goalTargetEntry" Placeholder="NUMERICAL TARGET"></Entry>
             
             <Grid>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="40" />
                     <RowDefinition Height="40" />
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
@@ -22,10 +20,64 @@
                 </Grid.ColumnDefinitions>
                 <Label VerticalOptions="Center" Grid.Row="0" Grid.Column="0" Text="PRIVATE GOAL"/>
                 <CheckBox VerticalOptions="Center" HorizontalOptions="Center" Grid.Row="0" Grid.Column="1" x:Name="privateGoalCheckbox" Color="{StaticResource hiperPeach}"></CheckBox>
-                <Label VerticalOptions="Center" Grid.Row="1" Grid.Column="0" Text="DEADLINE"></Label>
-                <DatePicker VerticalOptions="Center" Grid.Row="1" Grid.Column="1" x:Name="goalDeadlineEntry"></DatePicker>
+            </Grid>
+            <Label Text="TARGET" HorizontalOptions="Center" Margin="0,20,0,10" TextColor="{StaticResource hiperPeach}"></Label>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="30" />
+                    <RowDefinition Height="30" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="20" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="150" />
+                </Grid.ColumnDefinitions>  
+                <RadioButton GroupName="target" x:Name="targetRB1" Grid.Row="0" PropertyChanged="targetRB1_PropertyChanged"></RadioButton>
+                <Label VerticalOptions="Center" HorizontalOptions="Start" Grid.Row="0" Grid.Column="1" Text="AIM HIGH"></Label>
+                <Entry x:Name="goalTargetEntry" Grid.Row="0" Grid.Column="2" Placeholder="TARGET"></Entry>
+                <RadioButton GroupName="target" x:Name="targetRB2" Grid.Row="1" PropertyChanged="targetRB2_PropertyChanged"></RadioButton>
+                <Label VerticalOptions="Center" HorizontalOptions="Start" Grid.Row="1" Grid.Column="1" Text="STEP BY STEP"></Label>
+                <Picker Grid.Row="1" Grid.Column="2" x:Name="stepbystepPicker"></Picker>
+                
 
             </Grid>
+
+            <Label Text="DEADLINE" HorizontalOptions="Center" Margin="0,20,0,10" TextColor="{StaticResource hiperPeach}"></Label>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="40" />
+                    <RowDefinition Height="40" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="20" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="150" />
+                </Grid.ColumnDefinitions>  
+                <RadioButton GroupName="deadline" x:Name="repeatableRB1" Grid.Row="0" PropertyChanged="repeatableRB1_PropertyChanged"></RadioButton>
+                <Label VerticalOptions="Center" HorizontalOptions="Start" Grid.Row="0" Grid.Column="1" Text="SINGLE"></Label>
+                <DatePicker VerticalOptions="Center" Grid.Row="0" Grid.Column="2" x:Name="goalDeadlineEntry"></DatePicker>
+                <RadioButton GroupName="deadline" x:Name="repeatableRB2" Grid.Row="1" PropertyChanged="repeatableRB2_PropertyChanged"></RadioButton>
+                <Label VerticalOptions="Center" HorizontalOptions="Start" Grid.Row="1" Grid.Column="1" Text="RECURRENT"></Label>
+            </Grid>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="30" />
+                    <RowDefinition Height="30" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="20" />
+                    <ColumnDefinition Width="20" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="150" />
+                </Grid.ColumnDefinitions>  
+                <RadioButton GroupName="repeat" x:Name="repeatableRB21" Grid.Row="0" Grid.Column="1" PropertyChanged="repeatableRB21_PropertyChanged"></RadioButton>
+                <Label VerticalOptions="Center" HorizontalOptions="Start" Grid.Row="0" Grid.Column="2" Text="WEEKLY"></Label>
+                <Picker x:Name="weekdayPicker"  Grid.Row="0" Grid.Column="3"></Picker>
+                <RadioButton GroupName="repeat" x:Name="repeatableRB22" Grid.Row="1" Grid.Column="1" PropertyChanged="repeatableRB22_PropertyChanged"></RadioButton>
+                <Label VerticalOptions="Center" HorizontalOptions="Start" Grid.Row="1" Grid.Column="2" Text="MONTHLY"></Label>
+                <Picker x:Name="dayOfMonthPicker" Grid.Row="1" Grid.Column="3"></Picker>
+            </Grid>
+
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

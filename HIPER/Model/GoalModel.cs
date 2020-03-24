@@ -47,6 +47,42 @@ namespace HIPER.Model
 
         public int Hipes { get; set; }
 
+        public int TargetType { get; set; }
+        // 0-Aim high, 1-step by step
+
+        public int SteByStepAmount { get; set; }
+
+        public int RepeatType { get; set; }
+        // 0-Single, 1-Recurrent
+
+        public int WeeklyOrMonthly { get; set; }
+        // 0-Weekly, 1-Monthly
+
+        public int RepeatWeekly { get; set; }
+        // 0-Monday ....
+
+        public int RepeatMonthly { get; set; }
+        // 1,2,3,4
+
+        public bool Checkbox1 { get; set; }
+        public bool Checkbox2 { get; set; }
+        public bool Checkbox3 { get; set; }
+        public bool Checkbox4 { get; set; }
+        public bool Checkbox5 { get; set; }
+        public bool Checkbox6 { get; set; }
+        public bool Checkbox7 { get; set; }
+        public bool Checkbox8 { get; set; }
+        public bool Checkbox9 { get; set; }
+        public string Checkbox1Comment { get; set; }
+        public string Checkbox2Comment { get; set; }
+        public string Checkbox3Comment { get; set; }
+        public string Checkbox4Comment { get; set; }
+        public string Checkbox5Comment { get; set; }
+        public string Checkbox6Comment { get; set; }
+        public string Checkbox7Comment { get; set; }
+        public string Checkbox8Comment { get; set; }
+        public string Checkbox9Comment { get; set; }
+
         public GoalModel()
         {
 

@@ -42,5 +42,9 @@
             <Setter Property="HasShadow" Value="False"></Setter>
         </Style>
 
+        <Style TargetType="RadioButton">
+            <Setter Property="TextColor" Value="{StaticResource hiperPeach}"></Setter>
+
+        </Style>
     </Application.Resources>
 </Application>
