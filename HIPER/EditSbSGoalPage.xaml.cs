@@ -30,14 +30,16 @@ namespace HIPER
             goalDeadlineEntry.Date = selectedGoal.Deadline;
             privateGoalCheckbox.IsChecked = selectedGoal.PrivateGoal;
 
-            goalNameEntry.IsEnabled = !selectedGoal.Completed;
-            goalDescriptionEntry.IsEnabled = !selectedGoal.Completed;
-            goalDeadlineEntry.IsEnabled = !selectedGoal.Completed;
-            privateGoalCheckbox.IsEnabled = !selectedGoal.Completed;
 
-            deleteGoal.IsVisible = !selectedGoal.Completed;
-            updateGoal.IsVisible = !selectedGoal.Completed;
-            completeGoal.IsVisible = !selectedGoal.Completed;
+            gridTitle.IsEnabled = !(selectedGoal.Completed || selectedGoal.Closed);
+            gridSteps.IsEnabled = !(selectedGoal.Completed || selectedGoal.Closed);
+            gridSingle.IsEnabled = !(selectedGoal.Completed || selectedGoal.Closed);
+            gridSingle.IsEnabled = !(selectedGoal.Completed || selectedGoal.Closed);
+
+
+            deleteGoal.IsVisible = !(selectedGoal.Completed || selectedGoal.Closed);
+            updateGoal.IsVisible = !(selectedGoal.Completed || selectedGoal.Closed);
+            completeGoal.IsVisible = !(selectedGoal.Completed || selectedGoal.Closed);
 
             repeatableRB1.IsChecked = (selectedGoal.TargetType == 0) ? true : false;
             repeatableRB2.IsChecked = (selectedGoal.TargetType == 1) ? true : false;
@@ -122,7 +124,6 @@ namespace HIPER
 
             bool isGoalNameEmpty = string.IsNullOrEmpty(goalNameEntry.Text);
             bool isGoalDescriptionEmpty = string.IsNullOrEmpty(goalDescriptionEntry.Text);
-
             bool isWeeklyCheckedAndEntryFilled =  repeatableRB2.IsChecked && repeatableRB21.IsChecked && (weekdayPicker.SelectedIndex < 0);
             bool isMonthlyCheckedAndEntryFilled = repeatableRB2.IsChecked && repeatableRB22.IsChecked && (dayOfMonthPicker.SelectedIndex < 0);
 
@@ -142,7 +143,7 @@ namespace HIPER
                 {
                     selectedGoal.Deadline = DateTime.Parse(goalDeadlineEntry.Date.ToString());
                 }
-
+                selectedGoal.LastUpdatedDate = DateTime.Now;
 
                 selectedGoal.Title = goalNameEntry.Text;
                 selectedGoal.Description = goalDescriptionEntry.Text;
@@ -185,17 +186,24 @@ namespace HIPER
 
         private async void deleteGoal_Clicked(System.Object sender, System.EventArgs e)
         {
-            await App.client.GetTable<GoalModel>().DeleteAsync(selectedGoal);
-            await DisplayAlert("Success", "Goal deleted", "Ok");
-            await Navigation.PopAsync();
-
+            bool delete = await DisplayAlert("Wait", "Are you sure you want to delete this goal?", "Yes", "No");
+            if (delete)
+            {
+                await App.client.GetTable<GoalModel>().DeleteAsync(selectedGoal);
+                await DisplayAlert("Sure", "Lets delete it", "Ok");
+                await Navigation.PopAsync();
+            }
         }
 
         private async void completeGoal_Clicked(System.Object sender, System.EventArgs e)
         {
-
+            selectedGoal.LastUpdatedDate = DateTime.Now;
             selectedGoal.Completed = true;
-            selectedGoal.Closed = true;
+            if (selectedGoal.RepeatType == 0)
+            {
+                selectedGoal.Closed = true;
+            }
+            selectedGoal.ClosedDate = DateTime.Now.Date;
 
             await App.client.GetTable<GoalModel>().UpdateAsync(selectedGoal);
             await DisplayAlert("Congratulations", "Goal goal completed", "Ok");
@@ -212,6 +220,8 @@ namespace HIPER
                 dayOfMonthPicker.IsEnabled = false;
                 weekdayPicker.IsEnabled = false;
                 goalDeadlineEntry.IsEnabled = true;
+                dayOfMonthPicker.SelectedIndex = -1;
+                weekdayPicker.SelectedIndex = -1;
             }
             else if (repeatableRB2.IsChecked)
             {
@@ -222,11 +232,13 @@ namespace HIPER
                 {
                     weekdayPicker.IsEnabled = true;
                     dayOfMonthPicker.IsEnabled = false;
+                    dayOfMonthPicker.SelectedIndex = -1;
                 }
                 else
                 {
                     weekdayPicker.IsEnabled = false;
                     dayOfMonthPicker.IsEnabled = true;
+                    weekdayPicker.SelectedIndex = -1;
                 }
             }
         }

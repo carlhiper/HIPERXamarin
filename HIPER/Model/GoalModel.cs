@@ -24,6 +24,8 @@ namespace HIPER.Model
 
         public DateTime ClosedDate { get; set; }
 
+        public DateTime LastUpdatedDate { get; set; }
+
         public string TargetValue { get; set; }
 
         public string CurrentValue { get; set; }

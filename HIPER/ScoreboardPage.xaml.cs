@@ -23,8 +23,10 @@ namespace HIPER
         {
             base.OnAppearing();
 
-            createGoalsList();
+            createGoalsList(filter.SelectedIndex);
             UpdateScoreboard.checkDeadlines();
+
+            filter.ItemsSource = App.filterOptions;
         }
         
         void goalCollectionView_SelectionChanged(System.Object sender, Xamarin.Forms.SelectionChangedEventArgs e)
@@ -42,21 +44,39 @@ namespace HIPER
 
         private void showClosedSwitch_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
-            createGoalsList();
+            createGoalsList(filter.SelectedIndex);
         }
 
-        private async void createGoalsList()
+        private async void createGoalsList(int filter)
         {
             List<GoalModel> activeGoals = new List<GoalModel>();
             List<GoalModel> closedGoals = new List<GoalModel>();
             var goals = await App.client.GetTable<GoalModel>().Where(g => g.UserId == App.loggedInUser.Id).ToListAsync();
 
-            
+            //Sorting
+            if(filter == 0)
+            {
+                goals.Sort((x, y) => x.Title.CompareTo(y.Title));
+            }
+            else if (filter == 1)
+            {
+                goals.Sort((x, y) => x.LastUpdatedDate.CompareTo(y.LastUpdatedDate));
+            }
+            else if (filter == 2)
+            {
+                goals.Sort((x, y) => x.Deadline.CompareTo(y.Deadline));
+            }
+            else
+            {
+
+            }
+
+
             if (showClosedSwitch.IsToggled)
             {
                 foreach (var item in goals)
                 {
-                    if (item.Closed)
+                    if (item.Closed || item.Completed)
                     {
                         closedGoals.Add(item);
                     }
@@ -67,15 +87,18 @@ namespace HIPER
             {
                 foreach (var item in goals)
                 {
-                    if (!item.Closed)
+                    if (!item.Closed && !item.Completed)
                     {
-                      
                         activeGoals.Add(item);
-                        
                     }
                 }
                 goalCollectionView.ItemsSource = activeGoals;
             }
+        }
+
+        void filter_SelectedIndexChanged(System.Object sender, System.EventArgs e)
+        {
+            createGoalsList(filter.SelectedIndex);
         }
     }
 }

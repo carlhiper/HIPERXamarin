@@ -19,12 +19,12 @@
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="50" />
                     <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="100" />
+                    <ColumnDefinition Width="120" />
                 </Grid.ColumnDefinitions>
                 <Label Grid.Column="0" Text="Active" VerticalOptions="End" HorizontalOptions="End"></Label>
                 <Switch Grid.Column="1" x:Name="showClosedSwitch" OnColor="LightGray" ThumbColor="{StaticResource hiperPeach}" PropertyChanged="showClosedSwitch_PropertyChanged" VerticalOptions="End"></Switch> 
                 <Label Grid.Column="2" Text="Closed" VerticalOptions="End" HorizontalOptions="Start"></Label>
-                <Picker Grid.Column="3" VerticalOptions="End" HorizontalOptions="FillAndExpand" Title="Filter"></Picker>
+                <Picker Grid.Column="3" x:Name="filter" VerticalOptions="End" HorizontalOptions="FillAndExpand" Title="Filter" SelectedIndexChanged="filter_SelectedIndexChanged"></Picker>
             </Grid>
 
             <CollectionView

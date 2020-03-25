@@ -44,8 +44,8 @@ namespace HIPER
                 bool isGoalDescriptionEmpty = string.IsNullOrEmpty(goalDescriptionEntry.Text);
                 bool isTargetCheckedAndEntryFilled = targetRB1.IsChecked && string.IsNullOrEmpty(goalTargetEntry.Text);
                 bool isStepbyStepCheckedAndEntryFilled = targetRB2.IsChecked && (stepbystepPicker.SelectedIndex < 0);
-                bool isWeeklyCheckedAndEntryFilled = repeatableRB21.IsChecked && (weekdayPicker.SelectedIndex < 0);
-                bool isMonthlyCheckedAndEntryFilled = repeatableRB22.IsChecked && (dayOfMonthPicker.SelectedIndex < 0);
+                bool isWeeklyCheckedAndEntryFilled = repeatableRB2.IsChecked && repeatableRB21.IsChecked && (weekdayPicker.SelectedIndex < 0);
+                bool isMonthlyCheckedAndEntryFilled = repeatableRB2.IsChecked && repeatableRB22.IsChecked && (dayOfMonthPicker.SelectedIndex < 0);
 
                 if (isGoalNameEmpty || isGoalDescriptionEmpty || isTargetCheckedAndEntryFilled || isStepbyStepCheckedAndEntryFilled || isWeeklyCheckedAndEntryFilled || isMonthlyCheckedAndEntryFilled)
                 {
@@ -53,7 +53,7 @@ namespace HIPER
                 }
                 else
                 {
-  
+                    
                     var startDate = DateHandling.GetStartDate(repeatableRB2.IsChecked && repeatableRB21.IsChecked, repeatableRB2.IsChecked && repeatableRB22.IsChecked, weekdayPicker.SelectedIndex, dayOfMonthPicker.SelectedIndex);
                     DateTime deadLineDate;
                     if (repeatableRB2.IsChecked)
@@ -64,8 +64,8 @@ namespace HIPER
                     {
                         deadLineDate = DateTime.Parse(goalDeadlineEntry.Date.ToString());
                     }
-              
-          
+
+
 
 
                     GoalModel goal = new GoalModel() {
@@ -78,6 +78,7 @@ namespace HIPER
                         CurrentValue = "0",
                         ClosedDate = DateTime.MaxValue,
                         CreatedDate = startDate,
+                        LastUpdatedDate = DateTime.Now,
                         Progress = 0,
                         TargetType = targetRB1.IsChecked? 0 : 1,
                         RepeatType = repeatableRB1.IsChecked? 0 : 1,
@@ -112,6 +113,8 @@ namespace HIPER
                 dayOfMonthPicker.IsEnabled = false;
                 weekdayPicker.IsEnabled = false;
                 goalDeadlineEntry.IsEnabled = true;
+                dayOfMonthPicker.SelectedIndex = -1;
+                weekdayPicker.SelectedIndex = -1;
             }
             else if (repeatableRB2.IsChecked)
             {
@@ -122,11 +125,13 @@ namespace HIPER
                 {
                     weekdayPicker.IsEnabled = true;
                     dayOfMonthPicker.IsEnabled = false;
-                 }
+                    dayOfMonthPicker.SelectedIndex = -1;
+                }
                 else
                 {
                     weekdayPicker.IsEnabled = false;
                     dayOfMonthPicker.IsEnabled = true;
+                    weekdayPicker.SelectedIndex = -1;
                 }
             }
         }
@@ -157,11 +162,13 @@ namespace HIPER
             {
                 goalTargetEntry.IsEnabled = true;
                 stepbystepPicker.IsEnabled = false;
+                stepbystepPicker.SelectedIndex = -1;
             }
             else
             {
                 goalTargetEntry.IsEnabled = false;
                 stepbystepPicker.IsEnabled = true;
+                goalTargetEntry.Text = "";
             }
 
         }

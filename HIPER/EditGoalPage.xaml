@@ -11,7 +11,7 @@
 
         <Label x:Name="headerText" Text="EDIT GOAL" Style="{StaticResource Header}"></Label>
             
-        <Grid>
+        <Grid x:Name="gridTitle">
             <Grid.RowDefinitions>
                 <RowDefinition Height="40" />
                 <RowDefinition Height="40" />
@@ -30,7 +30,7 @@
         </Grid>
         <Label Text="AIM HIGH" HorizontalOptions="Center" TextColor="{StaticResource hiperPeach}" Margin="0,20,0,5"></Label>
  
-        <Grid>
+        <Grid x:Name="gridAimHigh">
             <Grid.RowDefinitions>
                 <RowDefinition Height="40" />
                 <RowDefinition Height="40" />
@@ -47,7 +47,7 @@
         </Grid>
 
         <Label Text="DEADLINE" HorizontalOptions="Center" TextColor="{StaticResource hiperPeach}" Margin="0,20,0,5"></Label>
-        <Grid>
+        <Grid x:Name="gridSingle">
             <Grid.RowDefinitions>
                 <RowDefinition Height="40" />
                 <RowDefinition Height="40" />
@@ -61,9 +61,9 @@
             <Label VerticalOptions="Center" HorizontalOptions="Start" Grid.Row="0" Grid.Column="1" Text="SINGLE"></Label>
             <DatePicker VerticalOptions="Center" Grid.Row="0" Grid.Column="2" x:Name="goalDeadlineEntry"></DatePicker>
             <RadioButton GroupName="deadline" x:Name="repeatableRB2" Grid.Row="1" PropertyChanged="repeatableRB2_PropertyChanged"></RadioButton>
-            <Label VerticalOptions="Center" HorizontalOptions="Start" Grid.Row="1" Grid.Column="1" Text="RECURRENT"></Label>
+            <Label VerticalOptions="Center" HorizontalOptions="Start" Grid.Row="1" Grid.Column="1" Text="REPEATING"></Label>
         </Grid>
-        <Grid>
+        <Grid x:Name="gridWeekly">
             <Grid.RowDefinitions>
                 <RowDefinition Height="30" />
                 <RowDefinition Height="30" />

@@ -38,28 +38,53 @@ namespace HIPER.Controllers
                 {
                     if ((goal.RepeatType == 1) && !goal.Closed)
                     {
-                        if (goal.WeeklyOrMonthly == 0)  //Weekly
+
+                        if (today > goal.Deadline)
                         {
-                            //var repeatday =
-                            var cDate = goal.CreatedDate.AddDays(7);
-                            if (today > cDate)
+                            goal.Closed = true;
+                            
+                            await App.client.GetTable<GoalModel>().UpdateAsync(goal);
+
+                            GoalModel newGoal = new GoalModel()
                             {
+                                Title = goal.Title,
+                                Description = goal.Description,
+                                Deadline = goal.Deadline.AddDays(7),
+                                TargetValue = goal.TargetValue,
+                                PrivateGoal = goal.PrivateGoal,
+                                UserId = App.loggedInUser.Id,
+                                CurrentValue = "0",
+                                ClosedDate = goal.Deadline,
+                                CreatedDate = goal.Deadline.AddDays(1),
+                                Progress = 0,
+                                TargetType = goal.TargetType,
+                                RepeatType = goal.RepeatType,
+                                WeeklyOrMonthly = goal.WeeklyOrMonthly,
+                                RepeatWeekly = goal.RepeatWeekly,
+                                RepeatMonthly = goal.RepeatMonthly,
+                                SteByStepAmount = goal.SteByStepAmount,
+                                Checkbox1Comment = goal.Checkbox1Comment,
+                                Checkbox2Comment = goal.Checkbox2Comment,
+                                Checkbox3Comment = goal.Checkbox3Comment,
+                                Checkbox4Comment = goal.Checkbox4Comment,
+                                Checkbox5Comment = goal.Checkbox5Comment,
+                                Checkbox6Comment = goal.Checkbox6Comment,
+                                Checkbox7Comment = goal.Checkbox7Comment,
+                                Checkbox8Comment = goal.Checkbox8Comment,
+                                Checkbox9Comment = goal.Checkbox9Comment,
+                            };
 
-
+                            if (goal.WeeklyOrMonthly == 0)  //Weekly
+                            {
+                                newGoal.Deadline = goal.Deadline.AddDays(7);
+                            }
+                            else
+                            {                          //Monthly
+                                newGoal.Deadline = goal.Deadline.AddDays(DateTime.DaysInMonth(DateTime.Today.Year, DateTime.Today.Month));
                             }
 
-                            //goal.RepeatWeekly;
-                            //goal.CreatedDate;
+                            await App.client.GetTable<GoalModel>().InsertAsync(newGoal);
                         }
-                        else
-                        {                          //Monthly
-
-
-
-                        }
-
-                        goal.Closed = true;
-                        await App.client.GetTable<GoalModel>().UpdateAsync(goal);
                     }
                 }
             }
