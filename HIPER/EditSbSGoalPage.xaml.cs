@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using HIPER.Helpers;
 using HIPER.Model;
 using Xamarin.Forms;
 
@@ -98,7 +99,7 @@ namespace HIPER
 
             if (selectedGoal.Completed)
             {
-                headerText.Text = "COMPLETED GOAL";
+                headerText.Text = "CLOSED GOAL";
             }
             else
             {
@@ -118,42 +119,67 @@ namespace HIPER
 
         private async void updateGoal_Clicked(System.Object sender, System.EventArgs e)
         {
-            selectedGoal.Title = goalNameEntry.Text;
-            selectedGoal.Description = goalDescriptionEntry.Text;
-            selectedGoal.PrivateGoal = privateGoalCheckbox.IsChecked;
-            selectedGoal.Deadline = DateTime.Parse(goalDeadlineEntry.Date.ToString());
-            selectedGoal.TargetValue = (selectedGoal.SteByStepAmount + 1).ToString();
-            selectedGoal.CurrentValue = ((step1CB.IsChecked? 1 : 0) + (step2CB.IsChecked ? 1 : 0) + (step3CB.IsChecked ? 1 : 0) + (step4CB.IsChecked ? 1 : 0) +(step5CB.IsChecked ? 1 : 0) + (step6CB.IsChecked ? 1 : 0) +
-                                        (step7CB.IsChecked ? 1 : 0) + (step8CB.IsChecked ? 1 : 0) + (step8CB.IsChecked ? 1 : 0)).ToString() ;
 
-            selectedGoal.RepeatWeekly = weekdayPicker.SelectedIndex;
-            selectedGoal.RepeatMonthly = dayOfMonthPicker.SelectedIndex;
-            selectedGoal.SteByStepAmount = stepbystepPicker.SelectedIndex;
-            selectedGoal.RepeatType = repeatableRB1.IsChecked ? 0 : 1;
-            selectedGoal.WeeklyOrMonthly = repeatableRB21.IsChecked ? 0 : 1; 
+            bool isGoalNameEmpty = string.IsNullOrEmpty(goalNameEntry.Text);
+            bool isGoalDescriptionEmpty = string.IsNullOrEmpty(goalDescriptionEntry.Text);
 
-            selectedGoal.Checkbox1 = step1CB.IsChecked;
-            selectedGoal.Checkbox1Comment = step1entry.Text;
-            selectedGoal.Checkbox2 = step2CB.IsChecked;
-            selectedGoal.Checkbox2Comment = step2entry.Text;
-            selectedGoal.Checkbox3 = step3CB.IsChecked;
-            selectedGoal.Checkbox3Comment = step3entry.Text;
-            selectedGoal.Checkbox4 = step4CB.IsChecked;
-            selectedGoal.Checkbox4Comment = step4entry.Text;
-            selectedGoal.Checkbox5 = step5CB.IsChecked;
-            selectedGoal.Checkbox5Comment = step5entry.Text;
-            selectedGoal.Checkbox6 = step6CB.IsChecked;
-            selectedGoal.Checkbox6Comment = step6entry.Text;
-            selectedGoal.Checkbox7 = step7CB.IsChecked;
-            selectedGoal.Checkbox7Comment = step7entry.Text;
-            selectedGoal.Checkbox8 = step8CB.IsChecked;
-            selectedGoal.Checkbox8Comment = step8entry.Text;
-            selectedGoal.Checkbox9 = step9CB.IsChecked;
-            selectedGoal.Checkbox9Comment = step9entry.Text;
-            
-            await App.client.GetTable<GoalModel>().UpdateAsync(selectedGoal);
-            await DisplayAlert("Success", "Goal updated", "Ok");
-            await Navigation.PopAsync();
+            bool isWeeklyCheckedAndEntryFilled =  repeatableRB2.IsChecked && repeatableRB21.IsChecked && (weekdayPicker.SelectedIndex < 0);
+            bool isMonthlyCheckedAndEntryFilled = repeatableRB2.IsChecked && repeatableRB22.IsChecked && (dayOfMonthPicker.SelectedIndex < 0);
+
+            if (isGoalNameEmpty || isGoalDescriptionEmpty || isWeeklyCheckedAndEntryFilled || isMonthlyCheckedAndEntryFilled)
+            {
+                await DisplayAlert("Error", "All field needs to be entered", "Ok");
+            }
+            else
+            {
+                if (repeatableRB2.IsChecked)
+                {
+                    var startDate = DateHandling.GetStartDate(repeatableRB2.IsChecked && repeatableRB21.IsChecked, repeatableRB2.IsChecked && repeatableRB22.IsChecked, weekdayPicker.SelectedIndex, dayOfMonthPicker.SelectedIndex);
+                    selectedGoal.CreatedDate = startDate;
+                    selectedGoal.Deadline = DateHandling.GetDeadlineDateForRepeatingGoals(repeatableRB2.IsChecked && repeatableRB21.IsChecked, repeatableRB2.IsChecked && repeatableRB22.IsChecked, startDate);
+                }
+                else
+                {
+                    selectedGoal.Deadline = DateTime.Parse(goalDeadlineEntry.Date.ToString());
+                }
+
+
+                selectedGoal.Title = goalNameEntry.Text;
+                selectedGoal.Description = goalDescriptionEntry.Text;
+                selectedGoal.PrivateGoal = privateGoalCheckbox.IsChecked;
+                selectedGoal.TargetValue = (selectedGoal.SteByStepAmount + 1).ToString();
+                selectedGoal.CurrentValue = ((step1CB.IsChecked ? 1 : 0) + (step2CB.IsChecked ? 1 : 0) + (step3CB.IsChecked ? 1 : 0) + (step4CB.IsChecked ? 1 : 0) + (step5CB.IsChecked ? 1 : 0) + (step6CB.IsChecked ? 1 : 0) +
+                                            (step7CB.IsChecked ? 1 : 0) + (step8CB.IsChecked ? 1 : 0) + (step8CB.IsChecked ? 1 : 0)).ToString();
+
+                selectedGoal.RepeatWeekly = weekdayPicker.SelectedIndex;
+                selectedGoal.RepeatMonthly = dayOfMonthPicker.SelectedIndex;
+                selectedGoal.SteByStepAmount = stepbystepPicker.SelectedIndex;
+                selectedGoal.RepeatType = repeatableRB1.IsChecked ? 0 : 1;
+                selectedGoal.WeeklyOrMonthly = repeatableRB21.IsChecked ? 0 : 1;
+
+                selectedGoal.Checkbox1 = step1CB.IsChecked;
+                selectedGoal.Checkbox1Comment = step1entry.Text;
+                selectedGoal.Checkbox2 = step2CB.IsChecked;
+                selectedGoal.Checkbox2Comment = step2entry.Text;
+                selectedGoal.Checkbox3 = step3CB.IsChecked;
+                selectedGoal.Checkbox3Comment = step3entry.Text;
+                selectedGoal.Checkbox4 = step4CB.IsChecked;
+                selectedGoal.Checkbox4Comment = step4entry.Text;
+                selectedGoal.Checkbox5 = step5CB.IsChecked;
+                selectedGoal.Checkbox5Comment = step5entry.Text;
+                selectedGoal.Checkbox6 = step6CB.IsChecked;
+                selectedGoal.Checkbox6Comment = step6entry.Text;
+                selectedGoal.Checkbox7 = step7CB.IsChecked;
+                selectedGoal.Checkbox7Comment = step7entry.Text;
+                selectedGoal.Checkbox8 = step8CB.IsChecked;
+                selectedGoal.Checkbox8Comment = step8entry.Text;
+                selectedGoal.Checkbox9 = step9CB.IsChecked;
+                selectedGoal.Checkbox9Comment = step9entry.Text;
+
+                await App.client.GetTable<GoalModel>().UpdateAsync(selectedGoal);
+                await DisplayAlert("Success", "Goal updated", "Ok");
+                await Navigation.PopAsync();
+            }
 
         }
 

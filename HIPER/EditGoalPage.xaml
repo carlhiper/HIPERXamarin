@@ -41,9 +41,9 @@
             </Grid.ColumnDefinitions>
   
             <Label VerticalOptions="Center" Grid.Row="0" Grid.Column="0" Text="TARGET"/>
-            <Entry x:Name="goalTargetEntry" Grid.Row="0" Grid.Column="1" Placeholder="TARGET"></Entry>
+            <Entry x:Name="goalTargetEntry" Grid.Row="0" Grid.Column="1" Placeholder="TARGET" TextChanged="goalTargetEntry_TextChanged"></Entry>
             <Label VerticalOptions="Center" Grid.Row="1" Grid.Column="0" Text="CURRENT"/>
-            <Entry x:Name="goalCurrentEntry" Grid.Row="1" Grid.Column="1" Placeholder="CURRENT VALUE"></Entry>
+            <Entry x:Name="goalCurrentEntry" Grid.Row="1" Grid.Column="1" Placeholder="CURRENT VALUE" TextChanged="goalCurrentEntry_TextChanged" ></Entry>
         </Grid>
 
         <Label Text="DEADLINE" HorizontalOptions="Center" TextColor="{StaticResource hiperPeach}" Margin="0,20,0,5"></Label>

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using HIPER.Model;
 using SQLite;
 using Xamarin.Forms;
+using HIPER.Controllers;
 
 namespace HIPER
 {
@@ -23,6 +24,7 @@ namespace HIPER
             base.OnAppearing();
 
             createGoalsList();
+            UpdateScoreboard.checkDeadlines();
         }
         
         void goalCollectionView_SelectionChanged(System.Object sender, Xamarin.Forms.SelectionChangedEventArgs e)

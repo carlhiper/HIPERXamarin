@@ -8,7 +8,6 @@ namespace HIPER
 {
     public partial class EditUserPage : ContentPage
     {
-        UserModel selectedUser;
 
         public EditUserPage()
         {
@@ -36,12 +35,6 @@ namespace HIPER
                 App.loggedInUser.Company = companyEntry.Text;
                 App.loggedInUser.Email = emailEntry.Text;
                 App.loggedInUser.UserPassword = passwordEntry.Text;
-
-              /*  selectedUser.FirstName = firstNameEntry.Text;
-                selectedUser.LastName = lastNameEntry.Text;
-                selectedUser.Company = companyEntry.Text;
-                selectedUser.Email = emailEntry.Text;
-                selectedUser.UserPassword = passwordEntry.Text;*/
 
                 await App.client.GetTable<UserModel>().UpdateAsync(App.loggedInUser);
                 await DisplayAlert("Success", "Profile updated", "Ok");

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using HIPER.Helpers;
 using HIPER.Model;
 using SQLite;
 using Xamarin.Forms;
@@ -45,7 +46,7 @@ namespace HIPER
           
             if (selectedGoal.Completed)
             {
-                headerText.Text = "COMPLETED GOAL";
+                headerText.Text = "CLOSED GOAL";
             }
             else
             {
@@ -62,21 +63,44 @@ namespace HIPER
 
         private async void updateGoal_Clicked(System.Object sender, System.EventArgs e)
         {
-            selectedGoal.Title = goalNameEntry.Text;
-            selectedGoal.Description = goalDescriptionEntry.Text;
-            selectedGoal.Deadline = DateTime.Parse(goalDeadlineEntry.Date.ToString());
-            selectedGoal.TargetValue = goalTargetEntry.Text;
-            selectedGoal.PrivateGoal = privateGoalCheckbox.IsChecked;
-            selectedGoal.CurrentValue = goalCurrentEntry.Text;
 
-            selectedGoal.RepeatWeekly = weekdayPicker.SelectedIndex;
-            selectedGoal.RepeatMonthly = dayOfMonthPicker.SelectedIndex;
-            selectedGoal.RepeatType = repeatableRB1.IsChecked ? 0 : 1;
-            selectedGoal.WeeklyOrMonthly = repeatableRB21.IsChecked ? 0 : 1;
+            bool isGoalNameEmpty = string.IsNullOrEmpty(goalNameEntry.Text);
+            bool isGoalDescriptionEmpty = string.IsNullOrEmpty(goalDescriptionEntry.Text);
+            bool isWeeklyCheckedAndEntryFilled = repeatableRB21.IsChecked && (weekdayPicker.SelectedIndex < 0);
+            bool isMonthlyCheckedAndEntryFilled = repeatableRB22.IsChecked && (dayOfMonthPicker.SelectedIndex < 0);
 
-            await App.client.GetTable<GoalModel>().UpdateAsync(selectedGoal);
-            await DisplayAlert("Success", "Goal updated", "Ok");
-            await Navigation.PopAsync();
+            if(isGoalNameEmpty || isGoalDescriptionEmpty || isWeeklyCheckedAndEntryFilled || isMonthlyCheckedAndEntryFilled)
+            {
+                await DisplayAlert("Error", "All field needs to be entered", "Ok");
+            }
+            else
+            {
+                if (repeatableRB2.IsChecked)
+                {
+                    var startDate = DateHandling.GetStartDate(repeatableRB2.IsChecked && repeatableRB21.IsChecked, repeatableRB2.IsChecked && repeatableRB22.IsChecked, weekdayPicker.SelectedIndex, dayOfMonthPicker.SelectedIndex);
+                    selectedGoal.CreatedDate = startDate;
+                    selectedGoal.Deadline = DateHandling.GetDeadlineDateForRepeatingGoals(repeatableRB2.IsChecked && repeatableRB21.IsChecked, repeatableRB2.IsChecked && repeatableRB22.IsChecked, startDate);
+                }
+                else
+                {
+                    selectedGoal.Deadline = DateTime.Parse(goalDeadlineEntry.Date.ToString());
+                }
+
+                selectedGoal.Title = goalNameEntry.Text;
+                selectedGoal.Description = goalDescriptionEntry.Text;
+                selectedGoal.TargetValue = goalTargetEntry.Text;
+                selectedGoal.PrivateGoal = privateGoalCheckbox.IsChecked;
+                selectedGoal.CurrentValue = goalCurrentEntry.Text;
+                selectedGoal.RepeatWeekly = weekdayPicker.SelectedIndex;
+                selectedGoal.RepeatMonthly = dayOfMonthPicker.SelectedIndex;
+                selectedGoal.RepeatType = repeatableRB1.IsChecked ? 0 : 1;
+                selectedGoal.WeeklyOrMonthly = repeatableRB21.IsChecked ? 0 : 1;
+
+                await App.client.GetTable<GoalModel>().UpdateAsync(selectedGoal);
+                await DisplayAlert("Success", "Goal updated", "Ok");
+                await Navigation.PopAsync();
+            }
+
 
         }
 
@@ -95,7 +119,7 @@ namespace HIPER
             selectedGoal.Closed = true;
 
             await App.client.GetTable<GoalModel>().UpdateAsync(selectedGoal);
-            await DisplayAlert("Congratulations", "Goal goal completed", "Ok");
+            await DisplayAlert("Congratulations", "Goal completed", "Ok");
             await Navigation.PopAsync();
 
         }
@@ -146,6 +170,35 @@ namespace HIPER
         void repeatableRB22_PropertyChanged(System.Object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
             radioButtonController();
+        }
+
+        private void goalCurrentEntry_TextChanged(System.Object sender, Xamarin.Forms.TextChangedEventArgs e)
+        {
+            //checkGoalCompleted();
+        }
+
+        private void goalTargetEntry_TextChanged(System.Object sender, Xamarin.Forms.TextChangedEventArgs e)
+        {
+         //   checkGoalCompleted();
+        }
+
+        private async void checkGoalCompleted()
+        {
+            if (!string.IsNullOrEmpty(goalCurrentEntry.Text) && !string.IsNullOrEmpty(goalCurrentEntry.Text))
+            {
+                if (int.Parse(goalCurrentEntry.Text) >= int.Parse(goalTargetEntry.Text))
+                {
+                    bool setGoalCompleted = await DisplayAlert("Congrats!", "You did it! Would you like to set this goal completed?", "Ok", "Cancel");
+                    if (setGoalCompleted)
+                    {
+                        selectedGoal.Completed = true;
+                        selectedGoal.Closed = true;
+
+                        await App.client.GetTable<GoalModel>().UpdateAsync(selectedGoal);
+                        await Navigation.PopAsync();
+                    }
+                }
+            }
         }
     }
 }

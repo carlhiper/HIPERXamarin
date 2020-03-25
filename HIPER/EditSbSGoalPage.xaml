@@ -46,31 +46,31 @@
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
             <Label x:Name="step1label" VerticalOptions="Center" Grid.Row="0" Grid.Column="0" Text="1" />
-            <Entry x:Name="step1entry" Grid.Row="0" Grid.Column="2" Placeholder="TITLE" MaxLength="255"></Entry>
+            <Entry x:Name="step1entry" Grid.Row="0" Grid.Column="2" Placeholder="STEP DESCRIPTION" MaxLength="255"></Entry>
             <CheckBox x:Name="step1CB" VerticalOptions="Center" Grid.Row="0" Grid.Column="1" Color="{StaticResource hiperPeach}"></CheckBox>
             <Label x:Name="step2label" VerticalOptions="Center" Grid.Row="1" Grid.Column="0" Text="2" />
-            <Entry x:Name="step2entry" Grid.Row="1" Grid.Column="2" Placeholder="TITLE" MaxLength="255"></Entry>
+            <Entry x:Name="step2entry" Grid.Row="1" Grid.Column="2" Placeholder="STEP DESCRIPTION" MaxLength="255"></Entry>
             <CheckBox x:Name="step2CB" VerticalOptions="Center" HorizontalOptions="Center" Grid.Row="1" Grid.Column="1" Color="{StaticResource hiperPeach}"></CheckBox>
             <Label x:Name="step3label" VerticalOptions="Center" Grid.Row="2" Grid.Column="0" Text="3" />
-            <Entry x:Name="step3entry" Grid.Row="2" Grid.Column="2" Placeholder="TITLE" MaxLength="255"></Entry>
+            <Entry x:Name="step3entry" Grid.Row="2" Grid.Column="2" Placeholder="STEP DESCRIPTION" MaxLength="255"></Entry>
             <CheckBox x:Name="step3CB" VerticalOptions="Center" HorizontalOptions="Center" Grid.Row="2" Grid.Column="1" Color="{StaticResource hiperPeach}"></CheckBox>
             <Label x:Name="step4label" VerticalOptions="Center" Grid.Row="3" Grid.Column="0" Text="4" IsVisible="false" />
-            <Entry x:Name="step4entry" Grid.Row="3" Grid.Column="2" Placeholder="TITLE" MaxLength="255" IsVisible="false"></Entry>
+            <Entry x:Name="step4entry" Grid.Row="3" Grid.Column="2" Placeholder="STEP DESCRIPTION" MaxLength="255" IsVisible="false"></Entry>
             <CheckBox x:Name="step4CB" VerticalOptions="Center" HorizontalOptions="Center" Grid.Row="3" Grid.Column="1" IsVisible="false" Color="{StaticResource hiperPeach}"></CheckBox>
             <Label x:Name="step5label" VerticalOptions="Center" Grid.Row="4" Grid.Column="0" Text="5" IsVisible="false"/>
-            <Entry x:Name="step5entry" Grid.Row="4" Grid.Column="2" Placeholder="TITLE" MaxLength="255" IsVisible="false"></Entry>
+            <Entry x:Name="step5entry" Grid.Row="4" Grid.Column="2" Placeholder="STEP DESCRIPTION" MaxLength="255" IsVisible="false"></Entry>
             <CheckBox x:Name="step5CB" VerticalOptions="Center" HorizontalOptions="Center" Grid.Row="4" Grid.Column="1" IsVisible="false" Color="{StaticResource hiperPeach}"></CheckBox>
             <Label x:Name="step6label" VerticalOptions="Center" Grid.Row="5" Grid.Column="0" Text="6" IsVisible="false"/>
-            <Entry x:Name="step6entry" Grid.Row="5" Grid.Column="2" Placeholder="TITLE" MaxLength="255" IsVisible="false"></Entry>
+            <Entry x:Name="step6entry" Grid.Row="5" Grid.Column="2" Placeholder="STEP DESCRIPTION" MaxLength="255" IsVisible="false"></Entry>
             <CheckBox x:Name="step6CB" VerticalOptions="Center" HorizontalOptions="Center" Grid.Row="5" Grid.Column="1" IsVisible="false" Color="{StaticResource hiperPeach}"></CheckBox>
             <Label x:Name="step7label" VerticalOptions="Center" Grid.Row="6" Grid.Column="0" Text="7" IsVisible="false" />
-            <Entry x:Name="step7entry" Grid.Row="6" Grid.Column="2" Placeholder="TITLE" MaxLength="255" IsVisible="false"></Entry>
+            <Entry x:Name="step7entry" Grid.Row="6" Grid.Column="2" Placeholder="STEP DESCRIPTION" MaxLength="255" IsVisible="false"></Entry>
             <CheckBox x:Name="step7CB" VerticalOptions="Center" HorizontalOptions="Center" Grid.Row="6" Grid.Column="1" IsVisible="false" Color="{StaticResource hiperPeach}"></CheckBox>
             <Label x:Name="step8label" VerticalOptions="Center" Grid.Row="7" Grid.Column="0" Text="8" IsVisible="false"/>
-            <Entry x:Name="step8entry" Grid.Row="7" Grid.Column="2" Placeholder="TITLE" MaxLength="255" IsVisible="false"></Entry>
+            <Entry x:Name="step8entry" Grid.Row="7" Grid.Column="2" Placeholder="STEP DESCRIPTION" MaxLength="255" IsVisible="false"></Entry>
             <CheckBox x:Name="step8CB" VerticalOptions="Center" HorizontalOptions="Center" Grid.Row="7" Grid.Column="1" IsVisible="false" Color="{StaticResource hiperPeach}"></CheckBox>
             <Label x:Name="step9label" VerticalOptions="Center" Grid.Row="8" Grid.Column="0" Text="9" IsVisible="false" />
-            <Entry x:Name="step9entry" Grid.Row="8" Grid.Column="2" Placeholder="TITLE" MaxLength="255" IsVisible="false"></Entry>
+            <Entry x:Name="step9entry" Grid.Row="8" Grid.Column="2" Placeholder="STEP DESCRIPTION" MaxLength="255" IsVisible="false"></Entry>
             <CheckBox x:Name="step9CB" VerticalOptions="Center" HorizontalOptions="Center" Grid.Row="8" Grid.Column="1" IsVisible="false" Color="{StaticResource hiperPeach}"></CheckBox>
         </Grid>
         <Label Text="DEADLINE" HorizontalOptions="Center" TextColor="{StaticResource hiperPeach}" Margin="0,0,0,5"></Label>

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using HIPER.Helpers;
 using HIPER.Model;
 using SQLite;
 using Xamarin.Forms;
@@ -41,23 +42,42 @@ namespace HIPER
             try {
                 bool isGoalNameEmpty = string.IsNullOrEmpty(goalNameEntry.Text);
                 bool isGoalDescriptionEmpty = string.IsNullOrEmpty(goalDescriptionEntry.Text);
+                bool isTargetCheckedAndEntryFilled = targetRB1.IsChecked && string.IsNullOrEmpty(goalTargetEntry.Text);
+                bool isStepbyStepCheckedAndEntryFilled = targetRB2.IsChecked && (stepbystepPicker.SelectedIndex < 0);
+                bool isWeeklyCheckedAndEntryFilled = repeatableRB21.IsChecked && (weekdayPicker.SelectedIndex < 0);
+                bool isMonthlyCheckedAndEntryFilled = repeatableRB22.IsChecked && (dayOfMonthPicker.SelectedIndex < 0);
 
-                if (isGoalNameEmpty || isGoalDescriptionEmpty)
+                if (isGoalNameEmpty || isGoalDescriptionEmpty || isTargetCheckedAndEntryFilled || isStepbyStepCheckedAndEntryFilled || isWeeklyCheckedAndEntryFilled || isMonthlyCheckedAndEntryFilled)
                 {
-                    await DisplayAlert("Not filled", "All field needs to be entered", "Ok");
+                    await DisplayAlert("Error", "All field needs to be entered", "Ok");
                 }
                 else
                 {
+  
+                    var startDate = DateHandling.GetStartDate(repeatableRB2.IsChecked && repeatableRB21.IsChecked, repeatableRB2.IsChecked && repeatableRB22.IsChecked, weekdayPicker.SelectedIndex, dayOfMonthPicker.SelectedIndex);
+                    DateTime deadLineDate;
+                    if (repeatableRB2.IsChecked)
+                    {
+                        deadLineDate = DateHandling.GetDeadlineDateForRepeatingGoals(repeatableRB2.IsChecked && repeatableRB21.IsChecked, repeatableRB2.IsChecked && repeatableRB22.IsChecked, startDate);
+                    }
+                    else
+                    {
+                        deadLineDate = DateTime.Parse(goalDeadlineEntry.Date.ToString());
+                    }
+              
+          
+
+
                     GoalModel goal = new GoalModel() {
                         Title = goalNameEntry.Text,
                         Description = goalDescriptionEntry.Text,
-                        Deadline = DateTime.Parse(goalDeadlineEntry.Date.ToString()),
+                        Deadline = deadLineDate,
                         TargetValue = goalTargetEntry.Text,
                         PrivateGoal = privateGoalCheckbox.IsChecked,
                         UserId = user.Id,
                         CurrentValue = "0",
-                        CreatedDate = DateTime.Now,
                         ClosedDate = DateTime.MaxValue,
+                        CreatedDate = startDate,
                         Progress = 0,
                         TargetType = targetRB1.IsChecked? 0 : 1,
                         RepeatType = repeatableRB1.IsChecked? 0 : 1,
@@ -81,9 +101,6 @@ namespace HIPER
             {
                 await DisplayAlert("Goal not saved!", "Something went wrong, please try again", "Ok");
             }
-
-
-
         }
 
         private void radioButtonController()
