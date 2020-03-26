@@ -12,6 +12,10 @@ namespace HIPER.Model
 
         public int Hipes { get; set; }
 
+        public DateTime Deadline { get; set; }
+
+        public DateTime LastUpdated { get; set; }
+
         public FeedModel()
         {
         }

@@ -34,8 +34,8 @@ namespace HIPER
             updateGoal.IsVisible = !(selectedGoal.Completed || selectedGoal.Closed);
             completeGoal.IsVisible = !(selectedGoal.Completed || selectedGoal.Closed);
 
-            repeatableRB1.IsChecked = (selectedGoal.TargetType == 0) ? true : false;
-            repeatableRB2.IsChecked = (selectedGoal.TargetType == 1) ? true : false;
+            repeatableRB1.IsChecked = (selectedGoal.RepeatType == 0) ? true : false;
+            repeatableRB2.IsChecked = (selectedGoal.RepeatType == 1) ? true : false;
             repeatableRB21.IsChecked = (selectedGoal.WeeklyOrMonthly == 0) ? true : false;
             repeatableRB22.IsChecked = (selectedGoal.WeeklyOrMonthly == 1) ? true : false;
 

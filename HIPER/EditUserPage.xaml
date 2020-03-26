@@ -18,6 +18,8 @@
                 <RowDefinition Height="40" />
                 <RowDefinition Height="40" />
                 <RowDefinition Height="40" />
+                <RowDefinition Height="120" />
+                <RowDefinition Height="40" />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
@@ -33,6 +35,8 @@
             <Entry x:Name="emailEntry" Grid.Row="3" Grid.Column="1" Placeholder="EMAIL" MaxLength="40"></Entry>
             <Label VerticalOptions="Center" Grid.Row="4" Grid.Column="0" Text="PASSWORD"/>
             <Entry x:Name="passwordEntry" Grid.Row="4" Grid.Column="1" Placeholder="PASSWORD" IsPassword="True" MaxLength="20"></Entry>
+            <Button VerticalOptions="Center" Grid.Row="5" Grid.Column="0" Text="PHOTO" Clicked="Button_Clicked"/>
+            <Image x:Name="profileImage" Grid.Row="5" Grid.Column="1"></Image>
         </Grid>
       </StackLayout>
 </ContentPage>

@@ -25,6 +25,7 @@ namespace HIPER
 
             createGoalsList(filter.SelectedIndex);
             UpdateScoreboard.checkDeadlines();
+            UpdateScoreboard.checkRepeatGoals();
 
             filter.ItemsSource = App.filterOptions;
         }
@@ -60,7 +61,7 @@ namespace HIPER
             }
             else if (filter == 1)
             {
-                goals.Sort((x, y) => x.LastUpdatedDate.CompareTo(y.LastUpdatedDate));
+                goals.Sort((x, y) => y.LastUpdatedDate.CompareTo(x.LastUpdatedDate));
             }
             else if (filter == 2)
             {
@@ -68,10 +69,8 @@ namespace HIPER
             }
             else
             {
-
+                goals.Sort((x, y) => y.LastUpdatedDate.CompareTo(x.LastUpdatedDate));
             }
-
-
             if (showClosedSwitch.IsToggled)
             {
                 foreach (var item in goals)
