@@ -7,7 +7,7 @@
             <Label Text="YOU" FontFamily="FUTURA BOOK" TextColor="{StaticResource hiperPeach}" HorizontalOptions="Center" Margin="0,10,0,0"></Label>
             <Frame>
                 <StackLayout Padding="5">
-                    <Grid>
+                    <Grid Padding="0">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto"></RowDefinition>
                             <RowDefinition Height="Auto"></RowDefinition>
@@ -15,12 +15,14 @@
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"></ColumnDefinition>
-                            <ColumnDefinition Width="100"></ColumnDefinition>
+                            <ColumnDefinition Width="90"></ColumnDefinition>
                         </Grid.ColumnDefinitions>
                         <Label x:Name="userName" Text="NAME" FontAttributes="Bold"></Label>
                         <Label x:Name="company" Grid.Row="1" Text="COMPANY"></Label>
                         <Label x:Name="email" Grid.Row="2" Text="EMAIL"></Label>
-                        <Image x:Name="profileImage" WidthRequest="100" Grid.RowSpan="2" Grid.Column="1"></Image>
+                        <Frame CornerRadius="40" IsClippedToBounds="True" Padding="0" Grid.Column="1" Grid.RowSpan="3" BorderColor="gray">
+                            <Image x:Name="profileImage" Aspect="AspectFill" WidthRequest="80" HeightRequest="80"></Image>
+                        </Frame>
                     </Grid>
                  </StackLayout>
             </Frame>
@@ -59,6 +61,7 @@
                                 <ColumnDefinition Width="Auto" />
                                 <ColumnDefinition Width="150" />
                                 <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="70" />
                             </Grid.ColumnDefinitions>
               
                             <Label Grid.Row="0"
@@ -81,6 +84,20 @@
                                 Text="{Binding Email}"
                                 FontAttributes="Italic" 
                                 VerticalOptions="End" />
+                            <Frame Grid.RowSpan="3"
+                                   Grid.Column="3"
+                                   CornerRadius="30"
+                                   Padding="0"
+                                   BorderColor="Gray"
+                                   IsClippedToBounds="True">
+                                    <Image WidthRequest="50"
+                                           HeightRequest="50"
+                                           Aspect="AspectFill"
+                                          
+                                        Source="{Binding ImageUrl}">
+                                    </Image>
+                            </Frame>
+
                             
                         </Grid>
                     </DataTemplate>

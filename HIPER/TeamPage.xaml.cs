@@ -24,7 +24,7 @@ namespace HIPER
                 userName.Text = App.loggedInUser.FirstName + " " + App.loggedInUser.LastName;
                 company.Text = App.loggedInUser.Company;
                 email.Text = App.loggedInUser.Email;
-
+                profileImage.Source = App.loggedInUser.ImageUrl;
                 team = (await App.client.GetTable<TeamModel>().Where(t => t.Id == App.loggedInUser.TeamId).ToListAsync()).FirstOrDefault();
                 if (team != null) { 
                     var users = await App.client.GetTable<UserModel>().Where(u => u.TeamId == team.Id).ToListAsync();
