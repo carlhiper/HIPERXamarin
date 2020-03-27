@@ -42,6 +42,7 @@ namespace HIPER.Controllers
                         if (today > goal.Deadline)
                         {
                             goal.Closed = true;
+                            goal.ClosedDate = DateTime.Now.Date;
                             
                             await App.client.GetTable<GoalModel>().UpdateAsync(goal);
 
@@ -49,12 +50,11 @@ namespace HIPER.Controllers
                             {
                                 Title = goal.Title,
                                 Description = goal.Description,
-                                Deadline = goal.Deadline.AddDays(7),
                                 TargetValue = goal.TargetValue,
                                 PrivateGoal = goal.PrivateGoal,
                                 UserId = App.loggedInUser.Id,
                                 CurrentValue = "0",
-                                ClosedDate = goal.Deadline,
+                                ClosedDate = DateTime.MaxValue,
                                 CreatedDate = goal.Deadline.AddDays(1),
                                 Progress = 0,
                                 TargetType = goal.TargetType,
@@ -63,6 +63,7 @@ namespace HIPER.Controllers
                                 RepeatWeekly = goal.RepeatWeekly,
                                 RepeatMonthly = goal.RepeatMonthly,
                                 SteByStepAmount = goal.SteByStepAmount,
+                                LastUpdatedDate = DateTime.Now.Date,
                                 Checkbox1Comment = goal.Checkbox1Comment,
                                 Checkbox2Comment = goal.Checkbox2Comment,
                                 Checkbox3Comment = goal.Checkbox3Comment,
@@ -82,11 +83,14 @@ namespace HIPER.Controllers
                             {                          //Monthly
                                 newGoal.Deadline = goal.Deadline.AddDays(DateTime.DaysInMonth(DateTime.Today.Year, DateTime.Today.Month));
                             }
-
+          
                             await App.client.GetTable<GoalModel>().InsertAsync(newGoal);
                         }
                     }
                 }
+            }
+            catch(NullReferenceException nre)
+            {
             }
             catch(Exception ex)
             {

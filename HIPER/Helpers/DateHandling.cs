@@ -40,11 +40,16 @@ namespace HIPER.Helpers
             }
             else if (checkboxesForMonthly)    //monthly
             {
-                deadLine = startDate.AddDays(DateTime.DaysInMonth(DateTime.Today.Year, DateTime.Today.Month-1)-1);
+                if (startDate.Month < DateTime.Now.Month) {
+                    deadLine = startDate.AddDays(DateTime.DaysInMonth(DateTime.Today.Year, DateTime.Today.Month - 1) - 1);
+                }
+                else
+                {
+                    deadLine = startDate.AddDays(DateTime.DaysInMonth(DateTime.Today.Year, DateTime.Today.Month) - 1);
+                }
             }
             else
             {
-
                 deadLine = DateTime.MaxValue;
             }
             return deadLine;

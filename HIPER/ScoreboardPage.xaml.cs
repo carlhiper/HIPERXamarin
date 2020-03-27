@@ -24,8 +24,6 @@ namespace HIPER
             base.OnAppearing();
 
             createGoalsList(filter.SelectedIndex);
-            UpdateScoreboard.checkDeadlines();
-            UpdateScoreboard.checkRepeatGoals();
 
             filter.ItemsSource = App.filterOptions;
         }

@@ -88,6 +88,11 @@ namespace HIPER
                         SteByStepAmount = stepbystepPicker.SelectedIndex
                     };
 
+                    //if (goal.RepeatMonthly == 28) // Last day of month
+                    //{
+                    //    goal.RepeatMonthly = DateTime.DaysInMonth(DateTime.Now.Year, DateTime.Now.Month);
+                    //}
+
                     await App.client.GetTable<GoalModel>().InsertAsync(goal);
                     await DisplayAlert("Success", "Goal saved", "Ok");
                     await Navigation.PopAsync();
