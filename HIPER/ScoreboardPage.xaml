@@ -12,7 +12,7 @@
                     
             <Grid Padding="20">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="40" />
+                    <RowDefinition Height="35" />
                 </Grid.RowDefinitions>
 
                 <Grid.ColumnDefinitions>

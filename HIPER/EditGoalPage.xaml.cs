@@ -99,8 +99,6 @@ namespace HIPER
                 await DisplayAlert("Success", "Goal updated", "Ok");
                 await Navigation.PopAsync();
             }
-
-
         }
 
         private async void deleteGoal_Clicked(System.Object sender, System.EventArgs e)

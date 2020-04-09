@@ -13,12 +13,11 @@ namespace HIPER
         }
 
 
-        protected override async void OnAppearing()
+        protected override void OnAppearing()
         {
             base.OnAppearing();
 
             createFeedList();
-
 
         }
 
@@ -34,47 +33,66 @@ namespace HIPER
 
             foreach (UserModel user in users)
             {
-                var goals = await App.client.GetTable<GoalModel>().Where(g => g.UserId == user.Id).ToListAsync();
 
-                foreach (var goal in goals)
+                try
                 {
-                    if (!goal.PrivateGoal && !goal.Completed && !goal.Closed)
+                    var goals = await App.client.GetTable<GoalModel>().Where(g => g.UserId == user.Id).ToListAsync();
+
+
+                    foreach (var goal in goals)
                     {
-                        FeedModel feedItem = new FeedModel();
-                        feedItem.GoalTitle = goal.Title;
-                        feedItem.UserName = user.FirstName + " " + user.LastName;
-                        feedItem.Progress = goal.Progress;
-                        feedItem.Hipes = goal.Hipes;
-                        feedItem.LastUpdated = goal.LastUpdatedDate;
-                        feedItem.Deadline = goal.Deadline;
-                        feed.Add(feedItem);
+                        if (!goal.PrivateGoal && goal.Completed)
+                        {
+                            FeedModel feedItem = new FeedModel();
+
+                            feedItem.IndexDate = goal.ClosedDate;
+                            feedItem.ProfileImageURL = user.ImageUrl;
+                            feedItem.FeedItemTitle = user.FirstName + " completed a goal!";
+                            feedItem.FeedItemPost = "Goal " + goal.Title + " was successfully completed. " + user.FirstName + " has completed 400 goals in total.";
+
+                            feed.Add(feedItem);
+                        }
+
                     }
+
+                    var posts = await App.client.GetTable<PostModel>().Where(p => p.UserId == user.Id).ToListAsync();
+                    foreach (var post in posts)
+                    {
+                        if (!string.IsNullOrEmpty(post.Post))
+                        {
+                            FeedModel feedItem = new FeedModel();
+                            feedItem.IndexDate = post.CreatedDate;
+                            feedItem.ProfileImageURL = user.ImageUrl;
+                            feedItem.FeedItemTitle = user.FirstName + " posted";
+                            feedItem.FeedItemPost = post.Post;
+
+                            feed.Add(feedItem);
+                        }
+                    }
+
+
+                }catch(Exception ex)
+                {
+
                 }
-            }
+             }
 
             int filter = feedFilter.SelectedIndex;
             //Sorting
-            if (filter == 0)
-            {
-                feed.Sort((x, y) => x.GoalTitle.CompareTo(y.GoalTitle));
-            }
-            else if (filter == 1)
-            {
-                feed.Sort((x, y) => y.LastUpdated.CompareTo(x.LastUpdated));
-            }
-            else if (filter == 2)
-            {
-                feed.Sort((x, y) => x.Deadline.CompareTo(y.Deadline));
-            }
-            else if (filter == 3)
-            {
-                feed.Sort((x, y) => x.UserName.CompareTo(y.UserName));
-            }
-            else
-            {
-                feed.Sort((x, y) => y.LastUpdated.CompareTo(x.LastUpdated));
-            }
+            //if (filter == 1)
+            //{
+            //    feed.Sort((x, y) => x..CompareTo(y.GoalTitle));
+            //}
+            //else if (filter == 2)
+            //{
 
+            //}
+            //else
+            //{ 
+            //    feed.Sort((x, y) => y.LastUpdated.CompareTo(x.LastUpdated));
+            //}
+
+            feed.Sort((x, y) => x.IndexDate.CompareTo(y.IndexDate));
             feedCollectionView.ItemsSource = feed;
         }
 
@@ -82,6 +100,39 @@ namespace HIPER
 
         void feedFilter_SelectedIndexChanged(System.Object sender, System.EventArgs e)
         {
+            createFeedList();
+        }
+
+        private async void PostButton_Clicked(System.Object sender, System.EventArgs e)
+        {
+            try
+            {
+                bool isPostEmpty = String.IsNullOrEmpty(PostEntry.Text);
+
+                if (!isPostEmpty)
+                {
+
+                    PostModel postItem = new PostModel()
+                    {
+                        Post = PostEntry.Text,
+                        UserId = App.loggedInUser.Id,
+                        CreatedDate = DateTime.Now
+                    };
+
+                    // Save on Azure
+                    await App.client.GetTable<PostModel>().InsertAsync(postItem);
+                    await DisplayAlert("Success", "Post inserted", "Ok");
+                }
+                else
+                {
+                    await DisplayAlert("Error", "Please write a post", "Ok");
+                }
+
+            }catch(Exception ex)
+            {
+
+            }
+
             createFeedList();
         }
     }

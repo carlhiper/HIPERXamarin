@@ -4,11 +4,11 @@
     </ContentPage.ToolbarItems>
     <ContentPage.Content>
         <StackLayout Margin="20">
-            <Label Style="{StaticResource Header}" Text="FEED"></Label>
+            <Label Style="{StaticResource Header}" Text="WALL"></Label>
 
             <Grid Padding="20">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="40" />
+                    <RowDefinition Height="35" />
                 </Grid.RowDefinitions>
 
                 <Grid.ColumnDefinitions>
@@ -21,6 +21,7 @@
             </Grid>
 
             <CollectionView
+                ItemsUpdatingScrollMode="KeepItemsInView"
                 x:Name="feedCollectionView"
                 SelectionMode="None">
                 <CollectionView.ItemTemplate>
@@ -33,36 +34,51 @@
                             </Grid.RowDefinitions>
 
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="200" />
+                                <ColumnDefinition Width="60" />
                                 <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
-              
+
+                            <Frame Grid.RowSpan="3"
+                                   Grid.Column="0"
+                                   CornerRadius="25"
+                                   Padding="0"
+                                   BorderColor="Gray"
+                                   IsClippedToBounds="True">
+                                    <Image WidthRequest="50"
+                                           HeightRequest="50"
+                                           Aspect="AspectFill"
+                                           Source="{Binding ProfileImageURL}">
+                                    </Image>
+                            </Frame>
+ 
+
                             <Label Grid.Row="0"
-                                Grid.Column="0" 
-                                Text="{Binding GoalTitle}" 
+                                Grid.Column="1" 
+                                Text="{Binding FeedItemTitle}" 
                                 FontAttributes="Bold" />
                             
-                            <ProgressBar
-                                VerticalOptions="Center"
-                                Grid.Column="1"
-                                Grid.Row="0"
-                                Progress="{Binding Progress}"
-                                ProgressColor="{StaticResource hiperPeach}" ></ProgressBar>
-
                             <Label Grid.Row="1"
-                                Grid.Column="0" 
-                                Text="{Binding UserName}"
+                                Grid.Column="1" 
+                                Text="{Binding FeedItemPost}"
                                 FontAttributes="Italic" 
                                 VerticalOptions="End" />
-                            <Label Grid.Row="2"
-                                Grid.Column="0" 
-                                Text="{Binding Hipes}"
-                                FontAttributes="Italic" 
-                                VerticalOptions="End" /> 
+
                         </Grid>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
-            </CollectionView> 
+            </CollectionView>
+            <Grid Margin="0,10,0,0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="30"></RowDefinition>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="250"></ColumnDefinition>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Entry x:Name="PostEntry" Grid.Column="0" Placeholder="Text"></Entry>
+                <Button x:Name="PostButton" Grid.Column="1" Text="POST" Clicked="PostButton_Clicked"></Button>       
+            </Grid>
+            
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

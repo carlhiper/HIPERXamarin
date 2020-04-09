@@ -24,7 +24,7 @@ namespace HIPER
 
         public static List<string> filterOptions = new List<string>() { "Title", "Last updated", "Deadline" };
 
-        public static List<string> feedfilterOptions = new List<string>() { "Title", "Last updated", "Deadline", "User" };
+        public static List<string> feedfilterOptions = new List<string>() { "All", "Posts", "Updates"};
 
 
         public App()

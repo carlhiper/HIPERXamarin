@@ -43,20 +43,6 @@ namespace HIPER
                 // Save on Azure
                 await App.client.GetTable<UserModel>().InsertAsync(user);
 
-                // Save locally
- /*               using (SQLiteConnection conn = new SQLiteConnection(App.DatabaseLocation)) { 
-                    conn.CreateTable<UserModel>();
-                    int rows = conn.Insert(user);
-     
-                    if (rows > 0)
-                    {
-                        DisplayAlert("User successfully saved!", "Return to login page to login", "Ok");
-                    }
-                    else
-                    {
-                        DisplayAlert("User not saved!", "Something went wrong, please try again", "Ok");
-                    }
-                } */
                 Page x = await Navigation.PopAsync();
             }
         }
