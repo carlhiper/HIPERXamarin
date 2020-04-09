@@ -12,7 +12,6 @@ namespace HIPER
 {
     public partial class EditUserPage : ContentPage
     {
-
         MediaFile selectedImage;
         string oldImageString;
 
@@ -31,7 +30,6 @@ namespace HIPER
             emailEntry.Text = App.loggedInUser.Email;
             passwordEntry.Text = App.loggedInUser.UserPassword;
             oldImageString = App.loggedInUser.ImageUrl;
-
             profileImage.Source = App.loggedInUser.ImageUrl;
         }
 
@@ -46,13 +44,33 @@ namespace HIPER
                 App.loggedInUser.Email = emailEntry.Text;
                 App.loggedInUser.UserPassword = passwordEntry.Text;
 
-                UploadImage(selectedImage.GetStream(), App.loggedInUser);
+                //UploadImage(selectedImage.GetStream());
+
+
+                var account = CloudStorageAccount.Parse("DefaultEndpointsProtocol=https;AccountName=hiperimagestorage;AccountKey=IayenlXv3jbB7XVIlgiWC1xyIVUSWZcme4AWFxNR0vFPo+eI7xPzUKqegTtspMUarqBv1jUzWHesPFqciPVxMQ==;EndpointSuffix=core.windows.net");
+                var client = account.CreateCloudBlobClient();
+                var container = client.GetContainerReference("imagecontainer");
+                await container.CreateIfNotExistsAsync();
+
+                // delete old image file
+                if (App.loggedInUser.ImageName != null)
+                {
+                    var oldBlockBlob = container.GetBlockBlobReference(App.loggedInUser.ImageName);
+                    bool result = await oldBlockBlob.DeleteIfExistsAsync();
+                }
+
+                // upload new
+                var name = Guid.NewGuid().ToString();
+                var blockBlob = container.GetBlockBlobReference($"{name}.jpg");
+                await blockBlob.UploadFromStreamAsync(selectedImage.GetStream());
+
+                App.loggedInUser.ImageName = $"{name}.jpg";
+                App.loggedInUser.ImageUrl = blockBlob.Uri.OriginalString;
+
 
                 await App.client.GetTable<UserModel>().UpdateAsync(App.loggedInUser);
                 await DisplayAlert("Success", "Profile updated", "Ok");
                 await Navigation.PopAsync();
-
-                
             }
             catch(NullReferenceException nre)
             {
@@ -62,7 +80,6 @@ namespace HIPER
             {
                 await DisplayAlert("Failure!", "Something went wrong, please try again", "Ok");
             }
-            
         }
 
         async void Button_Clicked(System.Object sender, System.EventArgs e)
@@ -77,7 +94,6 @@ namespace HIPER
             var mediaOptions = new PickMediaOptions()
             {
                 PhotoSize = PhotoSize.Medium
-
             };
             var selectedImageFile = await CrossMedia.Current.PickPhotoAsync(mediaOptions);
             if(selectedImageFile == null)
@@ -87,11 +103,9 @@ namespace HIPER
             }
             selectedImage = selectedImageFile;
             profileImage.Source = ImageSource.FromStream(() => selectedImageFile.GetStream());
-
-            
         }
 
-        private async void UploadImage(Stream stream, UserModel user)
+        private async void UploadImage(Stream stream)
         {
             try
             {
@@ -101,9 +115,9 @@ namespace HIPER
                 await container.CreateIfNotExistsAsync();
 
                 // delete old image file
-                if (user.ImageName != null)
+                if (App.loggedInUser.ImageName != null)
                 {
-                    var oldBlockBlob = container.GetBlockBlobReference(user.ImageName);
+                    var oldBlockBlob = container.GetBlockBlobReference(App.loggedInUser.ImageName);
                     bool result = await oldBlockBlob.DeleteIfExistsAsync();
                 }
 
@@ -112,16 +126,13 @@ namespace HIPER
                 var blockBlob = container.GetBlockBlobReference($"{name}.jpg");
                 await blockBlob.UploadFromStreamAsync(stream);
 
-                //await blockBlob.DeleteIfExistsAsync();
-
-                user.ImageUrl = blockBlob.Uri.OriginalString;
-                user.ImageName = $"{name}.jpg";
+                App.loggedInUser.ImageName = $"{name}.jpg";
+                App.loggedInUser.ImageUrl = blockBlob.Uri.OriginalString;
             }
             catch(Exception ex)
             {
                 
             }
-            
         }
     }
 }

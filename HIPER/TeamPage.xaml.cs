@@ -26,7 +26,12 @@ namespace HIPER
                 email.Text = App.loggedInUser.Email;
                 profileImage.Source = App.loggedInUser.ImageUrl;
                 team = (await App.client.GetTable<TeamModel>().Where(t => t.Id == App.loggedInUser.TeamId).ToListAsync()).FirstOrDefault();
-                if (team != null) { 
+                if (team != null) {
+                    if (team.Administrator_id == App.loggedInUser.Id)
+                    {
+                        teamAdmin.Text = "YOU (team admin)";
+                    }
+
                     var users = await App.client.GetTable<UserModel>().Where(u => u.TeamId == team.Id).ToListAsync();
                     if (users != null) {
                         users.RemoveAt(users.FindIndex(a => a.Id == App.loggedInUser.Id));
@@ -46,7 +51,7 @@ namespace HIPER
                     createTeam.IsEnabled = true;
                     joinTeam.IsEnabled = true;
                     leaveTeam.IsEnabled = false;
-                }
+                }  
             }
             catch(NullReferenceException nre)
             {
