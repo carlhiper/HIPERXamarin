@@ -28,8 +28,8 @@
                     <DataTemplate>
                         <Grid Padding="10">
                             <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="30" />
+                                <RowDefinition Height="20" />
                                 <RowDefinition Height="Auto" />
                             </Grid.RowDefinitions>
 
@@ -38,7 +38,7 @@
                                 <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
 
-                            <Frame Grid.RowSpan="3"
+                            <Frame Grid.RowSpan="2"
                                    Grid.Column="0"
                                    CornerRadius="25"
                                    Padding="0"
@@ -53,12 +53,14 @@
  
 
                             <Label Grid.Row="0"
-                                Grid.Column="1" 
+                                Grid.Column="1"
+                                VerticalTextAlignment="End"
                                 Text="{Binding FeedItemTitle}" 
                                 FontAttributes="Bold" />
                             
-                            <Label Grid.Row="1"
-                                Grid.Column="1" 
+                            <Label Grid.Row="2"
+                                Grid.Column="0"
+                                   Grid.ColumnSpan="2"
                                 Text="{Binding FeedItemPost}"
                                 FontAttributes="Italic" 
                                 VerticalOptions="End" />

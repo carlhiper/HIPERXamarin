@@ -203,7 +203,7 @@ namespace HIPER
             {
                 selectedGoal.Closed = true;
             }
-            selectedGoal.ClosedDate = DateTime.Now.Date;
+            selectedGoal.ClosedDate = DateTime.Now;
 
             await App.client.GetTable<GoalModel>().UpdateAsync(selectedGoal);
             await DisplayAlert("Congratulations", "Goal goal completed", "Ok");

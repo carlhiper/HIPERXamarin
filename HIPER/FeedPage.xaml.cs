@@ -92,7 +92,7 @@ namespace HIPER
             //    feed.Sort((x, y) => y.LastUpdated.CompareTo(x.LastUpdated));
             //}
 
-            feed.Sort((x, y) => x.IndexDate.CompareTo(y.IndexDate));
+            feed.Sort((x, y) => y.IndexDate.CompareTo(x.IndexDate));
             feedCollectionView.ItemsSource = feed;
         }
 
@@ -132,7 +132,7 @@ namespace HIPER
             {
 
             }
-
+            PostEntry.Text = "";
             createFeedList();
         }
     }
