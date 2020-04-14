@@ -10,7 +10,7 @@ namespace HIPER
     public partial class EditGoalPage : ContentPage
     {
         GoalModel selectedGoal;
- 
+
         public EditGoalPage(GoalModel selectedGoal)
         {
             InitializeComponent();
@@ -33,6 +33,7 @@ namespace HIPER
             deleteGoal.IsVisible = !(selectedGoal.Completed || selectedGoal.Closed);
             updateGoal.IsVisible = !(selectedGoal.Completed || selectedGoal.Closed);
             completeGoal.IsVisible = !(selectedGoal.Completed || selectedGoal.Closed);
+            closeGoal.IsVisible = !(selectedGoal.Completed || selectedGoal.Closed);
 
             repeatableRB1.IsChecked = (selectedGoal.RepeatType == 0) ? true : false;
             repeatableRB2.IsChecked = (selectedGoal.RepeatType == 1) ? true : false;
@@ -41,7 +42,7 @@ namespace HIPER
 
             weekdayPicker.SelectedIndex = selectedGoal.RepeatWeekly;
             dayOfMonthPicker.SelectedIndex = selectedGoal.RepeatMonthly;
-          
+
             if (selectedGoal.Completed)
             {
                 headerText.Text = "CLOSED GOAL";
@@ -49,7 +50,7 @@ namespace HIPER
             else
             {
                 headerText.Text = "EDIT GOAL";
-            }   
+            }
         }
 
         private void initPage()
@@ -67,7 +68,7 @@ namespace HIPER
             bool isWeeklyCheckedAndEntryFilled = repeatableRB2.IsChecked && repeatableRB21.IsChecked && (weekdayPicker.SelectedIndex < 0);
             bool isMonthlyCheckedAndEntryFilled = repeatableRB2.IsChecked && repeatableRB22.IsChecked && (dayOfMonthPicker.SelectedIndex < 0);
 
-            if(isGoalNameEmpty || isGoalDescriptionEmpty || isWeeklyCheckedAndEntryFilled || isMonthlyCheckedAndEntryFilled)
+            if (isGoalNameEmpty || isGoalDescriptionEmpty || isWeeklyCheckedAndEntryFilled || isMonthlyCheckedAndEntryFilled)
             {
                 await DisplayAlert("Error", "All field needs to be entered", "Ok");
             }
@@ -115,7 +116,7 @@ namespace HIPER
 
         private async void completeGoal_Clicked(System.Object sender, System.EventArgs e)
         {
-            
+
             selectedGoal.Completed = true;
             selectedGoal.LastUpdatedDate = DateTime.Now;
             if (selectedGoal.RepeatType == 0)
@@ -189,7 +190,7 @@ namespace HIPER
 
         private void goalTargetEntry_TextChanged(System.Object sender, Xamarin.Forms.TextChangedEventArgs e)
         {
-         //   checkGoalCompleted();
+            //   checkGoalCompleted();
         }
 
         private async void checkGoalCompleted()
@@ -208,6 +209,21 @@ namespace HIPER
                         await Navigation.PopAsync();
                     }
                 }
+            }
+        }
+
+        private async void closeGoal_Clicked(System.Object sender, System.EventArgs e)
+        {
+            bool delete = await DisplayAlert("Wait", "Are you sure you want to close this goal?", "Yes", "No");
+            if (delete)
+            {
+                selectedGoal.Closed = true;
+                selectedGoal.LastUpdatedDate = DateTime.Now;
+                selectedGoal.ClosedDate = DateTime.Now;
+
+                await App.client.GetTable<GoalModel>().UpdateAsync(selectedGoal);
+                await DisplayAlert("Goal closed", "", "Ok");
+                await Navigation.PopAsync();
             }
         }
     }

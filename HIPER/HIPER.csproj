@@ -24,6 +24,8 @@
     <Folder Include="Assets\" />
     <Folder Include="Assets\Images\" />
     <Folder Include="Controllers\" />
+    <Folder Include="ViewModel\" />
+    <Folder Include="ViewModel\Converters\" />
   </ItemGroup>
   <ItemGroup>
     <None Remove="Assets\Images\check-mark.png" />

@@ -36,10 +36,10 @@ namespace HIPER
             gridSingle.IsEnabled = !(selectedGoal.Completed || selectedGoal.Closed);
             gridSingle.IsEnabled = !(selectedGoal.Completed || selectedGoal.Closed);
 
-
             deleteGoal.IsVisible = !(selectedGoal.Completed || selectedGoal.Closed);
             updateGoal.IsVisible = !(selectedGoal.Completed || selectedGoal.Closed);
             completeGoal.IsVisible = !(selectedGoal.Completed || selectedGoal.Closed);
+            closeGoal.IsVisible = !(selectedGoal.Completed || selectedGoal.Closed);
 
             repeatableRB1.IsChecked = (selectedGoal.RepeatType == 0) ? true : false;
             repeatableRB2.IsChecked = (selectedGoal.RepeatType == 1) ? true : false;
@@ -124,7 +124,7 @@ namespace HIPER
 
             bool isGoalNameEmpty = string.IsNullOrEmpty(goalNameEntry.Text);
             bool isGoalDescriptionEmpty = string.IsNullOrEmpty(goalDescriptionEntry.Text);
-            bool isWeeklyCheckedAndEntryFilled =  repeatableRB2.IsChecked && repeatableRB21.IsChecked && (weekdayPicker.SelectedIndex < 0);
+            bool isWeeklyCheckedAndEntryFilled = repeatableRB2.IsChecked && repeatableRB21.IsChecked && (weekdayPicker.SelectedIndex < 0);
             bool isMonthlyCheckedAndEntryFilled = repeatableRB2.IsChecked && repeatableRB22.IsChecked && (dayOfMonthPicker.SelectedIndex < 0);
 
             if (isGoalNameEmpty || isGoalDescriptionEmpty || isWeeklyCheckedAndEntryFilled || isMonthlyCheckedAndEntryFilled)
@@ -261,6 +261,21 @@ namespace HIPER
         void repeatableRB22_PropertyChanged(System.Object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
             radioButtonController();
+        }
+
+        private async void closeGoal_Clicked(System.Object sender, System.EventArgs e)
+        {
+            bool delete = await DisplayAlert("Wait", "Are you sure you want to close this goal?", "Yes", "No");
+            if (delete)
+            {
+                selectedGoal.Closed = true;
+                selectedGoal.LastUpdatedDate = DateTime.Now;
+                selectedGoal.ClosedDate = DateTime.Now;
+
+                await App.client.GetTable<GoalModel>().UpdateAsync(selectedGoal);
+                await DisplayAlert("Goal closed", "", "Ok");
+                await Navigation.PopAsync();
+            }
         }
     }
 }

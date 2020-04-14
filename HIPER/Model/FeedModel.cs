@@ -1,8 +1,9 @@
 ﻿using System;
+using System.ComponentModel;
 
 namespace HIPER.Model
 {
-    public class FeedModel
+    public class FeedModel 
     {
         public string FeedItemTitle { get; set; }
 
@@ -10,24 +11,11 @@ namespace HIPER.Model
 
         public string FeedItemIndicator { get; set; }
 
-        public string UserName { get; set; }
-
-        public string GoalTitle { get; set; }
-    
-        public float Progress { get; set; }
-
-        public int Hipes { get; set; }
-
         public string ProfileImageURL { get; set; }
 
-        public DateTime Deadline { get; set; }
+        public DateTimeOffset IndexDate { get; set; }
 
-        public DateTime LastUpdated { get; set; }
-
-        public DateTime IndexDate { get; set; }
-
-        public FeedModel()
-        {
-        }
+        //public DateTimeOffset TimeAgo{ get ; set ; }
+        
     }
 }

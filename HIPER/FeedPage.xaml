@@ -1,75 +1,90 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="HIPER.FeedPage">
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="HIPER.FeedPage"
+             xmlns:converters="clr-namespace:HIPER.ViewModel.Converters">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:DateTimeToStringConverter x:Key="converter"/>
+        </ResourceDictionary>
+    </ContentPage.Resources>
     <ContentPage.ToolbarItems>
     </ContentPage.ToolbarItems>
     <ContentPage.Content>
-        <StackLayout Margin="20">
-            <Label Style="{StaticResource Header}" Text="WALL"></Label>
-
-            <Grid Padding="20">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="35" />
-                </Grid.RowDefinitions>
-
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="120" />
-                </Grid.ColumnDefinitions>
-                <Picker x:Name="feedFilter" Grid.Column="2" Title="Filter" SelectedIndexChanged="feedFilter_SelectedIndexChanged"></Picker>
-                
-            </Grid>
+        <StackLayout Margin="0">
+            <Label Margin="20" Style="{StaticResource Header}" Text="WALL"></Label>
 
             <CollectionView
-                ItemsUpdatingScrollMode="KeepItemsInView"
                 x:Name="feedCollectionView"
-                SelectionMode="None">
+                SelectionMode="None"
+                BackgroundColor="WhiteSmoke">
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
-                        <Grid Padding="10">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="30" />
-                                <RowDefinition Height="20" />
-                                <RowDefinition Height="Auto" />
-                            </Grid.RowDefinitions>
+                        <ContentView Padding="5,1,5,1">
+                            <Frame Style="{StaticResource Feed}">
+                                <Grid Padding="5">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="18"/>
+                                        <RowDefinition Height="30" />
+                                        <RowDefinition Height="20" />
+                                        <RowDefinition Height="Auto" />
+                                    </Grid.RowDefinitions>
 
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="60" />
-                                <ColumnDefinition Width="*" />
-                            </Grid.ColumnDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="60" />
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="50"/>
+                                    </Grid.ColumnDefinitions>
 
-                            <Frame Grid.RowSpan="2"
-                                   Grid.Column="0"
-                                   CornerRadius="25"
-                                   Padding="0"
-                                   BorderColor="Gray"
-                                   IsClippedToBounds="True">
-                                    <Image WidthRequest="50"
-                                           HeightRequest="50"
-                                           Aspect="AspectFill"
-                                           Source="{Binding ProfileImageURL}">
-                                    </Image>
-                            </Frame>
+                                     <Label Grid.Row="0"
+                                            Grid.ColumnSpan="2"
+                                           Grid.Column="0"
+                                            
+                                            VerticalTextAlignment="Start"
+                                            HorizontalTextAlignment="Start"
+                                            FontSize="10"
+                                           Text="{Binding IndexDate,Converter={StaticResource converter}}"/>
+
+                                    <Frame
+                                        Grid.Row="1"
+                                        Grid.RowSpan="2"
+                                           Grid.Column="0"
+                                           CornerRadius="25"
+                                           HorizontalOptions="Center"
+                                           VerticalOptions="Center"
+                                           Padding="0" 
+                                           BorderColor="Gray"
+                                           IsClippedToBounds="True">
+                                            <Image WidthRequest="50"
+                                                   HeightRequest="50"
+                                                   Aspect="AspectFill"
+                                                   Source="{Binding ProfileImageURL}">
+                                            </Image>
+                                    </Frame>
  
 
-                            <Label Grid.Row="0"
-                                Grid.Column="1"
-                                VerticalTextAlignment="End"
-                                Text="{Binding FeedItemTitle}" 
-                                FontAttributes="Bold" />
-                            
-                            <Label Grid.Row="2"
-                                Grid.Column="0"
-                                   Grid.ColumnSpan="2"
-                                Text="{Binding FeedItemPost}"
-                                FontAttributes="Italic" 
-                                VerticalOptions="End" />
+                                    <Label Grid.Row="1"
+                                        Grid.Column="1"
+                                        VerticalTextAlignment="End"
+                                        Text="{Binding FeedItemTitle}" 
+                                        FontAttributes="Bold" />
 
-                        </Grid>
+                                   
+
+                                    <Label Grid.Row="3"
+                                        Grid.Column="0"
+                                           Grid.ColumnSpan="2"
+                                        Text="{Binding FeedItemPost}"
+                                        FontAttributes="Italic" 
+                                        VerticalOptions="End" />
+
+                                </Grid>
+                            </Frame>
+                        </ContentView>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
-            <Grid Margin="0,10,0,0">
+            <Grid Margin="20,10,20,20">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="30"></RowDefinition>
                 </Grid.RowDefinitions>

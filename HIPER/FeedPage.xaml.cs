@@ -25,7 +25,7 @@ namespace HIPER
         {
 
             List<FeedModel> feed = new List<FeedModel>();
-            feedFilter.ItemsSource = App.feedfilterOptions;
+            //feedFilter.ItemsSource = App.feedfilterOptions;
 
             // Get users in team
             var users = await App.client.GetTable<UserModel>().Where(u => u.TeamId == App.loggedInUser.TeamId).ToListAsync();
@@ -46,6 +46,7 @@ namespace HIPER
                             FeedModel feedItem = new FeedModel();
 
                             feedItem.IndexDate = goal.ClosedDate;
+                   
                             feedItem.ProfileImageURL = user.ImageUrl;
                             feedItem.FeedItemTitle = user.FirstName + " completed a goal!";
                             feedItem.FeedItemPost = "Goal " + goal.Title + " was successfully completed. " + user.FirstName + " has completed 400 goals in total.";
@@ -77,7 +78,7 @@ namespace HIPER
                 }
              }
 
-            int filter = feedFilter.SelectedIndex;
+            //int filter = feedFilter.SelectedIndex;
             //Sorting
             //if (filter == 1)
             //{

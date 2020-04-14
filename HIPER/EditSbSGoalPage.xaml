@@ -112,7 +112,7 @@
         <Button x:Name="updateGoal" Text="UPDATE" Clicked="updateGoal_Clicked" Margin="0,20,0,0"></Button>
         <Button x:Name="deleteGoal" Text="DELETE" Clicked="deleteGoal_Clicked"></Button>
         <Button x:Name="completeGoal" Text="COMPLETED" Clicked="completeGoal_Clicked"></Button>
-
+        <Button x:Name="closeGoal" Text="CLOSE" Clicked="closeGoal_Clicked"></Button>
     </StackLayout>
     </ScrollView>
 </ContentPage>

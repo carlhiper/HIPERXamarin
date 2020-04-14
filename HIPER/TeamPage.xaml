@@ -20,8 +20,19 @@
                         <Label x:Name="userName" Text="NAME" FontAttributes="Bold"></Label>
                         <Label x:Name="company" Grid.Row="1" Text="COMPANY"></Label>
                         <Label x:Name="email" Grid.Row="2" Text="EMAIL"></Label>
-                        <Frame CornerRadius="40" IsClippedToBounds="True" Padding="0" Grid.Column="1" Grid.RowSpan="3" BorderColor="gray">
-                            <Image x:Name="profileImage" Aspect="AspectFill" WidthRequest="80" HeightRequest="80"></Image>
+                        <Frame CornerRadius="40"
+                               IsClippedToBounds="True"
+                               HorizontalOptions="Center"
+                               VerticalOptions="Center"
+                               Padding="0"
+                               Margin="0"
+                               Grid.Column="1"
+                               Grid.RowSpan="3"
+                               BorderColor="gray">
+                            <Image x:Name="profileImage"
+                                   Aspect="AspectFill"
+                                   WidthRequest="80"
+                                   HeightRequest="80"></Image>
                         </Frame>
                     </Grid>
                  </StackLayout>
@@ -86,19 +97,19 @@
                                 VerticalOptions="End" />
                             <Frame Grid.RowSpan="3"
                                    Grid.Column="3"
-                                   CornerRadius="30"
+                                   CornerRadius="25"
                                    Padding="0"
+                                   Margin="10"
+                                   HeightRequest="30"
+                                   WidthRequest="30"
                                    BorderColor="Gray"
                                    IsClippedToBounds="True">
                                     <Image WidthRequest="50"
                                            HeightRequest="50"
                                            Aspect="AspectFill"
-                                          
                                         Source="{Binding ImageUrl}">
                                     </Image>
-                            </Frame>
-
-                            
+                            </Frame>   
                         </Grid>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
