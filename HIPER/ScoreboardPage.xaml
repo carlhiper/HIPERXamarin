@@ -6,7 +6,8 @@
     </ContentPage.ToolbarItems>
     <ContentPage.Content>
   
-        <StackLayout Margin="20">
+        <StackLayout Margin="20"
+                     CompressedLayout.IsHeadless="True">
 
             <Label Text="SCOREBOARD" Style="{StaticResource Header}"></Label>
                     
@@ -27,7 +28,8 @@
                 <Picker Grid.Column="3" x:Name="filter" VerticalOptions="End" HorizontalOptions="FillAndExpand" Title="Filter" SelectedIndexChanged="filter_SelectedIndexChanged"></Picker>
             </Grid>
 
-            <CollectionView 
+            <CollectionView
+               
                 x:Name="goalCollectionView"
                 SelectionMode="Single"
                 SelectionChanged="goalCollectionView_SelectionChanged">

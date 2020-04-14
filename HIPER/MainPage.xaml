@@ -6,7 +6,9 @@
              mc:Ignorable="d" x:Class="HIPER.MainPage">
 
 
-    <StackLayout VerticalOptions="CenterAndExpand" Margin="20">
+    <StackLayout VerticalOptions="CenterAndExpand"
+                 Margin="20"
+                 CompressedLayout.IsHeadless="True">
         <!-- Place new controls here -->
         <Label Text="HIPER" FontSize="60" FontFamily="FUTURA BOOK" TextColor="{StaticResource hiperPeach}"
                HorizontalOptions="Center" />

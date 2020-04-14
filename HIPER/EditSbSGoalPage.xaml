@@ -1,7 +1,9 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="HIPER.EditSbSGoalPage">
     <ScrollView>
-    <StackLayout Margin="20">
+    <StackLayout
+        Margin="20"
+        CompressedLayout.IsHeadless="True">
 
         <Label x:Name="headerText" Text="EDIT GOAL" Style="{StaticResource Header}"></Label>
             

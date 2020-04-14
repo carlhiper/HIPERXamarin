@@ -5,7 +5,8 @@
         </ToolbarItem>
     </ContentPage.ToolbarItems>
     <ContentPage.Content>
-        <StackLayout Margin="20">
+        <StackLayout Margin="20"
+                     CompressedLayout.IsHeadless="True">
             <Label Style="{StaticResource Header}" Text="ADD GOAL"></Label>
             <Entry x:Name="goalNameEntry" Placeholder="TITLE" MaxLength="20"></Entry>
             <Entry x:Name="goalDescriptionEntry" Placeholder="DESCRIPTION" MaxLength="200"></Entry>

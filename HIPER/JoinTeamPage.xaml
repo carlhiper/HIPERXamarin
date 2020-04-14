@@ -4,7 +4,8 @@
         <ToolbarItem x:Name="saveButton" Text="Join" Clicked="saveButton_Clicked"></ToolbarItem> 
     </ContentPage.ToolbarItems>
     <ContentPage.Content>
-        <StackLayout Margin="20">
+        <StackLayout Margin="20"
+                     CompressedLayout.IsHeadless="True">
             <Label  Style="{StaticResource Header}" Text="JOIN TEAM"></Label>
             <Entry x:Name="teamNameEntry" Placeholder="TEAM NAME"></Entry>
             <Entry x:Name="identifierEntry" Placeholder="IDENTIFIER" ></Entry>

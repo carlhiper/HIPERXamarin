@@ -6,7 +6,8 @@
             <Label x:Name="teamIdentifierLabel" HorizontalOptions="Center"></Label>
             <Label x:Name="teamAdmin" Text="YOU" FontFamily="FUTURA BOOK" TextColor="{StaticResource hiperPeach}" HorizontalOptions="Center" Margin="0,10,0,0"></Label>
             <Frame>
-                <StackLayout Padding="5">
+                <StackLayout Padding="5"
+                             CompressedLayout.IsHeadless="True">
                     <Grid Padding="0">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto"></RowDefinition>

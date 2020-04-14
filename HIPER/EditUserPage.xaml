@@ -8,7 +8,9 @@
         </ToolbarItem>
     </ContentPage.ToolbarItems>
 
-    <StackLayout Margin="20,0">
+    <StackLayout
+        Margin="20,0"
+        CompressedLayout.IsHeadless="True">
         <Label Text="EDIT YOUR PROFILE" Style="{StaticResource Header}"></Label>
 
                <Grid>

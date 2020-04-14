@@ -4,7 +4,8 @@
         <ToolbarItem x:Name="saveButton" Text="Register" Clicked="saveButton_Clicked"></ToolbarItem> 
     </ContentPage.ToolbarItems>
     <ContentPage.Content>
-        <StackLayout Margin="20">
+        <StackLayout Margin="20"
+                     CompressedLayout.IsHeadless="True">
             <Label  Style="{StaticResource Header}" Text="CREATE USER"></Label>
             <Entry x:Name="firstNameEntry" Placeholder="FIRST NAME"></Entry>
             <Entry x:Name="lastNameEntry" Placeholder="LAST NAME"></Entry>

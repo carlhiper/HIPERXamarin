@@ -11,10 +11,15 @@
     <ContentPage.ToolbarItems>
     </ContentPage.ToolbarItems>
     <ContentPage.Content>
-        <StackLayout Margin="0">
-            <Label Margin="20" Style="{StaticResource Header}" Text="WALL"></Label>
+        <StackLayout
+            Margin="0"
+            CompressedLayout.IsHeadless="True">
+            <Label Margin="20"
+                   Style="{StaticResource Header}"
+                   Text="WALL"></Label>
 
             <CollectionView
+                
                 x:Name="feedCollectionView"
                 SelectionMode="None"
                 BackgroundColor="WhiteSmoke">
