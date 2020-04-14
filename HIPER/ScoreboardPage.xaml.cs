@@ -25,6 +25,8 @@ namespace HIPER
 
             createGoalsList(filter.SelectedIndex);
 
+            
+
             filter.ItemsSource = App.filterOptions;
         }
         
@@ -51,6 +53,8 @@ namespace HIPER
             List<GoalModel> activeGoals = new List<GoalModel>();
             List<GoalModel> closedGoals = new List<GoalModel>();
             var goals = await App.client.GetTable<GoalModel>().Where(g => g.UserId == App.loggedInUser.Id).ToListAsync();
+
+
 
             //Sorting
             if(filter == 0)

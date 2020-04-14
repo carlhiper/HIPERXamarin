@@ -39,6 +39,13 @@ namespace HIPER
                     //createUserButton.IsEnabled = false;
                 }
             } */
+
+            if (!string.IsNullOrEmpty(App.loggedInUser.Email))
+            {
+                loginNameEntry.Text = App.loggedInUser.Email;
+                passwordEntry.Text = App.loggedInUser.UserPassword;
+            }
+
         }
 
         void createUserButton_Clicked(System.Object sender, System.EventArgs e)
@@ -77,6 +84,11 @@ namespace HIPER
                     await DisplayAlert("Error", "Failed to login", "Ok");
                 }
             }
+        }
+
+        void forgotPasswordButton_Clicked(System.Object sender, System.EventArgs e)
+        {
+            Navigation.PushAsync(new ForgotPasswordPage());
         }
     }
 }

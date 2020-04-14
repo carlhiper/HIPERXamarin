@@ -27,6 +27,9 @@ namespace HIPER
                 await DisplayAlert("Field missing input!", "Please fill in all fields and try again.", "Ok");
             } else if(passwordEntry.Text != confirmPasswordEntry.Text) {
                 await DisplayAlert("Error", "Passwords don't match", "Ok");
+            } else if( passwordEntry.Text.Length < 8)
+            {
+                await DisplayAlert("Error", "The password need to be at least 8 characters", "Ok");
             }
             else
             {

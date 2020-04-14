@@ -43,6 +43,55 @@ namespace HIPER.Model
             set {; }
         }
 
+        public int PerformanceIndicator {
+            get
+            {
+                TimeSpan totalOffset = Deadline - CreatedDate;
+                float totalHours = totalOffset.Days * 24 + totalOffset.Hours;
+
+                TimeSpan dividerOffset;
+
+                if (Completed || Closed)
+                {
+                    dividerOffset = ClosedDate - CreatedDate;
+                }
+                else
+                {
+                    dividerOffset = DateTime.Now - CreatedDate;
+                }
+                float todayHours = dividerOffset.Days * 24 + dividerOffset.Hours;
+
+                float timePassedDividend = todayHours / totalHours;
+                if (timePassedDividend == 0)
+                    return 0;
+
+                float performanceIndicator = Progress / timePassedDividend;
+
+                if (performanceIndicator > 2)
+                {
+                    return 5;
+                }else if (performanceIndicator <= 2 && performanceIndicator > 1.25)
+                {
+                    return 4;
+                }else if (performanceIndicator <= 1.25 && performanceIndicator > 0.75)
+                {
+                    return 3;
+                }else if (performanceIndicator <= 0.75 && performanceIndicator > 0.5)
+                {
+                    return 2;
+                }
+                else
+                {
+                    return 1;
+                }
+            }
+
+            set {; }
+
+
+
+        }
+
         public bool Completed { get; set; }
 
         public bool Closed { get; set; }

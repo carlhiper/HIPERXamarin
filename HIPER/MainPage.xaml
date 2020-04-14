@@ -25,5 +25,12 @@
                 Text="CREATE USER"
                 Clicked="createUserButton_Clicked"
                 ></Button>
+        <Button x:Name="forgotPasswordButton"
+                Text="Forgot password?"
+                BackgroundColor="White"
+                TextColor="{StaticResource hiperPeach}"
+                FontSize="Small"
+                HorizontalOptions="End"
+                Clicked="forgotPasswordButton_Clicked"></Button>
     </StackLayout>
 </ContentPage>

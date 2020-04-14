@@ -37,35 +37,51 @@ namespace HIPER
 
         private async void saveProfile_Clicked(System.Object sender, System.EventArgs e)
         {
-            try { 
+            try {
+
+
+                if (passwordEntry.Text.Length < 8)
+                {
+                    await DisplayAlert("Error", "The password need to be at least 8 characters", "Ok");
+                    return;
+                }
+                else if(string.IsNullOrEmpty(emailEntry.Text))
+                {
+                    await DisplayAlert("Error", "You need to fill in your email", "Ok");
+                    return;
+                }
+
                 App.loggedInUser.FirstName = firstNameEntry.Text;
                 App.loggedInUser.LastName = lastNameEntry.Text;
                 App.loggedInUser.Company = companyEntry.Text;
                 App.loggedInUser.Email = emailEntry.Text;
                 App.loggedInUser.UserPassword = passwordEntry.Text;
 
-                //UploadImage(selectedImage.GetStream());
 
-
-                var account = CloudStorageAccount.Parse("DefaultEndpointsProtocol=https;AccountName=hiperimagestorage;AccountKey=IayenlXv3jbB7XVIlgiWC1xyIVUSWZcme4AWFxNR0vFPo+eI7xPzUKqegTtspMUarqBv1jUzWHesPFqciPVxMQ==;EndpointSuffix=core.windows.net");
-                var client = account.CreateCloudBlobClient();
-                var container = client.GetContainerReference("imagecontainer");
-                await container.CreateIfNotExistsAsync();
-
-                // delete old image file
-                if (App.loggedInUser.ImageName != null)
+                if (selectedImage != null)
                 {
-                    var oldBlockBlob = container.GetBlockBlobReference(App.loggedInUser.ImageName);
-                    bool result = await oldBlockBlob.DeleteIfExistsAsync();
+
+                    var account = CloudStorageAccount.Parse("DefaultEndpointsProtocol=https;AccountName=hiperimagestorage;AccountKey=IayenlXv3jbB7XVIlgiWC1xyIVUSWZcme4AWFxNR0vFPo+eI7xPzUKqegTtspMUarqBv1jUzWHesPFqciPVxMQ==;EndpointSuffix=core.windows.net");
+                    var client = account.CreateCloudBlobClient();
+                    var container = client.GetContainerReference("imagecontainer");
+                    await container.CreateIfNotExistsAsync();
+
+                    // delete old image file
+                    if (App.loggedInUser.ImageName != null)
+                    {
+                        var oldBlockBlob = container.GetBlockBlobReference(App.loggedInUser.ImageName);
+                        bool result = await oldBlockBlob.DeleteIfExistsAsync();
+                    }
+
+                    // upload new
+                    var name = Guid.NewGuid().ToString();
+                    var blockBlob = container.GetBlockBlobReference($"{name}.jpg");
+                    await blockBlob.UploadFromStreamAsync(selectedImage.GetStream());
+
+                    App.loggedInUser.ImageName = $"{name}.jpg";
+                    App.loggedInUser.ImageUrl = blockBlob.Uri.OriginalString;
+
                 }
-
-                // upload new
-                var name = Guid.NewGuid().ToString();
-                var blockBlob = container.GetBlockBlobReference($"{name}.jpg");
-                await blockBlob.UploadFromStreamAsync(selectedImage.GetStream());
-
-                App.loggedInUser.ImageName = $"{name}.jpg";
-                App.loggedInUser.ImageUrl = blockBlob.Uri.OriginalString;
 
 
                 await App.client.GetTable<UserModel>().UpdateAsync(App.loggedInUser);

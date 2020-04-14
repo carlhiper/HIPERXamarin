@@ -6,7 +6,7 @@
     <TabbedPage.ToolbarItems>
         <ToolbarItem ></ToolbarItem>
     </TabbedPage.ToolbarItems>
-    <local:FeedPage Title="FEED"></local:FeedPage>
+    <local:FeedPage Title="WALL"></local:FeedPage>
     <local:ScoreboardPage Title="SCOREBOARD"></local:ScoreboardPage>
     <local:TeamPage Title="TEAM"></local:TeamPage>
 

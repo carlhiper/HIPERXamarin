@@ -98,12 +98,23 @@ namespace HIPER
                     }
                     else
                     {
-                        // Remove team id from user
-                        App.loggedInUser.TeamId = null;
-                        await App.client.GetTable<UserModel>().UpdateAsync(App.loggedInUser);
-                        // Delete team from database
-                        await App.client.GetTable<TeamModel>().DeleteAsync(team);
-                        await DisplayAlert("Success", "You have left the team", "Ok");
+                        bool deleteTeam = await DisplayAlert("Warning", "You are about to delete your team. Are you sure?", "Yes", "No");
+                        if (deleteTeam)
+                        {
+                            // Remove team id from user
+                            App.loggedInUser.TeamId = null;
+                            teamNameLabel.Text = "";
+                            teamIdentifierLabel.Text = "";
+                            teamAdmin.Text = "YOU";
+                            createTeam.IsEnabled = true;
+                            joinTeam.IsEnabled = true;
+                            leaveTeam.IsEnabled = false;
+
+                            await App.client.GetTable<UserModel>().UpdateAsync(App.loggedInUser);
+                            // Delete team from database
+                            await App.client.GetTable<TeamModel>().DeleteAsync(team);
+                            await DisplayAlert("Success", "You have left the team", "Ok");
+                        }
                     }
                 }
                 else

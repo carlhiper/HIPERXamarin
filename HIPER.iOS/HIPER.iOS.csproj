@@ -165,5 +165,20 @@
     <BundleResource Include="Resources\ok.png" />
     <BundleResource Include="Resources\ok%402x.png" />
     <BundleResource Include="Resources\ok%403x.png" />
+    <BundleResource Include="Resources\arrow_down.png" />
+    <BundleResource Include="Resources\arrow_down%402x.png" />
+    <BundleResource Include="Resources\arrow_down%403x.png" />
+    <BundleResource Include="Resources\arrow_neutral_down.png" />
+    <BundleResource Include="Resources\arrow_neutral_down%402x.png" />
+    <BundleResource Include="Resources\arrow_neutral_down%403x.png" />
+    <BundleResource Include="Resources\arrow_neutral_up.png" />
+    <BundleResource Include="Resources\arrow_neutral_up%402x.png" />
+    <BundleResource Include="Resources\arrow_neutral_up%403x.png" />
+    <BundleResource Include="Resources\arrow_neutral.png" />
+    <BundleResource Include="Resources\arrow_neutral%402x.png" />
+    <BundleResource Include="Resources\arrow_neutral%403x.png" />
+    <BundleResource Include="Resources\arrow_up.png" />
+    <BundleResource Include="Resources\arrow_up%402x.png" />
+    <BundleResource Include="Resources\arrow_up%403x.png" />
   </ItemGroup>
 </Project>
