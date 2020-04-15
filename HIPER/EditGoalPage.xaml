@@ -81,6 +81,28 @@
             <Label VerticalOptions="Center" HorizontalOptions="Start" Grid.Row="1" Grid.Column="2" Text="MONTHLY"></Label>
             <Picker x:Name="dayOfMonthPicker" Grid.Row="1" Grid.Column="3"></Picker>
         </Grid>
+        <Label Text="COMPETITION" HorizontalOptions="Center" TextColor="{StaticResource hiperPeach}" Margin="0,20,0,5"></Label>
+        <Grid x:Name="gridChallenge">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="20" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="30" />
+                <ColumnDefinition Width="120" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <CheckBox VerticalOptions="Start" HorizontalOptions="Start" Grid.Row="0" Grid.Column="0" x:Name="challengeCheckbox" Color="{StaticResource hiperPeach}"></CheckBox>
+            <Label VerticalOptions="Start" Grid.Row="0" Grid.Column="1" Text="CHALLENGE"/>
+            <CollectionView x:Name="challengeCollectionView" Grid.Row="0" Grid.Column="2" Grid.RowSpan="2" HeightRequest="200" SelectionMode="Multiple">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Label Text="{Binding TeamMember}"></Label>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </Grid>
+
         <Button x:Name="updateGoal" Text="UPDATE" Clicked="updateGoal_Clicked" Margin="0,20,0,0"></Button>
         <Button x:Name="deleteGoal" Text="DELETE" Clicked="deleteGoal_Clicked"></Button>
         <Button x:Name="completeGoal" Text="COMPLETED" Clicked="completeGoal_Clicked"></Button>

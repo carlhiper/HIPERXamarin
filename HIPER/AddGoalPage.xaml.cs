@@ -34,12 +34,15 @@ namespace HIPER
             repeatableRB1.IsChecked = true;
             repeatableRB21.IsChecked = true;
             targetRB1.IsChecked = true;
-            targetRB1.IsChecked = true;
+            step1CB.IsVisible = false;
+            step1entry.IsVisible = false;
+            step1label.IsVisible = false;
         }
 
         private async void saveGoal_Clicked(System.Object sender, System.EventArgs e)
         {
-            try {
+            try
+            {
                 bool isGoalNameEmpty = string.IsNullOrEmpty(goalNameEntry.Text);
                 bool isGoalDescriptionEmpty = string.IsNullOrEmpty(goalDescriptionEntry.Text);
                 bool isTargetCheckedAndEntryFilled = targetRB1.IsChecked && string.IsNullOrEmpty(goalTargetEntry.Text);
@@ -53,7 +56,7 @@ namespace HIPER
                 }
                 else
                 {
-                    
+
                     var startDate = DateHandling.GetStartDate(repeatableRB2.IsChecked && repeatableRB21.IsChecked, repeatableRB2.IsChecked && repeatableRB22.IsChecked, weekdayPicker.SelectedIndex, dayOfMonthPicker.SelectedIndex);
                     DateTime deadLineDate;
                     if (repeatableRB2.IsChecked)
@@ -68,7 +71,8 @@ namespace HIPER
 
 
 
-                    GoalModel goal = new GoalModel() {
+                    GoalModel goal = new GoalModel()
+                    {
                         Title = goalNameEntry.Text,
                         Description = goalDescriptionEntry.Text,
                         Deadline = deadLineDate,
@@ -80,13 +84,33 @@ namespace HIPER
                         CreatedDate = startDate,
                         LastUpdatedDate = DateTime.Now,
                         Progress = 0,
-                        TargetType = targetRB1.IsChecked? 0 : 1,
-                        RepeatType = repeatableRB1.IsChecked? 0 : 1,
-                        WeeklyOrMonthly = repeatableRB21.IsChecked? 0 : 1, 
+                        TargetType = targetRB1.IsChecked ? 0 : 1,
+                        RepeatType = repeatableRB1.IsChecked ? 0 : 1,
+                        WeeklyOrMonthly = repeatableRB21.IsChecked ? 0 : 1,
                         RepeatWeekly = weekdayPicker.SelectedIndex,
                         RepeatMonthly = dayOfMonthPicker.SelectedIndex,
-                        SteByStepAmount = stepbystepPicker.SelectedIndex
-                    };
+                        SteByStepAmount = stepbystepPicker.SelectedIndex,
+
+                        Checkbox1 = step1CB.IsChecked,
+                        Checkbox1Comment = step1entry.Text,
+                        Checkbox2 = step2CB.IsChecked,
+                        Checkbox2Comment = step2entry.Text,
+                        Checkbox3 = step3CB.IsChecked,
+                        Checkbox3Comment = step3entry.Text,
+                        Checkbox4 = step4CB.IsChecked,
+                        Checkbox4Comment = step4entry.Text,
+                        Checkbox5 = step5CB.IsChecked,
+                        Checkbox5Comment = step5entry.Text,
+                        Checkbox6 = step6CB.IsChecked,
+                        Checkbox6Comment = step6entry.Text,
+                        Checkbox7 = step7CB.IsChecked,
+                        Checkbox7Comment = step7entry.Text,
+                        Checkbox8 = step8CB.IsChecked,
+                        Checkbox8Comment = step8entry.Text,
+                        Checkbox9 = step9CB.IsChecked,
+                        Checkbox9Comment = step9entry.Text
+
+                };
 
                     //if (goal.RepeatMonthly == 28) // Last day of month
                     //{
@@ -97,13 +121,13 @@ namespace HIPER
                     await DisplayAlert("Success", "Goal saved", "Ok");
                     await Navigation.PopAsync();
                 }
-            
+
             }
-            catch(NullReferenceException nre)
+            catch (NullReferenceException nre)
             {
                 await DisplayAlert("Goal not saved!", "Something went wrong, please try again", "Ok");
             }
-            catch(Exception ex) 
+            catch (Exception ex)
             {
                 await DisplayAlert("Goal not saved!", "Something went wrong, please try again", "Ok");
             }
@@ -186,6 +210,39 @@ namespace HIPER
         void targetRB2_PropertyChanged(System.Object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
             radioButtonController2();
+        }
+
+        void stepbystepPicker_SelectedIndexChanged(System.Object sender, System.EventArgs e)
+        {
+            int steps = stepbystepPicker.SelectedIndex;
+
+            step1CB.IsVisible = (stepbystepPicker.SelectedIndex > -1);
+            step1entry.IsVisible = (stepbystepPicker.SelectedIndex > -1);
+            step1label.IsVisible = (stepbystepPicker.SelectedIndex > -1);
+            step2CB.IsVisible = (stepbystepPicker.SelectedIndex > 0) ? true : false;
+            step2entry.IsVisible = (stepbystepPicker.SelectedIndex > 0) ? true : false;
+            step2label.IsVisible = (stepbystepPicker.SelectedIndex > 0) ? true : false;
+            step3CB.IsVisible = (stepbystepPicker.SelectedIndex > 1) ? true : false;
+            step3entry.IsVisible = (stepbystepPicker.SelectedIndex > 1) ? true : false;
+            step3label.IsVisible = (stepbystepPicker.SelectedIndex > 1) ? true : false;
+            step4CB.IsVisible = (stepbystepPicker.SelectedIndex > 2) ? true : false;
+            step4entry.IsVisible = (stepbystepPicker.SelectedIndex > 2) ? true : false;
+            step4label.IsVisible = (stepbystepPicker.SelectedIndex > 2) ? true : false;
+            step5CB.IsVisible = (stepbystepPicker.SelectedIndex > 3) ? true : false;
+            step5entry.IsVisible = (stepbystepPicker.SelectedIndex > 3) ? true : false;
+            step5label.IsVisible = (stepbystepPicker.SelectedIndex > 3) ? true : false;
+            step6CB.IsVisible = (stepbystepPicker.SelectedIndex > 4) ? true : false;
+            step6entry.IsVisible = (stepbystepPicker.SelectedIndex > 4) ? true : false;
+            step6label.IsVisible = (stepbystepPicker.SelectedIndex > 4) ? true : false;
+            step7CB.IsVisible = (stepbystepPicker.SelectedIndex > 5) ? true : false;
+            step7entry.IsVisible = (stepbystepPicker.SelectedIndex > 5) ? true : false;
+            step7label.IsVisible = (stepbystepPicker.SelectedIndex > 5) ? true : false;
+            step8CB.IsVisible = (stepbystepPicker.SelectedIndex > 6) ? true : false;
+            step8entry.IsVisible = (stepbystepPicker.SelectedIndex > 6) ? true : false;
+            step8label.IsVisible = (stepbystepPicker.SelectedIndex > 6) ? true : false;
+            step9CB.IsVisible = (stepbystepPicker.SelectedIndex > 7) ? true : false;
+            step9entry.IsVisible = (stepbystepPicker.SelectedIndex > 7) ? true : false;
+            step9label.IsVisible = (stepbystepPicker.SelectedIndex > 7) ? true : false;
         }
     }
 }

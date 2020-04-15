@@ -15,7 +15,7 @@
     </ContentPage.ToolbarItems>
     <ContentPage.Content>
   
-        <StackLayout Margin="20"
+        <StackLayout Margin="10"
                      CompressedLayout.IsHeadless="True">
 
             <Label Text="SCOREBOARD" Style="{StaticResource Header}"></Label>
@@ -34,7 +34,7 @@
                 <Label Grid.Column="0" Text="Active" VerticalOptions="End" HorizontalOptions="End"></Label>
                 <Switch Grid.Column="1" x:Name="showClosedSwitch" OnColor="LightGray" ThumbColor="{StaticResource hiperPeach}" PropertyChanged="showClosedSwitch_PropertyChanged" VerticalOptions="End"></Switch> 
                 <Label Grid.Column="2" Text="Closed" VerticalOptions="End" HorizontalOptions="Start"></Label>
-                <Picker Grid.Column="3" x:Name="filter" VerticalOptions="End" HorizontalOptions="FillAndExpand" Title="Filter" SelectedIndexChanged="filter_SelectedIndexChanged"></Picker>
+                <Picker Grid.Column="3" x:Name="filter" VerticalOptions="End" HorizontalOptions="FillAndExpand" Title="Filter" SelectedIndexChanged="filter_SelectedIndexChanged" FontSize="Small"></Picker>
             </Grid>
 
             <CollectionView
@@ -49,7 +49,7 @@
                             <Frame>
                                 <Grid Padding="10">
                                     <Grid.RowDefinitions>
-                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="30" />
                                         <RowDefinition Height="Auto" />
                                         <RowDefinition Height="Auto" />
                                     </Grid.RowDefinitions>
@@ -57,7 +57,7 @@
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="200" />
                                         <ColumnDefinition Width="*" />
-                                        <ColumnDefinition Width="30"/>
+                                        <ColumnDefinition Width="35"/>
                                     </Grid.ColumnDefinitions>
               
                                     <Label Grid.Row="0"
@@ -74,17 +74,10 @@
                                         Source="{Binding PerformanceIndicator, Converter={StaticResource converter}}"
                                         Grid.Row="0"
                                         Grid.Column="2"
+                                        VerticalOptions="Start"
                                         HorizontalOptions="End"
                                         ></Image>
-                                    <Image
-                                        Source="{StaticResource ok}"
-                                        Aspect="AspectFit"
-                                        HorizontalOptions="End"
-                                        HeightRequest="20"
-                                        Grid.Column="2"
-                                        Grid.Row="2"
-                                        IsVisible="{Binding Completed}">
-                                    </Image>
+                                  
                                     <Label Grid.Row="1"
                                         Grid.Column="0" 
                                         Text="{Binding Description}"
@@ -95,6 +88,15 @@
                                         Text="{Binding Deadline, StringFormat='Deadline: {0:yyyy-MM-dd}'}"
                                         FontAttributes="Italic" 
                                         VerticalOptions="End" />
+                                      <Image
+                                        Source="{StaticResource ok}"
+                                        Aspect="AspectFit"
+                                        HorizontalOptions="End"
+                                        HeightRequest="20"
+                                        Grid.Column="2"
+                                        Grid.Row="2"
+                                        IsVisible="{Binding Completed}">
+                                    </Image>
                                 </Grid>
                             </Frame>
                         </ContentView>

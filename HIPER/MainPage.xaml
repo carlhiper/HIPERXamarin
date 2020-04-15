@@ -27,9 +27,10 @@
                 ></Button>
         <Button x:Name="forgotPasswordButton"
                 Text="Forgot password?"
-                BackgroundColor="White"
+                BackgroundColor="Transparent"
                 TextColor="{StaticResource hiperPeach}"
                 FontSize="Small"
+                WidthRequest="200"
                 HorizontalOptions="End"
                 Clicked="forgotPasswordButton_Clicked"></Button>
     </StackLayout>
