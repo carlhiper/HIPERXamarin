@@ -8,11 +8,7 @@ namespace HIPER.Model
         [PrimaryKey]
         public string Id { get; set; }
 
-
-        public string UserId { get; set; }
-
-
-        public string GoalId { get; set; }
+        public string OwnerId { get; set; }
 
     }
 }

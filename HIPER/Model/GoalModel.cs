@@ -12,6 +12,10 @@ namespace HIPER.Model
 
         public string TeamId { get; set; }
 
+        public string ChallengeId { get; set; }
+
+        public bool GoalAccepted { get; set; }
+
         [MaxLength(40)]
         public string Title { get; set; }
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using HIPER.Helpers;
 using HIPER.Model;
 using SQLite;
@@ -10,6 +11,8 @@ namespace HIPER
     public partial class AddGoalPage : ContentPage
     {
         UserModel user;
+        List<UserModel> teammembers;
+        ChallengeModel challenge;
 
         public AddGoalPage()
         {
@@ -24,6 +27,12 @@ namespace HIPER
             this.user = user;
 
             initPage();
+        }
+
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+
         }
 
         private void initPage()
@@ -50,74 +59,32 @@ namespace HIPER
                 bool isWeeklyCheckedAndEntryFilled = repeatableRB2.IsChecked && repeatableRB21.IsChecked && (weekdayPicker.SelectedIndex < 0);
                 bool isMonthlyCheckedAndEntryFilled = repeatableRB2.IsChecked && repeatableRB22.IsChecked && (dayOfMonthPicker.SelectedIndex < 0);
 
+
+                if (challengeCheckbox.IsChecked)
+                {
+                    challenge = new ChallengeModel()
+                    {
+                        OwnerId = App.loggedInUser.Id
+                    };
+                    await App.client.GetTable<ChallengeModel>().InsertAsync(challenge);
+                    challenge = (await App.client.GetTable<ChallengeModel>().Where(c => c.OwnerId == App.loggedInUser.Id).ToListAsync()).FirstOrDefault();
+                    
+                    var challengedUsers = challengeCollectionView.SelectedItems;
+
+                    foreach (UserModel user in challengedUsers)
+                    {
+                        CreateGoal(user.Id, false, challenge.Id);
+                    }
+                }
+
+
                 if (isGoalNameEmpty || isGoalDescriptionEmpty || isTargetCheckedAndEntryFilled || isStepbyStepCheckedAndEntryFilled || isWeeklyCheckedAndEntryFilled || isMonthlyCheckedAndEntryFilled)
                 {
                     await DisplayAlert("Error", "All field needs to be entered", "Ok");
                 }
                 else
                 {
-
-                    var startDate = DateHandling.GetStartDate(repeatableRB2.IsChecked && repeatableRB21.IsChecked, repeatableRB2.IsChecked && repeatableRB22.IsChecked, weekdayPicker.SelectedIndex, dayOfMonthPicker.SelectedIndex);
-                    DateTime deadLineDate;
-                    if (repeatableRB2.IsChecked)
-                    {
-                        deadLineDate = DateHandling.GetDeadlineDateForRepeatingGoals(repeatableRB2.IsChecked && repeatableRB21.IsChecked, repeatableRB2.IsChecked && repeatableRB22.IsChecked, startDate);
-                    }
-                    else
-                    {
-                        deadLineDate = DateTime.Parse(goalDeadlineEntry.Date.ToString());
-                    }
-
-
-
-
-                    GoalModel goal = new GoalModel()
-                    {
-                        Title = goalNameEntry.Text,
-                        Description = goalDescriptionEntry.Text,
-                        Deadline = deadLineDate,
-                        TargetValue = goalTargetEntry.Text,
-                        PrivateGoal = privateGoalCheckbox.IsChecked,
-                        UserId = user.Id,
-                        CurrentValue = "0",
-                        ClosedDate = DateTime.MaxValue,
-                        CreatedDate = startDate,
-                        LastUpdatedDate = DateTime.Now,
-                        Progress = 0,
-                        TargetType = targetRB1.IsChecked ? 0 : 1,
-                        RepeatType = repeatableRB1.IsChecked ? 0 : 1,
-                        WeeklyOrMonthly = repeatableRB21.IsChecked ? 0 : 1,
-                        RepeatWeekly = weekdayPicker.SelectedIndex,
-                        RepeatMonthly = dayOfMonthPicker.SelectedIndex,
-                        SteByStepAmount = stepbystepPicker.SelectedIndex,
-
-                        Checkbox1 = step1CB.IsChecked,
-                        Checkbox1Comment = step1entry.Text,
-                        Checkbox2 = step2CB.IsChecked,
-                        Checkbox2Comment = step2entry.Text,
-                        Checkbox3 = step3CB.IsChecked,
-                        Checkbox3Comment = step3entry.Text,
-                        Checkbox4 = step4CB.IsChecked,
-                        Checkbox4Comment = step4entry.Text,
-                        Checkbox5 = step5CB.IsChecked,
-                        Checkbox5Comment = step5entry.Text,
-                        Checkbox6 = step6CB.IsChecked,
-                        Checkbox6Comment = step6entry.Text,
-                        Checkbox7 = step7CB.IsChecked,
-                        Checkbox7Comment = step7entry.Text,
-                        Checkbox8 = step8CB.IsChecked,
-                        Checkbox8Comment = step8entry.Text,
-                        Checkbox9 = step9CB.IsChecked,
-                        Checkbox9Comment = step9entry.Text
-
-                };
-
-                    //if (goal.RepeatMonthly == 28) // Last day of month
-                    //{
-                    //    goal.RepeatMonthly = DateTime.DaysInMonth(DateTime.Now.Year, DateTime.Now.Month);
-                    //}
-
-                    await App.client.GetTable<GoalModel>().InsertAsync(goal);
+                    CreateGoal(App.loggedInUser.Id, true, challenge.Id);
                     await DisplayAlert("Success", "Goal saved", "Ok");
                     await Navigation.PopAsync();
                 }
@@ -131,6 +98,73 @@ namespace HIPER
             {
                 await DisplayAlert("Goal not saved!", "Something went wrong, please try again", "Ok");
             }
+        }
+
+        private async void CreateGoal(string userId, bool accepted, string challengeId)
+        {
+            var startDate = DateHandling.GetStartDate(repeatableRB2.IsChecked && repeatableRB21.IsChecked, repeatableRB2.IsChecked && repeatableRB22.IsChecked, weekdayPicker.SelectedIndex, dayOfMonthPicker.SelectedIndex);
+            DateTime deadLineDate;
+            if (repeatableRB2.IsChecked)
+            {
+                deadLineDate = DateHandling.GetDeadlineDateForRepeatingGoals(repeatableRB2.IsChecked && repeatableRB21.IsChecked, repeatableRB2.IsChecked && repeatableRB22.IsChecked, startDate);
+            }
+            else
+            {
+                deadLineDate = DateTime.Parse(goalDeadlineEntry.Date.ToString());
+            }
+
+            GoalModel goal = new GoalModel()
+            {
+                Title = goalNameEntry.Text,
+                Description = goalDescriptionEntry.Text,
+                Deadline = deadLineDate,
+                TargetValue = goalTargetEntry.Text,
+                PrivateGoal = privateGoalCheckbox.IsChecked,
+                UserId = userId,
+                GoalAccepted = accepted,
+                ChallengeId = challengeId,
+                CurrentValue = "0",
+                ClosedDate = DateTime.MaxValue,
+                CreatedDate = startDate,
+                LastUpdatedDate = DateTime.Now,
+                Progress = 0,
+                TargetType = targetRB1.IsChecked ? 0 : 1,
+                RepeatType = repeatableRB1.IsChecked ? 0 : 1,
+                WeeklyOrMonthly = repeatableRB21.IsChecked ? 0 : 1,
+                RepeatWeekly = weekdayPicker.SelectedIndex,
+                RepeatMonthly = dayOfMonthPicker.SelectedIndex,
+                SteByStepAmount = stepbystepPicker.SelectedIndex,
+
+                Checkbox1 = step1CB.IsChecked,
+                Checkbox1Comment = step1entry.Text,
+                Checkbox2 = step2CB.IsChecked,
+                Checkbox2Comment = step2entry.Text,
+                Checkbox3 = step3CB.IsChecked,
+                Checkbox3Comment = step3entry.Text,
+                Checkbox4 = step4CB.IsChecked,
+                Checkbox4Comment = step4entry.Text,
+                Checkbox5 = step5CB.IsChecked,
+                Checkbox5Comment = step5entry.Text,
+                Checkbox6 = step6CB.IsChecked,
+                Checkbox6Comment = step6entry.Text,
+                Checkbox7 = step7CB.IsChecked,
+                Checkbox7Comment = step7entry.Text,
+                Checkbox8 = step8CB.IsChecked,
+                Checkbox8Comment = step8entry.Text,
+                Checkbox9 = step9CB.IsChecked,
+                Checkbox9Comment = step9entry.Text
+
+            };
+
+            //if (goal.RepeatMonthly == 28) // Last day of month
+            //{
+            //    goal.RepeatMonthly = DateTime.DaysInMonth(DateTime.Now.Year, DateTime.Now.Month);
+            //}
+
+            await App.client.GetTable<GoalModel>().InsertAsync(goal);
+
+
+
         }
 
         private void radioButtonController()
@@ -243,6 +277,27 @@ namespace HIPER
             step9CB.IsVisible = (stepbystepPicker.SelectedIndex > 7) ? true : false;
             step9entry.IsVisible = (stepbystepPicker.SelectedIndex > 7) ? true : false;
             step9label.IsVisible = (stepbystepPicker.SelectedIndex > 7) ? true : false;
+        }
+
+        private async void challengeCheckbox_CheckedChanged(System.Object sender, Xamarin.Forms.CheckedChangedEventArgs e)
+        {
+            if (!challengeCheckbox.IsChecked)
+            {
+                challengeCollectionView.ItemsSource = null;
+            }
+            else
+            {
+                try { 
+                    if(teammembers == null)
+                    {
+                        teammembers = await App.client.GetTable<UserModel>().Where(u => u.TeamId == App.loggedInUser.TeamId).ToListAsync();
+                        teammembers.RemoveAt(teammembers.FindIndex(a => a.Id == App.loggedInUser.Id));
+                    }
+                    challengeCollectionView.ItemsSource = teammembers;
+                }
+                catch (Exception ex){ }
+
+            }
         }
     }
 }

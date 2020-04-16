@@ -8,6 +8,7 @@
        <!-- <Image x:Key="completed" Source="ok.png"></Image> -->
 
         <x:String x:Key="ok">ok.png</x:String>
+        <x:String x:Key="challenge">challenge.png</x:String>
 
         <Style TargetType="Button">
             <Setter Property="BackgroundColor" Value="{StaticResource hiperPeach}"></Setter>

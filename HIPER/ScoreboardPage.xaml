@@ -7,6 +7,8 @@
     <ContentPage.Resources>
         <ResourceDictionary>
             <converters:PerformanceToImageConverter x:Key="converter"/>
+            <converters:ChallengeIdToColorConverter x:Key="frameColorConverter"/>
+            <converters:ChallengeIdToBoolConverter x:Key="challengeVisibleConverter"/>
         </ResourceDictionary>
     </ContentPage.Resources>
     <ContentPage.ToolbarItems>
@@ -46,45 +48,56 @@
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
                         <ContentView>
-                            <Frame>
+                            <Frame BorderColor="{Binding ChallengeId, Converter={StaticResource frameColorConverter}}">
                                 <Grid Padding="10">
                                     <Grid.RowDefinitions>
-                                        <RowDefinition Height="30" />
+                                        <RowDefinition Height="23" />
                                         <RowDefinition Height="Auto" />
                                         <RowDefinition Height="Auto" />
                                     </Grid.RowDefinitions>
 
                                     <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
                                         <ColumnDefinition Width="200" />
                                         <ColumnDefinition Width="*" />
                                         <ColumnDefinition Width="35"/>
                                     </Grid.ColumnDefinitions>
-              
+
+                                    <Image
+                                        Source="{StaticResource challenge}"
+                                        Aspect="AspectFit"
+                                        HorizontalOptions="Start"
+                                        HeightRequest="25"
+                                        Grid.Column="0"
+                                        Grid.Row="0"
+                                        IsVisible="{Binding ChallengeId, Converter={StaticResource challengeVisibleConverter}}">
+                                    </Image>
                                     <Label Grid.Row="0"
-                                        Grid.Column="0" 
+                                        
+                                        Grid.Column="1" 
                                         Text="{Binding Title}" 
                                         FontAttributes="Bold" />
                                     <ProgressBar
                                         VerticalOptions="Center"
-                                        Grid.Column="1"
+                                        Grid.Column="2"
                                         Grid.Row="0"
                                         Progress="{Binding Progress}"
                                         ProgressColor="{StaticResource hiperPeach}" ></ProgressBar>
                                     <Image
                                         Source="{Binding PerformanceIndicator, Converter={StaticResource converter}}"
                                         Grid.Row="0"
-                                        Grid.Column="2"
+                                        Grid.Column="3"
                                         VerticalOptions="Start"
-                                        HorizontalOptions="End"
-                                        ></Image>
-                                  
+                                        HorizontalOptions="End"></Image>
                                     <Label Grid.Row="1"
+                                        Grid.ColumnSpan="3"
                                         Grid.Column="0" 
                                         Text="{Binding Description}"
-                                        FontAttributes="Italic" 
+                                        FontAttributes="None" 
                                         VerticalOptions="End" />
                                     <Label Grid.Row="2"
-                                        Grid.Column="0" 
+                                        Grid.Column="0"
+                                           Grid.ColumnSpan="3"
                                         Text="{Binding Deadline, StringFormat='Deadline: {0:yyyy-MM-dd}'}"
                                         FontAttributes="Italic" 
                                         VerticalOptions="End" />
@@ -93,7 +106,7 @@
                                         Aspect="AspectFit"
                                         HorizontalOptions="End"
                                         HeightRequest="20"
-                                        Grid.Column="2"
+                                        Grid.Column="3"
                                         Grid.Row="2"
                                         IsVisible="{Binding Completed}">
                                     </Image>
