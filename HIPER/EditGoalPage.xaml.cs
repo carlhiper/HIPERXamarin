@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using HIPER.Helpers;
 using HIPER.Model;
 using SQLite;
@@ -10,6 +11,7 @@ namespace HIPER
     public partial class EditGoalPage : ContentPage
     {
         GoalModel selectedGoal;
+        ChallengeModel challenge;
 
         public EditGoalPage(GoalModel selectedGoal)
         {
@@ -25,20 +27,14 @@ namespace HIPER
             goalCurrentEntry.Text = selectedGoal.CurrentValue;
             privateGoalCheckbox.IsChecked = selectedGoal.PrivateGoal;
 
-            gridTitle.IsEnabled = !(selectedGoal.Completed || selectedGoal.Closed);
-            gridAimHigh.IsEnabled = !(selectedGoal.Completed || selectedGoal.Closed);
-            gridSingle.IsEnabled = !(selectedGoal.Completed || selectedGoal.Closed);
-            gridSingle.IsEnabled = !(selectedGoal.Completed || selectedGoal.Closed);
 
-            deleteGoal.IsVisible = !(selectedGoal.Completed || selectedGoal.Closed);
-            updateGoal.IsVisible = !(selectedGoal.Completed || selectedGoal.Closed);
-            completeGoal.IsVisible = !(selectedGoal.Completed || selectedGoal.Closed);
-            closeGoal.IsVisible = !(selectedGoal.Completed || selectedGoal.Closed);
+            GetChallenge();
 
             repeatableRB1.IsChecked = (selectedGoal.RepeatType == 0) ? true : false;
             repeatableRB2.IsChecked = (selectedGoal.RepeatType == 1) ? true : false;
             repeatableRB21.IsChecked = (selectedGoal.WeeklyOrMonthly == 0) ? true : false;
             repeatableRB22.IsChecked = (selectedGoal.WeeklyOrMonthly == 1) ? true : false;
+
 
             weekdayPicker.SelectedIndex = selectedGoal.RepeatWeekly;
             dayOfMonthPicker.SelectedIndex = selectedGoal.RepeatMonthly;
@@ -47,9 +43,72 @@ namespace HIPER
             {
                 headerText.Text = "CLOSED GOAL";
             }
+            else if (!string.IsNullOrEmpty(selectedGoal.ChallengeId))
+            {
+                headerText.Text = "UPDATE CHALLENGE";
+            }
             else
             {
                 headerText.Text = "EDIT GOAL";
+            }
+        }
+
+        private async void GetChallenge()
+        {
+            bool isChallenge = !string.IsNullOrEmpty(selectedGoal.ChallengeId);
+
+            if (selectedGoal.Completed || selectedGoal.Closed)
+            {
+                gridTitle.IsEnabled = false;
+                gridAimHigh.IsEnabled = false;
+                gridSingle.IsEnabled = false;
+
+                deleteGoal.IsVisible = false;
+                updateGoal.IsVisible = false;
+                completeGoal.IsVisible = false;
+                closeGoal.IsVisible = false;
+            }
+            else if (isChallenge)
+            {
+                challenge = (await App.client.GetTable<ChallengeModel>().Where(c => c.Id == selectedGoal.ChallengeId).ToListAsync()).FirstOrDefault();
+                if (challenge != null)
+                {
+                    bool isChallengeOwner = (challenge.OwnerId == App.loggedInUser.Id);
+                    if (isChallengeOwner)
+                    {
+                        gridTitle.IsEnabled = true;
+                        gridAimHigh.IsEnabled = true;
+                        gridSingle.IsEnabled = true;
+
+                        deleteGoal.IsVisible = true;
+                        updateGoal.IsVisible = true;
+                        completeGoal.IsVisible = true;
+                        closeGoal.IsVisible = true;
+                    }
+                    else
+                    {
+                        gridTitle.IsEnabled = false;
+                        goalTargetEntry.IsEnabled = false;
+                        goalCurrentEntry.IsEnabled = true;
+                        gridSingle.IsEnabled = false;
+
+                        deleteGoal.IsVisible = false;
+                        updateGoal.IsVisible = true;
+                        completeGoal.IsVisible = true;
+                        closeGoal.IsVisible = false;
+                    }
+                }
+            }
+            else
+            {
+                gridTitle.IsEnabled = true;
+                gridAimHigh.IsEnabled = true;
+                gridSingle.IsEnabled = true;
+
+                deleteGoal.IsVisible = true;
+                updateGoal.IsVisible = true;
+                completeGoal.IsVisible = true;
+                closeGoal.IsVisible = true;
             }
         }
 

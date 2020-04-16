@@ -283,7 +283,7 @@ namespace HIPER
         {
             if (!challengeCheckbox.IsChecked)
             {
-                challengeCollectionView.ItemsSource = null;
+                challengeCollectionView.IsVisible = false;
             }
             else
             {
@@ -296,6 +296,7 @@ namespace HIPER
                     challengeCollectionView.ItemsSource = teammembers;
                 }
                 catch (Exception ex){ }
+                challengeCollectionView.IsVisible = true;
 
             }
         }

@@ -73,7 +73,6 @@
                                         IsVisible="{Binding ChallengeId, Converter={StaticResource challengeVisibleConverter}}">
                                     </Image>
                                     <Label Grid.Row="0"
-                                        
                                         Grid.Column="1" 
                                         Text="{Binding Title}" 
                                         FontAttributes="Bold" />
@@ -97,7 +96,7 @@
                                         VerticalOptions="End" />
                                     <Label Grid.Row="2"
                                         Grid.Column="0"
-                                           Grid.ColumnSpan="3"
+                                        Grid.ColumnSpan="3"
                                         Text="{Binding Deadline, StringFormat='Deadline: {0:yyyy-MM-dd}'}"
                                         FontAttributes="Italic" 
                                         VerticalOptions="End" />
