@@ -5,14 +5,14 @@
         Margin="20"
         CompressedLayout.IsHeadless="True">
 
-        <Label x:Name="headerText" Text="EDIT GOAL" Style="{StaticResource Header}"></Label>
-            
+        <Label x:Name="headerText" Text="EDIT GOAL" Margin="10" Style ="{StaticResource Header}"></Label>
+ 
         <Grid x:Name="gridTitle">
             <Grid.RowDefinitions>
-                <RowDefinition Height="40" />
-                <RowDefinition Height="40" />
-                <RowDefinition Height="40" />
-                <RowDefinition Height="40" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
@@ -21,8 +21,8 @@
             <Label VerticalOptions="Center" Grid.Row="0" Grid.Column="0" Text="TITLE"/>
             <Entry x:Name="goalNameEntry" Grid.Row="0" Grid.Column="1" Placeholder="TITLE" MaxLength="20"></Entry>
             <Label VerticalOptions="Center" Grid.Row="1" Grid.Column="0" Text="DESCRIPTION"/>
-            <Entry x:Name="goalDescriptionEntry" HeightRequest="100" Grid.Row="1" Grid.Column="1" Placeholder="DESCRIPTION" MaxLength="200"></Entry>
-            <Label VerticalOptions="Center" Grid.Row="2" Grid.Column="0" Text="PRIVATE GOAL"/>
+            <Entry x:Name="goalDescriptionEntry" HeightRequest="100" VerticalTextAlignment="Start" Grid.Row="1" Grid.Column="1" Placeholder="DESCRIPTION" MaxLength="200"></Entry>
+            <Label VerticalOptions="Center" x:Name="privateGoalLabel" Grid.Row="2" Grid.Column="0" Text="PRIVATE GOAL"/>
             <CheckBox VerticalOptions="Center" HorizontalOptions="Center" Grid.Row="2" Grid.Column="1" x:Name="privateGoalCheckbox" Color="{StaticResource hiperPeach}"></CheckBox>
             <Label VerticalOptions="Center" HorizontalOptions="Start" Grid.Row="3" Grid.Column="0" Text="NUMBER OF STEPS"></Label>
             <Picker Grid.Row="3" Grid.Column="1" x:Name="stepbystepPicker"></Picker>
@@ -111,10 +111,7 @@
             <Picker x:Name="dayOfMonthPicker" Grid.Row="1" Grid.Column="3"></Picker>
         </Grid>
 
-        <Button x:Name="updateGoal" Text="UPDATE" Clicked="updateGoal_Clicked" Margin="0,20,0,0"></Button>
         <Button x:Name="deleteGoal" Text="DELETE" Clicked="deleteGoal_Clicked"></Button>
-        <Button x:Name="completeGoal" Text="COMPLETED" Clicked="completeGoal_Clicked"></Button>
-        <Button x:Name="closeGoal" Text="CLOSE" Clicked="closeGoal_Clicked"></Button>
     </StackLayout>
     </ScrollView>
 </ContentPage>

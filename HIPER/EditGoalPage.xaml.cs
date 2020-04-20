@@ -13,12 +13,14 @@ namespace HIPER
         GoalModel selectedGoal;
         ChallengeModel challenge;
 
-        public EditGoalPage(GoalModel selectedGoal)
+        public EditGoalPage(GoalModel inputGoal)
         {
             InitializeComponent();
-            initPage();
+      
+            this.selectedGoal = inputGoal;
 
-            this.selectedGoal = selectedGoal;
+            weekdayPicker.ItemsSource = App.weekdays;
+            dayOfMonthPicker.ItemsSource = App.daysofmonth;
 
             goalNameEntry.Text = selectedGoal.Title;
             goalDescriptionEntry.Text = selectedGoal.Description;
@@ -27,21 +29,90 @@ namespace HIPER
             goalCurrentEntry.Text = selectedGoal.CurrentValue;
             privateGoalCheckbox.IsChecked = selectedGoal.PrivateGoal;
 
-
-            GetChallenge();
-
             repeatableRB1.IsChecked = (selectedGoal.RepeatType == 0) ? true : false;
             repeatableRB2.IsChecked = (selectedGoal.RepeatType == 1) ? true : false;
             repeatableRB21.IsChecked = (selectedGoal.WeeklyOrMonthly == 0) ? true : false;
             repeatableRB22.IsChecked = (selectedGoal.WeeklyOrMonthly == 1) ? true : false;
 
+            if (!string.IsNullOrEmpty(selectedGoal.ChallengeId))
+            {
+                privateGoalCheckbox.IsVisible = false;
+                privateGoalLabel.IsVisible = false;
+            }
 
             weekdayPicker.SelectedIndex = selectedGoal.RepeatWeekly;
             dayOfMonthPicker.SelectedIndex = selectedGoal.RepeatMonthly;
 
-            if (selectedGoal.Completed)
+            if (selectedGoal.TargetType == 1)
             {
-                headerText.Text = "CLOSED GOAL";
+                gridSteps.IsVisible = true;
+                gridLabel.IsVisible = true;
+                aimHighLabel.IsVisible = false;
+                gridAimHigh.IsVisible = false;
+
+                step1CB.IsChecked = selectedGoal.Checkbox1;
+                step1CB.IsVisible = true;
+                step1entry.Text = selectedGoal.Checkbox1Comment;
+                step1entry.IsVisible = true;
+                step1label.IsVisible = true;
+                step2CB.IsChecked = selectedGoal.Checkbox2;
+                step2CB.IsVisible = (selectedGoal.SteByStepAmount > 0) ? true : false;
+                step2entry.Text = selectedGoal.Checkbox2Comment;
+                step2entry.IsVisible = (selectedGoal.SteByStepAmount > 0) ? true : false;
+                step2label.IsVisible = (selectedGoal.SteByStepAmount > 0) ? true : false;
+                step3CB.IsChecked = selectedGoal.Checkbox3;
+                step3CB.IsVisible = (selectedGoal.SteByStepAmount > 1) ? true : false;
+                step3entry.Text = selectedGoal.Checkbox3Comment;
+                step3entry.IsVisible = (selectedGoal.SteByStepAmount > 1) ? true : false;
+                step3label.IsVisible = (selectedGoal.SteByStepAmount > 1) ? true : false;
+                step4CB.IsChecked = selectedGoal.Checkbox4;
+                step4CB.IsVisible = (selectedGoal.SteByStepAmount > 2) ? true : false;
+                step4entry.Text = selectedGoal.Checkbox4Comment;
+                step4entry.IsVisible = (selectedGoal.SteByStepAmount > 2) ? true : false;
+                step4label.IsVisible = (selectedGoal.SteByStepAmount > 2) ? true : false;
+                step5CB.IsChecked = selectedGoal.Checkbox5;
+                step5CB.IsVisible = (selectedGoal.SteByStepAmount > 3) ? true : false;
+                step5entry.Text = selectedGoal.Checkbox5Comment;
+                step5entry.IsVisible = (selectedGoal.SteByStepAmount > 3) ? true : false;
+                step5label.IsVisible = (selectedGoal.SteByStepAmount > 3) ? true : false;
+                step6CB.IsChecked = selectedGoal.Checkbox6;
+                step6CB.IsVisible = (selectedGoal.SteByStepAmount > 4) ? true : false;
+                step6entry.Text = selectedGoal.Checkbox6Comment;
+                step6entry.IsVisible = (selectedGoal.SteByStepAmount > 4) ? true : false;
+                step6label.IsVisible = (selectedGoal.SteByStepAmount > 4) ? true : false;
+                step7CB.IsChecked = selectedGoal.Checkbox7;
+                step7CB.IsVisible = (selectedGoal.SteByStepAmount > 5) ? true : false;
+                step7entry.Text = selectedGoal.Checkbox7Comment;
+                step7entry.IsVisible = (selectedGoal.SteByStepAmount > 5) ? true : false;
+                step7label.IsVisible = (selectedGoal.SteByStepAmount > 5) ? true : false;
+                step8CB.IsChecked = selectedGoal.Checkbox8;
+                step8CB.IsVisible = (selectedGoal.SteByStepAmount > 6) ? true : false;
+                step8entry.Text = selectedGoal.Checkbox8Comment;
+                step8entry.IsVisible = (selectedGoal.SteByStepAmount > 6) ? true : false;
+                step8label.IsVisible = (selectedGoal.SteByStepAmount > 6) ? true : false;
+                step9CB.IsChecked = selectedGoal.Checkbox9;
+                step9CB.IsVisible = (selectedGoal.SteByStepAmount > 7) ? true : false;
+                step9entry.Text = selectedGoal.Checkbox9Comment;
+                step9entry.IsVisible = (selectedGoal.SteByStepAmount > 7) ? true : false;
+                step9label.IsVisible = (selectedGoal.SteByStepAmount > 7) ? true : false;
+
+            }
+            else
+            {
+                gridSteps.IsVisible = false;
+                gridLabel.IsVisible = false;
+                aimHighLabel.IsVisible = true;
+                gridAimHigh.IsVisible = true;
+                goalCurrentEntry.IsEnabled = false;
+            }
+
+            if (selectedGoal.Completed && !string.IsNullOrEmpty(selectedGoal.ChallengeId))
+            {
+                headerText.Text = "CLOSED CHALLENGE";
+            }
+            else if (selectedGoal.Completed)
+            {
+                headerText.Text = "COMPLETED CHALLENGE";
             }
             else if (!string.IsNullOrEmpty(selectedGoal.ChallengeId))
             {
@@ -53,75 +124,9 @@ namespace HIPER
             }
         }
 
-        private async void GetChallenge()
+  
+        private async void saveGoal_Clicked(System.Object sender, System.EventArgs e)
         {
-            bool isChallenge = !string.IsNullOrEmpty(selectedGoal.ChallengeId);
-
-            if (selectedGoal.Completed || selectedGoal.Closed)
-            {
-                gridTitle.IsEnabled = false;
-                gridAimHigh.IsEnabled = false;
-                gridSingle.IsEnabled = false;
-
-                deleteGoal.IsVisible = false;
-                updateGoal.IsVisible = false;
-                completeGoal.IsVisible = false;
-                closeGoal.IsVisible = false;
-            }
-            else if (isChallenge)
-            {
-                challenge = (await App.client.GetTable<ChallengeModel>().Where(c => c.Id == selectedGoal.ChallengeId).ToListAsync()).FirstOrDefault();
-                if (challenge != null)
-                {
-                    bool isChallengeOwner = (challenge.OwnerId == App.loggedInUser.Id);
-                    if (isChallengeOwner)
-                    {
-                        gridTitle.IsEnabled = true;
-                        gridAimHigh.IsEnabled = true;
-                        gridSingle.IsEnabled = true;
-
-                        deleteGoal.IsVisible = true;
-                        updateGoal.IsVisible = true;
-                        completeGoal.IsVisible = true;
-                        closeGoal.IsVisible = true;
-                    }
-                    else
-                    {
-                        gridTitle.IsEnabled = false;
-                        goalTargetEntry.IsEnabled = false;
-                        goalCurrentEntry.IsEnabled = true;
-                        gridSingle.IsEnabled = false;
-
-                        deleteGoal.IsVisible = false;
-                        updateGoal.IsVisible = true;
-                        completeGoal.IsVisible = true;
-                        closeGoal.IsVisible = false;
-                    }
-                }
-            }
-            else
-            {
-                gridTitle.IsEnabled = true;
-                gridAimHigh.IsEnabled = true;
-                gridSingle.IsEnabled = true;
-
-                deleteGoal.IsVisible = true;
-                updateGoal.IsVisible = true;
-                completeGoal.IsVisible = true;
-                closeGoal.IsVisible = true;
-            }
-        }
-
-        private void initPage()
-        {
-
-            weekdayPicker.ItemsSource = App.weekdays;
-            dayOfMonthPicker.ItemsSource = App.daysofmonth;
-        }
-
-        private async void updateGoal_Clicked(System.Object sender, System.EventArgs e)
-        {
-
             bool isGoalNameEmpty = string.IsNullOrEmpty(goalNameEntry.Text);
             bool isGoalDescriptionEmpty = string.IsNullOrEmpty(goalDescriptionEntry.Text);
             bool isWeeklyCheckedAndEntryFilled = repeatableRB2.IsChecked && repeatableRB21.IsChecked && (weekdayPicker.SelectedIndex < 0);
@@ -130,6 +135,63 @@ namespace HIPER
             if (isGoalNameEmpty || isGoalDescriptionEmpty || isWeeklyCheckedAndEntryFilled || isMonthlyCheckedAndEntryFilled)
             {
                 await DisplayAlert("Error", "All field needs to be entered", "Ok");
+                return;
+            }
+
+            if (!string.IsNullOrEmpty(selectedGoal.ChallengeId))
+            {
+                try
+                {
+                    var goalsToUpdate = await App.client.GetTable<GoalModel>().Where(g => g.ChallengeId == selectedGoal.ChallengeId).ToListAsync();
+                    foreach (GoalModel g in goalsToUpdate)
+                    {
+                        if (repeatableRB2.IsChecked)
+                        {
+                            var startDate = DateHandling.GetStartDate(repeatableRB2.IsChecked && repeatableRB21.IsChecked, repeatableRB2.IsChecked && repeatableRB22.IsChecked, weekdayPicker.SelectedIndex, dayOfMonthPicker.SelectedIndex);
+                            g.CreatedDate = startDate;
+                            g.Deadline = DateHandling.GetDeadlineDateForRepeatingGoals(repeatableRB2.IsChecked && repeatableRB21.IsChecked, repeatableRB2.IsChecked && repeatableRB22.IsChecked, startDate);
+                        }
+                        else
+                        {
+                            g.Deadline = DateTime.Parse(goalDeadlineEntry.Date.ToString());
+                        }
+                        g.LastUpdatedDate = DateTime.Now;
+                        g.Title = goalNameEntry.Text;
+                        g.Description = goalDescriptionEntry.Text;
+                        g.PrivateGoal = privateGoalCheckbox.IsChecked;
+                        g.RepeatWeekly = weekdayPicker.SelectedIndex;
+                        g.RepeatMonthly = dayOfMonthPicker.SelectedIndex;
+                        g.RepeatType = repeatableRB1.IsChecked ? 0 : 1;
+                        g.WeeklyOrMonthly = repeatableRB21.IsChecked ? 0 : 1;
+
+                        if(g.TargetType == 1)
+                        {
+                            g.TargetValue = (selectedGoal.SteByStepAmount + 1).ToString();
+                            g.Checkbox1Comment = step1entry.Text;
+                            g.Checkbox2Comment = step2entry.Text;
+                            g.Checkbox3Comment = step3entry.Text;
+                            g.Checkbox4Comment = step4entry.Text;
+                            g.Checkbox5Comment = step5entry.Text;
+                            g.Checkbox6Comment = step6entry.Text;
+                            g.Checkbox7Comment = step7entry.Text;
+                            g.Checkbox8Comment = step8entry.Text;
+                            g.Checkbox9Comment = step9entry.Text;
+                        }
+                        else
+                        {
+                            g.TargetValue = goalTargetEntry.Text;
+                        }
+                      
+                        await App.client.GetTable<GoalModel>().UpdateAsync(g);
+                    }
+                }
+                catch (Exception ex)
+                {
+
+                }
+                await DisplayAlert("Success", "Challenge updated", "Ok");
+                await Navigation.PopAsync();
+
             }
             else
             {
@@ -143,17 +205,34 @@ namespace HIPER
                 {
                     selectedGoal.Deadline = DateTime.Parse(goalDeadlineEntry.Date.ToString());
                 }
-                selectedGoal.LastUpdatedDate = DateTime.Now;
 
+                selectedGoal.LastUpdatedDate = DateTime.Now;
                 selectedGoal.Title = goalNameEntry.Text;
                 selectedGoal.Description = goalDescriptionEntry.Text;
-                selectedGoal.TargetValue = goalTargetEntry.Text;
                 selectedGoal.PrivateGoal = privateGoalCheckbox.IsChecked;
                 selectedGoal.CurrentValue = goalCurrentEntry.Text;
                 selectedGoal.RepeatWeekly = weekdayPicker.SelectedIndex;
                 selectedGoal.RepeatMonthly = dayOfMonthPicker.SelectedIndex;
                 selectedGoal.RepeatType = repeatableRB1.IsChecked ? 0 : 1;
                 selectedGoal.WeeklyOrMonthly = repeatableRB21.IsChecked ? 0 : 1;
+
+                if (selectedGoal.TargetType == 1)
+                {
+                    selectedGoal.TargetValue = (selectedGoal.SteByStepAmount + 1).ToString();
+                    selectedGoal.Checkbox1Comment = step1entry.Text;
+                    selectedGoal.Checkbox2Comment = step2entry.Text;
+                    selectedGoal.Checkbox3Comment = step3entry.Text;
+                    selectedGoal.Checkbox4Comment = step4entry.Text;
+                    selectedGoal.Checkbox5Comment = step5entry.Text;
+                    selectedGoal.Checkbox6Comment = step6entry.Text;
+                    selectedGoal.Checkbox7Comment = step7entry.Text;
+                    selectedGoal.Checkbox8Comment = step8entry.Text;
+                    selectedGoal.Checkbox9Comment = step9entry.Text;
+                }
+                else
+                {
+                    selectedGoal.TargetValue = goalTargetEntry.Text;
+                }
 
                 await App.client.GetTable<GoalModel>().UpdateAsync(selectedGoal);
                 await DisplayAlert("Success", "Goal updated", "Ok");
@@ -163,32 +242,41 @@ namespace HIPER
 
         private async void deleteGoal_Clicked(System.Object sender, System.EventArgs e)
         {
-
-            bool delete = await DisplayAlert("Wait", "Are you sure you want to delete this goal?", "Yes", "No");
-            if (delete)
+            if ((challenge.OwnerId == App.loggedInUser.Id) && !string.IsNullOrEmpty(selectedGoal.ChallengeId))
             {
-                await App.client.GetTable<GoalModel>().DeleteAsync(selectedGoal);
-                await DisplayAlert("Sure", "Lets delete it", "Ok");
-                await Navigation.PopAsync();
+                bool delete = await DisplayAlert("Wait", "Are you sure you want to delete this challenge? It will be removed for all participants", "Yes", "No");
+                if (delete)
+                {
+                    try
+                    {
+                        var goalsToDelete = await App.client.GetTable<GoalModel>().Where(g => g.ChallengeId == selectedGoal.ChallengeId).ToListAsync();
+                        foreach (GoalModel goal in goalsToDelete)
+                        {
+                            await App.client.GetTable<GoalModel>().DeleteAsync(goal);
+                        }
+
+                        var challengeToDelete = (await App.client.GetTable<ChallengeModel>().Where(c => c.Id == selectedGoal.ChallengeId).ToListAsync()).FirstOrDefault();
+                        await App.client.GetTable<ChallengeModel>().DeleteAsync(challengeToDelete);
+                    }
+                    catch (Exception ex)
+                    {
+                    }
+                    await DisplayAlert("Challenge deleted", "", "Ok");
+                    await Navigation.PopAsync();
+                }
+            }
+            else
+            {
+                bool delete = await DisplayAlert("Wait", "Are you sure you want to delete this goal?", "Yes", "No");
+                if (delete)
+                {
+                    await App.client.GetTable<GoalModel>().DeleteAsync(selectedGoal);
+                    await DisplayAlert("Sure", "Lets delete it", "Ok");
+                    await Navigation.PopAsync();
+                }
             }
         }
 
-        private async void completeGoal_Clicked(System.Object sender, System.EventArgs e)
-        {
-
-            selectedGoal.Completed = true;
-            selectedGoal.LastUpdatedDate = DateTime.Now;
-            if (selectedGoal.RepeatType == 0)
-            {
-                selectedGoal.Closed = true;
-            }
-            selectedGoal.ClosedDate = DateTime.Now;
-
-            await App.client.GetTable<GoalModel>().UpdateAsync(selectedGoal);
-            await DisplayAlert("Congratulations", "Goal completed", "Ok");
-            await Navigation.PopAsync();
-
-        }
 
         private void radioButtonController()
         {
@@ -250,40 +338,6 @@ namespace HIPER
         private void goalTargetEntry_TextChanged(System.Object sender, Xamarin.Forms.TextChangedEventArgs e)
         {
             //   checkGoalCompleted();
-        }
-
-        private async void checkGoalCompleted()
-        {
-            if (!string.IsNullOrEmpty(goalCurrentEntry.Text) && !string.IsNullOrEmpty(goalCurrentEntry.Text))
-            {
-                if (int.Parse(goalCurrentEntry.Text) >= int.Parse(goalTargetEntry.Text))
-                {
-                    bool setGoalCompleted = await DisplayAlert("Congrats!", "You did it! Would you like to set this goal completed?", "Ok", "Cancel");
-                    if (setGoalCompleted)
-                    {
-                        selectedGoal.Completed = true;
-                        selectedGoal.Closed = true;
-
-                        await App.client.GetTable<GoalModel>().UpdateAsync(selectedGoal);
-                        await Navigation.PopAsync();
-                    }
-                }
-            }
-        }
-
-        private async void closeGoal_Clicked(System.Object sender, System.EventArgs e)
-        {
-            bool delete = await DisplayAlert("Wait", "Are you sure you want to close this goal?", "Yes", "No");
-            if (delete)
-            {
-                selectedGoal.Closed = true;
-                selectedGoal.LastUpdatedDate = DateTime.Now;
-                selectedGoal.ClosedDate = DateTime.Now;
-
-                await App.client.GetTable<GoalModel>().UpdateAsync(selectedGoal);
-                await DisplayAlert("Goal closed", "", "Ok");
-                await Navigation.PopAsync();
-            }
         }
     }
 }

@@ -46,6 +46,14 @@ namespace HIPER
             step1CB.IsVisible = false;
             step1entry.IsVisible = false;
             step1label.IsVisible = false;
+
+            if (App.loggedInUser.Id != user.Id)
+            {
+                challengeCheckbox.IsVisible = false;
+                challengeCollectionView.IsVisible = false;
+                challengeLabel.IsVisible = false;
+                challengeHeader.IsVisible = false;
+            }
         }
 
         private async void saveGoal_Clicked(System.Object sender, System.EventArgs e)
@@ -64,11 +72,16 @@ namespace HIPER
                 {
                     challenge = new ChallengeModel()
                     {
-                        OwnerId = App.loggedInUser.Id
+                        OwnerId = App.loggedInUser.Id,
+                        CreatedDate = DateTime.Now
                     };
                     await App.client.GetTable<ChallengeModel>().InsertAsync(challenge);
-                    challenge = (await App.client.GetTable<ChallengeModel>().Where(c => c.OwnerId == App.loggedInUser.Id).ToListAsync()).FirstOrDefault();
-                    
+
+                    var challenges = (await App.client.GetTable<ChallengeModel>().Where(c => c.OwnerId == App.loggedInUser.Id).ToListAsync());
+
+                    challenges.Sort((x, y) => y.CreatedDate.CompareTo(x.CreatedDate));
+                    challenge = challenges[0];
+
                     var challengedUsers = challengeCollectionView.SelectedItems;
 
                     foreach (UserModel user in challengedUsers)
@@ -281,12 +294,14 @@ namespace HIPER
 
         private async void challengeCheckbox_CheckedChanged(System.Object sender, Xamarin.Forms.CheckedChangedEventArgs e)
         {
+
             if (!challengeCheckbox.IsChecked)
             {
                 challengeCollectionView.IsVisible = false;
             }
             else
             {
+                privateGoalCheckbox.IsChecked = false;
                 try { 
                     if(teammembers == null)
                     {
@@ -297,8 +312,16 @@ namespace HIPER
                 }
                 catch (Exception ex){ }
                 challengeCollectionView.IsVisible = true;
+                challengeCollectionView.HeightRequest = teammembers.Count * 20;
 
             }
+        }
+
+        void privateGoalCheckbox_CheckedChanged(System.Object sender, Xamarin.Forms.CheckedChangedEventArgs e)
+        {
+            if (privateGoalCheckbox.IsChecked)
+                challengeCheckbox.IsChecked = false;
+
         }
     }
 }

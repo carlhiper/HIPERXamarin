@@ -15,106 +15,105 @@
         <ToolbarItem x:Name="addGoal" Text="Add goal" Clicked="addGoal_Clicked">
         </ToolbarItem>
     </ContentPage.ToolbarItems>
-    <ContentPage.Content>
-  
-        <StackLayout Margin="10"
-                     CompressedLayout.IsHeadless="True">
 
-            <Label Text="SCOREBOARD" Style="{StaticResource Header}"></Label>
+
+    <StackLayout Margin="10"
+                    CompressedLayout.IsHeadless="True">
+
+        <Label Text="SCOREBOARD" Style="{StaticResource Header}"></Label>
                     
-            <Grid Padding="20">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="35" />
-                </Grid.RowDefinitions>
+        <Grid Padding="20">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="35" />
+            </Grid.RowDefinitions>
 
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="50" />
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="120" />
-                </Grid.ColumnDefinitions>
-                <Label Grid.Column="0" Text="Active" VerticalOptions="End" HorizontalOptions="End"></Label>
-                <Switch Grid.Column="1" x:Name="showClosedSwitch" OnColor="LightGray" ThumbColor="{StaticResource hiperPeach}" PropertyChanged="showClosedSwitch_PropertyChanged" VerticalOptions="End"></Switch> 
-                <Label Grid.Column="2" Text="Closed" VerticalOptions="End" HorizontalOptions="Start"></Label>
-                <Picker Grid.Column="3" x:Name="filter" VerticalOptions="End" HorizontalOptions="FillAndExpand" Title="Filter" SelectedIndexChanged="filter_SelectedIndexChanged" FontSize="Small"></Picker>
-            </Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="50" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="120" />
+            </Grid.ColumnDefinitions>
+            <Label Grid.Column="0" Text="Active" VerticalOptions="End" HorizontalOptions="End"></Label>
+            <Switch Grid.Column="1" x:Name="showClosedSwitch" OnColor="LightGray" ThumbColor="{StaticResource hiperPeach}" PropertyChanged="showClosedSwitch_PropertyChanged" VerticalOptions="End"></Switch> 
+            <Label Grid.Column="2" Text="Closed" VerticalOptions="End" HorizontalOptions="Start"></Label>
+            <Picker Grid.Column="3" x:Name="filter" VerticalOptions="End" HorizontalOptions="FillAndExpand" Title="Filter" SelectedIndexChanged="filter_SelectedIndexChanged" FontSize="Small"></Picker>
+        </Grid>
 
-            <CollectionView
+        <CollectionView
                
-                x:Name="goalCollectionView"
-                SelectionMode="Single"
-                SelectionChanged="goalCollectionView_SelectionChanged">
+            x:Name="goalCollectionView"
+            SelectionMode="Single"
+            SelectionChanged="goalCollectionView_SelectionChanged">
                 
-                <CollectionView.ItemTemplate>
-                    <DataTemplate>
-                        <ContentView>
-                            <Frame BorderColor="{Binding ChallengeId, Converter={StaticResource frameColorConverter}}">
-                                <Grid Padding="10">
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="23" />
-                                        <RowDefinition Height="Auto" />
-                                        <RowDefinition Height="Auto" />
-                                    </Grid.RowDefinitions>
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <ContentView>
+                        <Frame BorderColor="{Binding ChallengeId, Converter={StaticResource frameColorConverter}}">
+                            <Grid Padding="10">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="23" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
 
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="Auto" />
-                                        <ColumnDefinition Width="200" />
-                                        <ColumnDefinition Width="*" />
-                                        <ColumnDefinition Width="35"/>
-                                    </Grid.ColumnDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="200" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="35"/>
+                                </Grid.ColumnDefinitions>
 
+                                <Image
+                                    Source="{StaticResource challenge}"
+                                    Aspect="AspectFit"
+                                    HorizontalOptions="Start"
+                                    HeightRequest="25"
+                                    Grid.Column="0"
+                                    Grid.Row="0"
+                                    IsVisible="{Binding ChallengeId, Converter={StaticResource challengeVisibleConverter}}">
+                                </Image>
+                                <Label Grid.Row="0"
+                                    Grid.Column="1" 
+                                    Text="{Binding Title}" 
+                                    FontAttributes="Bold" />
+                                <ProgressBar
+                                    VerticalOptions="Center"
+                                    Grid.Column="2"
+                                    Grid.Row="0"
+                                    Progress="{Binding Progress}"
+                                    ProgressColor="{StaticResource hiperPeach}" ></ProgressBar>
+                                <Image
+                                    Source="{Binding PerformanceIndicator, Converter={StaticResource converter}}"
+                                    Grid.Row="0"
+                                    Grid.Column="3"
+                                    VerticalOptions="Start"
+                                    HorizontalOptions="End"></Image>
+                                <Label Grid.Row="1"
+                                    Grid.ColumnSpan="3"
+                                    Grid.Column="0" 
+                                    Text="{Binding Description}"
+                                    FontAttributes="None" 
+                                    VerticalOptions="End" />
+                                <Label Grid.Row="2"
+                                    Grid.Column="0"
+                                    Grid.ColumnSpan="3"
+                                    Text="{Binding Deadline, StringFormat='Deadline: {0:yyyy-MM-dd}'}"
+                                    FontAttributes="Italic" 
+                                    VerticalOptions="End" />
                                     <Image
-                                        Source="{StaticResource challenge}"
-                                        Aspect="AspectFit"
-                                        HorizontalOptions="Start"
-                                        HeightRequest="25"
-                                        Grid.Column="0"
-                                        Grid.Row="0"
-                                        IsVisible="{Binding ChallengeId, Converter={StaticResource challengeVisibleConverter}}">
-                                    </Image>
-                                    <Label Grid.Row="0"
-                                        Grid.Column="1" 
-                                        Text="{Binding Title}" 
-                                        FontAttributes="Bold" />
-                                    <ProgressBar
-                                        VerticalOptions="Center"
-                                        Grid.Column="2"
-                                        Grid.Row="0"
-                                        Progress="{Binding Progress}"
-                                        ProgressColor="{StaticResource hiperPeach}" ></ProgressBar>
-                                    <Image
-                                        Source="{Binding PerformanceIndicator, Converter={StaticResource converter}}"
-                                        Grid.Row="0"
-                                        Grid.Column="3"
-                                        VerticalOptions="Start"
-                                        HorizontalOptions="End"></Image>
-                                    <Label Grid.Row="1"
-                                        Grid.ColumnSpan="3"
-                                        Grid.Column="0" 
-                                        Text="{Binding Description}"
-                                        FontAttributes="None" 
-                                        VerticalOptions="End" />
-                                    <Label Grid.Row="2"
-                                        Grid.Column="0"
-                                        Grid.ColumnSpan="3"
-                                        Text="{Binding Deadline, StringFormat='Deadline: {0:yyyy-MM-dd}'}"
-                                        FontAttributes="Italic" 
-                                        VerticalOptions="End" />
-                                      <Image
-                                        Source="{StaticResource ok}"
-                                        Aspect="AspectFit"
-                                        HorizontalOptions="End"
-                                        HeightRequest="20"
-                                        Grid.Column="3"
-                                        Grid.Row="2"
-                                        IsVisible="{Binding Completed}">
-                                    </Image>
-                                </Grid>
-                            </Frame>
-                        </ContentView>
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
-            </CollectionView> 
-        </StackLayout>
-    </ContentPage.Content>
+                                    Source="{StaticResource ok}"
+                                    Aspect="AspectFit"
+                                    HorizontalOptions="End"
+                                    HeightRequest="20"
+                                    Grid.Column="3"
+                                    Grid.Row="2"
+                                    IsVisible="{Binding Completed}">
+                                </Image>
+                            </Grid>
+                        </Frame>
+                    </ContentView>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView> 
+    </StackLayout>
 </ContentPage>

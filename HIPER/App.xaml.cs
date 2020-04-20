@@ -11,7 +11,8 @@ namespace HIPER
     {
         public static string DatabaseLocation = string.Empty;
 
-        public static MobileServiceClient client =new MobileServiceClient("https://hiper-app-webapp.azurewebsites.net");
+        //public static MobileServiceClient client =new MobileServiceClient("https://hiper-app-webapp.azurewebsites.net");
+        public static MobileServiceClient client = new MobileServiceClient(Helpers.Constants.AZURE_WEB_SERVICE);
 
         public static UserModel loggedInUser = new UserModel();
 
@@ -22,7 +23,7 @@ namespace HIPER
 
         public static List<string> numberofsteps = new List<string>() { "1", "2", "3", "4", "5", "6", "7", "8", "9" };
 
-        public static List<string> filterOptions = new List<string>() { "Title", "Last updated", "Deadline" };
+        public static List<string> filterOptions = new List<string>() { "Title", "Last updated", "Deadline", "Performance", "Progress" };
 
         public static List<string> feedfilterOptions = new List<string>() { "All", "Posts", "Updates"};
 

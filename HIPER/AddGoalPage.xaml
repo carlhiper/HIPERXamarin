@@ -5,12 +5,12 @@
         </ToolbarItem>
     </ContentPage.ToolbarItems>
     <ContentPage.Content>
-        <ScrollView>
+        <ScrollView  >
             <StackLayout Margin="20"
                          CompressedLayout.IsHeadless="True">
                 <Label Style="{StaticResource Header}" Text="ADD GOAL"></Label>
                 <Entry x:Name="goalNameEntry" Placeholder="TITLE" MaxLength="20"></Entry>
-                <Entry x:Name="goalDescriptionEntry" Placeholder="DESCRIPTION" MaxLength="200"></Entry>
+                <Entry x:Name="goalDescriptionEntry" Placeholder="DESCRIPTION" MaxLength="255" HeightRequest="100" VerticalTextAlignment="Start"></Entry>
             
                 <Grid>
                     <Grid.RowDefinitions>
@@ -21,7 +21,7 @@
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
                     <Label VerticalOptions="Center" Grid.Row="0" Grid.Column="0" Text="PRIVATE GOAL"/>
-                    <CheckBox VerticalOptions="Center" HorizontalOptions="Center" Grid.Row="0" Grid.Column="1" x:Name="privateGoalCheckbox" Color="{StaticResource hiperPeach}"></CheckBox>
+                    <CheckBox VerticalOptions="Center" HorizontalOptions="Center" Grid.Row="0" Grid.Column="1" x:Name="privateGoalCheckbox" Color="{StaticResource hiperPeach}" CheckedChanged="privateGoalCheckbox_CheckedChanged"></CheckBox>
                 </Grid>
                 <Label Text="TARGET" HorizontalOptions="Center" Margin="0,20,0,10" TextColor="{StaticResource hiperPeach}"></Label>
                 <Grid>
@@ -35,7 +35,7 @@
                         <ColumnDefinition Width="150" />
                     </Grid.ColumnDefinitions>  
                     <RadioButton GroupName="target" x:Name="targetRB1" Grid.Row="0" PropertyChanged="targetRB1_PropertyChanged"></RadioButton>
-                    <Label VerticalOptions="Center" HorizontalOptions="Start" Grid.Row="0" Grid.Column="1" Text="AIM HIGH"></Label>
+                    <Label VerticalOptions="Center" HorizontalOptions="Start" Grid.Row="0" Grid.Column="1" Text="SINGLE TARGET"></Label>
                     <Entry x:Name="goalTargetEntry" Grid.Row="0" Grid.Column="2" Placeholder="TARGET"></Entry>
                     <RadioButton GroupName="target" x:Name="targetRB2" Grid.Row="1" PropertyChanged="targetRB2_PropertyChanged"></RadioButton>
                     <Label VerticalOptions="Center" HorizontalOptions="Start" Grid.Row="1" Grid.Column="1" Text="STEP BY STEP"></Label>
@@ -122,7 +122,7 @@
                     <Label VerticalOptions="Center" HorizontalOptions="Start" Grid.Row="1" Grid.Column="2" Text="MONTHLY"></Label>
                     <Picker x:Name="dayOfMonthPicker" Grid.Row="1" Grid.Column="3"></Picker>
                 </Grid>
-                <Label Text="CHALLENGE" HorizontalOptions="Center" TextColor="{StaticResource hiperPeach}" Margin="0,20,0,20"></Label>
+                <Label x:Name="challengeHeader" Text="CHALLENGE" HorizontalOptions="Center" TextColor="{StaticResource hiperPeach}" Margin="0,20,0,20"></Label>
                 <Grid x:Name="gridChallenge">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="20" />
@@ -134,7 +134,7 @@
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
                     <CheckBox VerticalOptions="Start" HorizontalOptions="Start" Grid.Row="0" Grid.Column="0" x:Name="challengeCheckbox" CheckedChanged="challengeCheckbox_CheckedChanged" Color="{StaticResource hiperPeach}"></CheckBox>
-                    <Label VerticalOptions="Start" Grid.Row="0" Grid.Column="1" Text="CHALLENGE"/>
+                    <Label x:Name="challengeLabel" VerticalOptions="Start" Grid.Row="0" Grid.Column="1" Text="CHALLENGE"/>
                     <CollectionView x:Name="challengeCollectionView" Grid.Row="0" Grid.Column="2" Grid.RowSpan="2" SelectionMode="Multiple">
                         <CollectionView.ItemTemplate>
                             <DataTemplate>

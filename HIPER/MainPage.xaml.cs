@@ -25,27 +25,11 @@ namespace HIPER
         {
             base.OnAppearing();
 
-            // Local database
-        /*    using (SQLiteConnection conn = new SQLiteConnection(App.DatabaseLocation))
-            {
-                conn.CreateTable<UserModel>();
-                var x = conn.Table<UserModel>().Count();
-                if (x > 0) {
-                    
-                    var user = conn.Table<UserModel>().ToArray();
-                    selectedUser = user.GetValue(0) as UserModel;
-                    loginNameEntry.Text = selectedUser.Email;
-                    passwordEntry.Text = selectedUser.UserPassword;
-                    //createUserButton.IsEnabled = false;
-                }
-            } */
-
             if (!string.IsNullOrEmpty(App.loggedInUser.Email))
             {
                 loginNameEntry.Text = App.loggedInUser.Email;
                 passwordEntry.Text = App.loggedInUser.UserPassword;
             }
-
         }
 
         void createUserButton_Clicked(System.Object sender, System.EventArgs e)
@@ -55,35 +39,47 @@ namespace HIPER
 
         private async void loginButton_Clicked(System.Object sender, System.EventArgs e)
         {
-            
-            bool isLoginNameEntryEmpty = string.IsNullOrEmpty(loginNameEntry.Text);
-            bool isPasswordEntryEmpty = string.IsNullOrEmpty(passwordEntry.Text);
 
-            if (isLoginNameEntryEmpty || isPasswordEntryEmpty)
+            try
             {
 
-            }
-            else
-            {
-                var user = (await App.client.GetTable<UserModel>().Where(u => u.Email == loginNameEntry.Text).ToListAsync()).FirstOrDefault();
+                bool isLoginNameEntryEmpty = string.IsNullOrEmpty(loginNameEntry.Text);
+                bool isPasswordEntryEmpty = string.IsNullOrEmpty(passwordEntry.Text);
 
-                if (user != null)
+                if (isLoginNameEntryEmpty || isPasswordEntryEmpty)
                 {
-                    App.loggedInUser = user;
-                    if (user.UserPassword == passwordEntry.Text)
+
+                }
+                else
+                {
+                    var user = (await App.client.GetTable<UserModel>().Where(u => u.Email == loginNameEntry.Text).ToListAsync()).FirstOrDefault();
+
+                    if (user != null)
                     {
-                        
-                        await Navigation.PushAsync(new HomePage());
+                        App.loggedInUser = user;
+                        if (user.UserPassword == passwordEntry.Text)
+                        {
+
+                            await Navigation.PushAsync(new HomePage());
+                        }
+                        else
+                        {
+                            await DisplayAlert("Error", "Email or password are incorrect", "Ok");
+                        }
                     }
                     else
                     {
-                        await DisplayAlert("Error", "Email or password are incorrect", "Ok");
+                        await DisplayAlert("Error", "Failed to login", "Ok");
                     }
-                }else
-                {
-                    await DisplayAlert("Error", "Failed to login", "Ok");
                 }
+
+
             }
+            catch(Exception ex)
+            {
+                
+            }
+    
         }
 
         void forgotPasswordButton_Clicked(System.Object sender, System.EventArgs e)

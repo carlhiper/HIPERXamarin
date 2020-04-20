@@ -61,7 +61,7 @@ namespace HIPER
                 if (selectedImage != null)
                 {
 
-                    var account = CloudStorageAccount.Parse("DefaultEndpointsProtocol=https;AccountName=hiperimagestorage;AccountKey=IayenlXv3jbB7XVIlgiWC1xyIVUSWZcme4AWFxNR0vFPo+eI7xPzUKqegTtspMUarqBv1jUzWHesPFqciPVxMQ==;EndpointSuffix=core.windows.net");
+                    var account = CloudStorageAccount.Parse(Helpers.Constants.BLOBSTORAGE_IMAGES);
                     var client = account.CreateCloudBlobClient();
                     var container = client.GetContainerReference("imagecontainer");
                     await container.CreateIfNotExistsAsync();
@@ -125,7 +125,7 @@ namespace HIPER
         {
             try
             {
-                var account = CloudStorageAccount.Parse("DefaultEndpointsProtocol=https;AccountName=hiperimagestorage;AccountKey=IayenlXv3jbB7XVIlgiWC1xyIVUSWZcme4AWFxNR0vFPo+eI7xPzUKqegTtspMUarqBv1jUzWHesPFqciPVxMQ==;EndpointSuffix=core.windows.net");
+                var account = CloudStorageAccount.Parse(Helpers.Constants.BLOBSTORAGE_IMAGES);
                 var client = account.CreateCloudBlobClient();
                 var container = client.GetContainerReference("imagecontainer");
                 await container.CreateIfNotExistsAsync();

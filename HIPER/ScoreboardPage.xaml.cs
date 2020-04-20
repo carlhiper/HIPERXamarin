@@ -33,14 +33,15 @@ namespace HIPER
         void goalCollectionView_SelectionChanged(System.Object sender, Xamarin.Forms.SelectionChangedEventArgs e)
         {
             var selectedGoal = goalCollectionView.SelectedItem as GoalModel;
-            if (selectedGoal.TargetType == 1)
-            {
-                Navigation.PushAsync(new EditSbSGoalPage(selectedGoal));
-            }
-            else
-            { 
-                Navigation.PushAsync(new EditGoalPage(selectedGoal));
-            }
+            Navigation.PushAsync(new GoalDetailPage(selectedGoal));
+            //if (selectedGoal.TargetType == 1)
+            //{
+            //    Navigation.PushAsync(new EditSbSGoalPage(selectedGoal));
+            //}
+            //else
+            //{ 
+            //    Navigation.PushAsync(new EditGoalPage(selectedGoal));
+            //}
         }
 
         private void showClosedSwitch_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
@@ -69,10 +70,19 @@ namespace HIPER
             {
                 goals.Sort((x, y) => x.Deadline.CompareTo(y.Deadline));
             }
+            else if (filter == 3)
+            {
+                goals.Sort((x, y) => y.PerformanceIndicator.CompareTo(x.PerformanceIndicator));
+            }
+            else if (filter == 4)
+            {
+                goals.Sort((x, y) => y.Progress.CompareTo(x.Progress));
+            }
             else
             {
                 goals.Sort((x, y) => y.LastUpdatedDate.CompareTo(x.LastUpdatedDate));
             }
+
             if (showClosedSwitch.IsToggled)
             {
                 foreach (var item in goals)

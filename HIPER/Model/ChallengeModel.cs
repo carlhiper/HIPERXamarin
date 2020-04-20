@@ -10,5 +10,7 @@ namespace HIPER.Model
 
         public string OwnerId { get; set; }
 
+        public DateTime CreatedDate { get; set; }
+
     }
 }
