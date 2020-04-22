@@ -4,13 +4,13 @@
         <ToolbarItem x:Name="saveGoal" Text="Save" Clicked="saveGoal_Clicked">
         </ToolbarItem>
     </ContentPage.ToolbarItems>
-    <ContentPage.Content>
+    
         <ScrollView  >
             <StackLayout Margin="20"
                          CompressedLayout.IsHeadless="True">
                 <Label Style="{StaticResource Header}" Text="ADD GOAL"></Label>
                 <Entry x:Name="goalNameEntry" Placeholder="TITLE" MaxLength="20"></Entry>
-                <Entry x:Name="goalDescriptionEntry" Placeholder="DESCRIPTION" MaxLength="255" HeightRequest="100" VerticalTextAlignment="Start"></Entry>
+                <Editor x:Name="goalDescriptionEntry" Placeholder="DESCRIPTION" MaxLength="255" HeightRequest="100"></Editor>
             
                 <Grid>
                     <Grid.RowDefinitions>
@@ -157,5 +157,4 @@
                 </Grid>
             </StackLayout>
         </ScrollView>
-    </ContentPage.Content>
 </ContentPage>

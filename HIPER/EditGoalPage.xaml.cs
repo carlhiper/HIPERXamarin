@@ -106,15 +106,7 @@ namespace HIPER
                 goalCurrentEntry.IsEnabled = false;
             }
 
-            if (selectedGoal.Completed && !string.IsNullOrEmpty(selectedGoal.ChallengeId))
-            {
-                headerText.Text = "CLOSED CHALLENGE";
-            }
-            else if (selectedGoal.Completed)
-            {
-                headerText.Text = "COMPLETED CHALLENGE";
-            }
-            else if (!string.IsNullOrEmpty(selectedGoal.ChallengeId))
+            if (!string.IsNullOrEmpty(selectedGoal.ChallengeId))
             {
                 headerText.Text = "UPDATE CHALLENGE";
             }
@@ -123,7 +115,6 @@ namespace HIPER
                 headerText.Text = "EDIT GOAL";
             }
         }
-
   
         private async void saveGoal_Clicked(System.Object sender, System.EventArgs e)
         {
@@ -145,104 +136,79 @@ namespace HIPER
                     var goalsToUpdate = await App.client.GetTable<GoalModel>().Where(g => g.ChallengeId == selectedGoal.ChallengeId).ToListAsync();
                     foreach (GoalModel g in goalsToUpdate)
                     {
-                        if (repeatableRB2.IsChecked)
-                        {
-                            var startDate = DateHandling.GetStartDate(repeatableRB2.IsChecked && repeatableRB21.IsChecked, repeatableRB2.IsChecked && repeatableRB22.IsChecked, weekdayPicker.SelectedIndex, dayOfMonthPicker.SelectedIndex);
-                            g.CreatedDate = startDate;
-                            g.Deadline = DateHandling.GetDeadlineDateForRepeatingGoals(repeatableRB2.IsChecked && repeatableRB21.IsChecked, repeatableRB2.IsChecked && repeatableRB22.IsChecked, startDate);
-                        }
-                        else
-                        {
-                            g.Deadline = DateTime.Parse(goalDeadlineEntry.Date.ToString());
-                        }
-                        g.LastUpdatedDate = DateTime.Now;
-                        g.Title = goalNameEntry.Text;
-                        g.Description = goalDescriptionEntry.Text;
-                        g.PrivateGoal = privateGoalCheckbox.IsChecked;
-                        g.RepeatWeekly = weekdayPicker.SelectedIndex;
-                        g.RepeatMonthly = dayOfMonthPicker.SelectedIndex;
-                        g.RepeatType = repeatableRB1.IsChecked ? 0 : 1;
-                        g.WeeklyOrMonthly = repeatableRB21.IsChecked ? 0 : 1;
-
-                        if(g.TargetType == 1)
-                        {
-                            g.TargetValue = (selectedGoal.SteByStepAmount + 1).ToString();
-                            g.Checkbox1Comment = step1entry.Text;
-                            g.Checkbox2Comment = step2entry.Text;
-                            g.Checkbox3Comment = step3entry.Text;
-                            g.Checkbox4Comment = step4entry.Text;
-                            g.Checkbox5Comment = step5entry.Text;
-                            g.Checkbox6Comment = step6entry.Text;
-                            g.Checkbox7Comment = step7entry.Text;
-                            g.Checkbox8Comment = step8entry.Text;
-                            g.Checkbox9Comment = step9entry.Text;
-                        }
-                        else
-                        {
-                            g.TargetValue = goalTargetEntry.Text;
-                        }
-                      
+                        CopyViewToGoal(g);
+                  
                         await App.client.GetTable<GoalModel>().UpdateAsync(g);
+
+                        if (g.UserId == App.loggedInUser.Id)
+                        {
+                            CopyViewToGoal(selectedGoal);
+                        }
                     }
                 }
                 catch (Exception ex)
                 {
 
                 }
+
                 await DisplayAlert("Success", "Challenge updated", "Ok");
                 await Navigation.PopAsync();
 
             }
             else
             {
-                if (repeatableRB2.IsChecked)
-                {
-                    var startDate = DateHandling.GetStartDate(repeatableRB2.IsChecked && repeatableRB21.IsChecked, repeatableRB2.IsChecked && repeatableRB22.IsChecked, weekdayPicker.SelectedIndex, dayOfMonthPicker.SelectedIndex);
-                    selectedGoal.CreatedDate = startDate;
-                    selectedGoal.Deadline = DateHandling.GetDeadlineDateForRepeatingGoals(repeatableRB2.IsChecked && repeatableRB21.IsChecked, repeatableRB2.IsChecked && repeatableRB22.IsChecked, startDate);
-                }
-                else
-                {
-                    selectedGoal.Deadline = DateTime.Parse(goalDeadlineEntry.Date.ToString());
-                }
-
-                selectedGoal.LastUpdatedDate = DateTime.Now;
-                selectedGoal.Title = goalNameEntry.Text;
-                selectedGoal.Description = goalDescriptionEntry.Text;
-                selectedGoal.PrivateGoal = privateGoalCheckbox.IsChecked;
-                selectedGoal.CurrentValue = goalCurrentEntry.Text;
-                selectedGoal.RepeatWeekly = weekdayPicker.SelectedIndex;
-                selectedGoal.RepeatMonthly = dayOfMonthPicker.SelectedIndex;
-                selectedGoal.RepeatType = repeatableRB1.IsChecked ? 0 : 1;
-                selectedGoal.WeeklyOrMonthly = repeatableRB21.IsChecked ? 0 : 1;
-
-                if (selectedGoal.TargetType == 1)
-                {
-                    selectedGoal.TargetValue = (selectedGoal.SteByStepAmount + 1).ToString();
-                    selectedGoal.Checkbox1Comment = step1entry.Text;
-                    selectedGoal.Checkbox2Comment = step2entry.Text;
-                    selectedGoal.Checkbox3Comment = step3entry.Text;
-                    selectedGoal.Checkbox4Comment = step4entry.Text;
-                    selectedGoal.Checkbox5Comment = step5entry.Text;
-                    selectedGoal.Checkbox6Comment = step6entry.Text;
-                    selectedGoal.Checkbox7Comment = step7entry.Text;
-                    selectedGoal.Checkbox8Comment = step8entry.Text;
-                    selectedGoal.Checkbox9Comment = step9entry.Text;
-                }
-                else
-                {
-                    selectedGoal.TargetValue = goalTargetEntry.Text;
-                }
-
+                CopyViewToGoal(selectedGoal);
                 await App.client.GetTable<GoalModel>().UpdateAsync(selectedGoal);
                 await DisplayAlert("Success", "Goal updated", "Ok");
                 await Navigation.PopAsync();
             }
         }
 
+        private void CopyViewToGoal(GoalModel selectedGoal)
+        {
+            if (repeatableRB2.IsChecked)
+            {
+                var startDate = DateHandling.GetStartDate(repeatableRB2.IsChecked && repeatableRB21.IsChecked, repeatableRB2.IsChecked && repeatableRB22.IsChecked, weekdayPicker.SelectedIndex, dayOfMonthPicker.SelectedIndex);
+                selectedGoal.CreatedDate = startDate;
+                selectedGoal.Deadline = DateHandling.GetDeadlineDateForRepeatingGoals(repeatableRB2.IsChecked && repeatableRB21.IsChecked, repeatableRB2.IsChecked && repeatableRB22.IsChecked, startDate);
+            }
+            else
+            {
+                selectedGoal.Deadline = DateTime.Parse(goalDeadlineEntry.Date.ToString());
+            }
+
+            selectedGoal.LastUpdatedDate = DateTime.Now;
+            selectedGoal.Title = goalNameEntry.Text;
+            selectedGoal.Description = goalDescriptionEntry.Text;
+            selectedGoal.PrivateGoal = privateGoalCheckbox.IsChecked;
+            selectedGoal.RepeatWeekly = weekdayPicker.SelectedIndex;
+            selectedGoal.RepeatMonthly = dayOfMonthPicker.SelectedIndex;
+            selectedGoal.RepeatType = repeatableRB1.IsChecked ? 0 : 1;
+            selectedGoal.WeeklyOrMonthly = repeatableRB21.IsChecked ? 0 : 1;
+
+            if (selectedGoal.TargetType == 1)
+            {
+                selectedGoal.TargetValue = (selectedGoal.SteByStepAmount + 1).ToString();
+                selectedGoal.Checkbox1Comment = step1entry.Text;
+                selectedGoal.Checkbox2Comment = step2entry.Text;
+                selectedGoal.Checkbox3Comment = step3entry.Text;
+                selectedGoal.Checkbox4Comment = step4entry.Text;
+                selectedGoal.Checkbox5Comment = step5entry.Text;
+                selectedGoal.Checkbox6Comment = step6entry.Text;
+                selectedGoal.Checkbox7Comment = step7entry.Text;
+                selectedGoal.Checkbox8Comment = step8entry.Text;
+                selectedGoal.Checkbox9Comment = step9entry.Text;
+            }
+            else
+            {
+                selectedGoal.TargetValue = goalTargetEntry.Text;
+            }
+        }
+
+
         private async void deleteGoal_Clicked(System.Object sender, System.EventArgs e)
         {
-            if ((challenge.OwnerId == App.loggedInUser.Id) && !string.IsNullOrEmpty(selectedGoal.ChallengeId))
+            if (!string.IsNullOrEmpty(selectedGoal.ChallengeId))
             {
                 bool delete = await DisplayAlert("Wait", "Are you sure you want to delete this challenge? It will be removed for all participants", "Yes", "No");
                 if (delete)
@@ -261,18 +227,28 @@ namespace HIPER
                     catch (Exception ex)
                     {
                     }
-                    await DisplayAlert("Challenge deleted", "", "Ok");
+                    await DisplayAlert("Success", "Challenge deleted", "Ok");
+                    Navigation.RemovePage(Navigation.NavigationStack[Navigation.NavigationStack.Count - 2]);
                     await Navigation.PopAsync();
                 }
             }
             else
             {
-                bool delete = await DisplayAlert("Wait", "Are you sure you want to delete this goal?", "Yes", "No");
-                if (delete)
+                try
                 {
-                    await App.client.GetTable<GoalModel>().DeleteAsync(selectedGoal);
-                    await DisplayAlert("Sure", "Lets delete it", "Ok");
-                    await Navigation.PopAsync();
+                    bool delete = await DisplayAlert("Wait", "Are you sure you want to delete this goal?", "Yes", "No");
+                    if (delete)
+                    {
+                        await App.client.GetTable<GoalModel>().DeleteAsync(selectedGoal);
+                        await DisplayAlert("Sure", "Lets delete it", "Ok");
+                        Navigation.RemovePage(Navigation.NavigationStack[Navigation.NavigationStack.Count-2]);
+                        await Navigation.PopAsync();
+
+                    }
+                }
+                catch(Exception ex)
+                {
+
                 }
             }
         }

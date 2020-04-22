@@ -14,13 +14,19 @@ namespace HIPER
         ChallengeModel challenge;
         List<LeaderBoardModel> competitors = new List<LeaderBoardModel>();
 
-        public GoalDetailPage(GoalModel goal)
+        public GoalDetailPage(GoalModel inputGoal)
         {
-            this.goal = goal;
+            this.goal = inputGoal;
             InitializeComponent();
 
-            constructorRunning = true;
+            UpdateDetailView();
+            UpdateLeaderBoard();
 
+        }
+
+        private void UpdateDetailView()
+        {
+            constructorRunning = true;
             headerText.Text = goal.Title;
             goalDescriptionLabel.Text = goal.Description;
             goalTargetLabel.Text = goal.TargetValue;
@@ -36,17 +42,22 @@ namespace HIPER
                 closeGoal.IsVisible = false;
             }
 
-            if (string.IsNullOrEmpty(goal.ChallengeId)){
+            if (string.IsNullOrEmpty(goal.ChallengeId))
+            {
                 leaderboardCollectionView.IsVisible = false;
                 leaderBoardLabel.IsVisible = false;
+                cardFrame.BorderColor = Color.FromHex(HIPER.Helpers.Constants.HIPER_PEACH);
+                challengeImage.IsVisible = false;
             }
             else
             {
                 leaderboardCollectionView.IsVisible = true;
                 leaderBoardLabel.IsVisible = true;
+                cardFrame.BorderColor = Color.FromHex(HIPER.Helpers.Constants.CHALLENGE_GOLD);
+                challengeImage.IsVisible = true;
             }
 
-            if ( goal.TargetType == 1)
+            if (goal.TargetType == 1)
             {
                 gridAimHigh.IsVisible = false;
                 aimHighLabel.IsVisible = false;
@@ -109,11 +120,14 @@ namespace HIPER
             constructorRunning = false;
         }
 
+  
         protected async override void OnAppearing()
         {
             base.OnAppearing();
 
-            if(goal.Closed || goal.Completed)
+            UpdateDetailView();
+
+            if (goal.Closed || goal.Completed)
             {
                 editGoal.IsEnabled = false;
             }
@@ -133,26 +147,23 @@ namespace HIPER
             {
                 editGoal.IsEnabled = true;
             }
-
             UpdateLeaderBoard();
-
+   
         }
 
 
 
         private async void UpdateLeaderBoard()
         {
-            competitors.Clear();
             try
             {
                 if (!string.IsNullOrEmpty(goal.ChallengeId))
                 {
+                    competitors.Clear();
                     var goals = await App.client.GetTable<GoalModel>().Where(g => g.ChallengeId == goal.ChallengeId).ToListAsync();
                     
                     if (goals != null)
                     {
-
-
                         foreach (GoalModel g in goals)
                         {
                             var user = (await App.client.GetTable<UserModel>().Where(u => u.Id == g.UserId).ToListAsync()).FirstOrDefault();
@@ -173,21 +184,21 @@ namespace HIPER
                         {
                             competitors[i - 1].Placing = i;
                         }
+                        leaderboardCollectionView.ItemsSource = competitors;
+                        leaderboardCollectionView.HeightRequest = competitors.Count * 50 + 20;
+
                     }
-                    leaderboardCollectionView.ItemsSource = competitors;
-                    leaderboardCollectionView.HeightRequest = competitors.Count * 50 + 20;
                 }
             }
             catch (Exception ex)
             {
-
 
             }
         }
 
         protected override bool OnBackButtonPressed()
         {
- 
+
             return base.OnBackButtonPressed();
         }
 
@@ -195,24 +206,24 @@ namespace HIPER
         void editGoal_Clicked(System.Object sender, System.EventArgs e) {
 
             Navigation.PushAsync(new EditGoalPage(goal));
-            //if (goal.TargetType == 1)
-            //{
-            //    Navigation.PushAsync(new EditSbSGoalPage(goal));
-            //}
-            //else
-            //{
-            //    Navigation.PushAsync(new EditGoalPage(goal));
-            //}
+
         }
 
         private async void goalCurrentEntry_TextChanged(System.Object sender, Xamarin.Forms.TextChangedEventArgs e)
         {
             if (!constructorRunning)
             {
-                goal.CurrentValue = goalCurrentEntry.Text;
-                await App.client.GetTable<GoalModel>().UpdateAsync(goal);
-            }
-            
+                try
+                {
+                    goal.CurrentValue = goalCurrentEntry.Text;
+
+                    await App.client.GetTable<GoalModel>().UpdateAsync(goal);
+                }
+                catch(Exception ex)
+                {
+
+                }
+            }   
         }
 
         private async void completeGoal_Clicked(System.Object sender, System.EventArgs e)
@@ -267,5 +278,6 @@ namespace HIPER
                 await App.client.GetTable<GoalModel>().UpdateAsync(goal);
             }
         }
+
     }
 }

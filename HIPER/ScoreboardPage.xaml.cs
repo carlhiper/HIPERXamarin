@@ -25,8 +25,6 @@ namespace HIPER
 
             createGoalsList(filter.SelectedIndex);
 
-            
-
             filter.ItemsSource = App.filterOptions;
         }
         

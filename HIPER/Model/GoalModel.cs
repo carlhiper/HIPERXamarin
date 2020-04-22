@@ -19,7 +19,7 @@ namespace HIPER.Model
         [MaxLength(40)]
         public string Title { get; set; }
 
-        [MaxLength(200)]
+        [MaxLength(255)]
         public string Description { get; set; }
 
         public DateTime Deadline { get; set; }
@@ -138,9 +138,6 @@ namespace HIPER.Model
         public string Checkbox8Comment { get; set; }
         public string Checkbox9Comment { get; set; }
 
-        public GoalModel()
-        {
 
-        }
     }
 }

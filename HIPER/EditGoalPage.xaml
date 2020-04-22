@@ -13,7 +13,7 @@
         <Grid x:Name="gridTitle">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
+                <RowDefinition Height="100" />
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
@@ -23,7 +23,7 @@
             <Label VerticalOptions="Center" Grid.Row="0" Grid.Column="0" Text="TITLE"/>
             <Entry x:Name="goalNameEntry" Grid.Row="0" Grid.Column="1" Placeholder="TITLE" MaxLength="20"></Entry>
             <Label VerticalOptions="Center" Grid.Row="1" Grid.Column="0" Text="DESCRIPTION"/>
-            <Entry x:Name="goalDescriptionEntry" VerticalTextAlignment="Start" HeightRequest="100" Grid.Row="1" Grid.Column="1" Placeholder="DESCRIPTION" MaxLength="200"></Entry>
+            <Editor x:Name="goalDescriptionEntry" VerticalOptions="Center" HeightRequest="100" Grid.Row="1" Grid.Column="1" Placeholder="DESCRIPTION" MaxLength="255" ></Editor>
             <Label VerticalOptions="Center" x:Name="privateGoalLabel" Grid.Row="2" Grid.Column="0" Text="PRIVATE GOAL"/>
             <CheckBox VerticalOptions="Center" HorizontalOptions="Center" Grid.Row="2" Grid.Column="1" x:Name="privateGoalCheckbox" Color="{StaticResource hiperPeach}"></CheckBox>
         </Grid>

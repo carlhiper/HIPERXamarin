@@ -4,8 +4,7 @@
 
         <Color x:Key="hiperPeach">#ff7562</Color>
         <Color x:Key="hiperWhite">#ffffff</Color>
-
-       <!-- <Image x:Key="completed" Source="ok.png"></Image> -->
+        <Color x:Key="challengeGoal">#d4af37</Color>
 
         <x:String x:Key="ok">ok.png</x:String>
         <x:String x:Key="challenge">challenge.png</x:String>
@@ -17,6 +16,12 @@
             <Setter Property="FontSize" Value="Medium"></Setter>
         </Style>
         <Style TargetType="Entry">
+            <Setter Property="TextColor" Value="Black" ></Setter>
+            <Setter Property="FontFamily" Value="FUTURA BOOK"></Setter>
+            <Setter Property="IsSpellCheckEnabled" Value="False"></Setter>
+            <Setter Property="IsTextPredictionEnabled" Value="False"></Setter>
+        </Style>
+        <Style TargetType="Editor">
             <Setter Property="TextColor" Value="Black" ></Setter>
             <Setter Property="FontFamily" Value="FUTURA BOOK"></Setter>
             <Setter Property="IsSpellCheckEnabled" Value="False"></Setter>

@@ -54,6 +54,9 @@ namespace HIPER
                 challengeLabel.IsVisible = false;
                 challengeHeader.IsVisible = false;
             }
+            challengeCollectionView.HeightRequest = 20;
+            challengeCollectionView.IsVisible = false;
+
         }
 
         private async void saveGoal_Clicked(System.Object sender, System.EventArgs e)
@@ -66,6 +69,12 @@ namespace HIPER
                 bool isStepbyStepCheckedAndEntryFilled = targetRB2.IsChecked && (stepbystepPicker.SelectedIndex < 0);
                 bool isWeeklyCheckedAndEntryFilled = repeatableRB2.IsChecked && repeatableRB21.IsChecked && (weekdayPicker.SelectedIndex < 0);
                 bool isMonthlyCheckedAndEntryFilled = repeatableRB2.IsChecked && repeatableRB22.IsChecked && (dayOfMonthPicker.SelectedIndex < 0);
+
+                if (isGoalNameEmpty || isGoalDescriptionEmpty || isTargetCheckedAndEntryFilled || isStepbyStepCheckedAndEntryFilled || isWeeklyCheckedAndEntryFilled || isMonthlyCheckedAndEntryFilled)
+                {
+                    await DisplayAlert("Error", "All field needs to be entered", "Ok");
+                    return;
+                }
 
 
                 if (challengeCheckbox.IsChecked)
@@ -88,16 +97,14 @@ namespace HIPER
                     {
                         CreateGoal(user.Id, false, challenge.Id);
                     }
-                }
 
-
-                if (isGoalNameEmpty || isGoalDescriptionEmpty || isTargetCheckedAndEntryFilled || isStepbyStepCheckedAndEntryFilled || isWeeklyCheckedAndEntryFilled || isMonthlyCheckedAndEntryFilled)
-                {
-                    await DisplayAlert("Error", "All field needs to be entered", "Ok");
+                    CreateGoal(App.loggedInUser.Id, true, challenge.Id);
+                    await DisplayAlert("Success", "Challenge saved and sent to selected team members", "Ok");
+                    await Navigation.PopAsync();
                 }
                 else
                 {
-                    CreateGoal(App.loggedInUser.Id, true, challenge.Id);
+                    CreateGoal(App.loggedInUser.Id, true, null);
                     await DisplayAlert("Success", "Goal saved", "Ok");
                     await Navigation.PopAsync();
                 }
@@ -175,9 +182,6 @@ namespace HIPER
             //}
 
             await App.client.GetTable<GoalModel>().InsertAsync(goal);
-
-
-
         }
 
         private void radioButtonController()
@@ -297,7 +301,9 @@ namespace HIPER
 
             if (!challengeCheckbox.IsChecked)
             {
+                challengeCollectionView.HeightRequest = 20;
                 challengeCollectionView.IsVisible = false;
+      
             }
             else
             {
@@ -312,6 +318,7 @@ namespace HIPER
                 }
                 catch (Exception ex){ }
                 challengeCollectionView.IsVisible = true;
+
                 challengeCollectionView.HeightRequest = teammembers.Count * 20;
 
             }

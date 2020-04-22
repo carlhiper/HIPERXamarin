@@ -71,5 +71,17 @@ namespace HIPER
         {
             createGoalsList();
         }
+
+        private async void removeFromTeam_Clicked(System.Object sender, System.EventArgs e)
+        {
+            bool kickout = await DisplayAlert("Warning", "Are you sure you want to kick this user out from your team?", "Yes", "No");
+
+            if (kickout)
+            {
+                user.TeamId = null;
+                await App.client.GetTable<UserModel>().UpdateAsync(user);
+                await Navigation.PopAsync();
+            }
+        }
     }
 }

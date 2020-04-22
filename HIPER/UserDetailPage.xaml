@@ -13,7 +13,20 @@
         <StackLayout Margin="20"
                      CompressedLayout.IsHeadless="True">
             <Label x:Name="titleLabel" Text="SCOREBOARD" Style="{StaticResource Header}"></Label>
-            <Button x:Name="addGoalButton" Text="ADD GOAL" Clicked="addGoalButton_Clicked"></Button>
+
+            <Grid Padding="20">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="40" />
+                </Grid.RowDefinitions>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+            <Button x:Name="addGoalButton" Grid.Column="0" Text="ASSIGN GOAL" Clicked="addGoalButton_Clicked"/>
+            <Button x:Name="removeFromTeam" Grid.Column="1" Text="KICK OUT" Clicked="removeFromTeam_Clicked"/>
+            </Grid>
+
             <Grid Padding="20">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="40" />

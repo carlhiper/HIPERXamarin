@@ -6,16 +6,14 @@
     </ContentPage.ToolbarItems>
     <ScrollView>
     <StackLayout  Margin="10">
-        <Frame>
+        <Frame x:Name="cardFrame">
             <ContentView>
                 <StackLayout Margin="10">
-      
+
+                    <Image Source="{StaticResource challenge}" HeightRequest="40" x:Name="challengeImage"></Image>
                     <Label x:Name="headerText" Text="GOAL TITLE" Margin="10" HorizontalTextAlignment="Center" Style="{StaticResource Header}"></Label>
-
                     <Label x:Name="goalDescriptionLabel" HorizontalTextAlignment="Center"></Label>
-
-
-                    <Label x:Name="aimHighLabel" Text="AIM HIGH" HorizontalOptions="Center" TextColor="{StaticResource hiperPeach}" Margin="0,20,0,5"></Label>
+                    <Label x:Name="aimHighLabel" Text="SINGLE TARGET" HorizontalOptions="Center" TextColor="{StaticResource hiperPeach}" Margin="0,20,0,5"></Label>
  
                     <Grid x:Name="gridAimHigh">
                         <Grid.RowDefinitions>
@@ -28,9 +26,9 @@
                         </Grid.ColumnDefinitions>
   
                         <Label Grid.Row="0" Grid.Column="0" Text="TARGET"/>
-                        <Label x:Name="goalTargetLabel" Grid.Row="0" Grid.Column="1"></Label>
+                        <Label x:Name="goalTargetLabel" Grid.Row="0" Grid.Column="1" HorizontalTextAlignment="Center"></Label>
                         <Label Grid.Row="1" Grid.Column="0" Text="CURRENT"/>
-                        <Entry VerticalOptions="Start" x:Name="goalCurrentEntry" Grid.Row="1" Grid.Column="1" Placeholder="CURRENT VALUE" TextChanged="goalCurrentEntry_TextChanged" ></Entry>
+                        <Entry VerticalOptions="Start" x:Name="goalCurrentEntry" HorizontalTextAlignment="Center" Grid.Row="1" Grid.Column="1" Placeholder="CURRENT VALUE" TextChanged="goalCurrentEntry_TextChanged" ></Entry>
                     </Grid>
 
                     <Label x:Name="stepsLabel" Text="STEPS" HorizontalOptions="Center" TextColor="{StaticResource hiperPeach}" Margin="0,20,0,5"></Label>
@@ -116,7 +114,6 @@
                             </DataTemplate>
                         </CollectionView.ItemTemplate>
                     </CollectionView>
-
                     <Button x:Name="completeGoal" Text="COMPLETED" Clicked="completeGoal_Clicked"></Button>
                     <Button x:Name="closeGoal" Text="CLOSE" Clicked="closeGoal_Clicked"></Button>
                 </StackLayout>

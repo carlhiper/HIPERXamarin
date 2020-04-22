@@ -7,6 +7,10 @@ namespace HIPER
 {
     public partial class FeedPage : ContentPage
     {
+
+        private bool _isRefreshing;
+        private Command _refreshViewCommand;
+
         public FeedPage()
         {
             InitializeComponent();
@@ -136,5 +140,6 @@ namespace HIPER
             PostEntry.Text = "";
             createFeedList();
         }
+
     }
 }
