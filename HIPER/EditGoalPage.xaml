@@ -131,7 +131,7 @@
             <Picker x:Name="dayOfMonthPicker" Grid.Row="1" Grid.Column="3"></Picker>
         </Grid>
    
-        <Button x:Name="deleteGoal" Text="DELETE" Clicked="deleteGoal_Clicked"></Button>
+        <Button x:Name="deleteGoal" Text="DELETE" Clicked="deleteGoal_Clicked" Margin="0,20,0,0"></Button>
     </StackLayout>
     </ScrollView>
 </ContentPage>

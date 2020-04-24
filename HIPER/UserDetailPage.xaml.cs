@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using HIPER.Helpers;
 using HIPER.Model;
 using Xamarin.Forms;
 
@@ -20,11 +21,26 @@ namespace HIPER
             this.user = selectedUser;
         }
 
-        protected override void OnAppearing()
+        protected async override void OnAppearing()
         {
             base.OnAppearing();
 
             titleLabel.Text = (user.FirstName + " " + user.LastName).ToUpper();
+            companyLabel.Text = user.Company;
+            emailLabel.Text = user.Email;
+            profileImage.Source = user.ImageUrl;
+            try
+            {
+                List<GoalModel> goals = await App.client.GetTable<GoalModel>().Where(g => g.UserId == user.Id).ToListAsync();
+                if (goals != null)
+                {
+                    var ratio = GoalStats.GetGoalCompletionRatio(goals);
+                    completionRatioLabel.Text = ratio.ToString("F0") + "% of goals completed last month";
+                }
+            }catch(Exception ex)
+            {
+
+            }
 
             createGoalsList();
         }

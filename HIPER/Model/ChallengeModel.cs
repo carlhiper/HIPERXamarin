@@ -10,6 +10,8 @@ namespace HIPER.Model
 
         public string OwnerId { get; set; }
 
+        public string InitialGoalId { get; set; }
+
         public DateTime CreatedDate { get; set; }
 
     }

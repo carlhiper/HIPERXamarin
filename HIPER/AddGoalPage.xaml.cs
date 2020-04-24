@@ -13,7 +13,7 @@ namespace HIPER
         UserModel user;
         List<UserModel> teammembers;
         ChallengeModel challenge;
-
+        
         public AddGoalPage()
         {
             InitializeComponent();
@@ -75,7 +75,6 @@ namespace HIPER
                     await DisplayAlert("Error", "All field needs to be entered", "Ok");
                     return;
                 }
-
 
                 if (challengeCheckbox.IsChecked)
                 {
@@ -153,7 +152,7 @@ namespace HIPER
                 WeeklyOrMonthly = repeatableRB21.IsChecked ? 0 : 1,
                 RepeatWeekly = weekdayPicker.SelectedIndex,
                 RepeatMonthly = dayOfMonthPicker.SelectedIndex,
-                SteByStepAmount = stepbystepPicker.SelectedIndex,
+                StepByStepAmount = stepbystepPicker.SelectedIndex,
 
                 Checkbox1 = step1CB.IsChecked,
                 Checkbox1Comment = step1entry.Text,
@@ -250,7 +249,6 @@ namespace HIPER
                 stepbystepPicker.IsEnabled = true;
                 goalTargetEntry.Text = "";
             }
-
         }
 
         void targetRB1_PropertyChanged(System.Object sender, System.ComponentModel.PropertyChangedEventArgs e)
@@ -265,8 +263,6 @@ namespace HIPER
 
         void stepbystepPicker_SelectedIndexChanged(System.Object sender, System.EventArgs e)
         {
-            int steps = stepbystepPicker.SelectedIndex;
-
             step1CB.IsVisible = (stepbystepPicker.SelectedIndex > -1);
             step1entry.IsVisible = (stepbystepPicker.SelectedIndex > -1);
             step1label.IsVisible = (stepbystepPicker.SelectedIndex > -1);
@@ -303,20 +299,21 @@ namespace HIPER
             {
                 challengeCollectionView.HeightRequest = 20;
                 challengeCollectionView.IsVisible = false;
-      
+
             }
             else
             {
                 privateGoalCheckbox.IsChecked = false;
-                try { 
-                    if(teammembers == null)
+                try
+                {
+                    if (teammembers == null)
                     {
                         teammembers = await App.client.GetTable<UserModel>().Where(u => u.TeamId == App.loggedInUser.TeamId).ToListAsync();
                         teammembers.RemoveAt(teammembers.FindIndex(a => a.Id == App.loggedInUser.Id));
                     }
                     challengeCollectionView.ItemsSource = teammembers;
                 }
-                catch (Exception ex){ }
+                catch (Exception ex) { }
                 challengeCollectionView.IsVisible = true;
 
                 challengeCollectionView.HeightRequest = teammembers.Count * 20;

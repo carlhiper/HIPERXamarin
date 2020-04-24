@@ -58,8 +58,8 @@
 
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto" />
-                                    <ColumnDefinition Width="200" />
                                     <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="100" />
                                     <ColumnDefinition Width="35"/>
                                 </Grid.ColumnDefinitions>
 
@@ -94,13 +94,21 @@
                                     Text="{Binding Description}"
                                     FontAttributes="None" 
                                     VerticalOptions="End" />
+                                 <Image
+                                    Source="{StaticResource recurrent}"
+                                    Aspect="AspectFit"
+                                    HorizontalOptions="End"
+                                    HeightRequest="25"
+                                    Grid.Column="3"
+                                    Grid.Row="1"
+                                    IsVisible="{Binding RepeatType}"/>
                                 <Label Grid.Row="2"
                                     Grid.Column="0"
                                     Grid.ColumnSpan="3"
                                     Text="{Binding Deadline, StringFormat='Deadline: {0:yyyy-MM-dd}'}"
                                     FontAttributes="Italic" 
                                     VerticalOptions="End" />
-                                    <Image
+                                 <Image
                                     Source="{StaticResource ok}"
                                     Aspect="AspectFit"
                                     HorizontalOptions="End"

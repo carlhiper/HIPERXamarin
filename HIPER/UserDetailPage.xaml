@@ -9,12 +9,46 @@
             <converters:PerformanceToImageConverter x:Key="converter"/>
         </ResourceDictionary>
     </ContentPage.Resources>
-
+    <ContentPage.Content>
         <StackLayout Margin="20"
                      CompressedLayout.IsHeadless="True">
             <Label x:Name="titleLabel" Text="SCOREBOARD" Style="{StaticResource Header}"></Label>
 
-            <Grid Padding="20">
+            <Frame>
+                <StackLayout Padding="5">
+                    <Grid Padding="0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                            <ColumnDefinition Width="90"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Label x:Name="companyLabel" Grid.Row="1" Text="COMPANY"></Label>
+                        <Label x:Name="emailLabel" Grid.Row="2" Text="EMAIL"></Label>
+                        <Label x:Name="completionRatioLabel" Grid.Row="3" Text="Goal completion ratio"/>
+                        <Frame CornerRadius="40"
+                               IsClippedToBounds="True"
+                               HorizontalOptions="Center"
+                               VerticalOptions="Center"
+                               Padding="0"
+                               Margin="0"
+                               Grid.Column="1"
+                               Grid.RowSpan="3"
+                               BorderColor="gray">
+                            <Image x:Name="profileImage"
+                                   Aspect="AspectFill"
+                                   WidthRequest="80"
+                                   HeightRequest="80"></Image>
+                        </Frame>
+                    </Grid>
+                 </StackLayout>
+            </Frame>
+
+            <Grid Padding="0,20,0,0">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="40" />
                 </Grid.RowDefinitions>
@@ -23,11 +57,11 @@
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
-            <Button x:Name="addGoalButton" Grid.Column="0" Text="ASSIGN GOAL" Clicked="addGoalButton_Clicked"/>
-            <Button x:Name="removeFromTeam" Grid.Column="1" Text="KICK OUT" Clicked="removeFromTeam_Clicked"/>
+                <Button x:Name="addGoalButton" Grid.Column="0" Text="ASSIGN GOAL" Clicked="addGoalButton_Clicked"/>
+                <Button x:Name="removeFromTeam" Grid.Column="1" Text="KICK OUT" Clicked="removeFromTeam_Clicked"/>
             </Grid>
 
-            <Grid Padding="20">
+            <Grid Padding="10">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="40" />
                 </Grid.RowDefinitions>
@@ -87,12 +121,20 @@
                                         Text="{Binding Description}"
                                         FontAttributes="Italic" 
                                         VerticalOptions="End" />
+                                    <Image
+                                        Source="{StaticResource recurrent}"
+                                        Aspect="AspectFit"
+                                        HorizontalOptions="End"
+                                        HeightRequest="25"
+                                        Grid.Column="2"
+                                        Grid.Row="1"
+                                        IsVisible="{Binding RepeatType}"/>
                                     <Label Grid.Row="2"
                                         Grid.Column="0" 
                                         Text="{Binding Deadline, StringFormat='Deadline: {0:yyyy-MM-dd}'}"
                                         FontAttributes="Italic" 
                                         VerticalOptions="End" />
-                                      <Image
+                                    <Image
                                         Source="{StaticResource ok}"
                                         Aspect="AspectFit"
                                         HorizontalOptions="End"
@@ -108,4 +150,5 @@
                 </CollectionView.ItemTemplate>
             </CollectionView> 
         </StackLayout>
+    </ContentPage.Content>
 </ContentPage>

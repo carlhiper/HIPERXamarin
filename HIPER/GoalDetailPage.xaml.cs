@@ -11,6 +11,7 @@ namespace HIPER
     {
         bool constructorRunning;
         GoalModel goal;
+        UserModel challengeOwner;
         ChallengeModel challenge;
         List<LeaderBoardModel> competitors = new List<LeaderBoardModel>();
 
@@ -19,9 +20,10 @@ namespace HIPER
             this.goal = inputGoal;
             InitializeComponent();
 
+            GetChallengeOwner();
+
             UpdateDetailView();
             UpdateLeaderBoard();
-
         }
 
         private void UpdateDetailView()
@@ -48,6 +50,8 @@ namespace HIPER
                 leaderBoardLabel.IsVisible = false;
                 cardFrame.BorderColor = Color.FromHex(HIPER.Helpers.Constants.HIPER_PEACH);
                 challengeImage.IsVisible = false;
+                createdByLabel.Text = "";
+                createdByLabel.IsVisible = false;
             }
             else
             {
@@ -55,6 +59,33 @@ namespace HIPER
                 leaderBoardLabel.IsVisible = true;
                 cardFrame.BorderColor = Color.FromHex(HIPER.Helpers.Constants.CHALLENGE_GOLD);
                 challengeImage.IsVisible = true;
+                if (challengeOwner != null)
+                {
+                    createdByLabel.Text = "Created by " + challengeOwner.FirstName + " " + challengeOwner.LastName;
+                    createdByLabel.IsVisible = true;
+                }
+                else
+                {
+                    createdByLabel.Text = "";
+                    createdByLabel.IsVisible = false;
+                }
+            }
+
+            if (goal.RepeatType == 1)
+            {
+                recurrentLabel.IsVisible = true;
+                if (goal.WeeklyOrMonthly == 0)
+                {
+                    recurrentLabel.Text = "recurring weekly";
+                }
+                else
+                {
+                    recurrentLabel.Text = "recurring monthly";
+                }
+            }
+            else
+            {
+                recurrentLabel.IsVisible = false;
             }
 
             if (goal.TargetType == 1)
@@ -70,45 +101,45 @@ namespace HIPER
                 step1entry.IsVisible = true;
                 step1label.IsVisible = true;
                 step2CB.IsChecked = goal.Checkbox2;
-                step2CB.IsVisible = (goal.SteByStepAmount > 0) ? true : false;
+                step2CB.IsVisible = (goal.StepByStepAmount > 0) ? true : false;
                 step2entry.Text = goal.Checkbox2Comment;
-                step2entry.IsVisible = (goal.SteByStepAmount > 0) ? true : false;
-                step2label.IsVisible = (goal.SteByStepAmount > 0) ? true : false;
+                step2entry.IsVisible = (goal.StepByStepAmount > 0) ? true : false;
+                step2label.IsVisible = (goal.StepByStepAmount > 0) ? true : false;
                 step3CB.IsChecked = goal.Checkbox3;
-                step3CB.IsVisible = (goal.SteByStepAmount > 1) ? true : false;
+                step3CB.IsVisible = (goal.StepByStepAmount > 1) ? true : false;
                 step3entry.Text = goal.Checkbox3Comment;
-                step3entry.IsVisible = (goal.SteByStepAmount > 1) ? true : false;
-                step3label.IsVisible = (goal.SteByStepAmount > 1) ? true : false;
+                step3entry.IsVisible = (goal.StepByStepAmount > 1) ? true : false;
+                step3label.IsVisible = (goal.StepByStepAmount > 1) ? true : false;
                 step4CB.IsChecked = goal.Checkbox4;
-                step4CB.IsVisible = (goal.SteByStepAmount > 2) ? true : false;
+                step4CB.IsVisible = (goal.StepByStepAmount > 2) ? true : false;
                 step4entry.Text = goal.Checkbox4Comment;
-                step4entry.IsVisible = (goal.SteByStepAmount > 2) ? true : false;
-                step4label.IsVisible = (goal.SteByStepAmount > 2) ? true : false;
+                step4entry.IsVisible = (goal.StepByStepAmount > 2) ? true : false;
+                step4label.IsVisible = (goal.StepByStepAmount > 2) ? true : false;
                 step5CB.IsChecked = goal.Checkbox5;
-                step5CB.IsVisible = (goal.SteByStepAmount > 3) ? true : false;
+                step5CB.IsVisible = (goal.StepByStepAmount > 3) ? true : false;
                 step5entry.Text = goal.Checkbox5Comment;
-                step5entry.IsVisible = (goal.SteByStepAmount > 3) ? true : false;
-                step5label.IsVisible = (goal.SteByStepAmount > 3) ? true : false;
+                step5entry.IsVisible = (goal.StepByStepAmount > 3) ? true : false;
+                step5label.IsVisible = (goal.StepByStepAmount > 3) ? true : false;
                 step6CB.IsChecked = goal.Checkbox6;
-                step6CB.IsVisible = (goal.SteByStepAmount > 4) ? true : false;
+                step6CB.IsVisible = (goal.StepByStepAmount > 4) ? true : false;
                 step6entry.Text = goal.Checkbox6Comment;
-                step6entry.IsVisible = (goal.SteByStepAmount > 4) ? true : false;
-                step6label.IsVisible = (goal.SteByStepAmount > 4) ? true : false;
+                step6entry.IsVisible = (goal.StepByStepAmount > 4) ? true : false;
+                step6label.IsVisible = (goal.StepByStepAmount > 4) ? true : false;
                 step7CB.IsChecked = goal.Checkbox7;
-                step7CB.IsVisible = (goal.SteByStepAmount > 5) ? true : false;
+                step7CB.IsVisible = (goal.StepByStepAmount > 5) ? true : false;
                 step7entry.Text = goal.Checkbox7Comment;
-                step7entry.IsVisible = (goal.SteByStepAmount > 5) ? true : false;
-                step7label.IsVisible = (goal.SteByStepAmount > 5) ? true : false;
+                step7entry.IsVisible = (goal.StepByStepAmount > 5) ? true : false;
+                step7label.IsVisible = (goal.StepByStepAmount > 5) ? true : false;
                 step8CB.IsChecked = goal.Checkbox8;
-                step8CB.IsVisible = (goal.SteByStepAmount > 6) ? true : false;
+                step8CB.IsVisible = (goal.StepByStepAmount > 6) ? true : false;
                 step8entry.Text = goal.Checkbox8Comment;
-                step8entry.IsVisible = (goal.SteByStepAmount > 6) ? true : false;
-                step8label.IsVisible = (goal.SteByStepAmount > 6) ? true : false;
+                step8entry.IsVisible = (goal.StepByStepAmount > 6) ? true : false;
+                step8label.IsVisible = (goal.StepByStepAmount > 6) ? true : false;
                 step9CB.IsChecked = goal.Checkbox9;
-                step9CB.IsVisible = (goal.SteByStepAmount > 7) ? true : false;
+                step9CB.IsVisible = (goal.StepByStepAmount > 7) ? true : false;
                 step9entry.Text = goal.Checkbox9Comment;
-                step9entry.IsVisible = (goal.SteByStepAmount > 7) ? true : false;
-                step9label.IsVisible = (goal.SteByStepAmount > 7) ? true : false;
+                step9entry.IsVisible = (goal.StepByStepAmount > 7) ? true : false;
+                step9label.IsVisible = (goal.StepByStepAmount > 7) ? true : false;
             }
             else
             {
@@ -120,7 +151,7 @@ namespace HIPER
             constructorRunning = false;
         }
 
-  
+
         protected async override void OnAppearing()
         {
             base.OnAppearing();
@@ -148,10 +179,23 @@ namespace HIPER
                 editGoal.IsEnabled = true;
             }
             UpdateLeaderBoard();
-   
         }
 
+        private async void GetChallengeOwner()
+        {
+            try
+            {
+                if (!string.IsNullOrEmpty(goal.ChallengeId))
+                {
+                    challenge = (await App.client.GetTable<ChallengeModel>().Where(c => c.Id == goal.ChallengeId).ToListAsync()).FirstOrDefault();
+                    challengeOwner = (await App.client.GetTable<UserModel>().Where(u => u.Id == challenge.OwnerId).ToListAsync()).FirstOrDefault();
+                }
+            }
+            catch (Exception ex)
+            {
 
+            }
+        }
 
         private async void UpdateLeaderBoard()
         {
@@ -271,7 +315,7 @@ namespace HIPER
                 goal.Checkbox8 = step8CB.IsChecked;
                 goal.Checkbox9 = step9CB.IsChecked;
 
-                goal.TargetValue = (goal.SteByStepAmount + 1).ToString();
+                goal.TargetValue = (goal.StepByStepAmount + 1).ToString();
                 goal.CurrentValue = ((step1CB.IsChecked ? 1 : 0) + (step2CB.IsChecked ? 1 : 0) + (step3CB.IsChecked ? 1 : 0) + (step4CB.IsChecked ? 1 : 0) + (step5CB.IsChecked ? 1 : 0) + (step6CB.IsChecked ? 1 : 0) +
                 (step7CB.IsChecked ? 1 : 0) + (step8CB.IsChecked ? 1 : 0) + (step8CB.IsChecked ? 1 : 0)).ToString();
 

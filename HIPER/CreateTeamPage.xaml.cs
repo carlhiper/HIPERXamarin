@@ -31,10 +31,8 @@ namespace HIPER
 
         private async void saveButton_Clicked(System.Object sender, System.EventArgs e)
         {
-
             try
             {
-
                 bool isTeamNameEntryEmpty = string.IsNullOrEmpty(teamNameEntry.Text);
                 bool isCompanyEntryEmpty = string.IsNullOrEmpty(companyEntry.Text);
 

@@ -14,6 +14,8 @@ namespace HIPER.Model
 
         public string ChallengeId { get; set; }
 
+        public string RecurrentId { get; set; }
+
         public bool GoalAccepted { get; set; }
 
         [MaxLength(40)]
@@ -105,7 +107,7 @@ namespace HIPER.Model
         public int TargetType { get; set; }
         // 0-Aim high, 1-step by step
 
-        public int SteByStepAmount { get; set; }
+        public int StepByStepAmount { get; set; }
 
         public int RepeatType { get; set; }
         // 0-Single, 1-Recurrent

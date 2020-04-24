@@ -11,8 +11,9 @@
                 <StackLayout Margin="10">
 
                     <Image Source="{StaticResource challenge}" HeightRequest="40" x:Name="challengeImage"></Image>
-                    <Label x:Name="headerText" Text="GOAL TITLE" Margin="10" HorizontalTextAlignment="Center" Style="{StaticResource Header}"></Label>
-                    <Label x:Name="goalDescriptionLabel" HorizontalTextAlignment="Center"></Label>
+                    <Label x:Name="headerText" Text="GOAL TITLE" Margin="10,0,10,5" HorizontalTextAlignment="Center" Style="{StaticResource Header}"></Label>
+                    <Label x:Name="createdByLabel" Text="Created by " FontSize="Small" FontAttributes="Italic" HorizontalTextAlignment="Center"></Label>
+                    <Label x:Name="goalDescriptionLabel" HorizontalTextAlignment="Center" Margin="0,15,0,0"></Label>
                     <Label x:Name="aimHighLabel" Text="SINGLE TARGET" HorizontalOptions="Center" TextColor="{StaticResource hiperPeach}" Margin="0,20,0,5"></Label>
  
                     <Grid x:Name="gridAimHigh">
@@ -81,7 +82,8 @@
                     </Grid>
 
                     <Label Text="NEXT DEADLINE" HorizontalOptions="Center" TextColor="{StaticResource hiperPeach}" Margin="0,20,0,5"></Label>
-                    <Label Text="2020-09-12" x:Name="deadlineLabel" HorizontalOptions="Center" Margin="0,10,0,5"></Label>
+                    <Label Text="2020-09-12" x:Name="deadlineLabel" HorizontalOptions="Center"></Label>
+                    <Label HorizontalOptions="Center" x:Name="recurrentLabel" Text="recurrent weekly"/>
 
                     <Label Text="LEADERBOARD" x:Name="leaderBoardLabel" HorizontalOptions="Center" TextColor="{StaticResource hiperPeach}" Margin="0,20,0,5"></Label>
                     <CollectionView
@@ -114,7 +116,7 @@
                             </DataTemplate>
                         </CollectionView.ItemTemplate>
                     </CollectionView>
-                    <Button x:Name="completeGoal" Text="COMPLETED" Clicked="completeGoal_Clicked"></Button>
+                    <Button x:Name="completeGoal" Text="COMPLETED" Clicked="completeGoal_Clicked" Margin="0,20,0,0"></Button>
                     <Button x:Name="closeGoal" Text="CLOSE" Clicked="closeGoal_Clicked"></Button>
                 </StackLayout>
             </ContentView>

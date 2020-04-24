@@ -4,6 +4,7 @@ using System.Linq;
 using HIPER.Model;
 using SQLite;
 using Xamarin.Forms;
+using HIPER.Helpers;
 
 namespace HIPER
 {
@@ -51,7 +52,15 @@ namespace HIPER
                     createTeam.IsEnabled = true;
                     joinTeam.IsEnabled = true;
                     leaveTeam.IsEnabled = false;
-                }  
+                }
+
+                List<GoalModel> goals = await App.client.GetTable<GoalModel>().Where(g => g.UserId == App.loggedInUser.Id).ToListAsync();
+                if (goals != null)
+                {
+                    var ratio = GoalStats.GetGoalCompletionRatio(goals);
+                    completionRatioLabel.Text = ratio.ToString("F0") + "% of goals completed last month";
+                }
+
             }
             catch(NullReferenceException nre)
             {
@@ -84,6 +93,13 @@ namespace HIPER
         {
             Navigation.PushAsync(new CreateTeamPage());
         }
+
+        private async void GetCompletionRatio(UserModel user)
+        {
+
+            
+        }
+
 
         private async void leaveTeam_Clicked(System.Object sender, System.EventArgs e)
         {

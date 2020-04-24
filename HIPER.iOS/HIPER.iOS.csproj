@@ -183,5 +183,8 @@
     <BundleResource Include="Resources\challenge.png" />
     <BundleResource Include="Resources\challenge%402x.png" />
     <BundleResource Include="Resources\challenge%403x.png" />
+    <BundleResource Include="Resources\recurrent.png" />
+    <BundleResource Include="Resources\recurrent%402x.png" />
+    <BundleResource Include="Resources\recurrent%403x.png" />
   </ItemGroup>
 </Project>

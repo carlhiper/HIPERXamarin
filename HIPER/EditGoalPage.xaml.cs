@@ -16,7 +16,7 @@ namespace HIPER
         public EditGoalPage(GoalModel inputGoal)
         {
             InitializeComponent();
-      
+
             this.selectedGoal = inputGoal;
 
             weekdayPicker.ItemsSource = App.weekdays;
@@ -56,45 +56,45 @@ namespace HIPER
                 step1entry.IsVisible = true;
                 step1label.IsVisible = true;
                 step2CB.IsChecked = selectedGoal.Checkbox2;
-                step2CB.IsVisible = (selectedGoal.SteByStepAmount > 0) ? true : false;
+                step2CB.IsVisible = (selectedGoal.StepByStepAmount > 0) ? true : false;
                 step2entry.Text = selectedGoal.Checkbox2Comment;
-                step2entry.IsVisible = (selectedGoal.SteByStepAmount > 0) ? true : false;
-                step2label.IsVisible = (selectedGoal.SteByStepAmount > 0) ? true : false;
+                step2entry.IsVisible = (selectedGoal.StepByStepAmount > 0) ? true : false;
+                step2label.IsVisible = (selectedGoal.StepByStepAmount > 0) ? true : false;
                 step3CB.IsChecked = selectedGoal.Checkbox3;
-                step3CB.IsVisible = (selectedGoal.SteByStepAmount > 1) ? true : false;
+                step3CB.IsVisible = (selectedGoal.StepByStepAmount > 1) ? true : false;
                 step3entry.Text = selectedGoal.Checkbox3Comment;
-                step3entry.IsVisible = (selectedGoal.SteByStepAmount > 1) ? true : false;
-                step3label.IsVisible = (selectedGoal.SteByStepAmount > 1) ? true : false;
+                step3entry.IsVisible = (selectedGoal.StepByStepAmount > 1) ? true : false;
+                step3label.IsVisible = (selectedGoal.StepByStepAmount > 1) ? true : false;
                 step4CB.IsChecked = selectedGoal.Checkbox4;
-                step4CB.IsVisible = (selectedGoal.SteByStepAmount > 2) ? true : false;
+                step4CB.IsVisible = (selectedGoal.StepByStepAmount > 2) ? true : false;
                 step4entry.Text = selectedGoal.Checkbox4Comment;
-                step4entry.IsVisible = (selectedGoal.SteByStepAmount > 2) ? true : false;
-                step4label.IsVisible = (selectedGoal.SteByStepAmount > 2) ? true : false;
+                step4entry.IsVisible = (selectedGoal.StepByStepAmount > 2) ? true : false;
+                step4label.IsVisible = (selectedGoal.StepByStepAmount > 2) ? true : false;
                 step5CB.IsChecked = selectedGoal.Checkbox5;
-                step5CB.IsVisible = (selectedGoal.SteByStepAmount > 3) ? true : false;
+                step5CB.IsVisible = (selectedGoal.StepByStepAmount > 3) ? true : false;
                 step5entry.Text = selectedGoal.Checkbox5Comment;
-                step5entry.IsVisible = (selectedGoal.SteByStepAmount > 3) ? true : false;
-                step5label.IsVisible = (selectedGoal.SteByStepAmount > 3) ? true : false;
+                step5entry.IsVisible = (selectedGoal.StepByStepAmount > 3) ? true : false;
+                step5label.IsVisible = (selectedGoal.StepByStepAmount > 3) ? true : false;
                 step6CB.IsChecked = selectedGoal.Checkbox6;
-                step6CB.IsVisible = (selectedGoal.SteByStepAmount > 4) ? true : false;
+                step6CB.IsVisible = (selectedGoal.StepByStepAmount > 4) ? true : false;
                 step6entry.Text = selectedGoal.Checkbox6Comment;
-                step6entry.IsVisible = (selectedGoal.SteByStepAmount > 4) ? true : false;
-                step6label.IsVisible = (selectedGoal.SteByStepAmount > 4) ? true : false;
+                step6entry.IsVisible = (selectedGoal.StepByStepAmount > 4) ? true : false;
+                step6label.IsVisible = (selectedGoal.StepByStepAmount > 4) ? true : false;
                 step7CB.IsChecked = selectedGoal.Checkbox7;
-                step7CB.IsVisible = (selectedGoal.SteByStepAmount > 5) ? true : false;
+                step7CB.IsVisible = (selectedGoal.StepByStepAmount > 5) ? true : false;
                 step7entry.Text = selectedGoal.Checkbox7Comment;
-                step7entry.IsVisible = (selectedGoal.SteByStepAmount > 5) ? true : false;
-                step7label.IsVisible = (selectedGoal.SteByStepAmount > 5) ? true : false;
+                step7entry.IsVisible = (selectedGoal.StepByStepAmount > 5) ? true : false;
+                step7label.IsVisible = (selectedGoal.StepByStepAmount > 5) ? true : false;
                 step8CB.IsChecked = selectedGoal.Checkbox8;
-                step8CB.IsVisible = (selectedGoal.SteByStepAmount > 6) ? true : false;
+                step8CB.IsVisible = (selectedGoal.StepByStepAmount > 6) ? true : false;
                 step8entry.Text = selectedGoal.Checkbox8Comment;
-                step8entry.IsVisible = (selectedGoal.SteByStepAmount > 6) ? true : false;
-                step8label.IsVisible = (selectedGoal.SteByStepAmount > 6) ? true : false;
+                step8entry.IsVisible = (selectedGoal.StepByStepAmount > 6) ? true : false;
+                step8label.IsVisible = (selectedGoal.StepByStepAmount > 6) ? true : false;
                 step9CB.IsChecked = selectedGoal.Checkbox9;
-                step9CB.IsVisible = (selectedGoal.SteByStepAmount > 7) ? true : false;
+                step9CB.IsVisible = (selectedGoal.StepByStepAmount > 7) ? true : false;
                 step9entry.Text = selectedGoal.Checkbox9Comment;
-                step9entry.IsVisible = (selectedGoal.SteByStepAmount > 7) ? true : false;
-                step9label.IsVisible = (selectedGoal.SteByStepAmount > 7) ? true : false;
+                step9entry.IsVisible = (selectedGoal.StepByStepAmount > 7) ? true : false;
+                step9label.IsVisible = (selectedGoal.StepByStepAmount > 7) ? true : false;
 
             }
             else
@@ -115,7 +115,7 @@ namespace HIPER
                 headerText.Text = "EDIT GOAL";
             }
         }
-  
+
         private async void saveGoal_Clicked(System.Object sender, System.EventArgs e)
         {
             bool isGoalNameEmpty = string.IsNullOrEmpty(goalNameEntry.Text);
@@ -137,7 +137,7 @@ namespace HIPER
                     foreach (GoalModel g in goalsToUpdate)
                     {
                         CopyViewToGoal(g);
-                  
+
                         await App.client.GetTable<GoalModel>().UpdateAsync(g);
 
                         if (g.UserId == App.loggedInUser.Id)
@@ -188,7 +188,7 @@ namespace HIPER
 
             if (selectedGoal.TargetType == 1)
             {
-                selectedGoal.TargetValue = (selectedGoal.SteByStepAmount + 1).ToString();
+                selectedGoal.TargetValue = (selectedGoal.StepByStepAmount + 1).ToString();
                 selectedGoal.Checkbox1Comment = step1entry.Text;
                 selectedGoal.Checkbox2Comment = step2entry.Text;
                 selectedGoal.Checkbox3Comment = step3entry.Text;
@@ -241,12 +241,12 @@ namespace HIPER
                     {
                         await App.client.GetTable<GoalModel>().DeleteAsync(selectedGoal);
                         await DisplayAlert("Sure", "Lets delete it", "Ok");
-                        Navigation.RemovePage(Navigation.NavigationStack[Navigation.NavigationStack.Count-2]);
+                        Navigation.RemovePage(Navigation.NavigationStack[Navigation.NavigationStack.Count - 2]);
                         await Navigation.PopAsync();
 
                     }
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
 
                 }

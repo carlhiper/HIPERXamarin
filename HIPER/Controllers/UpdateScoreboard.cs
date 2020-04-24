@@ -44,7 +44,7 @@ namespace HIPER.Controllers
                         {
                             goal.Closed = true;
                             goal.ClosedDate = DateTime.Now;
-                            
+                            goal.RecurrentId = goal.Id;
                             await App.client.GetTable<GoalModel>().UpdateAsync(goal);
 
                             GoalModel newGoal = new GoalModel()
@@ -57,13 +57,16 @@ namespace HIPER.Controllers
                                 CurrentValue = "0",
                                 ClosedDate = DateTime.MaxValue,
                                 CreatedDate = goal.Deadline.AddDays(1),
+                                RecurrentId = goal.RecurrentId,
                                 Progress = 0,
                                 TargetType = goal.TargetType,
                                 RepeatType = goal.RepeatType,
                                 WeeklyOrMonthly = goal.WeeklyOrMonthly,
                                 RepeatWeekly = goal.RepeatWeekly,
                                 RepeatMonthly = goal.RepeatMonthly,
-                                SteByStepAmount = goal.SteByStepAmount,
+                                StepByStepAmount = goal.StepByStepAmount,
+                                ChallengeId = goal.ChallengeId,
+                                GoalAccepted = goal.GoalAccepted,
                                 LastUpdatedDate = DateTime.Now,
                                 Checkbox1Comment = goal.Checkbox1Comment,
                                 Checkbox2Comment = goal.Checkbox2Comment,
