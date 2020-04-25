@@ -21,6 +21,7 @@ namespace HIPER
 
             weekdayPicker.ItemsSource = App.weekdays;
             dayOfMonthPicker.ItemsSource = App.daysofmonth;
+            stepbystepPicker.ItemsSource = App.numberofsteps;
 
             goalNameEntry.Text = selectedGoal.Title;
             goalDescriptionEntry.Text = selectedGoal.Description;
@@ -50,48 +51,58 @@ namespace HIPER
                 aimHighLabel.IsVisible = false;
                 gridAimHigh.IsVisible = false;
 
+                stepbystepPicker.SelectedIndex = selectedGoal.StepByStepAmount;
                 step1CB.IsChecked = selectedGoal.Checkbox1;
                 step1CB.IsVisible = true;
+                step1CB.IsEnabled = false;
                 step1entry.Text = selectedGoal.Checkbox1Comment;
                 step1entry.IsVisible = true;
                 step1label.IsVisible = true;
                 step2CB.IsChecked = selectedGoal.Checkbox2;
                 step2CB.IsVisible = (selectedGoal.StepByStepAmount > 0) ? true : false;
+                step2CB.IsEnabled = false;
                 step2entry.Text = selectedGoal.Checkbox2Comment;
                 step2entry.IsVisible = (selectedGoal.StepByStepAmount > 0) ? true : false;
                 step2label.IsVisible = (selectedGoal.StepByStepAmount > 0) ? true : false;
                 step3CB.IsChecked = selectedGoal.Checkbox3;
                 step3CB.IsVisible = (selectedGoal.StepByStepAmount > 1) ? true : false;
+                step3CB.IsEnabled = false;
                 step3entry.Text = selectedGoal.Checkbox3Comment;
                 step3entry.IsVisible = (selectedGoal.StepByStepAmount > 1) ? true : false;
                 step3label.IsVisible = (selectedGoal.StepByStepAmount > 1) ? true : false;
                 step4CB.IsChecked = selectedGoal.Checkbox4;
                 step4CB.IsVisible = (selectedGoal.StepByStepAmount > 2) ? true : false;
+                step4CB.IsEnabled = false;
                 step4entry.Text = selectedGoal.Checkbox4Comment;
                 step4entry.IsVisible = (selectedGoal.StepByStepAmount > 2) ? true : false;
                 step4label.IsVisible = (selectedGoal.StepByStepAmount > 2) ? true : false;
                 step5CB.IsChecked = selectedGoal.Checkbox5;
                 step5CB.IsVisible = (selectedGoal.StepByStepAmount > 3) ? true : false;
+                step5CB.IsEnabled = false;
                 step5entry.Text = selectedGoal.Checkbox5Comment;
                 step5entry.IsVisible = (selectedGoal.StepByStepAmount > 3) ? true : false;
                 step5label.IsVisible = (selectedGoal.StepByStepAmount > 3) ? true : false;
                 step6CB.IsChecked = selectedGoal.Checkbox6;
                 step6CB.IsVisible = (selectedGoal.StepByStepAmount > 4) ? true : false;
+                step6CB.IsEnabled = false;
                 step6entry.Text = selectedGoal.Checkbox6Comment;
                 step6entry.IsVisible = (selectedGoal.StepByStepAmount > 4) ? true : false;
                 step6label.IsVisible = (selectedGoal.StepByStepAmount > 4) ? true : false;
                 step7CB.IsChecked = selectedGoal.Checkbox7;
                 step7CB.IsVisible = (selectedGoal.StepByStepAmount > 5) ? true : false;
+                step7CB.IsEnabled = false;
                 step7entry.Text = selectedGoal.Checkbox7Comment;
                 step7entry.IsVisible = (selectedGoal.StepByStepAmount > 5) ? true : false;
                 step7label.IsVisible = (selectedGoal.StepByStepAmount > 5) ? true : false;
                 step8CB.IsChecked = selectedGoal.Checkbox8;
                 step8CB.IsVisible = (selectedGoal.StepByStepAmount > 6) ? true : false;
+                step9CB.IsEnabled = false;
                 step8entry.Text = selectedGoal.Checkbox8Comment;
                 step8entry.IsVisible = (selectedGoal.StepByStepAmount > 6) ? true : false;
                 step8label.IsVisible = (selectedGoal.StepByStepAmount > 6) ? true : false;
                 step9CB.IsChecked = selectedGoal.Checkbox9;
                 step9CB.IsVisible = (selectedGoal.StepByStepAmount > 7) ? true : false;
+                step9CB.IsEnabled = false;
                 step9entry.Text = selectedGoal.Checkbox9Comment;
                 step9entry.IsVisible = (selectedGoal.StepByStepAmount > 7) ? true : false;
                 step9label.IsVisible = (selectedGoal.StepByStepAmount > 7) ? true : false;
@@ -185,19 +196,29 @@ namespace HIPER
             selectedGoal.RepeatMonthly = dayOfMonthPicker.SelectedIndex;
             selectedGoal.RepeatType = repeatableRB1.IsChecked ? 0 : 1;
             selectedGoal.WeeklyOrMonthly = repeatableRB21.IsChecked ? 0 : 1;
-
+    
             if (selectedGoal.TargetType == 1)
             {
+                selectedGoal.StepByStepAmount = stepbystepPicker.SelectedIndex;
                 selectedGoal.TargetValue = (selectedGoal.StepByStepAmount + 1).ToString();
                 selectedGoal.Checkbox1Comment = step1entry.Text;
+                //selectedGoal.Checkbox1 = step1CB.IsChecked;
                 selectedGoal.Checkbox2Comment = step2entry.Text;
+                //selectedGoal.Checkbox2 = step2CB.IsChecked;
                 selectedGoal.Checkbox3Comment = step3entry.Text;
+                //selectedGoal.Checkbox3 = step3CB.IsChecked;
                 selectedGoal.Checkbox4Comment = step4entry.Text;
+                //selectedGoal.Checkbox4 = step4CB.IsChecked;
                 selectedGoal.Checkbox5Comment = step5entry.Text;
+                //selectedGoal.Checkbox5 = step5CB.IsChecked;
                 selectedGoal.Checkbox6Comment = step6entry.Text;
+                //selectedGoal.Checkbox6 = step6CB.IsChecked;
                 selectedGoal.Checkbox7Comment = step7entry.Text;
+                //selectedGoal.Checkbox7 = step7CB.IsChecked;
                 selectedGoal.Checkbox8Comment = step8entry.Text;
+                //selectedGoal.Checkbox8 = step8CB.IsChecked;
                 selectedGoal.Checkbox9Comment = step9entry.Text;
+                //selectedGoal.Checkbox9 = step9CB.IsChecked;
             }
             else
             {
@@ -314,6 +335,37 @@ namespace HIPER
         private void goalTargetEntry_TextChanged(System.Object sender, Xamarin.Forms.TextChangedEventArgs e)
         {
             //   checkGoalCompleted();
+        }
+
+        void stepbystepPicker_SelectedIndexChanged(System.Object sender, System.EventArgs e)
+        {
+            step1CB.IsVisible = (stepbystepPicker.SelectedIndex > -1);
+            step1entry.IsVisible = (stepbystepPicker.SelectedIndex > -1);
+            step1label.IsVisible = (stepbystepPicker.SelectedIndex > -1);
+            step2CB.IsVisible = (stepbystepPicker.SelectedIndex > 0) ? true : false;
+            step2entry.IsVisible = (stepbystepPicker.SelectedIndex > 0) ? true : false;
+            step2label.IsVisible = (stepbystepPicker.SelectedIndex > 0) ? true : false;
+            step3CB.IsVisible = (stepbystepPicker.SelectedIndex > 1) ? true : false;
+            step3entry.IsVisible = (stepbystepPicker.SelectedIndex > 1) ? true : false;
+            step3label.IsVisible = (stepbystepPicker.SelectedIndex > 1) ? true : false;
+            step4CB.IsVisible = (stepbystepPicker.SelectedIndex > 2) ? true : false;
+            step4entry.IsVisible = (stepbystepPicker.SelectedIndex > 2) ? true : false;
+            step4label.IsVisible = (stepbystepPicker.SelectedIndex > 2) ? true : false;
+            step5CB.IsVisible = (stepbystepPicker.SelectedIndex > 3) ? true : false;
+            step5entry.IsVisible = (stepbystepPicker.SelectedIndex > 3) ? true : false;
+            step5label.IsVisible = (stepbystepPicker.SelectedIndex > 3) ? true : false;
+            step6CB.IsVisible = (stepbystepPicker.SelectedIndex > 4) ? true : false;
+            step6entry.IsVisible = (stepbystepPicker.SelectedIndex > 4) ? true : false;
+            step6label.IsVisible = (stepbystepPicker.SelectedIndex > 4) ? true : false;
+            step7CB.IsVisible = (stepbystepPicker.SelectedIndex > 5) ? true : false;
+            step7entry.IsVisible = (stepbystepPicker.SelectedIndex > 5) ? true : false;
+            step7label.IsVisible = (stepbystepPicker.SelectedIndex > 5) ? true : false;
+            step8CB.IsVisible = (stepbystepPicker.SelectedIndex > 6) ? true : false;
+            step8entry.IsVisible = (stepbystepPicker.SelectedIndex > 6) ? true : false;
+            step8label.IsVisible = (stepbystepPicker.SelectedIndex > 6) ? true : false;
+            step9CB.IsVisible = (stepbystepPicker.SelectedIndex > 7) ? true : false;
+            step9entry.IsVisible = (stepbystepPicker.SelectedIndex > 7) ? true : false;
+            step9label.IsVisible = (stepbystepPicker.SelectedIndex > 7) ? true : false;
         }
     }
 }

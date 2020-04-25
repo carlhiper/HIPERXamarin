@@ -19,11 +19,34 @@ namespace HIPER
         {
             this.goal = inputGoal;
             InitializeComponent();
-
             GetChallengeOwner();
-
             UpdateDetailView();
             UpdateLeaderBoard();
+
+            //AcceptChallenge();
+        }
+
+        private async void AcceptChallenge()
+        {
+            try
+            {
+                if (!goal.GoalAccepted && !string.IsNullOrEmpty(goal.ChallengeId) && challengeOwner != null)
+                {
+                    bool accepted = await DisplayAlert("New challenge!", "You have been challenged by " + challengeOwner.FirstName + " " + challengeOwner.LastName + " with the goal " + goal.Title, "Accept", "Decline");
+                    if (accepted)
+                    {
+                        goal.GoalAccepted = true;
+                        await App.client.GetTable<GoalModel>().InsertAsync(goal);
+                    }
+                    else
+                    {
+                        await App.client.GetTable<GoalModel>().DeleteAsync(goal);
+                    }
+                }
+            }catch(Exception ex)
+            {
+
+            }
         }
 
         private void UpdateDetailView()
@@ -99,46 +122,55 @@ namespace HIPER
                 step1CB.IsVisible = true;
                 step1entry.Text = goal.Checkbox1Comment;
                 step1entry.IsVisible = true;
+                step1entry.IsEnabled = false;
                 step1label.IsVisible = true;
                 step2CB.IsChecked = goal.Checkbox2;
                 step2CB.IsVisible = (goal.StepByStepAmount > 0) ? true : false;
                 step2entry.Text = goal.Checkbox2Comment;
                 step2entry.IsVisible = (goal.StepByStepAmount > 0) ? true : false;
+                step2entry.IsEnabled = false;
                 step2label.IsVisible = (goal.StepByStepAmount > 0) ? true : false;
                 step3CB.IsChecked = goal.Checkbox3;
                 step3CB.IsVisible = (goal.StepByStepAmount > 1) ? true : false;
                 step3entry.Text = goal.Checkbox3Comment;
                 step3entry.IsVisible = (goal.StepByStepAmount > 1) ? true : false;
+                step3entry.IsEnabled = false;
                 step3label.IsVisible = (goal.StepByStepAmount > 1) ? true : false;
                 step4CB.IsChecked = goal.Checkbox4;
                 step4CB.IsVisible = (goal.StepByStepAmount > 2) ? true : false;
                 step4entry.Text = goal.Checkbox4Comment;
                 step4entry.IsVisible = (goal.StepByStepAmount > 2) ? true : false;
+                step4entry.IsEnabled = false;
                 step4label.IsVisible = (goal.StepByStepAmount > 2) ? true : false;
                 step5CB.IsChecked = goal.Checkbox5;
                 step5CB.IsVisible = (goal.StepByStepAmount > 3) ? true : false;
                 step5entry.Text = goal.Checkbox5Comment;
                 step5entry.IsVisible = (goal.StepByStepAmount > 3) ? true : false;
+                step5entry.IsEnabled = false;
                 step5label.IsVisible = (goal.StepByStepAmount > 3) ? true : false;
                 step6CB.IsChecked = goal.Checkbox6;
                 step6CB.IsVisible = (goal.StepByStepAmount > 4) ? true : false;
                 step6entry.Text = goal.Checkbox6Comment;
                 step6entry.IsVisible = (goal.StepByStepAmount > 4) ? true : false;
+                step6entry.IsEnabled = false;
                 step6label.IsVisible = (goal.StepByStepAmount > 4) ? true : false;
                 step7CB.IsChecked = goal.Checkbox7;
                 step7CB.IsVisible = (goal.StepByStepAmount > 5) ? true : false;
                 step7entry.Text = goal.Checkbox7Comment;
                 step7entry.IsVisible = (goal.StepByStepAmount > 5) ? true : false;
                 step7label.IsVisible = (goal.StepByStepAmount > 5) ? true : false;
+                step7entry.IsEnabled = false;
                 step8CB.IsChecked = goal.Checkbox8;
                 step8CB.IsVisible = (goal.StepByStepAmount > 6) ? true : false;
                 step8entry.Text = goal.Checkbox8Comment;
                 step8entry.IsVisible = (goal.StepByStepAmount > 6) ? true : false;
+                step8entry.IsEnabled = false;
                 step8label.IsVisible = (goal.StepByStepAmount > 6) ? true : false;
                 step9CB.IsChecked = goal.Checkbox9;
                 step9CB.IsVisible = (goal.StepByStepAmount > 7) ? true : false;
                 step9entry.Text = goal.Checkbox9Comment;
                 step9entry.IsVisible = (goal.StepByStepAmount > 7) ? true : false;
+                step9entry.IsEnabled = false;
                 step9label.IsVisible = (goal.StepByStepAmount > 7) ? true : false;
             }
             else
@@ -272,17 +304,28 @@ namespace HIPER
 
         private async void completeGoal_Clicked(System.Object sender, System.EventArgs e)
         {
-            goal.Completed = true;
-            goal.LastUpdatedDate = DateTime.Now;
-            if (goal.RepeatType == 0)
+            bool complete = await DisplayAlert("Wait", "Is this goal really completed?", "Yes", "No");
+            if (complete)
             {
-                goal.Closed = true;
-            }
-            goal.ClosedDate = DateTime.Now;
+                goal.Completed = true;
+                goal.LastUpdatedDate = DateTime.Now;
+                if (goal.RepeatType == 0)
+                {
+                    goal.Closed = true;
+                }
+                goal.ClosedDate = DateTime.Now;
 
-            await App.client.GetTable<GoalModel>().UpdateAsync(goal);
-            await DisplayAlert("Congratulations", "Goal completed", "Ok");
-            await Navigation.PopAsync();
+                bool setTarget = await DisplayAlert("Ok", "Do you want to set your current value to the target value?", "Yes", "No"); 
+                if (setTarget)
+                {
+                    goal.CurrentValue = goal.TargetValue;
+                }
+
+                await App.client.GetTable<GoalModel>().UpdateAsync(goal);
+                await DisplayAlert("Congratulations", "Goal completed", "Ok");
+                await Navigation.PopAsync();
+
+            }
         }
 
         private async void closeGoal_Clicked(System.Object sender, System.EventArgs e)

@@ -47,7 +47,20 @@
         </Grid>
 
         <Label x:Name="gridLabel" Text="STEPS" HorizontalOptions="Center" TextColor="{StaticResource hiperPeach}" Margin="0,20,0,5"></Label>
-    
+
+        <Grid x:Name="selectStepsGrid" Margin="10">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Label Grid.Column="0" VerticalOptions="Center" HorizontalOptions="Start" Text="NUMBER OF STEPS"></Label>
+            <Picker Grid.Column="1" x:Name="stepbystepPicker" SelectedIndexChanged="stepbystepPicker_SelectedIndexChanged"></Picker>
+
+        </Grid>
+   
         <Grid x:Name="gridSteps">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />

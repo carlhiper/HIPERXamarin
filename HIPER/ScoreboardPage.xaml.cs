@@ -32,14 +32,6 @@ namespace HIPER
         {
             var selectedGoal = goalCollectionView.SelectedItem as GoalModel;
             Navigation.PushAsync(new GoalDetailPage(selectedGoal));
-            //if (selectedGoal.TargetType == 1)
-            //{
-            //    Navigation.PushAsync(new EditSbSGoalPage(selectedGoal));
-            //}
-            //else
-            //{ 
-            //    Navigation.PushAsync(new EditGoalPage(selectedGoal));
-            //}
         }
 
         private void showClosedSwitch_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)

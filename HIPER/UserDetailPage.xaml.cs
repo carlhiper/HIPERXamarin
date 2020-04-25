@@ -42,6 +42,8 @@ namespace HIPER
 
             }
 
+
+
             createGoalsList();
         }
 
