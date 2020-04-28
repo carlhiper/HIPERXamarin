@@ -11,5 +11,7 @@ namespace HIPER.Model
         public float Progress { get; set; }
 
         public bool Completed { get; set; }
+
+        public bool Accepted { get; set; }
     }
 }

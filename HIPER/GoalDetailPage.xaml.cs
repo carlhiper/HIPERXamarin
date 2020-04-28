@@ -4,6 +4,7 @@ using HIPER.Model;
 using Xamarin.Forms;
 using HIPER.Controllers;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace HIPER
 {
@@ -19,11 +20,15 @@ namespace HIPER
         {
             this.goal = inputGoal;
             InitializeComponent();
-            GetChallengeOwner();
             UpdateDetailView();
             UpdateLeaderBoard();
+            ChallengeHandler();
+        }
 
-            //AcceptChallenge();
+        private async void ChallengeHandler()
+        {
+            await GetChallengeOwner();
+            AcceptChallenge();
         }
 
         private async void AcceptChallenge()
@@ -36,16 +41,34 @@ namespace HIPER
                     if (accepted)
                     {
                         goal.GoalAccepted = true;
-                        await App.client.GetTable<GoalModel>().InsertAsync(goal);
+                        await App.client.GetTable<GoalModel>().UpdateAsync(goal);
                     }
                     else
                     {
                         await App.client.GetTable<GoalModel>().DeleteAsync(goal);
+                        await Navigation.PopAsync();
                     }
                 }
             }catch(Exception ex)
             {
 
+            }
+        }
+
+        private async Task<bool> GetChallengeOwner()
+        {
+            try
+            {
+                if (!string.IsNullOrEmpty(goal.ChallengeId))
+                {
+                    challenge = (await App.client.GetTable<ChallengeModel>().Where(c => c.Id == goal.ChallengeId).ToListAsync()).FirstOrDefault();
+                    challengeOwner = (await App.client.GetTable<UserModel>().Where(u => u.Id == challenge.OwnerId).ToListAsync()).FirstOrDefault();
+                }
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
             }
         }
 
@@ -213,21 +236,7 @@ namespace HIPER
             UpdateLeaderBoard();
         }
 
-        private async void GetChallengeOwner()
-        {
-            try
-            {
-                if (!string.IsNullOrEmpty(goal.ChallengeId))
-                {
-                    challenge = (await App.client.GetTable<ChallengeModel>().Where(c => c.Id == goal.ChallengeId).ToListAsync()).FirstOrDefault();
-                    challengeOwner = (await App.client.GetTable<UserModel>().Where(u => u.Id == challenge.OwnerId).ToListAsync()).FirstOrDefault();
-                }
-            }
-            catch (Exception ex)
-            {
 
-            }
-        }
 
         private async void UpdateLeaderBoard()
         {
@@ -236,6 +245,7 @@ namespace HIPER
                 if (!string.IsNullOrEmpty(goal.ChallengeId))
                 {
                     competitors.Clear();
+                    leaderboardCollectionView.ItemsSource = null;
                     var goals = await App.client.GetTable<GoalModel>().Where(g => g.ChallengeId == goal.ChallengeId).ToListAsync();
                     
                     if (goals != null)
@@ -248,9 +258,9 @@ namespace HIPER
                             {
                                 Name = user.FirstName + " " + user.LastName,
                                 Progress = g.Progress,
-                                Completed = g.Completed
+                                Completed = g.Completed,
+                                Accepted = !g.GoalAccepted
                             };
-
                             competitors.Add(competitor);
 
                         }
@@ -262,7 +272,6 @@ namespace HIPER
                         }
                         leaderboardCollectionView.ItemsSource = competitors;
                         leaderboardCollectionView.HeightRequest = competitors.Count * 50 + 20;
-
                     }
                 }
             }
@@ -289,16 +298,21 @@ namespace HIPER
         {
             if (!constructorRunning)
             {
-                try
-                {
-                    goal.CurrentValue = goalCurrentEntry.Text;
+                goal.CurrentValue = goalCurrentEntry.Text;
+                await UpdateGoalAndLeaderboard(goal);
+                //UpdateLeaderBoard();
 
-                    await App.client.GetTable<GoalModel>().UpdateAsync(goal);
-                }
-                catch(Exception ex)
-                {
+                //try
+                //{
+                //    goal.CurrentValue = goalCurrentEntry.Text;
 
-                }
+                    
+                ////    await App.client.GetTable<GoalModel>().UpdateAsync(goal);
+                //}
+                //catch(Exception ex)
+                //{
+
+                //}
             }   
         }
 
@@ -324,7 +338,6 @@ namespace HIPER
                 await App.client.GetTable<GoalModel>().UpdateAsync(goal);
                 await DisplayAlert("Congratulations", "Goal completed", "Ok");
                 await Navigation.PopAsync();
-
             }
         }
 
@@ -362,9 +375,23 @@ namespace HIPER
                 goal.CurrentValue = ((step1CB.IsChecked ? 1 : 0) + (step2CB.IsChecked ? 1 : 0) + (step3CB.IsChecked ? 1 : 0) + (step4CB.IsChecked ? 1 : 0) + (step5CB.IsChecked ? 1 : 0) + (step6CB.IsChecked ? 1 : 0) +
                 (step7CB.IsChecked ? 1 : 0) + (step8CB.IsChecked ? 1 : 0) + (step8CB.IsChecked ? 1 : 0)).ToString();
 
-                await App.client.GetTable<GoalModel>().UpdateAsync(goal);
+                await UpdateGoalAndLeaderboard(goal);
+                //UpdateLeaderBoard();
             }
         }
 
+        private async Task<bool> UpdateGoalAndLeaderboard(GoalModel goal)
+        {
+            try
+            {
+                await App.client.GetTable<GoalModel>().UpdateAsync(goal);
+                UpdateLeaderBoard();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
     }
 }

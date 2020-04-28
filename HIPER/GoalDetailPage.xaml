@@ -96,6 +96,7 @@
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="20"/>
                                             <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="Auto"/>
                                             <ColumnDefinition Width="30"/>
                                         </Grid.ColumnDefinitions>
                                         <Grid.RowDefinitions>
@@ -104,8 +105,9 @@
                                         </Grid.RowDefinitions>
                                         <Label Grid.Row="0" Grid.Column="0" Margin="0,0,0,0" Grid.RowSpan="2" FontSize="Large" Text="{Binding Placing}"/>
                                         <Label Grid.Row="0" Grid.Column="1" Text="{Binding Name}"/>
+                                        <Label Grid.Row="0" Grid.Column="2" Text="?" IsVisible="{Binding Accepted}"/>
                                         <ProgressBar Grid.Row="1" Grid.Column="1" ProgressColor="{StaticResource hiperPeach}" Progress="{Binding Progress}" />
-                                        <Image Grid.Row="0" Grid.Column="2"
+                                        <Image Grid.Row="0" Grid.Column="3"
                                                Source="{StaticResource ok}"
                                                Aspect="AspectFit"
                                                HorizontalOptions="End"
