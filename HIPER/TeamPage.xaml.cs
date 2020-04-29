@@ -30,7 +30,7 @@ namespace HIPER
                 if (team != null) {
                     if (team.Administrator_id == App.loggedInUser.Id)
                     {
-                        teamAdmin.Text = "YOU (team admin)";
+                        userName.Text += " (admin)";
                     }
 
                     var users = await App.client.GetTable<UserModel>().Where(u => u.TeamId == team.Id).ToListAsync();
@@ -54,12 +54,7 @@ namespace HIPER
                     leaveTeam.IsEnabled = false;
                 }
 
-                List<GoalModel> goals = await App.client.GetTable<GoalModel>().Where(g => g.UserId == App.loggedInUser.Id).ToListAsync();
-                if (goals != null)
-                {
-                    var ratio = GoalStats.GetGoalCompletionRatio(goals);
-                    completionRatioLabel.Text = ratio.ToString("F0") + "% of goals completed last month";
-                }
+
 
             }
             catch(NullReferenceException nre)
@@ -74,6 +69,11 @@ namespace HIPER
         void editProfileButton_Clicked(System.Object sender, System.EventArgs e)
         {
             Navigation.PushAsync(new EditUserPage());
+        }
+
+        void viewStatsButton_Clicked(System.Object sender, System.EventArgs e)
+        {
+            Navigation.PushAsync(new StatisticsPage(App.loggedInUser));
         }
 
         void teamCollectionView_SelectionChanged(System.Object sender, Xamarin.Forms.SelectionChangedEventArgs e)
@@ -93,13 +93,6 @@ namespace HIPER
         {
             Navigation.PushAsync(new CreateTeamPage());
         }
-
-        private async void GetCompletionRatio(UserModel user)
-        {
-
-            
-        }
-
 
         private async void leaveTeam_Clicked(System.Object sender, System.EventArgs e)
         {
@@ -121,7 +114,6 @@ namespace HIPER
                             App.loggedInUser.TeamId = null;
                             teamNameLabel.Text = "";
                             teamIdentifierLabel.Text = "";
-                            teamAdmin.Text = "YOU";
                             createTeam.IsEnabled = true;
                             joinTeam.IsEnabled = true;
                             leaveTeam.IsEnabled = false;

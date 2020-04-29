@@ -21,7 +21,7 @@ namespace HIPER
             this.user = selectedUser;
         }
 
-        protected async override void OnAppearing()
+        protected override void OnAppearing()
         {
             base.OnAppearing();
 
@@ -29,21 +29,7 @@ namespace HIPER
             companyLabel.Text = user.Company;
             emailLabel.Text = user.Email;
             profileImage.Source = user.ImageUrl;
-            try
-            {
-                List<GoalModel> goals = await App.client.GetTable<GoalModel>().Where(g => g.UserId == user.Id).ToListAsync();
-                if (goals != null)
-                {
-                    var ratio = GoalStats.GetGoalCompletionRatio(goals);
-                    completionRatioLabel.Text = ratio.ToString("F0") + "% of goals completed last month";
-                }
-            }catch(Exception ex)
-            {
-
-            }
-
-
-
+  
             createGoalsList();
         }
 
@@ -100,6 +86,10 @@ namespace HIPER
                 await App.client.GetTable<UserModel>().UpdateAsync(user);
                 await Navigation.PopAsync();
             }
+        }
+        void statsButton_Clicked(System.Object sender, System.EventArgs e)
+        {
+            Navigation.PushAsync(new StatisticsPage(user));
         }
     }
 }

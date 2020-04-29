@@ -16,6 +16,12 @@
             <Setter Property="FontFamily" Value="FUTURA BOOK"></Setter>
             <Setter Property="FontSize" Value="Medium"></Setter>
         </Style>
+        <Style x:Key="Minimal" TargetType="Button">
+            <Setter Property="BackgroundColor" Value="Transparent"></Setter>
+            <Setter Property="TextColor" Value="{StaticResource hiperPeach}"></Setter>
+            <Setter Property="FontFamily" Value="FUTURA BOOK"></Setter>
+            <Setter Property="FontSize" Value="Small"></Setter>
+        </Style>
         <Style TargetType="Entry">
             <Setter Property="TextColor" Value="Black" ></Setter>
             <Setter Property="FontFamily" Value="FUTURA BOOK"></Setter>

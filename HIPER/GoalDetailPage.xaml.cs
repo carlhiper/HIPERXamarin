@@ -294,26 +294,10 @@ namespace HIPER
 
         }
 
-        private async void goalCurrentEntry_TextChanged(System.Object sender, Xamarin.Forms.TextChangedEventArgs e)
+        private async void goalCurrentEntry_Unfocused(System.Object sender, Xamarin.Forms.TextChangedEventArgs e)
         {
-            if (!constructorRunning)
-            {
-                goal.CurrentValue = goalCurrentEntry.Text;
-                await UpdateGoalAndLeaderboard(goal);
-                //UpdateLeaderBoard();
-
-                //try
-                //{
-                //    goal.CurrentValue = goalCurrentEntry.Text;
-
-                    
-                ////    await App.client.GetTable<GoalModel>().UpdateAsync(goal);
-                //}
-                //catch(Exception ex)
-                //{
-
-                //}
-            }   
+            goal.CurrentValue = goalCurrentEntry.Text;
+            await UpdateGoalAndLeaderboard(goal);
         }
 
         private async void completeGoal_Clicked(System.Object sender, System.EventArgs e)

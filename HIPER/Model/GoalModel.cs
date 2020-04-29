@@ -93,9 +93,6 @@ namespace HIPER.Model
             }
 
             set {; }
-
-
-
         }
 
         public bool Completed { get; set; }
@@ -139,7 +136,6 @@ namespace HIPER.Model
         public string Checkbox7Comment { get; set; }
         public string Checkbox8Comment { get; set; }
         public string Checkbox9Comment { get; set; }
-
 
     }
 }

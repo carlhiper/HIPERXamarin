@@ -2,9 +2,9 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="HIPER.TeamPage">
     <ContentPage.Content>
         <StackLayout Margin="10">
-            <Label x:Name="teamNameLabel" Margin="20,20,20,5" Text="TEAM" Style="{StaticResource Header}"></Label>
+            <Label x:Name="teamNameLabel" Margin="20,20,20,0" Text="TEAM" Style="{StaticResource Header}"></Label>
             <Label x:Name="teamIdentifierLabel" HorizontalOptions="Center"></Label>
-            <Label x:Name="teamAdmin" Text="YOU" FontFamily="FUTURA BOOK" TextColor="{StaticResource hiperPeach}" HorizontalOptions="Center" Margin="0,10,0,0"></Label>
+         
             <Frame>
                 <StackLayout Padding="5">
                     <Grid Padding="0">
@@ -12,7 +12,7 @@
                             <RowDefinition Height="Auto"></RowDefinition>
                             <RowDefinition Height="Auto"></RowDefinition>
                             <RowDefinition Height="Auto"></RowDefinition>
-                            <RowDefinition Height="Auto"></RowDefinition>
+                            <RowDefinition Height="20"></RowDefinition>
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"></ColumnDefinition>
@@ -21,7 +21,7 @@
                         <Label x:Name="userName" Text="NAME" FontAttributes="Bold"></Label>
                         <Label x:Name="company" Grid.Row="1" Text="COMPANY"></Label>
                         <Label x:Name="email" Grid.Row="2" FontAttributes="Italic" Text="EMAIL"></Label>
-                        <Label x:Name="completionRatioLabel" Grid.Row="3" Text="Goal completion ratio"/>
+               <!--         <Label x:Name="completionRatioLabel" Grid.Row="3" Text="Goal completion ratio"/> -->
                         <Frame CornerRadius="40"
                                IsClippedToBounds="True"
                                HorizontalOptions="Center"
@@ -36,6 +36,10 @@
                                    WidthRequest="80"
                                    HeightRequest="80"></Image>
                         </Frame>
+                        <Button Style="{StaticResource Minimal}" x:Name="viewStatsButton" Clicked="viewStatsButton_Clicked"
+                                Grid.Row="3" Grid.Column="0" Text="View stats" HorizontalOptions="Start" VerticalOptions="End"></Button>
+                        <Button Style="{StaticResource Minimal}" x:Name="editProfileButton" Clicked="editProfileButton_Clicked"
+                                Grid.Row="3" Grid.Column="1" Text="Edit profile   " HorizontalOptions="End" VerticalOptions="End"></Button>
                     </Grid>
                  </StackLayout>
             </Frame>
@@ -48,7 +52,7 @@
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
-                <Button x:Name="editProfileButton" Clicked="editProfileButton_Clicked" Grid.Column="0" Text="EDIT PROFILE" HorizontalOptions="FillAndExpand"></Button>
+                <Button x:Name="teamStats" Grid.Column="0" Text="TEAM STATS" HorizontalOptions="FillAndExpand"></Button>
                 <Button x:Name="leaveTeam"  Clicked="leaveTeam_Clicked" Grid.Column="1" Text="LEAVE TEAM" HorizontalOptions="FillAndExpand"></Button>
                 <Button x:Name="createTeam" Clicked="createTeam_Clicked" Grid.Row="1" Grid.Column="0" Text="CREATE TEAM" HorizontalOptions="FillAndExpand"></Button>
                 <Button x:Name="joinTeam" Clicked="joinTeam_Clicked" Grid.Row="1" Grid.Column="1" Text="JOIN TEAM" HorizontalOptions="FillAndExpand"></Button>

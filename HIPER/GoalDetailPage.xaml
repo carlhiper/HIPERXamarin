@@ -29,7 +29,7 @@
                         <Label Grid.Row="0" Grid.Column="0" Text="TARGET"/>
                         <Label x:Name="goalTargetLabel" Grid.Row="0" Grid.Column="1" HorizontalTextAlignment="Center"></Label>
                         <Label Grid.Row="1" Grid.Column="0" Text="CURRENT"/>
-                        <Entry VerticalOptions="Start" x:Name="goalCurrentEntry" HorizontalTextAlignment="Center" Grid.Row="1" Grid.Column="1" Placeholder="CURRENT VALUE" TextChanged="goalCurrentEntry_TextChanged" ></Entry>
+                        <Entry VerticalOptions="Start" x:Name="goalCurrentEntry" HorizontalTextAlignment="Center" Grid.Row="1" Grid.Column="1" Placeholder="CURRENT VALUE" Unfocused="goalCurrentEntry_Unfocused"></Entry>
                     </Grid>
 
                     <Label x:Name="stepsLabel" Text="STEPS" HorizontalOptions="Center" TextColor="{StaticResource hiperPeach}" Margin="0,20,0,5"></Label>
