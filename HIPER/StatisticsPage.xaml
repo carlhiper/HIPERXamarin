@@ -1,6 +1,7 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="HIPER.StatisticsPage">
     <ContentPage.Content>
+        
         <StackLayout Margin="40,20">
             <Label x:Name="userNameLabel" Margin="20,10,20,10" Text="STATS" Style="{StaticResource Header}"></Label>
             <Label Margin="20,0,20,10" Text="LAST MONTH" TextColor="{StaticResource hiperPeach}" HorizontalTextAlignment="Center"></Label>
@@ -12,13 +13,10 @@
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="100"/>
                 </Grid.ColumnDefinitions>
 
                 <Label Grid.Row="0" Text="Goals created: "/>
@@ -33,6 +31,8 @@
                 <Label x:Name="completionRatioLabel" Grid.Row="4" Grid.Column="1"/>
  
             </Grid>
+
+
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

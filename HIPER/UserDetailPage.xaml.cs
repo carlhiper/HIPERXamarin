@@ -29,8 +29,9 @@ namespace HIPER
             companyLabel.Text = user.Company;
             emailLabel.Text = user.Email;
             profileImage.Source = user.ImageUrl;
-  
-            createGoalsList();
+
+            filterPicker.ItemsSource = App.filterOptions;
+            createGoalsList(1);
         }
 
         void addGoalButton_Clicked(System.Object sender, System.EventArgs e)
@@ -39,12 +40,41 @@ namespace HIPER
         }
 
 
-        private async void createGoalsList()
+        private async void createGoalsList(int filter)
         {
             List<GoalModel> activeGoals = new List<GoalModel>();
             List<GoalModel> closedGoals = new List<GoalModel>();
-            if (user != null) { 
+
+            if (user != null)
+            {
                 var goals = await App.client.GetTable<GoalModel>().Where(g => g.UserId == user.Id).ToListAsync();
+
+           
+                //Sorting
+                if (filter == 0)
+                {
+                    goals.Sort((x, y) => x.Title.CompareTo(y.Title));
+                }
+                else if (filter == 1)
+                {
+                    goals.Sort((x, y) => y.LastUpdatedDate.CompareTo(x.LastUpdatedDate));
+                }
+                else if (filter == 2)
+                {
+                    goals.Sort((x, y) => x.Deadline.CompareTo(y.Deadline));
+                }
+                else if (filter == 3)
+                {
+                    goals.Sort((x, y) => y.PerformanceIndicator.CompareTo(x.PerformanceIndicator));
+                }
+                else if (filter == 4)
+                {
+                    goals.Sort((x, y) => y.Progress.CompareTo(x.Progress));
+                }
+                else
+                {
+                    goals.Sort((x, y) => y.LastUpdatedDate.CompareTo(x.LastUpdatedDate));
+                }
 
                 if (completedSwitch.IsToggled)
                 {
@@ -73,7 +103,7 @@ namespace HIPER
 
         void completedSwitch_PropertyChanged(System.Object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
-            createGoalsList();
+            createGoalsList(1);
         }
 
         private async void removeFromTeam_Clicked(System.Object sender, System.EventArgs e)
@@ -91,5 +121,11 @@ namespace HIPER
         {
             Navigation.PushAsync(new StatisticsPage(user));
         }
+
+        void filterPicker_SelectedIndexChanged(System.Object sender, System.EventArgs e)
+        {
+            createGoalsList(filterPicker.SelectedIndex);
+        }
+
     }
 }

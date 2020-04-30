@@ -61,20 +61,21 @@
                 <Button x:Name="removeFromTeam" Grid.Column="1" Text="KICK OUT" Clicked="removeFromTeam_Clicked"/>
             </Grid>
 
-            <Grid Padding="10">
+            <Grid Padding="10" Margin="0,10,0,0">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="40" />
+                    <RowDefinition Height="30" />
                 </Grid.RowDefinitions>
 
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="50" />
                     <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="120" />
                 </Grid.ColumnDefinitions>
                 <Label Grid.Column="0" Text="Active" VerticalOptions="End" HorizontalOptions="End"></Label>
                 <Switch Grid.Column="1" x:Name="completedSwitch" PropertyChanged="completedSwitch_PropertyChanged" OnColor="LightGray" ThumbColor="{StaticResource hiperPeach}" VerticalOptions="End"></Switch> 
                 <Label Grid.Column="2" Text="Closed" VerticalOptions="End" HorizontalOptions="Start"></Label>
-               
+                <Picker x:Name="filterPicker" Grid.Column="3" HorizontalOptions="FillAndExpand" Title="Filter" FontSize="Small" WidthRequest="200" SelectedIndexChanged="filterPicker_SelectedIndexChanged"/>
             </Grid>
 
             <CollectionView
