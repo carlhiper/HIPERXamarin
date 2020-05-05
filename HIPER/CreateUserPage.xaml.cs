@@ -33,20 +33,27 @@ namespace HIPER
             }
             else
             {
-                UserModel user = new UserModel()
+                try
                 {
-                    FirstName = firstNameEntry.Text,
-                    LastName = lastNameEntry.Text,
-                    Company = companyEntry.Text,
-                    Email = emailEntry.Text,
-                    UserPassword = passwordEntry.Text,
-                    CreatedDate = DateTime.Now
-                };
+                    UserModel user = new UserModel()
+                    {
+                        FirstName = firstNameEntry.Text,
+                        LastName = lastNameEntry.Text,
+                        Company = companyEntry.Text,
+                        Email = emailEntry.Text,
+                        UserPassword = passwordEntry.Text,
+                        CreatedDate = DateTime.Now
+                    };
 
-                // Save on Azure
-                await App.client.GetTable<UserModel>().InsertAsync(user);
-
-                Page x = await Navigation.PopAsync();
+                    // Save on Azure
+                    await App.client.GetTable<UserModel>().InsertAsync(user);
+                    await DisplayAlert("Success", "user successfully created. Please login.", "Ok");
+                    await Navigation.PopAsync();
+                }catch(Exception ex)
+                {
+                    await DisplayAlert("Error", "Something went wrong", "Ok");
+                }
+ 
             }
         }
     }

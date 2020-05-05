@@ -79,8 +79,7 @@ namespace HIPER
             goalDescriptionLabel.Text = goal.Description;
             goalTargetLabel.Text = goal.TargetValue;
             goalCurrentEntry.Text = goal.CurrentValue;
-            deadlineLabel.Text = goal.Deadline.ToShortDateString();
-
+            deadlineLabel.Text = goal.Deadline.ToLongDateString();
 
             if (goal.Completed || goal.Closed)
             {
@@ -89,6 +88,9 @@ namespace HIPER
                 completeGoal.IsVisible = false;
                 closeGoal.IsVisible = false;
             }
+
+            if (string.IsNullOrEmpty(goal.TeamId))
+                
 
             if (string.IsNullOrEmpty(goal.ChallengeId))
             {
@@ -252,17 +254,19 @@ namespace HIPER
                     {
                         foreach (GoalModel g in goals)
                         {
-                            var user = (await App.client.GetTable<UserModel>().Where(u => u.Id == g.UserId).ToListAsync()).FirstOrDefault();
-
-                            LeaderBoardModel competitor = new LeaderBoardModel()
+                            if(g.Deadline > DateTime.Today)
                             {
-                                Name = user.FirstName + " " + user.LastName,
-                                Progress = g.Progress,
-                                Completed = g.Completed,
-                                Accepted = !g.GoalAccepted
-                            };
-                            competitors.Add(competitor);
+                                var user = (await App.client.GetTable<UserModel>().Where(u => u.Id == g.UserId).ToListAsync()).FirstOrDefault();
 
+                                LeaderBoardModel competitor = new LeaderBoardModel()
+                                {
+                                    Name = user.FirstName + " " + user.LastName,
+                                    Progress = g.Progress,
+                                    Completed = g.Completed,
+                                    Accepted = !g.GoalAccepted
+                                };
+                                competitors.Add(competitor);
+                            }
                         }
                         competitors.Sort((x, y) => y.Progress.CompareTo(x.Progress));
 
@@ -307,16 +311,20 @@ namespace HIPER
             {
                 goal.Completed = true;
                 goal.LastUpdatedDate = DateTime.Now;
+                goal.ClosedDate = DateTime.Now;
                 if (goal.RepeatType == 0)
                 {
                     goal.Closed = true;
                 }
-                goal.ClosedDate = DateTime.Now;
 
-                bool setTarget = await DisplayAlert("Ok", "Do you want to set your current value to the target value?", "Yes", "No"); 
-                if (setTarget)
+
+                if (goal.CurrentValue != goal.TargetValue)
                 {
-                    goal.CurrentValue = goal.TargetValue;
+                    bool setTarget = await DisplayAlert("Ok", "Do you want to set your current value to the target value?", "Yes", "No");
+                    if (setTarget)
+                    {
+                        goal.CurrentValue = goal.TargetValue;
+                    }
                 }
 
                 await App.client.GetTable<GoalModel>().UpdateAsync(goal);
@@ -330,7 +338,10 @@ namespace HIPER
             bool delete = await DisplayAlert("Wait", "Are you sure you want to close this goal?", "Yes", "No");
             if (delete)
             {
-                goal.Closed = true;
+                if (goal.RepeatType == 0)
+                {
+                    goal.Closed = true;
+                }
                 goal.LastUpdatedDate = DateTime.Now;
                 goal.ClosedDate = DateTime.Now;
 
@@ -360,7 +371,6 @@ namespace HIPER
                 (step7CB.IsChecked ? 1 : 0) + (step8CB.IsChecked ? 1 : 0) + (step8CB.IsChecked ? 1 : 0)).ToString();
 
                 await UpdateGoalAndLeaderboard(goal);
-                //UpdateLeaderBoard();
             }
         }
 

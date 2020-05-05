@@ -101,6 +101,9 @@ namespace HIPER.Model
 
         public int Hipes { get; set; }
 
+        // 0-standard, 1-Challenge, 2-Competition
+        public int GoalType { get; set; }
+
         public int TargetType { get; set; }
         // 0-Aim high, 1-step by step
 

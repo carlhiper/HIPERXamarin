@@ -8,25 +8,20 @@ using Xamarin.Forms;
 
 namespace HIPER
 {
-    public partial class AddGoalPage : ContentPage
+    public partial class AddCompetitionPage: ContentPage
     {
         UserModel user;
         List<UserModel> teammembers;
         ChallengeModel challenge;
-        
-        public AddGoalPage()
+
+        public AddCompetitionPage()
         {
             InitializeComponent();
             this.user = App.loggedInUser;
             initPage();
+            GetCompetitors();
         }
 
-        public AddGoalPage(UserModel user)
-        {
-            InitializeComponent();
-            this.user = user;
-            initPage();
-        }
 
         protected override void OnAppearing()
         {
@@ -45,78 +40,10 @@ namespace HIPER
             step1CB.IsVisible = false;
             step1entry.IsVisible = false;
             step1label.IsVisible = false;
-
-            if (App.loggedInUser.Id != user.Id)
-            {
-                challengeCheckbox.IsVisible = false;
-                challengeCollectionView.IsVisible = false;
-                challengeLabel.IsVisible = false;
-                challengeHeader.IsVisible = false;
-            }
             challengeCollectionView.HeightRequest = 20;
-            challengeCollectionView.IsVisible = false;
         }
 
-        private async void saveGoal_Clicked(System.Object sender, System.EventArgs e)
-        {
-            try
-            {
-                bool isGoalNameEmpty = string.IsNullOrEmpty(goalNameEntry.Text);
-                bool isGoalDescriptionEmpty = string.IsNullOrEmpty(goalDescriptionEntry.Text);
-                bool isTargetCheckedAndEntryFilled = targetRB1.IsChecked && string.IsNullOrEmpty(goalTargetEntry.Text);
-                bool isStepbyStepCheckedAndEntryFilled = targetRB2.IsChecked && (stepbystepPicker.SelectedIndex < 0);
-                bool isWeeklyCheckedAndEntryFilled = repeatableRB2.IsChecked && repeatableRB21.IsChecked && (weekdayPicker.SelectedIndex < 0);
-                bool isMonthlyCheckedAndEntryFilled = repeatableRB2.IsChecked && repeatableRB22.IsChecked && (dayOfMonthPicker.SelectedIndex < 0);
-
-                if (isGoalNameEmpty || isGoalDescriptionEmpty || isTargetCheckedAndEntryFilled || isStepbyStepCheckedAndEntryFilled || isWeeklyCheckedAndEntryFilled || isMonthlyCheckedAndEntryFilled)
-                {
-                    await DisplayAlert("Error", "All field needs to be entered", "Ok");
-                    return;
-                }
-
-                if (challengeCheckbox.IsChecked)
-                {
-                    challenge = new ChallengeModel()
-                    {
-                        OwnerId = App.loggedInUser.Id,
-                        CreatedDate = DateTime.Now
-                    };
-                    await App.client.GetTable<ChallengeModel>().InsertAsync(challenge);
-
-                    var challenges = (await App.client.GetTable<ChallengeModel>().Where(c => c.OwnerId == App.loggedInUser.Id).ToListAsync());
-
-                    challenges.Sort((x, y) => y.CreatedDate.CompareTo(x.CreatedDate));
-                    challenge = challenges[0];
-
-                    var challengedUsers = challengeCollectionView.SelectedItems;
-
-                    foreach (UserModel user in challengedUsers)
-                    {
-                        CreateGoal(user.Id, false, challenge.Id);
-                    }
-
-                    CreateGoal(App.loggedInUser.Id, true, challenge.Id);
-                    await DisplayAlert("Success", "Challenge saved and sent to selected team members", "Ok");
-                    await Navigation.PopAsync();
-                }
-                else
-                {
-                    CreateGoal(App.loggedInUser.Id, true, null);
-                    await DisplayAlert("Success", "Goal saved", "Ok");
-                    await Navigation.PopAsync();
-                }
-
-            }
-            catch (NullReferenceException nre)
-            {
-                await DisplayAlert("Goal not saved!", "Something went wrong, please try again", "Ok");
-            }
-            catch (Exception ex)
-            {
-                await DisplayAlert("Goal not saved!", "Something went wrong, please try again", "Ok");
-            }
-        }
-
+ 
         private async void CreateGoal(string userId, bool accepted, string challengeId)
         {
             var startDate = DateHandling.GetStartDate(repeatableRB2.IsChecked && repeatableRB21.IsChecked, repeatableRB2.IsChecked && repeatableRB22.IsChecked, weekdayPicker.SelectedIndex, dayOfMonthPicker.SelectedIndex);
@@ -136,7 +63,6 @@ namespace HIPER
                 Description = goalDescriptionEntry.Text,
                 Deadline = deadLineDate,
                 TargetValue = goalTargetEntry.Text,
-                PrivateGoal = privateGoalCheckbox.IsChecked,
                 UserId = userId,
                 GoalAccepted = accepted,
                 ChallengeId = challengeId,
@@ -145,6 +71,7 @@ namespace HIPER
                 CreatedDate = startDate,
                 LastUpdatedDate = DateTime.Now,
                 Progress = 0,
+                GoalType = 2,
                 TargetType = targetRB1.IsChecked ? 0 : 1,
                 RepeatType = repeatableRB1.IsChecked ? 0 : 1,
                 WeeklyOrMonthly = repeatableRB21.IsChecked ? 0 : 1,
@@ -172,15 +99,6 @@ namespace HIPER
                 Checkbox9Comment = step9entry.Text
 
             };
-
-            if (string.IsNullOrEmpty(challengeId))
-            {
-                goal.GoalType = 0;
-            }
-            else
-            {
-                goal.GoalType = 1;
-            }
 
             //if (goal.RepeatMonthly == 28) // Last day of month
             //{
@@ -299,40 +217,74 @@ namespace HIPER
             step9label.IsVisible = (stepbystepPicker.SelectedIndex > 7) ? true : false;
         }
 
-        private async void challengeCheckbox_CheckedChanged(System.Object sender, Xamarin.Forms.CheckedChangedEventArgs e)
+        private async void GetCompetitors()
         {
 
-            if (!challengeCheckbox.IsChecked)
+   
+            try
             {
-                challengeCollectionView.HeightRequest = 20;
-                challengeCollectionView.IsVisible = false;
-
-            }
-            else
-            {
-                privateGoalCheckbox.IsChecked = false;
-                try
+                if (teammembers == null)
                 {
-                    if (teammembers == null)
-                    {
-                        teammembers = await App.client.GetTable<UserModel>().Where(u => u.TeamId == App.loggedInUser.TeamId).ToListAsync();
-                        teammembers.RemoveAt(teammembers.FindIndex(a => a.Id == App.loggedInUser.Id));
-                    }
-                    challengeCollectionView.ItemsSource = teammembers;
+                    teammembers = await App.client.GetTable<UserModel>().Where(u => u.TeamId == App.loggedInUser.TeamId).ToListAsync();
+                    //teammembers.RemoveAt(teammembers.FindIndex(a => a.Id == App.loggedInUser.Id));
                 }
-                catch (Exception ex) { }
-                challengeCollectionView.IsVisible = true;
-
-                challengeCollectionView.HeightRequest = teammembers.Count * 20;
-
+                challengeCollectionView.ItemsSource = teammembers;
             }
+            catch (Exception ex) { }
+            challengeCollectionView.IsVisible = true;
+            challengeCollectionView.HeightRequest = 20*teammembers.Count;
+
         }
 
-        void privateGoalCheckbox_CheckedChanged(System.Object sender, Xamarin.Forms.CheckedChangedEventArgs e)
-        {
-            if (privateGoalCheckbox.IsChecked)
-                challengeCheckbox.IsChecked = false;
 
+        private async void startCompetition_Clicked(System.Object sender, System.EventArgs e)
+        {
+            try
+            {
+                bool isGoalNameEmpty = string.IsNullOrEmpty(goalNameEntry.Text);
+                bool isGoalDescriptionEmpty = string.IsNullOrEmpty(goalDescriptionEntry.Text);
+                bool isTargetCheckedAndEntryFilled = targetRB1.IsChecked && string.IsNullOrEmpty(goalTargetEntry.Text);
+                bool isStepbyStepCheckedAndEntryFilled = targetRB2.IsChecked && (stepbystepPicker.SelectedIndex < 0);
+                bool isWeeklyCheckedAndEntryFilled = repeatableRB2.IsChecked && repeatableRB21.IsChecked && (weekdayPicker.SelectedIndex < 0);
+                bool isMonthlyCheckedAndEntryFilled = repeatableRB2.IsChecked && repeatableRB22.IsChecked && (dayOfMonthPicker.SelectedIndex < 0);
+
+                if (isGoalNameEmpty || isGoalDescriptionEmpty || isTargetCheckedAndEntryFilled || isStepbyStepCheckedAndEntryFilled || isWeeklyCheckedAndEntryFilled || isMonthlyCheckedAndEntryFilled)
+                {
+                    await DisplayAlert("Error", "All field needs to be entered", "Ok");
+                    return;
+                }
+
+                challenge = new ChallengeModel()
+                {
+                    OwnerId = App.loggedInUser.Id,
+                    CreatedDate = DateTime.Now
+                };
+                await App.client.GetTable<ChallengeModel>().InsertAsync(challenge);
+
+                var challenges = (await App.client.GetTable<ChallengeModel>().Where(c => c.OwnerId == App.loggedInUser.Id).ToListAsync());
+
+                challenges.Sort((x, y) => y.CreatedDate.CompareTo(x.CreatedDate));
+                challenge = challenges[0];
+
+                var challengedUsers = challengeCollectionView.SelectedItems;
+
+                foreach (UserModel user in challengedUsers)
+                {
+                    CreateGoal(user.Id, true, challenge.Id);
+                }
+
+                await DisplayAlert("Success", "Competition started and sent to selected team members", "Ok");
+                await Navigation.PopAsync();
+    
+            }
+            catch (NullReferenceException nre)
+            {
+                await DisplayAlert("Error", "Something went wrong, please try again", "Ok");
+            }
+            catch (Exception ex)
+            {
+                await DisplayAlert("Error", "Something went wrong, please try again", "Ok");
+            }
         }
     }
 }

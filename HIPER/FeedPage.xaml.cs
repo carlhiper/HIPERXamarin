@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using HIPER.Model;
 using Xamarin.Forms;
+using HIPER.Helpers;
 
 namespace HIPER
 {
@@ -53,7 +54,7 @@ namespace HIPER
                    
                             feedItem.ProfileImageURL = user.ImageUrl;
                             feedItem.FeedItemTitle = user.FirstName + " completed a goal!";
-                            feedItem.FeedItemPost = "Goal " + goal.Title + " was successfully completed. " + user.FirstName + " has completed 400 goals in total.";
+                            feedItem.FeedItemPost = "Goal " + goal.Title + " was successfully completed. " + RandomPhrases.RandomCheerPhrase(user.FirstName);
 
                             feed.Add(feedItem);
                         }

@@ -39,12 +39,14 @@ namespace HIPER.Controllers
                 {
                     if ((goal.RepeatType == 1) && !goal.Closed)
                     {
-
                         if (today > goal.Deadline)
                         {
                             goal.Closed = true;
-                            goal.ClosedDate = DateTime.Now;
-                            goal.RecurrentId = goal.Id;
+                            if (goal.RecurrentId == null)
+                            {
+                                goal.RecurrentId = goal.Id;
+                            }
+  
                             await App.client.GetTable<GoalModel>().UpdateAsync(goal);
 
                             GoalModel newGoal = new GoalModel()
@@ -56,9 +58,8 @@ namespace HIPER.Controllers
                                 UserId = App.loggedInUser.Id,
                                 CurrentValue = "0",
                                 ClosedDate = DateTime.MaxValue,
-                                CreatedDate = goal.Deadline.AddDays(1),
+                                LastUpdatedDate = DateTime.Now,
                                 RecurrentId = goal.RecurrentId,
-                                Progress = 0,
                                 TargetType = goal.TargetType,
                                 RepeatType = goal.RepeatType,
                                 WeeklyOrMonthly = goal.WeeklyOrMonthly,
@@ -67,7 +68,6 @@ namespace HIPER.Controllers
                                 StepByStepAmount = goal.StepByStepAmount,
                                 ChallengeId = goal.ChallengeId,
                                 GoalAccepted = goal.GoalAccepted,
-                                LastUpdatedDate = DateTime.Now,
                                 Checkbox1Comment = goal.Checkbox1Comment,
                                 Checkbox2Comment = goal.Checkbox2Comment,
                                 Checkbox3Comment = goal.Checkbox3Comment,
@@ -84,21 +84,23 @@ namespace HIPER.Controllers
                                 DateTime newDeadline = goal.Deadline;
                                 while (newDeadline < DateTime.Now)
                                 {
-                                    newDeadline.AddDays(7);
+                                    newDeadline = newDeadline.AddDays(7);
                                 }
                                 newGoal.Deadline = newDeadline;
+                                newGoal.CreatedDate = newDeadline.AddDays(-6);
+                              
                             }
                             else
                             {                          //Monthly
                                 DateTime newDeadline = goal.Deadline;
                                 while (newDeadline < DateTime.Now)
                                 {
-                                    newDeadline.AddMonths(1);
-                                    // newDeadline.AddDays(DateTime.DaysInMonth(DateTime.Today.Year, DateTime.Today.Month));
+                                    newDeadline = newDeadline.AddMonths(1);
                                 }
                                 newGoal.Deadline = newDeadline;
+                                newGoal.CreatedDate = (newDeadline.AddMonths(-1)).AddDays(1);
                             }
-          
+
                             await App.client.GetTable<GoalModel>().InsertAsync(newGoal);
                         }
                     }

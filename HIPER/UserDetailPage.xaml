@@ -28,8 +28,7 @@
                         </Grid.ColumnDefinitions>
                         <Label x:Name="companyLabel" Grid.Row="0" Text="COMPANY"></Label>
                         <Label x:Name="emailLabel" Grid.Row="1" Text="EMAIL"></Label>
-                        <Button Style="{StaticResource Minimal}" x:Name="statsButton" HorizontalOptions="Start" Grid.Row="2" Text="View stats" Clicked="statsButton_Clicked"/>
-                        <!--   <Label x:Name="completionRatioLabel" Grid.Row="3" Text="Goal completion ratio"/> -->
+                        <Button Style="{StaticResource Minimal}" x:Name="statsButton" HorizontalOptions="Start" Grid.Row="2" Text="View performance" Clicked="statsButton_Clicked"/>
                         <Frame CornerRadius="40"
                                IsClippedToBounds="True"
                                HorizontalOptions="Center"

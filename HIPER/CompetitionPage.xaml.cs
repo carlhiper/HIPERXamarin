@@ -7,16 +7,16 @@ using HIPER.Controllers;
 
 namespace HIPER
 {
-    public partial class ScoreboardPage : ContentPage
+    public partial class CompetitionPage : ContentPage
     {
-        public ScoreboardPage()
+        public CompetitionPage()
         {
             InitializeComponent();
         }
 
         void addGoal_Clicked(System.Object sender, System.EventArgs e)
         {
-            Navigation.PushAsync(new AddGoalPage());
+            Navigation.PushAsync(new AddCompetitionPage());
         }
 
         protected override void OnAppearing()
@@ -27,7 +27,7 @@ namespace HIPER
 
             filter.ItemsSource = App.filterOptions;
         }
-        
+
         void goalCollectionView_SelectionChanged(System.Object sender, Xamarin.Forms.SelectionChangedEventArgs e)
         {
             var selectedGoal = goalCollectionView.SelectedItem as GoalModel;
@@ -41,59 +41,68 @@ namespace HIPER
 
         private async void createGoalsList(int filter)
         {
-            List<GoalModel> activeGoals = new List<GoalModel>();
-            List<GoalModel> closedGoals = new List<GoalModel>();
+            List<GoalModel> activeCompetitions = new List<GoalModel>();
+            List<GoalModel> closedCompetitions = new List<GoalModel>();
+
+            //var challenges = await App.client.GetTable<ChallengeModel>().Where(c => c.OwnerId == App.loggedInUser.Id).ToListAsync();
+
             var goals = await App.client.GetTable<GoalModel>().Where(g => g.UserId == App.loggedInUser.Id).ToListAsync();
 
+            List<GoalModel> competitions = new List<GoalModel>();
 
-
-            //Sorting
-            if(filter == 0)
+            foreach(var g in goals)
             {
-                goals.Sort((x, y) => x.Title.CompareTo(y.Title));
+                if (g.GoalType == 2)
+                    competitions.Add(g);
+            }
+          
+            //Sorting
+            if (filter == 0)
+            {
+                competitions.Sort((x, y) => x.Title.CompareTo(y.Title));
             }
             else if (filter == 1)
             {
-                goals.Sort((x, y) => y.LastUpdatedDate.CompareTo(x.LastUpdatedDate));
+                competitions.Sort((x, y) => y.LastUpdatedDate.CompareTo(x.LastUpdatedDate));
             }
             else if (filter == 2)
             {
-                goals.Sort((x, y) => x.Deadline.CompareTo(y.Deadline));
+                competitions.Sort((x, y) => x.Deadline.CompareTo(y.Deadline));
             }
             else if (filter == 3)
             {
-                goals.Sort((x, y) => y.PerformanceIndicator.CompareTo(x.PerformanceIndicator));
+                competitions.Sort((x, y) => y.PerformanceIndicator.CompareTo(x.PerformanceIndicator));
             }
             else if (filter == 4)
             {
-                goals.Sort((x, y) => y.Progress.CompareTo(x.Progress));
+                competitions.Sort((x, y) => y.Progress.CompareTo(x.Progress));
             }
             else
             {
-                goals.Sort((x, y) => y.LastUpdatedDate.CompareTo(x.LastUpdatedDate));
+                competitions.Sort((x, y) => y.LastUpdatedDate.CompareTo(x.LastUpdatedDate));
             }
 
             if (showClosedSwitch.IsToggled)
             {
-                foreach (var item in goals)
+                foreach (var item in competitions)
                 {
                     if (item.Closed || item.Completed || item.ClosedDate < DateTime.Now)
                     {
-                        closedGoals.Add(item);
+                        closedCompetitions.Add(item);
                     }
                 }
-                goalCollectionView.ItemsSource = closedGoals;
+                goalCollectionView.ItemsSource = closedCompetitions;
             }
             else
             {
-                foreach (var item in goals)
+                foreach (var item in competitions)
                 {
                     if (!item.Closed && !item.Completed && !(item.ClosedDate < DateTime.Now))
                     {
-                        activeGoals.Add(item);
+                        activeCompetitions.Add(item);
                     }
                 }
-                goalCollectionView.ItemsSource = activeGoals;
+                goalCollectionView.ItemsSource = activeCompetitions;
             }
         }
 

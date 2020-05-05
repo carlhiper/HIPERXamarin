@@ -3,7 +3,7 @@
     <ContentPage.Content>
         
         <StackLayout Margin="40,20">
-            <Label x:Name="userNameLabel" Margin="20,10,20,10" Text="STATS" Style="{StaticResource Header}"></Label>
+            <Label x:Name="userNameLabel" Margin="20,10,20,10" Text="PERFORMANCE" Style="{StaticResource Header}"></Label>
             <Label Margin="20,0,20,10" Text="LAST MONTH" TextColor="{StaticResource hiperPeach}" HorizontalTextAlignment="Center"></Label>
 
             <Grid>
@@ -31,8 +31,6 @@
                 <Label x:Name="completionRatioLabel" Grid.Row="4" Grid.Column="1"/>
  
             </Grid>
-
-
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

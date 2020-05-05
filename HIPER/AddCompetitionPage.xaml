@@ -1,27 +1,41 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="HIPER.AddGoalPage">
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="HIPER.AddCompetitionPage">
     <ContentPage.ToolbarItems>
-        <ToolbarItem x:Name="saveGoal" Text="Save" Clicked="saveGoal_Clicked">
+        <ToolbarItem x:Name="startCompetition" Text="Start" Clicked="startCompetition_Clicked">
         </ToolbarItem>
     </ContentPage.ToolbarItems>
     
         <ScrollView  >
             <StackLayout Margin="20"
                          CompressedLayout.IsHeadless="True">
-                <Label Style="{StaticResource Header}" Text="ADD A GOAL"></Label>
+                <Label Style="{StaticResource Header}" Text="COMPETITION"></Label>
                 <Entry x:Name="goalNameEntry" Placeholder="TITLE" MaxLength="20"></Entry>
-                <Editor x:Name="goalDescriptionEntry" Placeholder="DESCRIPTION" MaxLength="255" HeightRequest="100"></Editor>
-            
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="40" />
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" />
-                    </Grid.ColumnDefinitions>
-                    <Label VerticalOptions="Center" Grid.Row="0" Grid.Column="0" Text="IS THE GOAL PRIVATE?"/>
-                    <CheckBox VerticalOptions="Center" HorizontalOptions="Center" Grid.Row="0" Grid.Column="1" x:Name="privateGoalCheckbox" Color="{StaticResource hiperPeach}" CheckedChanged="privateGoalCheckbox_CheckedChanged"></CheckBox>
-                </Grid>
+                <Editor x:Name="goalDescriptionEntry" Placeholder="DESCRIBE GOAL AND FIRST PRIZE" MaxLength="255" HeightRequest="100"></Editor>
+          
+                <Label x:Name="challengeHeader" Text="SELECT COMPETITORS" HorizontalOptions="Center" TextColor="{StaticResource hiperPeach}" Margin="0,20,0,20"></Label>
+              
+                <CollectionView x:Name="challengeCollectionView" SelectionMode="Multiple">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <ContentView>
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="20"></RowDefinition>
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"></ColumnDefinition>
+                                        <ColumnDefinition Width="Auto"></ColumnDefinition>
+                                    </Grid.ColumnDefinitions>
+                                    <Label Grid.Column="0" Text="{Binding FirstName}" FontSize="Medium" HorizontalTextAlignment="End"></Label>
+                                    <Label Grid.Column="1" Text="{Binding LastName}" FontSize="Medium" HorizontalTextAlignment="End"></Label>
+                                    </Grid>
+                            </ContentView>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+
                 <Label Text="CHOOSE A TARGET" HorizontalOptions="Center" Margin="0,20,0,10" TextColor="{StaticResource hiperPeach}"></Label>
                 <Grid>
                     <Grid.RowDefinitions>
@@ -86,7 +100,7 @@
                     <Entry x:Name="step9entry" Grid.Row="8" Grid.Column="2" Placeholder="STEP DESCRIPTION" MaxLength="255" IsVisible="false"></Entry>
                     <CheckBox x:Name="step9CB" VerticalOptions="Center" HorizontalOptions="Center" Grid.Row="8" Grid.Column="1" IsVisible="false" Color="{StaticResource hiperPeach}"></CheckBox>
                 </Grid>
-                <Label Text="SET THE DEADLINE" HorizontalOptions="Center" Margin="0,5,0,10" TextColor="{StaticResource hiperPeach}"></Label>
+                <Label Text="SET A DEADLINE" HorizontalOptions="Center" Margin="0,5,0,10" TextColor="{StaticResource hiperPeach}"></Label>
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="40" />
@@ -121,39 +135,7 @@
                     <Label VerticalOptions="Center" HorizontalOptions="Start" Grid.Row="1" Grid.Column="2" Text="MONTHLY"></Label>
                     <Picker x:Name="dayOfMonthPicker" Grid.Row="1" Grid.Column="3"></Picker>
                 </Grid>
-                <Label x:Name="challengeHeader" Text="CHALLENGE SOMEONE?" HorizontalOptions="Center" TextColor="{StaticResource hiperPeach}" Margin="0,20,0,20"></Label>
-                <Grid x:Name="gridChallenge">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="20" />
-                        <RowDefinition Height="Auto" />
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="30" />
-                        <ColumnDefinition Width="120" />
-                        <ColumnDefinition Width="*" />
-                    </Grid.ColumnDefinitions>
-                    <CheckBox VerticalOptions="Start" HorizontalOptions="Start" Grid.Row="0" Grid.Column="0" x:Name="challengeCheckbox" CheckedChanged="challengeCheckbox_CheckedChanged" Color="{StaticResource hiperPeach}"></CheckBox>
-                    <Label x:Name="challengeLabel" VerticalOptions="Start" Grid.Row="0" Grid.Column="1" Text="CHALLENGE"/>
-                    <CollectionView x:Name="challengeCollectionView" Grid.Row="0" Grid.Column="2" Grid.RowSpan="2" SelectionMode="Multiple">
-                        <CollectionView.ItemTemplate>
-                            <DataTemplate>
-                                <ContentView>
-                                    <Grid>
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="20"></RowDefinition>
-                                        </Grid.RowDefinitions>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="Auto"></ColumnDefinition>
-                                            <ColumnDefinition Width="Auto"></ColumnDefinition>
-                                        </Grid.ColumnDefinitions>
-                                        <Label Grid.Column="0" Text="{Binding FirstName}" FontSize="Medium" HorizontalTextAlignment="End"></Label>
-                                        <Label Grid.Column="1" Text="{Binding LastName}" FontSize="Medium" HorizontalTextAlignment="End"></Label>
-                                     </Grid>
-                                </ContentView>
-                            </DataTemplate>
-                        </CollectionView.ItemTemplate>
-                    </CollectionView>
-                </Grid>
+
             </StackLayout>
         </ScrollView>
 </ContentPage>

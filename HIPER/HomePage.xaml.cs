@@ -10,13 +10,14 @@ namespace HIPER
         public HomePage()
         {
             InitializeComponent();
+            UpdateScoreboard.checkDeadlines();
+            UpdateScoreboard.checkRepeatGoals();
         }
 
         protected override void OnAppearing()
         {
             base.OnAppearing();
-            UpdateScoreboard.checkDeadlines();
-            UpdateScoreboard.checkRepeatGoals();
+
 
         }
     }

@@ -11,7 +11,7 @@ namespace HIPER
     public partial class TeamPage : ContentPage
     {
         TeamModel team;
-   
+
         public TeamPage()
         {
             InitializeComponent();
@@ -21,22 +21,31 @@ namespace HIPER
         {
             base.OnAppearing();
 
-            try {
+            try
+            {
                 userName.Text = App.loggedInUser.FirstName + " " + App.loggedInUser.LastName;
                 company.Text = App.loggedInUser.Company;
                 email.Text = App.loggedInUser.Email;
                 profileImage.Source = App.loggedInUser.ImageUrl;
                 team = (await App.client.GetTable<TeamModel>().Where(t => t.Id == App.loggedInUser.TeamId).ToListAsync()).FirstOrDefault();
-                if (team != null) {
+                if (team != null)
+                {
+                    teamStats.IsEnabled = true;
                     if (team.Administrator_id == App.loggedInUser.Id)
                     {
                         userName.Text += " (admin)";
+                        buttonGrid.IsVisible = true;
+                    }
+                    else
+                    {
+                        buttonGrid.IsVisible = false;
                     }
 
                     var users = await App.client.GetTable<UserModel>().Where(u => u.TeamId == team.Id).ToListAsync();
-                    if (users != null) {
+                    if (users != null)
+                    {
                         users.RemoveAt(users.FindIndex(a => a.Id == App.loggedInUser.Id));
-         
+
                         teamCollectionView.ItemsSource = users;
 
                         teamNameLabel.Text = "TEAM " + team.Name.ToUpper();
@@ -49,18 +58,17 @@ namespace HIPER
                 }
                 else
                 {
+                    teamStats.IsEnabled = false;
                     createTeam.IsEnabled = true;
                     joinTeam.IsEnabled = true;
                     leaveTeam.IsEnabled = false;
                 }
-
-
-
             }
-            catch(NullReferenceException nre)
+            catch (NullReferenceException nre)
             {
 
-            }catch(Exception ex)
+            }
+            catch (Exception ex)
             {
 
             }
@@ -78,7 +86,8 @@ namespace HIPER
 
         void teamCollectionView_SelectionChanged(System.Object sender, Xamarin.Forms.SelectionChangedEventArgs e)
         {
-            if (App.loggedInUser.Id == team.Administrator_id) { 
+            if (App.loggedInUser.Id == team.Administrator_id)
+            {
                 var selectedUser = teamCollectionView.SelectedItem as UserModel;
                 Navigation.PushAsync(new UserDetailPage(selectedUser));
             }
@@ -101,7 +110,7 @@ namespace HIPER
                 if (team.Administrator_id == App.loggedInUser.Id)
                 {
                     var users = await App.client.GetTable<UserModel>().Where(u => u.TeamId == team.Id).ToListAsync();
-                    if(users.Count > 1)
+                    if (users.Count > 1)
                     {
                         await DisplayAlert("Failure", "You are team administrator and can not leave as long as there are members in your team", "Ok");
                     }
@@ -137,13 +146,26 @@ namespace HIPER
                     }
                 }
 
-            }catch(NullReferenceException nre)
-            {
-
-            }catch(Exception ex)
+            }
+            catch (NullReferenceException nre)
             {
 
             }
+            catch (Exception ex)
+            {
+
+            }
+        }
+
+        void teamStats_Clicked(System.Object sender, System.EventArgs e)
+        {
+            if(team != null)
+                Navigation.PushAsync(new TeamStatisticsPage(team));
+        }
+
+        void competitionButton_Clicked(System.Object sender, System.EventArgs e)
+        {
+            Navigation.PushAsync(new CompetitionPage());
         }
     }
 }
