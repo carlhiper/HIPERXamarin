@@ -77,23 +77,25 @@
                 
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
+
                         <Grid Padding="10">
                             <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="20" />
+                                <RowDefinition Height="20" />
+                                <RowDefinition Height="20" />
                             </Grid.RowDefinitions>
 
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto" />
                                 <ColumnDefinition Width="150" />
                                 <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="70" />
+                                <ColumnDefinition Width="72" />
                             </Grid.ColumnDefinitions>
               
                             <Label Grid.Row="0"
                                 Grid.Column="0" 
-                                Text="{Binding FirstName}" 
+                                Text="{Binding FirstName}"
+                                   VerticalOptions="End"
                                 FontAttributes="Bold" />
                             <Label Grid.Row="0"
                                 Grid.Column="1" 
@@ -117,8 +119,8 @@
                                    CornerRadius="25"
                                    Padding="0"
                                    Margin="10"
-                                   HeightRequest="30"
-                                   WidthRequest="30"
+                                   HeightRequest="50"
+                                   WidthRequest="50"
                                    BorderColor="Gray"
                                    IsClippedToBounds="True">
                                     <Image WidthRequest="50"

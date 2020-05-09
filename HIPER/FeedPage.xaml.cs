@@ -30,8 +30,7 @@ namespace HIPER
         {
 
             List<FeedModel> feed = new List<FeedModel>();
-            //feedFilter.ItemsSource = App.feedfilterOptions;
-
+       
             // Get users in team
             var users = await App.client.GetTable<UserModel>().Where(u => u.TeamId == App.loggedInUser.TeamId).ToListAsync();
 
@@ -54,11 +53,28 @@ namespace HIPER
                    
                             feedItem.ProfileImageURL = user.ImageUrl;
                             feedItem.FeedItemTitle = user.FirstName + " completed a goal!";
-                            feedItem.FeedItemPost = "Goal " + goal.Title + " was successfully completed. " + RandomPhrases.RandomCheerPhrase(user.FirstName);
+                            feedItem.FeedItemPost = "Goal \"" + goal.Title + "\" was successfully completed. ";
 
                             feed.Add(feedItem);
                         }
+                        if(goal.GoalType == 1 && goal.GoalAccepted)
+                        {
+                            FeedModel feedItem = new FeedModel();
 
+                            feedItem.IndexDate = goal.ClosedDate;
+
+                            feedItem.ProfileImageURL = user.ImageUrl;
+                            feedItem.FeedItemTitle =  "Completed challenge!";
+                            feedItem.FeedItemPost = user.FirstName + " has completed the challenge \"" + goal.Title + "\". ";
+
+                            feed.Add(feedItem);
+
+                        }
+                        else if (goal.GoalType == 2)
+                        {
+           
+
+                        }
                     }
 
                     var posts = await App.client.GetTable<PostModel>().Where(p => p.UserId == user.Id).ToListAsync();
@@ -75,33 +91,15 @@ namespace HIPER
                             feed.Add(feedItem);
                         }
                     }
-
-
                 }catch(Exception ex)
                 {
 
                 }
              }
 
-            //int filter = feedFilter.SelectedIndex;
-            //Sorting
-            //if (filter == 1)
-            //{
-            //    feed.Sort((x, y) => x..CompareTo(y.GoalTitle));
-            //}
-            //else if (filter == 2)
-            //{
-
-            //}
-            //else
-            //{ 
-            //    feed.Sort((x, y) => y.LastUpdated.CompareTo(x.LastUpdated));
-            //}
-
             feed.Sort((x, y) => y.IndexDate.CompareTo(x.IndexDate));
             feedCollectionView.ItemsSource = feed;
         }
-
 
 
         void feedFilter_SelectedIndexChanged(System.Object sender, System.EventArgs e)
@@ -141,6 +139,5 @@ namespace HIPER
             PostEntry.Text = "";
             createFeedList();
         }
-
     }
 }

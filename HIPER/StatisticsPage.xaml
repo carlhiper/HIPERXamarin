@@ -1,36 +1,54 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="HIPER.StatisticsPage">
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="HIPER.StatisticsPage">
     <ContentPage.Content>
-        
-        <StackLayout Margin="40,20">
-            <Label x:Name="userNameLabel" Margin="20,10,20,10" Text="PERFORMANCE" Style="{StaticResource Header}"></Label>
-            <Label Margin="20,0,20,10" Text="LAST MONTH" TextColor="{StaticResource hiperPeach}" HorizontalTextAlignment="Center"></Label>
+        <ScrollView>
+            <Frame Margin="10">
+                <StackLayout Margin="40,20">
+                    <Label x:Name="userNameLabel" Margin="20,10,20,10" Text="PERFORMANCE" Style="{StaticResource Header}"></Label>
+                    <Grid Margin="10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="120"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="20"/>
+                        </Grid.RowDefinitions>
+                        <Button x:Name="prevButton" Grid.Column="0" Style="{StaticResource Key=Minimal}" Text="prev" VerticalOptions="Start" Clicked="prevButton_Clicked"/>
+                        <Label x:Name="monthLabel" Grid.Column="1"  Text="LAST MONTH" TextColor="{StaticResource hiperPeach}" HorizontalTextAlignment="Center"></Label>
+                        <Button x:Name="nextButton" Grid.Column="2" Style="{StaticResource Key=Minimal}" Text="next" VerticalOptions="Center" Clicked="nextButton_Clicked"/>
 
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="100"/>
-                </Grid.ColumnDefinitions>
+                    </Grid>
+                    
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="100"/>
+                        </Grid.ColumnDefinitions>
 
-                <Label Grid.Row="0" Text="Goals created: "/>
-                <Label x:Name="goalsCreatedLabel" Grid.Row="0" Grid.Column="1"/>
-                <Label Grid.Row="1" Text="Goals completed: "/>
-                <Label x:Name="goalsCompletedLabel" Grid.Row="1" Grid.Column="1"/>
-                <Label Grid.Row="2" Text="Goals closed: "/>
-                <Label  x:Name="goalsClosedLabel" Grid.Row="2" Grid.Column="1"/>
-                <Label Grid.Row="3" Text="Challenges created: "/>
-                <Label x:Name="challengesCreatedLabel" Grid.Row="3" Grid.Column="1"/>
-                <Label Grid.Row="4" Grid.Column="0" Text="Goals completed ratio: "/>
-                <Label x:Name="completionRatioLabel" Grid.Row="4" Grid.Column="1"/>
+                        <Label Grid.Row="0" Text="Goals created: "/>
+                        <Label x:Name="goalsCreatedLabel" Grid.Row="0" Grid.Column="1"/>
+                        <Label Grid.Row="1" Text="Goals completed: "/>
+                        <Label x:Name="goalsCompletedLabel" Grid.Row="1" Grid.Column="1"/>
+                        <Label Grid.Row="2" Text="Goals closed: "/>
+                        <Label  x:Name="goalsClosedLabel" Grid.Row="2" Grid.Column="1"/>
+                        <Label Grid.Row="3" Text="Challenges created: "/>
+                        <Label x:Name="challengesCreatedLabel" Grid.Row="3" Grid.Column="1"/>
+                        <Label Grid.Row="4" Grid.Column="0" Text="Goals completed ratio: "/>
+                        <Label x:Name="completionRatioLabel" Grid.Row="4" Grid.Column="1"/>
  
-            </Grid>
-        </StackLayout>
+                    </Grid>
+                </StackLayout>
+            </Frame>
+        </ScrollView>
     </ContentPage.Content>
 </ContentPage>

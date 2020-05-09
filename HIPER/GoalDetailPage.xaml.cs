@@ -111,13 +111,20 @@ namespace HIPER
                 {
                     createdByLabel.Text = "Created by " + challengeOwner.FirstName + " " + challengeOwner.LastName;
                     createdByLabel.IsVisible = true;
-                }
-                else
-                {
+                        if (goal.GoalType == 2 && challengeOwner.Id == App.loggedInUser.Id)
+                        {
+                            goalCurrentEntry.IsEnabled = false;
+                            completeGoal.IsVisible = false;
+                            closeGoal.IsVisible = false;
+                        }
+
+                    }
+                    else
+                    {
                     createdByLabel.Text = "";
                     createdByLabel.IsVisible = false;
+                    }
                 }
-            }
 
             if (goal.RepeatType == 1)
             {

@@ -81,7 +81,7 @@
                         <CheckBox x:Name="step9CB" VerticalOptions="Center" HorizontalOptions="Center" Grid.Row="8" Grid.Column="1" IsVisible="false" Color="{StaticResource hiperPeach}" CheckedChanged="step1CB_CheckedChanged"></CheckBox>
                     </Grid>
 
-                    <Label Text="NEXT DEADLINE" HorizontalOptions="Center" TextColor="{StaticResource hiperPeach}" Margin="0,20,0,5"></Label>
+                    <Label Text="DEADLINE" HorizontalOptions="Center" TextColor="{StaticResource hiperPeach}" Margin="0,20,0,5"></Label>
                     <Label Text="2020-09-12" x:Name="deadlineLabel" HorizontalOptions="Center"></Label>
                     <Label HorizontalOptions="Center" x:Name="recurrentLabel" Text="recurrent weekly"/>
 

@@ -4,6 +4,7 @@ using HIPER.Model;
 using SQLite;
 using Xamarin.Forms;
 using HIPER.Controllers;
+using System.Linq;
 
 namespace HIPER
 {
@@ -43,18 +44,24 @@ namespace HIPER
         {
             List<GoalModel> activeCompetitions = new List<GoalModel>();
             List<GoalModel> closedCompetitions = new List<GoalModel>();
-
-            //var challenges = await App.client.GetTable<ChallengeModel>().Where(c => c.OwnerId == App.loggedInUser.Id).ToListAsync();
-
-            var goals = await App.client.GetTable<GoalModel>().Where(g => g.UserId == App.loggedInUser.Id).ToListAsync();
-
             List<GoalModel> competitions = new List<GoalModel>();
 
-            foreach(var g in goals)
+            var challenges = await App.client.GetTable<ChallengeModel>().Where(c => c.OwnerId == App.loggedInUser.Id).ToListAsync();
+        
+            if (challenges != null)
             {
-                if (g.GoalType == 2)
-                    competitions.Add(g);
+                foreach (var c in challenges)
+                {
+                    var goal = (await App.client.GetTable<GoalModel>().Where(g => g.ChallengeId == c.Id).ToListAsync()).FirstOrDefault();
+                    if (goal != null)
+                        if (goal.GoalType == 2)
+                            competitions.Add(goal);
+
+                }
             }
+
+
+
           
             //Sorting
             if (filter == 0)

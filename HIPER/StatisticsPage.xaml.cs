@@ -9,26 +9,34 @@ namespace HIPER
 {
     public partial class StatisticsPage : ContentPage
     {
+        List<GoalModel> goals;
         UserModel selectedUser;
+        int selectedMonth;
         public StatisticsPage(UserModel user)
         {
             this.selectedUser = user;
             InitializeComponent();
+            selectedMonth = 0;
         }
 
         protected override async void OnAppearing()
         {
             base.OnAppearing();
+            goals = await App.client.GetTable<GoalModel>().Where(g => g.UserId == selectedUser.Id).ToListAsync();
 
-            List<GoalModel> goals = await App.client.GetTable<GoalModel>().Where(g => g.UserId == selectedUser.Id).ToListAsync();
+            UpdateStats();
+ 
+        }
 
+        private async void UpdateStats()
+        {
             if (goals != null)
             {
-                
-                completionRatioLabel.Text = GoalStats.GetGoalCompletionRatio(goals, 1).ToString("F0") + "%";
-                goalsCreatedLabel.Text = GoalStats.GetCreatedGoals(goals, 1).ToString();
-                goalsClosedLabel.Text = GoalStats.GetClosedGoals(goals, 1).ToString();
-                goalsCompletedLabel.Text = GoalStats.GetCompletedGoals(goals, 1).ToString();
+                monthLabel.Text = GoalStats.GetMonthName(selectedMonth);
+                completionRatioLabel.Text = GoalStats.GetGoalCompletionRatio(goals, selectedMonth).ToString("F0") + "%";
+                goalsCreatedLabel.Text = GoalStats.GetCreatedGoals(goals, selectedMonth).ToString();
+                goalsClosedLabel.Text = GoalStats.GetClosedGoals(goals, selectedMonth).ToString();
+                goalsCompletedLabel.Text = GoalStats.GetCompletedGoals(goals, selectedMonth).ToString();
 
                 int createdChallenges = 0;
                 foreach (GoalModel goal in goals)
@@ -45,6 +53,22 @@ namespace HIPER
                 }
                 challengesCreatedLabel.Text = createdChallenges.ToString();
 
+            }
+        }
+
+        void prevButton_Clicked(System.Object sender, System.EventArgs e)
+        {
+            selectedMonth++;
+            UpdateStats();
+
+        }
+
+        void nextButton_Clicked(System.Object sender, System.EventArgs e)
+        {
+            if (selectedMonth > 0)
+            {
+                selectedMonth--;
+                UpdateStats();
             }
         }
     }

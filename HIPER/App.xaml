@@ -14,7 +14,7 @@
             <Setter Property="BackgroundColor" Value="{StaticResource hiperPeach}"></Setter>
             <Setter Property="TextColor" Value="{StaticResource hiperWhite}"></Setter>
             <Setter Property="FontFamily" Value="FUTURA BOOK"></Setter>
-            <Setter Property="FontSize" Value="Medium"></Setter>
+            <Setter Property="FontSize" Value="Small"></Setter>
         </Style>
         <Style x:Key="Minimal" TargetType="Button">
             <Setter Property="BackgroundColor" Value="Transparent"></Setter>
@@ -27,22 +27,25 @@
             <Setter Property="FontFamily" Value="FUTURA BOOK"></Setter>
             <Setter Property="IsSpellCheckEnabled" Value="False"></Setter>
             <Setter Property="IsTextPredictionEnabled" Value="False"></Setter>
+            <Setter Property="FontSize" Value="Small"/>
         </Style>
         <Style TargetType="Editor">
             <Setter Property="TextColor" Value="Black" ></Setter>
             <Setter Property="FontFamily" Value="FUTURA BOOK"></Setter>
             <Setter Property="IsSpellCheckEnabled" Value="False"></Setter>
             <Setter Property="IsTextPredictionEnabled" Value="False"></Setter>
+            <Setter Property="FontSize" Value="Small"/>
         </Style>
         <Style TargetType="Label">
             <Setter Property="TextColor" Value="Black" ></Setter>
             <Setter Property="FontFamily" Value="FUTURA BOOK"></Setter>
-        </Style>
+           <Setter Property="FontSize" Value="Small"/>
+         </Style>
 
         <Style x:Key="Header" TargetType="Label">
             <Setter Property="TextColor" Value="{StaticResource hiperPeach}" ></Setter>
             <Setter Property="FontFamily" Value="FUTURA BOOK"></Setter>
-            <Setter Property="FontSize" Value="Large"></Setter>
+            <Setter Property="FontSize" Value="Medium"></Setter>
             <Setter Property="Margin" Value="20"></Setter>
             <Setter Property="HorizontalOptions" Value="Center"></Setter>
         </Style>

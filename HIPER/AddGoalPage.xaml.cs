@@ -46,7 +46,7 @@ namespace HIPER
             step1entry.IsVisible = false;
             step1label.IsVisible = false;
 
-            if (App.loggedInUser.Id != user.Id)
+            if (App.loggedInUser.Id != user.Id || string.IsNullOrEmpty(user.TeamId))
             {
                 challengeCheckbox.IsVisible = false;
                 challengeCollectionView.IsVisible = false;
@@ -90,9 +90,9 @@ namespace HIPER
 
                     var challengedUsers = challengeCollectionView.SelectedItems;
 
-                    foreach (UserModel user in challengedUsers)
+                    foreach (UserModel u in challengedUsers)
                     {
-                        CreateGoal(user.Id, false, challenge.Id);
+                        CreateGoal(u.Id, false, challenge.Id);
                     }
 
                     CreateGoal(App.loggedInUser.Id, true, challenge.Id);
@@ -101,7 +101,7 @@ namespace HIPER
                 }
                 else
                 {
-                    CreateGoal(App.loggedInUser.Id, true, null);
+                    CreateGoal(user.Id, true, null);
                     await DisplayAlert("Success", "Goal saved", "Ok");
                     await Navigation.PopAsync();
                 }
