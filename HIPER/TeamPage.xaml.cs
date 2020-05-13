@@ -160,7 +160,7 @@ namespace HIPER
         void teamStats_Clicked(System.Object sender, System.EventArgs e)
         {
             if(team != null)
-                Navigation.PushAsync(new TeamStatisticsPage(team));
+                Navigation.PushAsync(new StatisticsPage(team));
         }
 
         void competitionButton_Clicked(System.Object sender, System.EventArgs e)

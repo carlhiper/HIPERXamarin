@@ -11,13 +11,15 @@ namespace HIPER
     public partial class GoalDetailPage : ContentPage
     {
         bool constructorRunning;
+        bool IsCompetitionPage;
         GoalModel goal;
         UserModel challengeOwner;
         ChallengeModel challenge;
         List<LeaderBoardModel> competitors = new List<LeaderBoardModel>();
 
-        public GoalDetailPage(GoalModel inputGoal)
+        public GoalDetailPage(GoalModel inputGoal, bool isCompetitionPage)
         {
+            this.IsCompetitionPage = isCompetitionPage;
             this.goal = inputGoal;
             InitializeComponent();
             UpdateDetailView();
@@ -105,13 +107,13 @@ namespace HIPER
             {
                 leaderboardCollectionView.IsVisible = true;
                 leaderBoardLabel.IsVisible = true;
-                cardFrame.BorderColor = Color.FromHex(HIPER.Helpers.Constants.CHALLENGE_GOLD);
+                cardFrame.BorderColor = Color.FromHex(HIPER.Helpers.Constants.HIPER_PEACH);
                 challengeImage.IsVisible = true;
                 if (challengeOwner != null)
                 {
                     createdByLabel.Text = "Created by " + challengeOwner.FirstName + " " + challengeOwner.LastName;
                     createdByLabel.IsVisible = true;
-                        if (goal.GoalType == 2 && challengeOwner.Id == App.loggedInUser.Id)
+                        if (goal.GoalType == 2 && challengeOwner.Id == App.loggedInUser.Id && IsCompetitionPage)
                         {
                             goalCurrentEntry.IsEnabled = false;
                             completeGoal.IsVisible = false;
@@ -261,19 +263,16 @@ namespace HIPER
                     {
                         foreach (GoalModel g in goals)
                         {
-                            if(g.Deadline > DateTime.Today)
-                            {
-                                var user = (await App.client.GetTable<UserModel>().Where(u => u.Id == g.UserId).ToListAsync()).FirstOrDefault();
+                            var user = (await App.client.GetTable<UserModel>().Where(u => u.Id == g.UserId).ToListAsync()).FirstOrDefault();
 
-                                LeaderBoardModel competitor = new LeaderBoardModel()
-                                {
-                                    Name = user.FirstName + " " + user.LastName,
-                                    Progress = g.Progress,
-                                    Completed = g.Completed,
-                                    Accepted = !g.GoalAccepted
-                                };
-                                competitors.Add(competitor);
-                            }
+                            LeaderBoardModel competitor = new LeaderBoardModel()
+                            {
+                                Name = user.FirstName + " " + user.LastName,
+                                Progress = g.Progress,
+                                Completed = g.Completed,
+                                Accepted = !g.GoalAccepted
+                            };
+                            competitors.Add(competitor);
                         }
                         competitors.Sort((x, y) => y.Progress.CompareTo(x.Progress));
 

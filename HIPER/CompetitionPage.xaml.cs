@@ -29,10 +29,10 @@ namespace HIPER
             filter.ItemsSource = App.filterOptions;
         }
 
-        void goalCollectionView_SelectionChanged(System.Object sender, Xamarin.Forms.SelectionChangedEventArgs e)
+        void competitionCollectionView_SelectionChanged(System.Object sender, Xamarin.Forms.SelectionChangedEventArgs e)
         {
-            var selectedGoal = goalCollectionView.SelectedItem as GoalModel;
-            Navigation.PushAsync(new GoalDetailPage(selectedGoal));
+            var selectedGoal = competitionCollectionView.SelectedItem as GoalModel;
+            Navigation.PushAsync(new GoalDetailPage(selectedGoal, true));
         }
 
         private void showClosedSwitch_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
@@ -98,7 +98,7 @@ namespace HIPER
                         closedCompetitions.Add(item);
                     }
                 }
-                goalCollectionView.ItemsSource = closedCompetitions;
+                competitionCollectionView.ItemsSource = closedCompetitions;
             }
             else
             {
@@ -109,7 +109,7 @@ namespace HIPER
                         activeCompetitions.Add(item);
                     }
                 }
-                goalCollectionView.ItemsSource = activeCompetitions;
+                competitionCollectionView.ItemsSource = activeCompetitions;
             }
         }
 

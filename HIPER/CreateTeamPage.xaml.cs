@@ -49,7 +49,7 @@ namespace HIPER
                         Organisation_number = orgNumberEntry.Text,
                         Identifier = uniqueIdentifier(Constants.UNIQUE_IDENTIFIER_LENGTH),
                         CreatedDate = DateTime.Now,
-                        Max_number_users = Constants.DEFAULT_NUMBER_TEAM_MEMBERS,
+                        Max_number_users = Constants.MAX_TEAM_MEMBERS,
                         Administrator_id = App.loggedInUser.Id,
                         Active = true
                     };

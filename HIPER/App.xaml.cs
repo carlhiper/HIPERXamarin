@@ -22,6 +22,7 @@ namespace HIPER
                                                                     , "24", "25", "26", "27", "28"};
 
         public static List<string> months = new List<string>() { "January", "Febuary", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" };
+        public static List<string> months_short = new List<string>() { "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" };
         public static List<string> numberofsteps = new List<string>() { "1", "2", "3", "4", "5", "6", "7", "8", "9" };
 
         public static List<string> filterOptions = new List<string>() { "Title", "Last updated", "Deadline", "Performance", "Progress" };

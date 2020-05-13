@@ -7,7 +7,7 @@
     <ContentPage.Resources>
         <ResourceDictionary>
             <converters:PerformanceToImageConverter x:Key="converter"/>
-            <converters:ChallengeIdToColorConverter x:Key="frameColorConverter"/>
+            <converters:AcceptedChallengeToColorConverter x:Key="frameColorConverter"/>
             <converters:ChallengeIdToBoolConverter x:Key="challengeVisibleConverter"/>
         </ResourceDictionary>
     </ContentPage.Resources>
@@ -41,14 +41,14 @@
 
         <CollectionView
                
-            x:Name="goalCollectionView"
+            x:Name="competitionCollectionView"
             SelectionMode="Single"
-            SelectionChanged="goalCollectionView_SelectionChanged">
+            SelectionChanged="competitionCollectionView_SelectionChanged">
                 
             <CollectionView.ItemTemplate>
                 <DataTemplate>
                     <ContentView>
-                        <Frame BorderColor="{Binding ChallengeId, Converter={StaticResource frameColorConverter}}">
+                        <Frame BorderColor="{Binding GoalAccepted, Converter={StaticResource frameColorConverter}}">
                             <Grid Padding="10">
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="23" />

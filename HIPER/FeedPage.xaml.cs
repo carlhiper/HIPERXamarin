@@ -59,15 +59,15 @@ namespace HIPER
                         }
                         if(goal.GoalType == 1 && goal.GoalAccepted)
                         {
-                            FeedModel feedItem = new FeedModel();
+                            //FeedModel feedItem = new FeedModel();
 
-                            feedItem.IndexDate = goal.ClosedDate;
+                            //feedItem.IndexDate = goal.ClosedDate;
 
-                            feedItem.ProfileImageURL = user.ImageUrl;
-                            feedItem.FeedItemTitle =  "Completed challenge!";
-                            feedItem.FeedItemPost = user.FirstName + " has completed the challenge \"" + goal.Title + "\". ";
+                            //feedItem.ProfileImageURL = user.ImageUrl;
+                            //feedItem.FeedItemTitle =  "Completed challenge!";
+                            //feedItem.FeedItemPost = user.FirstName + " has completed the challenge \"" + goal.Title + "\". ";
 
-                            feed.Add(feedItem);
+                            //feed.Add(feedItem);
 
                         }
                         else if (goal.GoalType == 2)

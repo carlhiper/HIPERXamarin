@@ -9,6 +9,9 @@ namespace HIPER
 {
     public partial class ScoreboardPage : ContentPage
     {
+        List<GoalModel> activeGoals = new List<GoalModel>();
+        List<GoalModel> closedGoals = new List<GoalModel>();
+
         public ScoreboardPage()
         {
             InitializeComponent();
@@ -16,7 +19,16 @@ namespace HIPER
 
         void addGoal_Clicked(System.Object sender, System.EventArgs e)
         {
-            Navigation.PushAsync(new AddGoalPage());
+            if (activeGoals != null)
+            {
+                if(activeGoals.Count < HIPER.Helpers.Constants.MAX_ACTIVE_GOALS)
+                {
+                    Navigation.PushAsync(new AddGoalPage());
+                }else
+                {
+                    DisplayAlert("Failure", "You have max allowed active goals. Please upgrade to premium to be able to add more goals", "Ok");
+                }
+            }
         }
 
         protected override void OnAppearing()
@@ -31,7 +43,7 @@ namespace HIPER
         void goalCollectionView_SelectionChanged(System.Object sender, Xamarin.Forms.SelectionChangedEventArgs e)
         {
             var selectedGoal = goalCollectionView.SelectedItem as GoalModel;
-            Navigation.PushAsync(new GoalDetailPage(selectedGoal));
+            Navigation.PushAsync(new GoalDetailPage(selectedGoal, false));
         }
 
         private void showClosedSwitch_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
@@ -41,58 +53,71 @@ namespace HIPER
 
         private async void createGoalsList(int filter)
         {
-            List<GoalModel> activeGoals = new List<GoalModel>();
-            List<GoalModel> closedGoals = new List<GoalModel>();
-            var goals = await App.client.GetTable<GoalModel>().Where(g => g.UserId == App.loggedInUser.Id).ToListAsync();
-
-
-
-            //Sorting
-            if(filter == 0)
-            {
-                goals.Sort((x, y) => x.Title.CompareTo(y.Title));
-            }
-            else if (filter == 1)
-            {
-                goals.Sort((x, y) => y.LastUpdatedDate.CompareTo(x.LastUpdatedDate));
-            }
-            else if (filter == 2)
-            {
-                goals.Sort((x, y) => x.Deadline.CompareTo(y.Deadline));
-            }
-            else if (filter == 3)
-            {
-                goals.Sort((x, y) => y.PerformanceIndicator.CompareTo(x.PerformanceIndicator));
-            }
-            else if (filter == 4)
-            {
-                goals.Sort((x, y) => y.Progress.CompareTo(x.Progress));
-            }
-            else
-            {
-                goals.Sort((x, y) => y.LastUpdatedDate.CompareTo(x.LastUpdatedDate));
-            }
+            activeGoals.Clear();
+            closedGoals.Clear();
 
             if (showClosedSwitch.IsToggled)
             {
-                foreach (var item in goals)
+                closedGoals = await App.client.GetTable<GoalModel>().Where(g => g.UserId == App.loggedInUser.Id && (g.Closed || g.ClosedDate < DateTime.Now)).OrderByDescending(g => g.ClosedDate).ToListAsync();
+        
+                //Sorting
+                if (filter == 0)
                 {
-                    if (item.Closed || item.Completed || item.ClosedDate < DateTime.Now)
-                    {
-                        closedGoals.Add(item);
-                    }
+                    closedGoals.Sort((x, y) => x.Title.CompareTo(y.Title));
                 }
+                else if (filter == 1)
+                {
+                    closedGoals.Sort((x, y) => y.LastUpdatedDate.CompareTo(x.LastUpdatedDate));
+                }
+                else if (filter == 2)
+                {
+                    closedGoals.Sort((x, y) => x.Deadline.CompareTo(y.Deadline));
+                }
+                else if (filter == 3)
+                {
+                    closedGoals.Sort((x, y) => y.PerformanceIndicator.CompareTo(x.PerformanceIndicator));
+                }
+                else if (filter == 4)
+                {
+                    closedGoals.Sort((x, y) => y.Progress.CompareTo(x.Progress));
+                }
+                else
+                {
+                    closedGoals.Sort((x, y) => y.LastUpdatedDate.CompareTo(x.LastUpdatedDate));
+                }
+          
                 goalCollectionView.ItemsSource = closedGoals;
             }
             else
             {
-                foreach (var item in goals)
+                activeGoals = await App.client.GetTable<GoalModel>().Where(g => g.UserId == App.loggedInUser.Id && (!g.Closed && !g.Completed && g.ClosedDate > DateTime.Now)).OrderByDescending(g => g.CreatedDate).ToListAsync();
+
+                //Sorting
+                if (filter == 0)
                 {
-                    if (!item.Closed && !item.Completed && !(item.ClosedDate < DateTime.Now))
-                    {
-                        activeGoals.Add(item);
-                    }
+                    activeGoals.Sort((x, y) => x.Title.CompareTo(y.Title));
                 }
+                else if (filter == 1)
+                {
+                    activeGoals.Sort((x, y) => y.LastUpdatedDate.CompareTo(x.LastUpdatedDate));
+                }
+                else if (filter == 2)
+                {
+                    activeGoals.Sort((x, y) => x.Deadline.CompareTo(y.Deadline));
+                }
+                else if (filter == 3)
+                {
+                    activeGoals.Sort((x, y) => y.PerformanceIndicator.CompareTo(x.PerformanceIndicator));
+                }
+                else if (filter == 4)
+                {
+                    activeGoals.Sort((x, y) => y.Progress.CompareTo(x.Progress));
+                }
+                else
+                {
+                    activeGoals.Sort((x, y) => y.LastUpdatedDate.CompareTo(x.LastUpdatedDate));
+                }
+       
                 goalCollectionView.ItemsSource = activeGoals;
             }
         }

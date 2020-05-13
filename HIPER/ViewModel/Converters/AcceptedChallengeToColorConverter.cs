@@ -4,21 +4,21 @@ using Xamarin.Forms;
 
 namespace HIPER.ViewModel.Converters
 {
-    public class ChallengeIdToColorConverter : IValueConverter
+    public class AcceptedChallengeToColorConverter : IValueConverter
     {
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            string challengeId = (string)value;
+            bool accepted = (bool)value;
             string hiperPeach = "#ff7562";
-            string challengeGold = "#D4AF37";
+            string hiperGray = "#777777";
 
-            if (!string.IsNullOrEmpty(challengeId))
+            if (accepted)
             {
-                return challengeGold;
+                return hiperPeach;
             }
   
-            return hiperPeach;
+            return hiperGray;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

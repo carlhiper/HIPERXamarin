@@ -324,7 +324,6 @@ namespace HIPER
                 challengeCollectionView.IsVisible = true;
 
                 challengeCollectionView.HeightRequest = teammembers.Count * 20;
-
             }
         }
 
