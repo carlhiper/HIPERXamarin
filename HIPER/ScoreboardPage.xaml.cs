@@ -58,7 +58,8 @@ namespace HIPER
 
             if (showClosedSwitch.IsToggled)
             {
-                closedGoals = await App.client.GetTable<GoalModel>().Where(g => g.UserId == App.loggedInUser.Id && (g.Closed || g.ClosedDate < DateTime.Now)).OrderByDescending(g => g.ClosedDate).ToListAsync();
+                DateTime earliestDate = DateTime.Now.AddMonths(-15);
+                closedGoals = await App.client.GetTable<GoalModel>().Where(g => g.UserId == App.loggedInUser.Id && (g.Closed || g.ClosedDate < DateTime.Now) && (g.ClosedDate > earliestDate)).OrderByDescending(g => g.ClosedDate).Take(500).ToListAsync();
         
                 //Sorting
                 if (filter == 0)

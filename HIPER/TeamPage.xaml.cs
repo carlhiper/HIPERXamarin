@@ -33,7 +33,6 @@ namespace HIPER
                     teamStats.IsEnabled = true;
                     if (team.Administrator_id == App.loggedInUser.Id)
                     {
-                        userName.Text += " (admin)";
                         buttonGrid.IsVisible = true;
                     }
                     else
@@ -41,6 +40,7 @@ namespace HIPER
                         buttonGrid.IsVisible = false;
                     }
 
+                    var teamAdmin = (await App.client.GetTable<UserModel>().Where(u => u.Id == team.Administrator_id).ToListAsync()).FirstOrDefault();
                     var users = await App.client.GetTable<UserModel>().Where(u => u.TeamId == team.Id).ToListAsync();
                     if (users != null)
                     {
@@ -49,7 +49,7 @@ namespace HIPER
                         teamCollectionView.ItemsSource = users;
 
                         teamNameLabel.Text = "TEAM " + team.Name.ToUpper();
-                        teamIdentifierLabel.Text = "Identifier: " + team.Identifier;
+                        teamIdentifierLabel.Text = "Identifier: " + team.Identifier + "   Admin: " + teamAdmin.FirstName + " " + teamAdmin.LastName;
 
                         createTeam.IsEnabled = false;
                         joinTeam.IsEnabled = false;

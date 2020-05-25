@@ -147,8 +147,8 @@
                                                 <ColumnDefinition Width="Auto"></ColumnDefinition>
                                                 <ColumnDefinition Width="Auto"></ColumnDefinition>
                                             </Grid.ColumnDefinitions>
-                                            <Label Grid.Column="0" Text="{Binding FirstName}" FontSize="Medium" HorizontalTextAlignment="End"></Label>
-                                            <Label Grid.Column="1" Text="{Binding LastName}" FontSize="Medium" HorizontalTextAlignment="End"></Label>
+                                            <Label Grid.Column="0" Text="{Binding FirstName}" FontSize="Small" HorizontalTextAlignment="End"></Label>
+                                            <Label Grid.Column="1" Text="{Binding LastName}" FontSize="Small" HorizontalTextAlignment="End"></Label>
                                          </Grid>
                                     </ContentView>
                                 </DataTemplate>

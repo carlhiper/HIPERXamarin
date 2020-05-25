@@ -47,7 +47,7 @@ namespace HIPER
                 }
                 else
                 {
-                    DisplayAlert("Failure", "You the user has max allowed active goals. Please upgrade to premium to be able to add more goals", "Ok");
+                    DisplayAlert("Failure", "The user has max allowed active goals. Please upgrade to premium to be able to add more goals", "Ok");
                 }
             }
         }

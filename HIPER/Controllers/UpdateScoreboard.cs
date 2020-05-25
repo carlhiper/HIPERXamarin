@@ -10,11 +10,11 @@ namespace HIPER.Controllers
         {
             try { 
                 var today = DateTime.Now.Date;
-                var goals = await App.client.GetTable<GoalModel>().Where(g => g.UserId == App.loggedInUser.Id).ToListAsync();
+                var goals = await App.client.GetTable<GoalModel>().Where(g => g.UserId == App.loggedInUser.Id && !g.Closed).ToListAsync();
 
                 foreach(var goal in goals)
                 {
-                    if ((goal.Deadline < today) && (goal.RepeatType==0) && !goal.Closed)
+                    if ((goal.Deadline < today) && (goal.RepeatType==0))
                     {
                         goal.Closed = true;
                         goal.ClosedDate = DateTime.Now;
@@ -33,11 +33,11 @@ namespace HIPER.Controllers
             try
             {
                 var today = DateTime.Now.Date;
-                var goals = await App.client.GetTable<GoalModel>().Where(g => g.UserId == App.loggedInUser.Id).ToListAsync();
+                var goals = await App.client.GetTable<GoalModel>().Where(g => g.UserId == App.loggedInUser.Id && !g.Closed).ToListAsync();
 
                 foreach (var goal in goals)
                 {
-                    if ((goal.RepeatType == 1) && !goal.Closed)
+                    if ((goal.RepeatType == 1))
                     {
                         if (today > goal.Deadline)
                         {
