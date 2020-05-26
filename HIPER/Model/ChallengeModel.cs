@@ -14,5 +14,6 @@ namespace HIPER.Model
 
         public DateTime CreatedDate { get; set; }
 
+
     }
 }
