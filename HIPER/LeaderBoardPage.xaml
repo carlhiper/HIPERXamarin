@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="HIPER.LeaderBoardPage">
+
+    <StackLayout Margin="20">
+        <Label Style="{StaticResource Header}" Text="LEADERBOARD"></Label>
+
+
+        <CollectionView
+            x:Name="leaderboardCollectionView"
+            SelectionMode="None"
+            HeightRequest="200">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <ContentView>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="20"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="30"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <Label Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" FontSize="Large" Text="{Binding Placing}"/>
+                            <Label Grid.Row="0" Grid.Column="1" Text="{Binding Name}"/>
+                            <ProgressBar Grid.Row="1" Grid.Column="1" Progress="{Binding Progress}"/>
+                            <Image Grid.Row="1" Grid.Column="2"
+                                   Source="{StaticResource ok}"
+                                   Aspect="AspectFit"
+                                   HorizontalOptions="End"
+                                   HeightRequest="20"
+                                   IsVisible="{Binding Completed}"/>
+                        </Grid>
+                    </ContentView>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </StackLayout>
+</ContentPage>
