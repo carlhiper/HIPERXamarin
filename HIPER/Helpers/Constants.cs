@@ -14,5 +14,10 @@ namespace HIPER.Helpers
 
         public const string HIPER_PEACH = "#ff7562";
         public const string CHALLENGE_GOLD = "#d4af37";
+
+        public const double POINTS_FOR_COMPLETED_GOAL = 10;
+        public const double POINTS_FOR_WON_CHALLENGE = 30;
+        public const double POINTS_FOR_ACCEPTED_CHALLENGE = 5;
+
     }
 }

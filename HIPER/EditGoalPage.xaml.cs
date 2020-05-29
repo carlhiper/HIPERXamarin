@@ -164,7 +164,6 @@ namespace HIPER
 
                 await DisplayAlert("Success", "Challenge updated", "Ok");
                 await Navigation.PopAsync();
-
             }
             else
             {
@@ -202,23 +201,14 @@ namespace HIPER
                 selectedGoal.StepByStepAmount = stepbystepPicker.SelectedIndex;
                 selectedGoal.TargetValue = (selectedGoal.StepByStepAmount + 1).ToString();
                 selectedGoal.Checkbox1Comment = step1entry.Text;
-                //selectedGoal.Checkbox1 = step1CB.IsChecked;
                 selectedGoal.Checkbox2Comment = step2entry.Text;
-                //selectedGoal.Checkbox2 = step2CB.IsChecked;
                 selectedGoal.Checkbox3Comment = step3entry.Text;
-                //selectedGoal.Checkbox3 = step3CB.IsChecked;
                 selectedGoal.Checkbox4Comment = step4entry.Text;
-                //selectedGoal.Checkbox4 = step4CB.IsChecked;
                 selectedGoal.Checkbox5Comment = step5entry.Text;
-                //selectedGoal.Checkbox5 = step5CB.IsChecked;
                 selectedGoal.Checkbox6Comment = step6entry.Text;
-                //selectedGoal.Checkbox6 = step6CB.IsChecked;
                 selectedGoal.Checkbox7Comment = step7entry.Text;
-                //selectedGoal.Checkbox7 = step7CB.IsChecked;
                 selectedGoal.Checkbox8Comment = step8entry.Text;
-                //selectedGoal.Checkbox8 = step8CB.IsChecked;
                 selectedGoal.Checkbox9Comment = step9entry.Text;
-                //selectedGoal.Checkbox9 = step9CB.IsChecked;
             }
             else
             {
