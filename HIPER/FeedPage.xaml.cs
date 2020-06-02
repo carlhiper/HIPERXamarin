@@ -30,77 +30,83 @@ namespace HIPER
         {
 
             List<FeedModel> feed = new List<FeedModel>();
-       
-            // Get users in team
-            var users = await App.client.GetTable<UserModel>().Where(u => u.TeamId == App.loggedInUser.TeamId).ToListAsync();
+            List<UserModel> users = new List<UserModel>();
 
 
-            foreach (UserModel user in users)
+            if (App.loggedInUser.TeamId == null)
             {
+                ;
+            }
+            else
+            {
+                users = await App.client.GetTable<UserModel>().Where(u => u.TeamId == App.loggedInUser.TeamId).ToListAsync();
 
-                try
+                foreach (UserModel user in users)
                 {
-                    var goals = await App.client.GetTable<GoalModel>().Where(g => g.UserId == user.Id).ToListAsync();
-
-
-                    foreach (var goal in goals)
+                    try
                     {
-                        if (!goal.PrivateGoal && goal.Completed)
+                        var goals = await App.client.GetTable<GoalModel>().Where(g => g.UserId == user.Id).ToListAsync();
+
+
+                        foreach (var goal in goals)
                         {
-                            FeedModel feedItem = new FeedModel();
+                            if (!goal.PrivateGoal && goal.Completed)
+                            {
+                                FeedModel feedItem = new FeedModel();
 
-                            feedItem.IndexDate = goal.ClosedDate;
-                   
-                            feedItem.ProfileImageURL = user.ImageUrl;
-                            feedItem.FeedItemTitle = user.FirstName + " completed a goal!";
-                            feedItem.FeedItemPost = "Goal \"" + goal.Title + "\" was successfully completed. ";
+                                feedItem.IndexDate = goal.ClosedDate;
 
-                            feed.Add(feedItem);
+                                feedItem.ProfileImageURL = user.ImageUrl;
+                                feedItem.FeedItemTitle = user.FirstName + " completed a goal!";
+                                feedItem.FeedItemPost = "Goal \"" + goal.Title + "\" was successfully completed. ";
+
+                                feed.Add(feedItem);
+                            }
+                            if (goal.GoalType == 1 && goal.GoalAccepted)
+                            {
+                                //FeedModel feedItem = new FeedModel();
+
+                                //feedItem.IndexDate = goal.ClosedDate;
+
+                                //feedItem.ProfileImageURL = user.ImageUrl;
+                                //feedItem.FeedItemTitle =  "Completed challenge!";
+                                //feedItem.FeedItemPost = user.FirstName + " has completed the challenge \"" + goal.Title + "\". ";
+
+                                //feed.Add(feedItem);
+
+                            }
+                            else if (goal.GoalType == 2)
+                            {
+
+
+                            }
                         }
-                        if(goal.GoalType == 1 && goal.GoalAccepted)
+
+                        var posts = await App.client.GetTable<PostModel>().Where(p => p.UserId == user.Id).ToListAsync();
+                        foreach (var post in posts)
                         {
-                            //FeedModel feedItem = new FeedModel();
+                            if (!string.IsNullOrEmpty(post.Post))
+                            {
+                                FeedModel feedItem = new FeedModel();
+                                feedItem.IndexDate = post.CreatedDate;
+                                feedItem.ProfileImageURL = user.ImageUrl;
+                                feedItem.FeedItemTitle = user.FirstName + " posted";
+                                feedItem.FeedItemPost = post.Post;
 
-                            //feedItem.IndexDate = goal.ClosedDate;
-
-                            //feedItem.ProfileImageURL = user.ImageUrl;
-                            //feedItem.FeedItemTitle =  "Completed challenge!";
-                            //feedItem.FeedItemPost = user.FirstName + " has completed the challenge \"" + goal.Title + "\". ";
-
-                            //feed.Add(feedItem);
-
-                        }
-                        else if (goal.GoalType == 2)
-                        {
-           
-
+                                feed.Add(feedItem);
+                            }
                         }
                     }
-
-                    var posts = await App.client.GetTable<PostModel>().Where(p => p.UserId == user.Id).ToListAsync();
-                    foreach (var post in posts)
+                    catch (Exception ex)
                     {
-                        if (!string.IsNullOrEmpty(post.Post))
-                        {
-                            FeedModel feedItem = new FeedModel();
-                            feedItem.IndexDate = post.CreatedDate;
-                            feedItem.ProfileImageURL = user.ImageUrl;
-                            feedItem.FeedItemTitle = user.FirstName + " posted";
-                            feedItem.FeedItemPost = post.Post;
 
-                            feed.Add(feedItem);
-                        }
                     }
-                }catch(Exception ex)
-                {
-
                 }
-             }
 
-            feed.Sort((x, y) => y.IndexDate.CompareTo(x.IndexDate));
-            feedCollectionView.ItemsSource = feed;
+                feed.Sort((x, y) => y.IndexDate.CompareTo(x.IndexDate));
+                feedCollectionView.ItemsSource = feed;
+            }
         }
-
 
         void feedFilter_SelectedIndexChanged(System.Object sender, System.EventArgs e)
         {

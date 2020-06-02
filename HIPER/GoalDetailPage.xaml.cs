@@ -44,6 +44,15 @@ namespace HIPER
                     {
                         goal.GoalAccepted = true;
                         await App.client.GetTable<GoalModel>().UpdateAsync(goal);
+
+                        // Register earned points
+                        PointModel point = new PointModel()
+                        {
+                            RegDate = DateTime.Now,
+                            Points = Helpers.Constants.POINTS_FOR_ACCEPTED_CHALLENGE,
+                            UserId = App.loggedInUser.Id
+                        };
+                        await App.client.GetTable<PointModel>().InsertAsync(point);
                     }
                     else
                     {
@@ -119,12 +128,11 @@ namespace HIPER
                             completeGoal.IsVisible = false;
                             closeGoal.IsVisible = false;
                         }
-
                     }
                     else
                     {
-                    createdByLabel.Text = "";
-                    createdByLabel.IsVisible = false;
+                        createdByLabel.Text = "";
+                        createdByLabel.IsVisible = false;
                     }
                 }
 
@@ -293,7 +301,6 @@ namespace HIPER
 
         protected override bool OnBackButtonPressed()
         {
-
             return base.OnBackButtonPressed();
         }
 
@@ -312,30 +319,72 @@ namespace HIPER
 
         private async void completeGoal_Clicked(System.Object sender, System.EventArgs e)
         {
-            bool complete = await DisplayAlert("Wait", "Is this goal really completed?", "Yes", "No");
-            if (complete)
+            try
             {
-                goal.Completed = true;
-                goal.LastUpdatedDate = DateTime.Now;
-                goal.ClosedDate = DateTime.Now;
-                if (goal.RepeatType == 0)
+                bool complete = await DisplayAlert("Wait", "Is this goal really completed?", "Yes", "No");
+                if (complete)
                 {
-                    goal.Closed = true;
-                }
-
-
-                if (goal.CurrentValue != goal.TargetValue)
-                {
-                    bool setTarget = await DisplayAlert("Ok", "Do you want to set your current value to the target value?", "Yes", "No");
-                    if (setTarget)
+                    goal.Completed = true;
+                    goal.LastUpdatedDate = DateTime.Now;
+                    goal.ClosedDate = DateTime.Now;
+                    if (goal.RepeatType == 0)
                     {
-                        goal.CurrentValue = goal.TargetValue;
+                        goal.Closed = true;
                     }
-                }
 
-                await App.client.GetTable<GoalModel>().UpdateAsync(goal);
-                await DisplayAlert("Congratulations", "Goal completed", "Ok");
-                await Navigation.PopAsync();
+                    // Register earned points for completing goal
+                    PointModel p1 = new PointModel()
+                    {
+                        RegDate = DateTime.Now,
+                        Points = Helpers.Constants.POINTS_FOR_COMPLETED_GOAL,
+                        UserId = App.loggedInUser.Id
+                    };
+                    await App.client.GetTable<PointModel>().InsertAsync(p1);
+
+
+                    if (goal.CurrentValue != goal.TargetValue)
+                    {
+                        bool setTarget = await DisplayAlert("Ok", "Do you want to set your current value to the target value?", "Yes", "No");
+                        if (setTarget)
+                        {
+                            goal.CurrentValue = goal.TargetValue;
+                        }
+                    }
+
+                    await App.client.GetTable<GoalModel>().UpdateAsync(goal);
+
+                    // Points for winning challenge
+                    if (goal.GoalType > 0)
+                    {
+                        var challenge_goals = await App.client.GetTable<GoalModel>().Where(g => g.ChallengeId == goal.ChallengeId).ToListAsync();
+                        int completed = 0;
+                        foreach (var g in challenge_goals)
+                        {
+                            if (g.Completed)
+                                completed++;
+                        }
+
+                        if (completed == 1)
+                        {
+                            PointModel p2 = new PointModel()
+                            {
+                                RegDate = DateTime.Now,
+                                Points = Helpers.Constants.POINTS_FOR_WON_CHALLENGE,
+                                UserId = App.loggedInUser.Id
+                            };
+                            await App.client.GetTable<PointModel>().InsertAsync(p2);
+
+                        }
+                    }
+
+                    await DisplayAlert("Congratulations", "Goal completed", "Ok");
+                    await Navigation.PopAsync();
+
+
+                }
+            }catch(Exception ex)
+            {
+                await DisplayAlert("Error", ex.ToString(), "Ok");
             }
         }
 

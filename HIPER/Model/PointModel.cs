@@ -3,7 +3,7 @@ using SQLite;
 
 namespace HIPER.Model
 {
-    public class PointsModel
+    public class PointModel
     {
         [PrimaryKey]
         public string Id { get; set; }
@@ -14,7 +14,7 @@ namespace HIPER.Model
 
         public DateTime RegDate { get; set; }
 
-        public PointsModel()
+        public PointModel()
         {
         }
     }
