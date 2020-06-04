@@ -5,7 +5,7 @@ namespace HIPER.Helpers
     {
         public const int UNIQUE_IDENTIFIER_LENGTH = 10;
 
-        public const int MAX_ACTIVE_GOALS = 5;
+        public const int MAX_ACTIVE_GOALS = 10;
         public const int MAX_TEAMS = 1;
         public const int MAX_TEAM_MEMBERS = 5;
 

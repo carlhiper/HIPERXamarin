@@ -12,8 +12,15 @@ namespace HIPER
  
     public partial class StatisticsPage : ContentPage
     {
+        int recurrentGoalStartIndex = 0;
         private readonly List<ChartEntry> goalsCompletedEntries = new List<ChartEntry>();
         private readonly List<ChartEntry> goalsCompletionEntries = new List<ChartEntry>();
+        private readonly List<ChartEntry> recurrentGoalEntries = new List<ChartEntry>();
+        private readonly List<ChartEntry> recurrentGoalEntriesAck = new List<ChartEntry>();
+        List<GoalModel> recurrentGoals = new List<GoalModel>();
+        Dictionary<string, string> recGoals = new Dictionary<string, string>();
+        List<string> pickerList = new List<string>();
+
         List<GoalModel> goals;
         UserModel selectedUser;
         TeamModel selectedTeam;
@@ -45,7 +52,7 @@ namespace HIPER
                 {
                     foreach (UserModel u in users)
                     {
-                        List<GoalModel> gs = await App.client.GetTable<GoalModel>().Where(g => g.UserId == u.Id).ToListAsync();
+                        List<GoalModel> gs = await App.client.GetTable<GoalModel>().Where(g => g.UserId == u.Id).Take(500).ToListAsync();
                         if (gs != null)
                         {
                             foreach (GoalModel g_s in gs)
@@ -58,17 +65,62 @@ namespace HIPER
             }
             else
             {
-                goals = await App.client.GetTable<GoalModel>().Where(g => g.UserId == selectedUser.Id).Take(150).ToListAsync();
+                goals = await App.client.GetTable<GoalModel>().Where(g => g.UserId == selectedUser.Id).Take(500).ToListAsync();
             }
-
 
             UpdateStats();
 
-            PopulateCharts();
+            PopulateStandardCharts();
+
+
+            // Implementation of recurrent goals chart
+            if (selectedTeam == null)
+            {
+
+                foreach (var g in goals)
+                {
+                    if (g.RecurrentId != null)
+                    {
+                        recurrentGoals.Add(g);
+                    }
+                }
+                var sortedRecurrentGoals = recurrentGoals.Where(r => r.Deadline >= DateTime.Now.Date).OrderByDescending(r => r.CreatedDate);
+
+                foreach (var g in sortedRecurrentGoals)
+                {
+                    if (!recGoals.ContainsKey(g.Title))
+                    {
+                        recGoals.Add(g.Title, g.RecurrentId);
+                    }
+                }
+                var first = recGoals.First();
+     
+                RecurrentGoalHandler(first.Value);
+
+                foreach (var item in recGoals)
+                {
+                    pickerList.Add(item.Key);
+                }
+                pickRecurrentGoal.ItemsSource = pickerList;
+                pickRecurrentGoal.Title = pickerList[0];
+                pickRecurrentGoal.SelectedIndex = 0;
+            }
         }
 
+        private void RecurrentGoalHandler(string recurrentId)
+        {
+            List<GoalModel> recurrentGoal = new List<GoalModel>();
 
-        void PopulateCharts()
+            foreach (var g in recurrentGoals)
+            {
+                if (g.RecurrentId == recurrentId)
+                    recurrentGoal.Add(g);
+            }
+
+            PopulateRecurrentGoalChart(recurrentGoal);
+        }
+
+        void PopulateStandardCharts()
         {
             goalsCompletedEntries.Clear();
             goalsCompletedEntries.Add(new ChartEntry(GoalStats.GetNbrCompletedGoals(goals, selectedMonth+4)) { Label = GoalStats.GetShortMonthName(selectedMonth+4), ValueLabel = GoalStats.GetNbrCompletedGoals(goals, selectedMonth + 4).ToString(), Color = SKColor.Parse("#FF7562") });
@@ -87,7 +139,49 @@ namespace HIPER
             goalsCompletionEntries.Add(new ChartEntry(GoalStats.GetGoalCompletionRatio(goals, selectedMonth)*100) { Label = GoalStats.GetShortMonthName(selectedMonth), ValueLabel = (GoalStats.GetGoalCompletionRatio(goals, selectedMonth)).ToString("F1") + "%", Color = SKColor.Parse("#FF7562") });
 
             chartViewCompletionRatio.Chart = new LineChart() { Entries = goalsCompletionEntries };
+        }
 
+        private void PopulateRecurrentGoalChart(List<GoalModel> recGoal) {
+
+            recurrentGoalEntries.Clear();
+            recurrentGoalEntriesAck.Clear();
+
+            var count = recGoal.Count;
+            count += recurrentGoalStartIndex;
+            if (count > 15)
+            {
+                count = 15;
+                recurrentGoalStartIndex--;
+            }
+
+            if (count == 0)
+            {
+                recurrentGoalStartIndex++;
+            }
+
+            int ackValue = 0;
+
+            if (recGoal[0].WeeklyOrMonthly == 1)
+            {
+                for (int i = (count - 1); i >= 0; i--)
+                {
+                    recurrentGoalEntries.Add(new ChartEntry(GoalStats.GetRecurrentGoalResult(recGoal, i)) { Label = GoalStats.GetShortMonthName(i), ValueLabel = (GoalStats.GetRecurrentGoalResult(recGoal, i)).ToString("D"), Color = SKColor.Parse("#FF7562") });
+                    ackValue += GoalStats.GetRecurrentGoalResult(recGoal, i);
+                    recurrentGoalEntriesAck.Add(new ChartEntry(ackValue) { Label = GoalStats.GetShortMonthName(i), ValueLabel = ackValue.ToString("D"), Color = SKColor.Parse("#FF7562") });
+                }
+            }
+            else
+            {
+                for (int i = (count - 1); i >= 0; i--)
+                {
+                    recurrentGoalEntries.Add(new ChartEntry(GoalStats.GetRecurrentGoalResult(recGoal, i)) { Label = "Week " + GoalStats.GetWeekNumber(i), ValueLabel = (GoalStats.GetRecurrentGoalResult(recGoal, i)).ToString("D"), Color = SKColor.Parse("#FF7562") });
+                    ackValue += GoalStats.GetRecurrentGoalResult(recGoal, i);
+                    recurrentGoalEntriesAck.Add(new ChartEntry(ackValue) { Label = "Week " + GoalStats.GetWeekNumber(i), ValueLabel = ackValue.ToString("D"), Color = SKColor.Parse("#FF7562") });
+                }
+            }
+
+            chartViewRecurrentGoals.Chart = new BarChart() { Entries = recurrentGoalEntries, MaxValue = int.Parse(recGoal[0].TargetValue) };
+            chartViewRecurrentGoalsAck.Chart = new LineChart() { Entries = recurrentGoalEntriesAck };
         }
 
         private async void UpdateStats()
@@ -122,7 +216,7 @@ namespace HIPER
         {
             selectedMonth++;
             UpdateStats();
-            PopulateCharts();
+            PopulateStandardCharts();
 
         }
 
@@ -132,7 +226,39 @@ namespace HIPER
             {
                 selectedMonth--;
                 UpdateStats();
-                PopulateCharts();
+                PopulateStandardCharts();
+            }
+        }
+
+        void pickRecurrentGoal_SelectedIndexChanged(System.Object sender, System.EventArgs e)
+        {
+            var pick = pickRecurrentGoal.SelectedIndex;
+            recurrentGoalStartIndex = 0;
+            if (pick < recGoals.Count)
+            {
+                var id = recGoals.ElementAt(pick).Value;
+                RecurrentGoalHandler(id);
+            }
+        }
+
+        void buttonLeft_Clicked(System.Object sender, System.EventArgs e)
+        {
+            var pick = pickRecurrentGoal.SelectedIndex;
+            if (pick >= 0)
+            {
+                recurrentGoalStartIndex++;
+                var id = recGoals.ElementAt(pick).Value;
+                RecurrentGoalHandler(id);
+            }
+        }
+        void buttonRight_Clicked(System.Object sender, System.EventArgs e)
+        {
+            var pick = pickRecurrentGoal.SelectedIndex;
+            if (pick >= 0)
+            {
+                recurrentGoalStartIndex--;
+                var id = recGoals.ElementAt(pick).Value;
+                RecurrentGoalHandler(id);
             }
         }
     }

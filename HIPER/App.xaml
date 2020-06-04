@@ -9,6 +9,9 @@
         <x:String x:Key="ok">ok.png</x:String>
         <x:String x:Key="challenge">challenge.png</x:String>
         <x:String x:Key="recurrent">recurrent.png</x:String>
+        <x:String x:Key="arrow_left">arrow_left.png</x:String>
+        <x:String x:Key="arrow_right">arrow_right.png</x:String>
+
 
         <Style TargetType="Button">
             <Setter Property="BackgroundColor" Value="{StaticResource hiperPeach}"></Setter>

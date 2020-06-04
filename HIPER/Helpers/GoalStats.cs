@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using HIPER.Model;
@@ -143,5 +144,30 @@ namespace HIPER.Helpers
             return App.months_short[index] + " " + year.ToString();
         }
 
+        public static string GetWeekNumber(int weeks)
+        {
+            // Gets the Calendar instance associated with a CultureInfo.
+            CultureInfo myCI = new CultureInfo("en-US");
+            Calendar myCal = myCI.Calendar;
+            // Gets the DTFI properties required by GetWeekOfYear.
+            CalendarWeekRule myCWR = myCI.DateTimeFormat.CalendarWeekRule;
+            DayOfWeek myFirstDOW = myCI.DateTimeFormat.FirstDayOfWeek;
+
+            var wantedWeekNbr = DateTime.Now.AddDays(-weeks * 7);
+
+            int week = myCal.GetWeekOfYear(wantedWeekNbr, myCWR, myFirstDOW);
+        
+            return week.ToString();
+        }
+
+        public static int GetRecurrentGoalResult(List<GoalModel> goals, int monthsBack)
+        {
+        //    var count = (monthsBack > (goals.Count-1)) ? (goals.Count-1) : monthsBack;
+            if (goals != null && monthsBack < goals.Count)
+            {
+                return int.Parse(goals[monthsBack].CurrentValue);
+            }else
+                return 0;
+        }
     }
 }

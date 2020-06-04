@@ -81,7 +81,8 @@
                                     Grid.Column="2"
                                     Grid.Row="0"
                                     Progress="{Binding Progress}"
-                                    ProgressColor="{StaticResource hiperPeach}" ></ProgressBar>
+                                    ProgressColor="{StaticResource hiperPeach}"
+                                    ></ProgressBar>
                                 <Image
                                     Source="{Binding PerformanceIndicator, Converter={StaticResource converter}}"
                                     Grid.Row="0"

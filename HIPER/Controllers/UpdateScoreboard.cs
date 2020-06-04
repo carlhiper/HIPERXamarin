@@ -78,30 +78,31 @@ namespace HIPER.Controllers
                                 Checkbox8Comment = goal.Checkbox8Comment,
                                 Checkbox9Comment = goal.Checkbox9Comment,
                             };
+                            DateTime newDeadline = goal.Deadline;
 
-                            if (goal.WeeklyOrMonthly == 0)  //Weekly
+                            while (today > newDeadline)
                             {
-                                DateTime newDeadline = goal.Deadline;
-                                while (newDeadline < DateTime.Now)
+                         
+                                if (goal.WeeklyOrMonthly == 0)  //Weekly
                                 {
                                     newDeadline = newDeadline.AddDays(7);
+                                    newGoal.Deadline = newDeadline;
+                                    newGoal.CreatedDate = newDeadline.AddDays(-6);
                                 }
-                                newGoal.Deadline = newDeadline;
-                                newGoal.CreatedDate = newDeadline.AddDays(-6);
-                              
-                            }
-                            else
-                            {                          //Monthly
-                                DateTime newDeadline = goal.Deadline;
-                                while (newDeadline < DateTime.Now)
-                                {
+                                else
+                                {                          //Monthly
                                     newDeadline = newDeadline.AddMonths(1);
+                                    newGoal.Deadline = newDeadline;
+                                    newGoal.CreatedDate = (newDeadline.AddMonths(-1)).AddDays(1);
                                 }
-                                newGoal.Deadline = newDeadline;
-                                newGoal.CreatedDate = (newDeadline.AddMonths(-1)).AddDays(1);
-                            }
+                                if (today > newDeadline)
+                                {
+                                    newGoal.Closed = true;
+                                    newGoal.ClosedDate = newGoal.CreatedDate;
+                                }
 
-                            await App.client.GetTable<GoalModel>().InsertAsync(newGoal);
+                                await App.client.GetTable<GoalModel>().InsertAsync(newGoal);
+                            }
                         }
                     }
                 }

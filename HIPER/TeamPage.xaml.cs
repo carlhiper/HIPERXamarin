@@ -54,6 +54,9 @@ namespace HIPER
                         createTeam.IsEnabled = false;
                         joinTeam.IsEnabled = false;
                         leaveTeam.IsEnabled = true;
+                        createTeam.IsVisible = false;
+                        joinTeam.IsVisible = false;
+                        leaveTeam.IsVisible = true;
                     }
                 }
                 else
@@ -62,6 +65,10 @@ namespace HIPER
                     createTeam.IsEnabled = true;
                     joinTeam.IsEnabled = true;
                     leaveTeam.IsEnabled = false;
+                    teamStats.IsVisible = false;
+                    createTeam.IsVisible = true;
+                    joinTeam.IsVisible = true;
+                    leaveTeam.IsVisible = false;
                 }
             }
             catch (NullReferenceException nre)
