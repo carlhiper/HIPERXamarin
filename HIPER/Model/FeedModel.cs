@@ -15,7 +15,9 @@ namespace HIPER.Model
 
         public DateTimeOffset IndexDate { get; set; }
 
+        public string UserId { get; set; }
+
         //public DateTimeOffset TimeAgo{ get ; set ; }
-        
+
     }
 }

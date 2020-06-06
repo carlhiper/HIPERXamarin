@@ -52,10 +52,13 @@
                             <forms:ChartView x:Name="chartViewCompleted" HeightRequest="175" BackgroundColor="LightGray" ></forms:ChartView>
                             <Label Text="GOALS COMPLETION RATIO" Margin="10" TextColor="{StaticResource hiperPeach}" HorizontalTextAlignment="Center"></Label>         
                             <forms:ChartView x:Name="chartViewCompletionRatio" HeightRequest="175" BackgroundColor="LightGray" ></forms:ChartView>
+                            <Label x:Name="labelTeamComparison" Text="TEAM COMPARISON" Margin="10,10,10,5" TextColor="{StaticResource hiperPeach}" HorizontalTextAlignment="Center"></Label>         
+                            <Label x:Name="labelTeamComparisonGoals" Text="Completed goals" Margin="0" TextColor="{StaticResource hiperPeach}" HorizontalTextAlignment="Center"></Label>         
+                            <forms:ChartView x:Name="chartViewTeamComparison" HeightRequest="175" BackgroundColor="LightGray" ></forms:ChartView>
                         </StackLayout>
                     </Frame>
 
-                    <Frame Padding="10">
+                    <Frame Padding="10" x:Name="recurrentGoalsFrame">
                         <StackLayout>
 
                             <Label Margin="20,10,20,10" Text="COMPARISON" Style="{StaticResource Header}"></Label>

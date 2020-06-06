@@ -1,0 +1,109 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:converters="clr-namespace:HIPER.ViewModel.Converters"
+             x:Class="HIPER.PostPage">
+
+     <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:DateTimeToStringConverter x:Key="converter"/>
+            <converters:FrameBackgroundColorConverter x:Key="backgroundConverter"/>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+       <ContentPage.Content>
+        <StackLayout
+            Margin="0"
+            CompressedLayout.IsHeadless="True">
+            <Label Margin="20"
+                   Style="{StaticResource Header}"
+                   Text="WALL"></Label>
+    
+            <CollectionView
+                
+                x:Name="feedCollectionView"
+                SelectionMode="None"
+                BackgroundColor="WhiteSmoke"
+                >
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <ContentView Padding="5,1,5,1">
+                            <Frame Style="{StaticResource Feed}" BackgroundColor="{Binding UserId, Converter={StaticResource backgroundConverter}}">
+                                <Grid Padding="5">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="28"/>
+                                        <RowDefinition Height="10" />
+                                        <RowDefinition Height="Auto" />
+                                    </Grid.RowDefinitions>
+
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="100"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <Frame
+                                        Grid.Row="0"
+                                        Grid.RowSpan="2"
+                                           Grid.Column="0"
+                                           CornerRadius="20"
+                                           HorizontalOptions="Start"
+                                           VerticalOptions="Start"
+                                           Padding="0" 
+                                           BorderColor="Gray"
+                                           IsClippedToBounds="True">
+                                            <Image WidthRequest="40"
+                                                   HeightRequest="40"
+                                                   Aspect="AspectFill"
+                                                   Source="{Binding ProfileImageURL}">
+                                            </Image>
+                                    </Frame>
+ 
+                                    <Label Grid.Row="0"
+                                        Grid.Column="1"
+                                        VerticalTextAlignment="End"
+                                        Text="{Binding FeedItemTitle}" 
+                                        FontAttributes="Bold"
+                                           FontSize="Small"/>
+
+                                     <Label Grid.Row="0"
+                                        
+                                        Grid.Column="4"
+                                        VerticalTextAlignment="Start"
+                                        HorizontalTextAlignment="End"
+                                        FontSize="10"
+                                        Text="{Binding IndexDate,Converter={StaticResource converter}}"/>
+
+          
+                                    <Label Grid.Row="2"
+                                        Grid.Column="0"
+                                        Grid.ColumnSpan="5"
+                                        Text="{Binding FeedItemPost}"
+                                        FontAttributes="None"
+                                        FontSize="Small"
+                                        VerticalOptions="End" />
+
+                                </Grid>
+                            </Frame>
+                        </ContentView>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+            <Grid Margin="20,10,20,20">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="35"></RowDefinition>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="250"></ColumnDefinition>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Entry x:Name="PostEntry" Grid.Column="0" Placeholder="Write something" FontSize="Small"></Entry>
+                <Button x:Name="PostButton" Grid.Column="1" Text="POST" Clicked="PostButton_Clicked" FontSize="Small"></Button>       
+            </Grid>
+
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

@@ -9,7 +9,6 @@ namespace HIPER.Helpers
 {
     public static class GoalStats
     {
-
         public static float GetGoalCompletionRatio(List<GoalModel> goals, int months)
         {
             int completedGoals = GetNbrCompletedGoals(goals, months);
@@ -20,7 +19,6 @@ namespace HIPER.Helpers
             else
                 return 0;
         }
-
 
         public static int GetNbrCompletedGoals(List<GoalModel> goals, int months)
         {
@@ -43,7 +41,6 @@ namespace HIPER.Helpers
             }
             return completedGoals;
         }
-
         
         public static int GetNbrClosedGoals(List<GoalModel> goals, int months)
         {
@@ -84,42 +81,25 @@ namespace HIPER.Helpers
             return createdGoals;
         }
 
-        public static int GetNbrCreatedChallenges(List<GoalModel> goals, int months)
+        public static int GetNbrCreatedChallenges(GoalModel goal, int months, string ownerId)
         {
             int createdChallenges = 0;
             var firstDayOfThisMonth = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
             var firstDayOfMonth = firstDayOfThisMonth.AddMonths(-months);
             var lastDayOfMonth = firstDayOfMonth.AddMonths(1).AddDays(-1);
 
-            if (goals != null)
+
+            if (goal.CreatedDate.CompareTo(firstDayOfMonth) > 0 && goal.CreatedDate.CompareTo(lastDayOfMonth) <= 0)
             {
-                foreach (GoalModel goal in goals)
+                if (goal.GoalType == 1)
                 {
-                    if (goal.CreatedDate.CompareTo(firstDayOfMonth) > 0 && goal.CreatedDate.CompareTo(lastDayOfMonth) <= 0)
-                    {
-                        if (goal.GoalType == 1)
-                        {
-                            var ownerId = GetChallengeOwnerId(goal);
-                            if (ownerId.ToString() == goal.UserId)
-                                createdChallenges += 1;
-                        }
-                    }
+                    if (ownerId == goal.UserId)
+                        createdChallenges += 1;
                 }
             }
             return createdChallenges;
         }
 
-
-        private static async Task<string> GetChallengeOwnerId(GoalModel goal)
-        {
-            try
-            {
-                return (await App.client.GetTable<ChallengeModel>().Where(c => c.Id == goal.ChallengeId).ToListAsync()).FirstOrDefault().OwnerId;
-            }catch(Exception ex)
-            {
-                return null;
-            }
-        }
 
         public static string GetMonthName(int month)
         {
@@ -160,12 +140,11 @@ namespace HIPER.Helpers
             return week.ToString();
         }
 
-        public static int GetRecurrentGoalResult(List<GoalModel> goals, int monthsBack)
+        public static int GetRecurrentGoalResult(List<GoalModel> goals, int timeBack)
         {
-        //    var count = (monthsBack > (goals.Count-1)) ? (goals.Count-1) : monthsBack;
-            if (goals != null && monthsBack < goals.Count)
+            if (goals != null && timeBack < goals.Count)
             {
-                return int.Parse(goals[monthsBack].CurrentValue);
+                return int.Parse(goals[timeBack].CurrentValue);
             }else
                 return 0;
         }

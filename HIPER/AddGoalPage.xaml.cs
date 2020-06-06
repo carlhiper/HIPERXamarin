@@ -136,7 +136,7 @@ namespace HIPER
                 Description = goalDescriptionEntry.Text,
                 Deadline = deadLineDate,
                 TargetValue = goalTargetEntry.Text,
-                PrivateGoal = privateGoalCheckbox.IsChecked,
+             //   PrivateGoal = privateGoalCheckbox.IsChecked,
                 UserId = userId,
                 GoalAccepted = accepted,
                 ChallengeId = challengeId,
@@ -310,7 +310,7 @@ namespace HIPER
             }
             else
             {
-                privateGoalCheckbox.IsChecked = false;
+         //       privateGoalCheckbox.IsChecked = false;
                 try
                 {
                     if (teammembers == null)
@@ -328,11 +328,11 @@ namespace HIPER
             }
         }
 
-        void privateGoalCheckbox_CheckedChanged(System.Object sender, Xamarin.Forms.CheckedChangedEventArgs e)
-        {
-            if (privateGoalCheckbox.IsChecked)
-                challengeCheckbox.IsChecked = false;
+        //void privateGoalCheckbox_CheckedChanged(System.Object sender, Xamarin.Forms.CheckedChangedEventArgs e)
+        //{
+        //    if (privateGoalCheckbox.IsChecked)
+        //        challengeCheckbox.IsChecked = false;
 
-        }
+        //}
     }
 }

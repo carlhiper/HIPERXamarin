@@ -28,18 +28,18 @@ namespace HIPER
             goalDeadlineEntry.Date = selectedGoal.Deadline;
             goalTargetEntry.Text = selectedGoal.TargetValue;
             goalCurrentEntry.Text = selectedGoal.CurrentValue;
-            privateGoalCheckbox.IsChecked = selectedGoal.PrivateGoal;
+//            privateGoalCheckbox.IsChecked = selectedGoal.PrivateGoal;
 
             repeatableRB1.IsChecked = (selectedGoal.RepeatType == 0) ? true : false;
             repeatableRB2.IsChecked = (selectedGoal.RepeatType == 1) ? true : false;
             repeatableRB21.IsChecked = (selectedGoal.WeeklyOrMonthly == 0) ? true : false;
             repeatableRB22.IsChecked = (selectedGoal.WeeklyOrMonthly == 1) ? true : false;
 
-            if (!string.IsNullOrEmpty(selectedGoal.ChallengeId))
-            {
-                privateGoalCheckbox.IsVisible = false;
-                privateGoalLabel.IsVisible = false;
-            }
+            //if (!string.IsNullOrEmpty(selectedGoal.ChallengeId))
+            //{
+            //    privateGoalCheckbox.IsVisible = false;
+            //    privateGoalLabel.IsVisible = false;
+            //}
 
             weekdayPicker.SelectedIndex = selectedGoal.RepeatWeekly;
             dayOfMonthPicker.SelectedIndex = selectedGoal.RepeatMonthly;
@@ -190,7 +190,7 @@ namespace HIPER
             selectedGoal.LastUpdatedDate = DateTime.Now;
             selectedGoal.Title = goalNameEntry.Text;
             selectedGoal.Description = goalDescriptionEntry.Text;
-            selectedGoal.PrivateGoal = privateGoalCheckbox.IsChecked;
+          //  selectedGoal.PrivateGoal = privateGoalCheckbox.IsChecked;
             selectedGoal.RepeatWeekly = weekdayPicker.SelectedIndex;
             selectedGoal.RepeatMonthly = dayOfMonthPicker.SelectedIndex;
             selectedGoal.RepeatType = repeatableRB1.IsChecked ? 0 : 1;

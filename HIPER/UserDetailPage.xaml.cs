@@ -95,7 +95,7 @@ namespace HIPER
                 }
                 else
                 {
-                    activeGoals = await App.client.GetTable<GoalModel>().Where(g => g.UserId == App.loggedInUser.Id && (!g.Closed && !g.Completed && g.ClosedDate > DateTime.Now)).OrderByDescending(g => g.CreatedDate).ToListAsync();
+                    activeGoals = await App.client.GetTable<GoalModel>().Where(g => g.UserId == user.Id && (!g.Closed && !g.Completed && g.ClosedDate > DateTime.Now)).OrderByDescending(g => g.CreatedDate).ToListAsync();
 
                     //Sorting
                     if (filter == 0)

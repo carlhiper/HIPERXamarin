@@ -17,14 +17,30 @@ namespace HIPER
         private readonly List<ChartEntry> goalsCompletionEntries = new List<ChartEntry>();
         private readonly List<ChartEntry> recurrentGoalEntries = new List<ChartEntry>();
         private readonly List<ChartEntry> recurrentGoalEntriesAck = new List<ChartEntry>();
+        private readonly List<ChartEntry> teamComparisonEntries = new List<ChartEntry>();
         List<GoalModel> recurrentGoals = new List<GoalModel>();
         Dictionary<string, string> recGoals = new Dictionary<string, string>();
         List<string> pickerList = new List<string>();
-
         List<GoalModel> goals;
         UserModel selectedUser;
         TeamModel selectedTeam;
         int selectedMonth;
+
+        private struct Teammember
+        {
+            public string FirstName;
+            public string LastName;
+            public int CompletedGoals;
+            public List<GoalModel> Goals;
+
+            //public Teammember(string firstname, string lastname, List<GoalModel> goals)
+            //{
+            //    FirstName = firstname;
+            //    LastName = lastname;
+            //    Goals = goals;
+            //}
+        }
+        List<Teammember> Teammembers = new List<Teammember>();
 
         public StatisticsPage(UserModel user)
         {
@@ -51,15 +67,23 @@ namespace HIPER
                 if (users != null)
                 {
                     foreach (UserModel u in users)
+
                     {
+                        List<GoalModel> temp_goals = new List<GoalModel>();
                         List<GoalModel> gs = await App.client.GetTable<GoalModel>().Where(g => g.UserId == u.Id).Take(500).ToListAsync();
                         if (gs != null)
                         {
                             foreach (GoalModel g_s in gs)
                             {
                                 goals.Add(g_s);
+                                temp_goals.Add(g_s);
                             }
                         }
+                        Teammember t = new Teammember();
+                        t.FirstName = u.FirstName;
+                        t.LastName = u.LastName;
+                        t.Goals = temp_goals;
+                        Teammembers.Add(t);
                     }
                 }
             }
@@ -76,7 +100,9 @@ namespace HIPER
             // Implementation of recurrent goals chart
             if (selectedTeam == null)
             {
-
+                chartViewTeamComparison.IsVisible = false;
+                labelTeamComparison.IsVisible = false;
+            
                 foreach (var g in goals)
                 {
                     if (g.RecurrentId != null)
@@ -93,17 +119,48 @@ namespace HIPER
                         recGoals.Add(g.Title, g.RecurrentId);
                     }
                 }
-                var first = recGoals.First();
-     
-                RecurrentGoalHandler(first.Value);
-
-                foreach (var item in recGoals)
+                if (recGoals.Count > 0)
                 {
-                    pickerList.Add(item.Key);
+                    var first = recGoals.First();
+
+                    RecurrentGoalHandler(first.Value);
+
+                    foreach (var item in recGoals)
+                    {
+                        pickerList.Add(item.Key);
+                    }
+                    pickRecurrentGoal.ItemsSource = pickerList;
+                    pickRecurrentGoal.Title = pickerList[0];
+                    pickRecurrentGoal.SelectedIndex = 0;
                 }
-                pickRecurrentGoal.ItemsSource = pickerList;
-                pickRecurrentGoal.Title = pickerList[0];
-                pickRecurrentGoal.SelectedIndex = 0;
+                else
+                {
+                    recurrentGoalsFrame.IsVisible = false;
+                }
+            }
+            else
+            {
+                recurrentGoalsFrame.IsVisible = false;
+
+                PopulateTeamComparisonChart();
+            }
+        }
+
+        private void PopulateTeamComparisonChart()
+        {
+            teamComparisonEntries.Clear();
+            int index = 0;
+            if (Teammembers.Count > 0)
+            {
+                foreach (Teammember member in Teammembers)
+                {
+                    int g_nbr = GoalStats.GetNbrCompletedGoals(member.Goals, selectedMonth);
+                    teamComparisonEntries.Add(new ChartEntry(g_nbr) { Label = member.FirstName + " " + member.LastName, ValueLabel = g_nbr.ToString("D"), Color = SKColor.Parse(App.donutChartColors[index])});
+                    index++;
+                    if (index >= App.donutChartColors.Count)
+                        index = 0;
+                }
+                chartViewTeamComparison.Chart = new DonutChart() { Entries = teamComparisonEntries };
             }
         }
 
@@ -116,7 +173,7 @@ namespace HIPER
                 if (g.RecurrentId == recurrentId)
                     recurrentGoal.Add(g);
             }
-
+            recurrentGoal.Sort((x, y) => y.CreatedDate.CompareTo(x.CreatedDate));
             PopulateRecurrentGoalChart(recurrentGoal);
         }
 
@@ -140,6 +197,7 @@ namespace HIPER
 
             chartViewCompletionRatio.Chart = new LineChart() { Entries = goalsCompletionEntries };
         }
+
 
         private void PopulateRecurrentGoalChart(List<GoalModel> recGoal) {
 
@@ -200,15 +258,10 @@ namespace HIPER
                     var challenge = (await App.client.GetTable<ChallengeModel>().Where(c => c.Id == goal.ChallengeId).ToListAsync()).FirstOrDefault();
                     if (challenge != null)
                     {
-                        if (challenge.OwnerId == goal.UserId)
-                        {
-                            createdChallenges++;
-                        }
-
+                        createdChallenges += GoalStats.GetNbrCreatedChallenges(goal, selectedMonth, challenge.OwnerId);
                     }
                 }
-                challengesCreatedLabel.Text = GoalStats.GetNbrCreatedChallenges(goals, selectedMonth).ToString();
-
+                challengesCreatedLabel.Text = createdChallenges.ToString();
             }
         }
 
@@ -217,6 +270,7 @@ namespace HIPER
             selectedMonth++;
             UpdateStats();
             PopulateStandardCharts();
+            PopulateTeamComparisonChart();
 
         }
 
@@ -227,6 +281,7 @@ namespace HIPER
                 selectedMonth--;
                 UpdateStats();
                 PopulateStandardCharts();
+                PopulateTeamComparisonChart();
             }
         }
 
