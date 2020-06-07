@@ -33,12 +33,7 @@ namespace HIPER
             public int CompletedGoals;
             public List<GoalModel> Goals;
 
-            //public Teammember(string firstname, string lastname, List<GoalModel> goals)
-            //{
-            //    FirstName = firstname;
-            //    LastName = lastname;
-            //    Goals = goals;
-            //}
+    
         }
         List<Teammember> Teammembers = new List<Teammember>();
 

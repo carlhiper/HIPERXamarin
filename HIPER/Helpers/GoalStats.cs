@@ -20,6 +20,7 @@ namespace HIPER.Helpers
                 return 0;
         }
 
+    
         public static int GetNbrCompletedGoals(List<GoalModel> goals, int months)
         {
             int completedGoals = 0;
