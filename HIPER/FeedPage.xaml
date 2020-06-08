@@ -11,7 +11,7 @@
     </ContentPage.Resources>
 
     <ContentPage.ToolbarItems>
-        <ToolbarItem x:Name="ChatButton" Text="Chat" Clicked="ChatButton_Clicked"/>
+        <ToolbarItem x:Name="ChatButton" Text="Chat" IconImageSource="{StaticResource chat}" Clicked="ChatButton_Clicked"/>
     </ContentPage.ToolbarItems>
     <ContentPage.Content>
         <StackLayout
@@ -68,8 +68,8 @@
             <CollectionView                
                 x:Name="feedCollectionView"
                 SelectionMode="None"
-                BackgroundColor="WhiteSmoke"
-                >
+                BackgroundColor="WhiteSmoke">
+
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
                         <ContentView Padding="3,0,3,0">
@@ -92,19 +92,18 @@
                                     <Frame
                                         Grid.Row="0"
                                         Grid.RowSpan="3"
-                                           Grid.Column="0"
-
-                                           CornerRadius="15"
-                                           HorizontalOptions="Start"
-                                           VerticalOptions="Start"
-                                           Padding="0" 
-                                           BorderColor="Gray"
-                                           IsClippedToBounds="True">
-                                            <Image WidthRequest="30"
-                                                   HeightRequest="30"
-                                                   Aspect="AspectFill"
-                                                   Source="{Binding ProfileImageURL}">
-                                            </Image>
+                                        Grid.Column="0"
+                                        CornerRadius="15"
+                                        HorizontalOptions="Start"
+                                        VerticalOptions="Start"
+                                        Padding="0" 
+                                        BorderColor="Gray"
+                                        IsClippedToBounds="True">
+                                        <Image WidthRequest="30"
+                                                HeightRequest="30"
+                                                Aspect="AspectFill"
+                                                Source="{Binding ProfileImageURL}">
+                                        </Image>
                                     </Frame>
  
                                     <Label Grid.Row="0"
@@ -112,10 +111,10 @@
                                         VerticalTextAlignment="End"
                                         Text="{Binding FeedItemTitle}" 
                                         FontAttributes="Bold"
-                                           FontSize="Micro"/>
+                                        FontSize="Micro"/>
 
                                      <Label Grid.Row="0"
-                                        Grid.Column="4"
+                                        Grid.Column="5"
                                         VerticalTextAlignment="Start"
                                         HorizontalTextAlignment="End"
                                         FontSize="10"

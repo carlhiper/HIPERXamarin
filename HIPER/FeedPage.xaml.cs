@@ -5,6 +5,7 @@ using Xamarin.Forms;
 using HIPER.Helpers;
 using Microcharts;
 using SkiaSharp;
+using System.Linq;
 
 namespace HIPER
 {
@@ -77,7 +78,6 @@ namespace HIPER
             {
 
             }
-
         }
 
         private string GetDifference(DateTime Deadline)
@@ -152,36 +152,7 @@ namespace HIPER
                                 if (!challengeIds.Contains(challengeId))
                                 {
                                     challengeIds.Add(challengeId);
-                                    
                                 }
-
-
-                            }
-                            if (goal.GoalType == 1 && goal.Completed)
-                            {
-
-                                FeedModel feedItem = new FeedModel();
-
-                                feedItem.IndexDate = goal.ClosedDate;
-
-                                feedItem.ProfileImageURL = user.ImageUrl;
-                                feedItem.FeedItemTitle =  "Completed challenge!";
-                                feedItem.FeedItemPost = user.FirstName + " has completed the challenge \"" + goal.Title + "\". ";
-
-                                feed.Add(feedItem);
-                            }
-                            else if (goal.GoalType == 2 && goal.Completed)
-                            {
-                       
-                                FeedModel feedItem = new FeedModel();
-
-                                feedItem.IndexDate = goal.ClosedDate;
-
-                                feedItem.ProfileImageURL = user.ImageUrl;
-                                feedItem.FeedItemTitle = "Completed competition!";
-                                feedItem.FeedItemPost = user.FirstName + " has completed the competition \"" + goal.Title + "\". ";
-
-                                feed.Add(feedItem);
                             }
                         }
                     }
@@ -191,6 +162,51 @@ namespace HIPER
                     }
                 }
 
+                // Insert winners of challenges
+                foreach (var id in challengeIds)
+                {
+                    var winnerGoal = (await App.client.GetTable<GoalModel>().Where(g => g.ChallengeId == id).OrderBy(g => g.ClosedDate).ToListAsync()).FirstOrDefault();
+                    var user = (await App.client.GetTable<UserModel>().Where(u => u.Id == winnerGoal.UserId).ToListAsync()).FirstOrDefault();
+                    FeedModel feedItem = new FeedModel();
+                    feedItem.IndexDate = winnerGoal.ClosedDate;
+                    feedItem.ProfileImageURL = user.ImageUrl;
+
+                    if (winnerGoal.GoalType == 1)
+                    {
+                        feedItem.FeedItemTitle = "Challenge won!";
+                        feedItem.FeedItemPost = user.FirstName + " has won the challenge \"" + winnerGoal.Title + "\"! ";
+                    }
+                    else if (winnerGoal.GoalType == 2)
+                    {
+                        feedItem.FeedItemTitle = "Competition won!";
+                        feedItem.FeedItemPost = user.FirstName + " has won the competition \"" + winnerGoal.Title + "\"! ";
+                    }
+
+                    feed.Add(feedItem);
+                }
+
+                foreach (var id in challengeIds)
+                {
+                    var challenge = (await App.client.GetTable<ChallengeModel>().Where(c => c.Id == id).ToListAsync()).FirstOrDefault();
+                    var user = (await App.client.GetTable<UserModel>().Where(u => u.Id == challenge.OwnerId).ToListAsync()).FirstOrDefault();
+                    var goal = (await App.client.GetTable<GoalModel>().Where(g => g.ChallengeId == challenge.Id).ToListAsync()).FirstOrDefault();
+                    FeedModel feedItem = new FeedModel();
+                    feedItem.IndexDate = challenge.CreatedDate;
+                    feedItem.ProfileImageURL = user.ImageUrl;
+
+                    if (goal.GoalType == 1)
+                    {
+                        feedItem.FeedItemTitle = "New challenge!";
+                        feedItem.FeedItemPost = user.FirstName + " created the challenge \"" + goal.Title + "\"! ";
+                    }
+                    else if (goal.GoalType == 2)
+                    {
+                        feedItem.FeedItemTitle = "New competition!";
+                        feedItem.FeedItemPost = user.FirstName + " created the competition \"" + goal.Title + "\"! ";
+                    }
+
+                    feed.Add(feedItem);
+                }
                 feed.Sort((x, y) => y.IndexDate.CompareTo(x.IndexDate));
                 feedCollectionView.ItemsSource = feed;
             }

@@ -11,6 +11,7 @@
         <x:String x:Key="recurrent">recurrent.png</x:String>
         <x:String x:Key="arrow_left">arrow_left.png</x:String>
         <x:String x:Key="arrow_right">arrow_right.png</x:String>
+        <x:String x:Key="chat">chat.png</x:String>
 
 
         <Style TargetType="Button">
