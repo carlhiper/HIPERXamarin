@@ -32,6 +32,7 @@ namespace HIPER
             createFeedList();
             PopulateProgressChart();
             PopulateTeamPointsChart();
+            GetAlerts();
         }
 
         private async void PopulateProgressChart()
@@ -47,6 +48,47 @@ namespace HIPER
                     index = 0;
             }
             chartViewProgress.Chart = new RadialGaugeChart() { Entries = progressEntries, MaxValue = 100 };
+        }
+
+        private async void GetAlerts()
+        {
+            var alertGoals = await App.client.GetTable<GoalModel>().Where(g => g.UserId == App.loggedInUser.Id && (!g.Closed && !g.Completed && g.ClosedDate > DateTime.Now)).OrderBy(g => g.Deadline).Take(3).ToListAsync();
+        
+            if (alertGoals.Count == 3)
+            {
+                Label1.Text = "-> " + alertGoals[0].Title + " ends " + GetDifference(alertGoals[0].Deadline.Date);
+                Label2.Text = "-> " + alertGoals[1].Title + " ends " + GetDifference(alertGoals[1].Deadline.Date);
+                Label3.Text = "-> " + alertGoals[2].Title + " ends " + GetDifference(alertGoals[2].Deadline.Date);
+            }
+            else if (alertGoals.Count == 2)
+            {
+                Label1.Text = alertGoals[0].Title + " ends " + GetDifference(alertGoals[0].Deadline.Date);
+                Label2.Text = alertGoals[1].Title + " ends " + GetDifference(alertGoals[1].Deadline.Date);
+                Label3.IsVisible = false;
+            }
+            else if (alertGoals.Count == 1)
+            {
+                Label1.Text = alertGoals[0].Title + " ends" + GetDifference(alertGoals[0].Deadline.Date);
+                Label2.IsVisible = false;
+                Label3.IsVisible = false;
+
+            }
+            else
+            {
+
+            }
+
+        }
+
+        private string GetDifference(DateTime Deadline)
+        {
+            DateTimeOffset today = (DateTimeOffset)DateTime.Now.Date;
+            var difference = (DateTimeOffset)Deadline.Date - today;
+
+            if (difference.TotalDays < 1)
+                return " today!";
+            else
+                return " in " + difference.TotalDays.ToString() + " days.";
         }
 
         private async void PopulateTeamPointsChart()
@@ -95,28 +137,29 @@ namespace HIPER
             else
             {
                 users = await App.client.GetTable<UserModel>().Where(u => u.TeamId == App.loggedInUser.TeamId).ToListAsync();
+                List<string> challengeIds = new List<string>();
 
                 foreach (UserModel user in users)
                 {
                     try
                     {
-                        var goals = await App.client.GetTable<GoalModel>().Where(g => g.UserId == user.Id).ToListAsync();
-
+                        var goals = await App.client.GetTable<GoalModel>().Where(g => g.UserId == user.Id).Where(g => g.GoalType > 0).Where(g => g.CreatedDate > DateTime.Now.AddYears(-1)).ToListAsync();
                         foreach (var goal in goals)
                         {
-                            if (goal.GoalType == 0 && goal.Completed)
+                            string challengeId = goal.ChallengeId;
+                            if( challengeId != null)
                             {
-                                FeedModel feedItem = new FeedModel();
+                                if (!challengeIds.Contains(challengeId))
+                                {
+                                    challengeIds.Add(challengeId);
+                                    
+                                }
 
-                                feedItem.IndexDate = goal.ClosedDate;
 
-                                feedItem.ProfileImageURL = user.ImageUrl;
-                                feedItem.FeedItemTitle = user.FirstName + " completed a goal!";
-                                feedItem.FeedItemPost = "Goal \"" + goal.Title + "\" was successfully completed. ";
-
-                                feed.Add(feedItem);
-                            }else if (goal.GoalType == 1 && goal.Completed)
+                            }
+                            if (goal.GoalType == 1 && goal.Completed)
                             {
+
                                 FeedModel feedItem = new FeedModel();
 
                                 feedItem.IndexDate = goal.ClosedDate;
@@ -126,10 +169,10 @@ namespace HIPER
                                 feedItem.FeedItemPost = user.FirstName + " has completed the challenge \"" + goal.Title + "\". ";
 
                                 feed.Add(feedItem);
-
                             }
                             else if (goal.GoalType == 2 && goal.Completed)
                             {
+                       
                                 FeedModel feedItem = new FeedModel();
 
                                 feedItem.IndexDate = goal.ClosedDate;

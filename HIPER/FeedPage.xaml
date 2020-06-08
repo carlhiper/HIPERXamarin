@@ -33,11 +33,12 @@
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
-                <Label x:Name="Label1" Text="..Goal something closest deadline ends in 2 sec"/>
-                <Label Grid.Row="1" x:Name="Label2" Text="..Goal something closest deadline ends in 2 sec"/>
-                <!--<Label Grid.Row="2" x:Name="Label3" Text="..Goal something closest deadline ends in 2 sec"/>-->
+                <Label Grid.Row="0" x:Name="Label1" FontSize="Micro" Text=""/>
+                <Label Grid.Row="1" x:Name="Label2" FontSize="Micro" Text=""/>
+                <Label Grid.Row="2" x:Name="Label3" FontSize="Micro" Text=""/>
             </Grid>
 
+      
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
@@ -64,21 +65,19 @@
 
             <forms:ChartView x:Name="chartViewPoints" HeightRequest="150" BackgroundColor="White" ></forms:ChartView>
 
-
-            <CollectionView
-                
+            <CollectionView                
                 x:Name="feedCollectionView"
                 SelectionMode="None"
                 BackgroundColor="WhiteSmoke"
                 >
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
-                        <ContentView Padding="5,1,5,1">
+                        <ContentView Padding="3,0,3,0">
                             <Frame Style="{StaticResource Feed}">
-                                <Grid Padding="5">
+                                <Grid Padding="2">
                                 <Grid.RowDefinitions>
-                                        <RowDefinition Height="28"/>
-                                        <RowDefinition Height="10" />
+                                        <RowDefinition Height="15"/>
+                                        <RowDefinition Height="13" />
                                         <RowDefinition Height="Auto" />
                                     </Grid.RowDefinitions>
 
@@ -92,16 +91,17 @@
 
                                     <Frame
                                         Grid.Row="0"
-                                        Grid.RowSpan="2"
+                                        Grid.RowSpan="3"
                                            Grid.Column="0"
-                                           CornerRadius="20"
+
+                                           CornerRadius="15"
                                            HorizontalOptions="Start"
                                            VerticalOptions="Start"
                                            Padding="0" 
                                            BorderColor="Gray"
                                            IsClippedToBounds="True">
-                                            <Image WidthRequest="40"
-                                                   HeightRequest="40"
+                                            <Image WidthRequest="30"
+                                                   HeightRequest="30"
                                                    Aspect="AspectFill"
                                                    Source="{Binding ProfileImageURL}">
                                             </Image>
@@ -112,23 +112,21 @@
                                         VerticalTextAlignment="End"
                                         Text="{Binding FeedItemTitle}" 
                                         FontAttributes="Bold"
-                                           FontSize="Small"/>
+                                           FontSize="Micro"/>
 
                                      <Label Grid.Row="0"
-                                        
                                         Grid.Column="4"
                                         VerticalTextAlignment="Start"
                                         HorizontalTextAlignment="End"
                                         FontSize="10"
                                         Text="{Binding IndexDate,Converter={StaticResource converter}}"/>
-
           
-                                    <Label Grid.Row="2"
-                                        Grid.Column="0"
+                                    <Label Grid.Row="1"
+                                        Grid.Column="1"
                                         Grid.ColumnSpan="5"
                                         Text="{Binding FeedItemPost}"
                                         FontAttributes="None"
-                                        FontSize="Small"
+                                        FontSize="Micro"
                                         VerticalOptions="End" />
                                 </Grid>
                             </Frame>
