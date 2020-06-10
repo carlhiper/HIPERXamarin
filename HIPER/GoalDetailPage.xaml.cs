@@ -265,7 +265,7 @@ namespace HIPER
                 {
                     competitors.Clear();
                     leaderboardCollectionView.ItemsSource = null;
-                    var goals = await App.client.GetTable<GoalModel>().Where(g => g.ChallengeId == goal.ChallengeId).ToListAsync();
+                    var goals = await App.client.GetTable<GoalModel>().Where(g => g.ChallengeId == goal.ChallengeId).Where(g => g.Deadline == goal.Deadline).ToListAsync();
                     
                     if (goals != null)
                     {

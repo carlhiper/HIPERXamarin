@@ -97,7 +97,16 @@ namespace HIPER
 
                     CreateGoal(App.loggedInUser.Id, true, challenge.Id);
                     await DisplayAlert("Success", "Challenge saved and sent to selected team members", "Ok");
+                    // Register earned points
+                    PointModel point = new PointModel()
+                    {
+                        RegDate = DateTime.Now,
+                        Points = Helpers.Constants.POINTS_FOR_CREATED_CHALLENGE,
+                        UserId = App.loggedInUser.Id
+                    };
+                    await App.client.GetTable<PointModel>().InsertAsync(point);
                     await Navigation.PopAsync();
+
                 }
                 else
                 {

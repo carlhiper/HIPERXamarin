@@ -16,7 +16,7 @@ namespace HIPER
 
         public static UserModel loggedInUser = new UserModel();
 
-        public static List<string> donutChartColors = new List<string>() { "#ff7563", "#cccccc", "#4ca3dd", "#66cdaa", "#ff7f50", "#468499", "#8b0000" };
+        public static List<string> donutChartColors = new List<string>() { "#ff7563", "#666666", "#4ca3dd", "#66cdaa", "#daa520", "#468499", "#8b0000", "#f7347a", "#065535" };
 
         public static List<string> weekdays = new List<string>() { "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday" };
         public static List<string> daysofmonth = new List<string>() { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13"

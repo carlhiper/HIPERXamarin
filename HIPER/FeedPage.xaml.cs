@@ -25,7 +25,6 @@ namespace HIPER
             InitializeComponent();
         }
 
-
         protected override void OnAppearing()
         {
             base.OnAppearing();
@@ -48,7 +47,7 @@ namespace HIPER
                 if (index >= App.donutChartColors.Count)
                     index = 0;
             }
-            chartViewProgress.Chart = new RadialGaugeChart() { Entries = progressEntries, MaxValue = 100 };
+            chartViewProgress.Chart = new RadialGaugeChart() { Entries = progressEntries, MaxValue = 100, LabelTextSize=20 };
         }
 
         private async void GetAlerts()
@@ -72,7 +71,6 @@ namespace HIPER
                 Label1.Text = alertGoals[0].Title + " ends" + GetDifference(alertGoals[0].Deadline.Date);
                 Label2.IsVisible = false;
                 Label3.IsVisible = false;
-
             }
             else
             {
@@ -117,12 +115,12 @@ namespace HIPER
                         point_sum += point.Points;
                 }
 
-                pointsEntries.Add(new ChartEntry(point_sum) { Label = user.FirstName, ValueLabel = point_sum.ToString("D"), Color = SKColor.Parse(App.donutChartColors[index]) });
+                pointsEntries.Add(new ChartEntry(point_sum) { Label = user.FirstName.Substring(0,1) + "." + user.LastName.Substring(0,1), ValueLabel = point_sum.ToString("D"), Color = SKColor.Parse(App.donutChartColors[index]) });
                 index++;
                 if (index >= App.donutChartColors.Count)
                     index = 0;
             }
-            chartViewPoints.Chart = new PointChart() { Entries = pointsEntries };
+            chartViewPoints.Chart = new PointChart() { Entries = pointsEntries, LabelTextSize=20, ValueLabelOrientation = Orientation.Horizontal };
         }
 
         private async void createFeedList()
@@ -165,31 +163,34 @@ namespace HIPER
                 // Insert winners of challenges
                 foreach (var id in challengeIds)
                 {
-                    var winnerGoal = (await App.client.GetTable<GoalModel>().Where(g => g.ChallengeId == id).OrderBy(g => g.ClosedDate).ToListAsync()).FirstOrDefault();
-                    var user = (await App.client.GetTable<UserModel>().Where(u => u.Id == winnerGoal.UserId).ToListAsync()).FirstOrDefault();
-                    FeedModel feedItem = new FeedModel();
-                    feedItem.IndexDate = winnerGoal.ClosedDate;
-                    feedItem.ProfileImageURL = user.ImageUrl;
-
-                    if (winnerGoal.GoalType == 1)
+                    var winnerGoal = (await App.client.GetTable<GoalModel>().Where(g => g.ChallengeId == id).Where(g => g.Completed == true).OrderBy(g => g.ClosedDate).ToListAsync()).FirstOrDefault();
+                    if (winnerGoal != null)
                     {
-                        feedItem.FeedItemTitle = "Challenge won!";
-                        feedItem.FeedItemPost = user.FirstName + " has won the challenge \"" + winnerGoal.Title + "\"! ";
-                    }
-                    else if (winnerGoal.GoalType == 2)
-                    {
-                        feedItem.FeedItemTitle = "Competition won!";
-                        feedItem.FeedItemPost = user.FirstName + " has won the competition \"" + winnerGoal.Title + "\"! ";
-                    }
+                        var user = (await App.client.GetTable<UserModel>().Where(u => u.Id == winnerGoal.UserId).ToListAsync()).FirstOrDefault();
+                        FeedModel feedItem = new FeedModel();
+                        feedItem.IndexDate = winnerGoal.ClosedDate;
+                        feedItem.ProfileImageURL = user.ImageUrl;
 
-                    feed.Add(feedItem);
+                        if (winnerGoal.GoalType == 1)
+                        {
+                            feedItem.FeedItemTitle = "Challenge won!";
+                            feedItem.FeedItemPost = user.FirstName + " has won the challenge \"" + winnerGoal.Title + "\"! ";
+                        }
+                        else if (winnerGoal.GoalType == 2)
+                        {
+                            feedItem.FeedItemTitle = "Competition won!";
+                            feedItem.FeedItemPost = user.FirstName + " has won the competition \"" + winnerGoal.Title + "\"! ";
+                        }
+
+                        feed.Add(feedItem);
+                    }
                 }
 
                 foreach (var id in challengeIds)
                 {
                     var challenge = (await App.client.GetTable<ChallengeModel>().Where(c => c.Id == id).ToListAsync()).FirstOrDefault();
                     var user = (await App.client.GetTable<UserModel>().Where(u => u.Id == challenge.OwnerId).ToListAsync()).FirstOrDefault();
-                    var goal = (await App.client.GetTable<GoalModel>().Where(g => g.ChallengeId == challenge.Id).ToListAsync()).FirstOrDefault();
+                    var goal = (await App.client.GetTable<GoalModel>().Where(g => g.ChallengeId == challenge.Id).OrderBy(g => g.CreatedDate).ToListAsync()).FirstOrDefault();
                     FeedModel feedItem = new FeedModel();
                     feedItem.IndexDate = challenge.CreatedDate;
                     feedItem.ProfileImageURL = user.ImageUrl;

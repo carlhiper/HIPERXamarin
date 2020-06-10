@@ -18,6 +18,6 @@ namespace HIPER.Helpers
         public const int POINTS_FOR_COMPLETED_GOAL = 10;
         public const int POINTS_FOR_WON_CHALLENGE = 30;
         public const int POINTS_FOR_ACCEPTED_CHALLENGE = 5;
-
+        public const int POINTS_FOR_CREATED_CHALLENGE = 5;
     }
 }

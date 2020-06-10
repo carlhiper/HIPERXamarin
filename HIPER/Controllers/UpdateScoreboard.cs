@@ -61,6 +61,7 @@ namespace HIPER.Controllers
                                 LastUpdatedDate = DateTime.Now,
                                 RecurrentId = goal.RecurrentId,
                                 TargetType = goal.TargetType,
+                                GoalType = goal.GoalType,
                                 RepeatType = goal.RepeatType,
                                 WeeklyOrMonthly = goal.WeeklyOrMonthly,
                                 RepeatWeekly = goal.RepeatWeekly,
