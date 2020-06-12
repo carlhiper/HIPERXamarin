@@ -46,7 +46,7 @@ namespace HIPER
                         postCollection.Add(post);
                     }
                 }
-                postCollection.Sort((x, y) => x.CreatedDate.CompareTo(y.CreatedDate));
+                postCollection.Sort((x, y) => y.CreatedDate.CompareTo(x.CreatedDate));
                 if (postCollection[0].CreatedDate > App.loggedInUser.LastViewedPostDate)
                 {
                     ChatButton.IconImageSource = "chat_ex.png";

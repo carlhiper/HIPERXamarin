@@ -84,7 +84,7 @@ namespace HIPER
 
                     // Save on Azure
                     await App.client.GetTable<PostModel>().InsertAsync(postItem);
-                    await DisplayAlert("Success", "Post inserted", "Ok");
+                    //await DisplayAlert("Success", "Post inserted", "Ok");
                 }
                 else
                 {
