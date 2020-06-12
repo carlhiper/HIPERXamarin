@@ -40,5 +40,7 @@
 	<string>This app needs access to your photo library</string>
 	<key>CFBundleIdentifier</key>
 	<string>se.hiper.hiper</string>
+	<key>UIUserInterfaceStyle</key>
+	<string>Light</string>
 </dict>
 </plist>
