@@ -24,8 +24,6 @@
 	<string>8.0</string>
 	<key>CFBundleDisplayName</key>
 	<string>HIPER</string>
-	<key>CFBundleIdentifier</key>
-	<string>com.hiper.HIPER</string>
 	<key>CFBundleVersion</key>
 	<string>1.0</string>
 	<key>UILaunchStoryboardName</key>
@@ -40,5 +38,7 @@
 	<string>This app needs access to the camera</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>This app needs access to your photo library</string>
+	<key>CFBundleIdentifier</key>
+	<string>se.hiper.hiper</string>
 </dict>
 </plist>
