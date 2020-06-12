@@ -38,6 +38,8 @@ namespace HIPER.Model
 
         public string ImageName { get; set; }
 
+        public DateTime LastViewedPostDate { get; set; }
+
         public UserModel()
         {
         }

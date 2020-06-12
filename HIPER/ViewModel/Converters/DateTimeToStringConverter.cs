@@ -11,8 +11,8 @@ namespace HIPER.ViewModel.Converters
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
 
-            DateTimeOffset dateTime = (DateTimeOffset)value;
-            DateTimeOffset rightNow = DateTimeOffset.Now;
+            DateTime dateTime = (DateTime)value;
+            DateTime rightNow = DateTime.Now;
             var differerence = rightNow - dateTime;
 
             if (differerence.TotalDays >= 7)
@@ -37,7 +37,7 @@ namespace HIPER.ViewModel.Converters
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return DateTimeOffset.Now;
+            return DateTime.Now;
         }
     }
 }

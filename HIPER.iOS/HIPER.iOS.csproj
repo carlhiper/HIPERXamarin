@@ -196,6 +196,9 @@
     <BundleResource Include="Resources\arrow_right.png" />
     <BundleResource Include="Resources\arrow_right%402x.png" />
     <BundleResource Include="Resources\arrow_right%403x.png" />
+    <BundleResource Include="Resources\chat_ex.png" />
+    <BundleResource Include="Resources\chat_ex%402x.png" />
+    <BundleResource Include="Resources\chat_ex%403x.png" />
     <BundleResource Include="Resources\chat.png" />
     <BundleResource Include="Resources\chat%402x.png" />
     <BundleResource Include="Resources\chat%403x.png" />

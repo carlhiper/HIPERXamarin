@@ -11,8 +11,7 @@ namespace HIPER
     public partial class EditGoalPage : ContentPage
     {
         GoalModel selectedGoal;
-        ChallengeModel challenge;
-
+  
         public EditGoalPage(GoalModel inputGoal)
         {
             InitializeComponent();

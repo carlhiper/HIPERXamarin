@@ -13,7 +13,7 @@ namespace HIPER.Model
 
         public string ProfileImageURL { get; set; }
 
-        public DateTimeOffset IndexDate { get; set; }
+        public DateTime IndexDate { get; set; }
 
         public string UserId { get; set; }
 

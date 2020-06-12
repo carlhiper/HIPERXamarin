@@ -16,10 +16,6 @@ namespace HIPER
         private readonly List<ChartEntry> progressEntries = new List<ChartEntry>();
         private readonly List<ChartEntry> pointsEntries = new List<ChartEntry>();
 
-        // for drag to refresh - not used
-        private bool _isRefreshing;
-        private Command _refreshViewCommand;
-
         public FeedPage()
         {
             InitializeComponent();
@@ -33,6 +29,33 @@ namespace HIPER
             PopulateProgressChart();
             PopulateTeamPointsChart();
             GetAlerts();
+            CheckChat();
+        }
+
+        private async void CheckChat()
+        {
+            if (App.loggedInUser.TeamId != null)
+            {
+                var users = await App.client.GetTable<UserModel>().Where(u => u.TeamId == App.loggedInUser.TeamId).ToListAsync();
+                List<PostModel> postCollection = new List<PostModel>();
+                foreach(var user in users)
+                {
+                    var post = (await App.client.GetTable<PostModel>().Where(p => p.UserId == user.Id).OrderByDescending(p => p.CreatedDate).ToListAsync()).FirstOrDefault();
+                    if (post != null)
+                    {
+                        postCollection.Add(post);
+                    }
+                }
+                postCollection.Sort((x, y) => x.CreatedDate.CompareTo(y.CreatedDate));
+                if (postCollection[0].CreatedDate > App.loggedInUser.LastViewedPostDate)
+                {
+                    ChatButton.IconImageSource = "chat_ex.png";
+                }
+                else
+                {
+                    ChatButton.IconImageSource = "chat.png";
+                }
+            }
         }
 
         private async void PopulateProgressChart()
@@ -213,20 +236,16 @@ namespace HIPER
             }
         }
 
-
         void feedFilter_SelectedIndexChanged(System.Object sender, System.EventArgs e)
         {
             createFeedList();
         }
-
-  
 
         void ChatButton_Clicked(System.Object sender, System.EventArgs e)
         {
             Navigation.PushAsync(new PostPage());
         }
 
-  
         void buttonYear_Clicked(System.Object sender, System.EventArgs e)
         {
             PointsChartYearly = true;

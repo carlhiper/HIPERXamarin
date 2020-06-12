@@ -13,6 +13,8 @@ namespace HIPER
             createFeedList();
         }
 
+     
+
         private async void createFeedList()
         {
 
@@ -56,6 +58,11 @@ namespace HIPER
 
                 feed.Sort((x, y) => y.IndexDate.CompareTo(x.IndexDate));
                 feedCollectionView.ItemsSource = feed;
+
+                //Update last viewed post date
+                App.loggedInUser.LastViewedPostDate = feed[0].IndexDate;
+                await App.client.GetTable<UserModel>().UpdateAsync(App.loggedInUser);
+
             }
         }
 
