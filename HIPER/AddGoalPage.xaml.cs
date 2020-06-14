@@ -46,7 +46,7 @@ namespace HIPER
             step1entry.IsVisible = false;
             step1label.IsVisible = false;
 
-            if (App.loggedInUser.Id != user.Id || string.IsNullOrEmpty(user.TeamId))
+            if (App.loggedInUser.id != user.id || string.IsNullOrEmpty(user.TeamId))
             {
                 challengeCheckbox.IsVisible = false;
                 challengeCollectionView.IsVisible = false;
@@ -78,12 +78,12 @@ namespace HIPER
                 {
                     challenge = new ChallengeModel()
                     {
-                        OwnerId = App.loggedInUser.Id,
+                        OwnerId = App.loggedInUser.id,
                         CreatedDate = DateTime.Now
                     };
                     await App.client.GetTable<ChallengeModel>().InsertAsync(challenge);
 
-                    var challenges = (await App.client.GetTable<ChallengeModel>().Where(c => c.OwnerId == App.loggedInUser.Id).ToListAsync());
+                    var challenges = (await App.client.GetTable<ChallengeModel>().Where(c => c.OwnerId == App.loggedInUser.id).ToListAsync());
 
                     challenges.Sort((x, y) => y.CreatedDate.CompareTo(x.CreatedDate));
                     challenge = challenges[0];
@@ -92,17 +92,17 @@ namespace HIPER
 
                     foreach (UserModel u in challengedUsers)
                     {
-                        CreateGoal(u.Id, false, challenge.Id);
+                        CreateGoal(u.id, false, challenge.Id);
                     }
 
-                    CreateGoal(App.loggedInUser.Id, true, challenge.Id);
+                    CreateGoal(App.loggedInUser.id, true, challenge.Id);
                     await DisplayAlert("Success", "Challenge saved and sent to selected team members", "Ok");
                     // Register earned points
                     PointModel point = new PointModel()
                     {
                         RegDate = DateTime.Now,
                         Points = Helpers.Constants.POINTS_FOR_CREATED_CHALLENGE,
-                        UserId = App.loggedInUser.Id
+                        UserId = App.loggedInUser.id
                     };
                     await App.client.GetTable<PointModel>().InsertAsync(point);
                     await Navigation.PopAsync();
@@ -110,7 +110,7 @@ namespace HIPER
                 }
                 else
                 {
-                    CreateGoal(user.Id, true, null);
+                    CreateGoal(user.id, true, null);
                     await DisplayAlert("Success", "Goal saved", "Ok");
                     await Navigation.PopAsync();
                 }
@@ -325,7 +325,7 @@ namespace HIPER
                     if (teammembers == null)
                     {
                         teammembers = await App.client.GetTable<UserModel>().Where(u => u.TeamId == App.loggedInUser.TeamId).ToListAsync();
-                        teammembers.RemoveAt(teammembers.FindIndex(a => a.Id == App.loggedInUser.Id));
+                        teammembers.RemoveAt(teammembers.FindIndex(a => a.id == App.loggedInUser.id));
                        
                     }
                     challengeCollectionView.ItemsSource = teammembers;

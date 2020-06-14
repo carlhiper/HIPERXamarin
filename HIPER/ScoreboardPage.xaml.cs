@@ -59,7 +59,7 @@ namespace HIPER
             if (showClosedSwitch.IsToggled)
             {
                 DateTime earliestDate = DateTime.Now.AddMonths(-15);
-                closedGoals = await App.client.GetTable<GoalModel>().Where(g => g.UserId == App.loggedInUser.Id && (g.Closed || g.ClosedDate < DateTime.Now) && (g.ClosedDate > earliestDate)).OrderByDescending(g => g.ClosedDate).Take(500).ToListAsync();
+                closedGoals = await App.client.GetTable<GoalModel>().Where(g => g.UserId == App.loggedInUser.id && (g.Closed || g.ClosedDate < DateTime.Now) && (g.ClosedDate > earliestDate)).OrderByDescending(g => g.ClosedDate).Take(500).ToListAsync();
         
                 //Sorting
                 if (filter == 0)
@@ -91,7 +91,7 @@ namespace HIPER
             }
             else
             {
-                activeGoals = await App.client.GetTable<GoalModel>().Where(g => g.UserId == App.loggedInUser.Id && (!g.Closed && !g.Completed && g.ClosedDate > DateTime.Now)).OrderByDescending(g => g.CreatedDate).ToListAsync();
+                activeGoals = await App.client.GetTable<GoalModel>().Where(g => g.UserId == App.loggedInUser.id && (!g.Closed && !g.Completed && g.ClosedDate > DateTime.Now)).OrderByDescending(g => g.CreatedDate).ToListAsync();
 
                 //Sorting
                 if (filter == 0)

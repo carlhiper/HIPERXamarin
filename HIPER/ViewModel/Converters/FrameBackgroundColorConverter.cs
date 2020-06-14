@@ -13,7 +13,7 @@ namespace HIPER.ViewModel.Converters
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             string id = (string)value;
-            if (id == App.loggedInUser.Id)
+            if (id == App.loggedInUser.id)
                 return "#f0f6ff";
             else
                 return "white";

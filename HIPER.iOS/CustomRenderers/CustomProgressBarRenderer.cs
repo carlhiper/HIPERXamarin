@@ -1,5 +1,4 @@
-﻿using System;
-using CoreGraphics;
+﻿using CoreGraphics;
 using HIPER.iOS.CustomRenderers;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.iOS;

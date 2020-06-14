@@ -63,7 +63,7 @@
                 </Grid>
             </Grid>
 
-            <forms:ChartView x:Name="chartViewPoints" HeightRequest="150" BackgroundColor="White" ></forms:ChartView>
+            <forms:ChartView x:Name="chartViewPoints" HeightRequest="120" BackgroundColor="White" ></forms:ChartView>
 
             <CollectionView                
                 x:Name="feedCollectionView"

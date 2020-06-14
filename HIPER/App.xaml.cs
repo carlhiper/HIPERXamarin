@@ -4,6 +4,8 @@ using Xamarin.Forms.Xaml;
 using Microsoft.WindowsAzure.MobileServices;
 using HIPER.Model;
 using System.Collections.Generic;
+using Microsoft.AppCenter;
+using Microsoft.AppCenter.Crashes;
 
 namespace HIPER
 {
@@ -50,7 +52,11 @@ namespace HIPER
 
         protected override void OnStart()
         {
-      
+
+            string androidAppSecret = "ffa750a1-2d72-432c-b96b-dd7b077d0ce0";
+            string iOSAppSecret = "bc589ec5-5df5-4bb6-a9de-415153420374";
+            AppCenter.Start($"android = {androidAppSecret}; ios = {iOSAppSecret}", typeof(Crashes));
+
         }
 
         protected override void OnSleep()

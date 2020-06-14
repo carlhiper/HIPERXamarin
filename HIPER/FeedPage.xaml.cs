@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using HIPER.Model;
 using Xamarin.Forms;
-using HIPER.Helpers;
 using Microcharts;
 using SkiaSharp;
 using System.Linq;
@@ -40,7 +39,7 @@ namespace HIPER
                 List<PostModel> postCollection = new List<PostModel>();
                 foreach(var user in users)
                 {
-                    var post = (await App.client.GetTable<PostModel>().Where(p => p.UserId == user.Id).OrderByDescending(p => p.CreatedDate).ToListAsync()).FirstOrDefault();
+                    var post = (await App.client.GetTable<PostModel>().Where(p => p.UserId == user.id).OrderByDescending(p => p.CreatedDate).ToListAsync()).FirstOrDefault();
                     if (post != null)
                     {
                         postCollection.Add(post);
@@ -62,7 +61,7 @@ namespace HIPER
         {
             progressEntries.Clear();
             int index = 0;
-            var activeGoals = await App.client.GetTable<GoalModel>().Where(g => g.UserId == App.loggedInUser.Id && (!g.Closed && !g.Completed && g.ClosedDate > DateTime.Now)).OrderByDescending(g => g.CreatedDate).ToListAsync();
+            var activeGoals = await App.client.GetTable<GoalModel>().Where(g => g.UserId == App.loggedInUser.id && (!g.Closed && !g.Completed && g.ClosedDate > DateTime.Now)).OrderByDescending(g => g.CreatedDate).ToListAsync();
             foreach (var goal in activeGoals)
             {
                 progressEntries.Add(new ChartEntry((int)(goal.Progress * 100)) { Label = goal.Title, ValueLabel = ((int)(goal.Progress * 100)).ToString("D") + "%", Color = SKColor.Parse(App.donutChartColors[index]) });
@@ -75,7 +74,7 @@ namespace HIPER
 
         private async void GetAlerts()
         {
-            var alertGoals = await App.client.GetTable<GoalModel>().Where(g => g.UserId == App.loggedInUser.Id && (!g.Closed && !g.Completed && g.ClosedDate > DateTime.Now)).OrderBy(g => g.Deadline).Take(3).ToListAsync();
+            var alertGoals = await App.client.GetTable<GoalModel>().Where(g => g.UserId == App.loggedInUser.id && (!g.Closed && !g.Completed && g.ClosedDate > DateTime.Now)).OrderBy(g => g.Deadline).Take(3).ToListAsync();
         
             if (alertGoals.Count == 3)
             {
@@ -130,7 +129,7 @@ namespace HIPER
             var users = await App.client.GetTable<UserModel>().Where(u => u.TeamId == App.loggedInUser.TeamId).OrderBy(u => u.FirstName).ToListAsync();
             foreach (var user in users)
             {
-                var points = await App.client.GetTable<PointModel>().Where(p => p.UserId == user.Id).ToListAsync();
+                var points = await App.client.GetTable<PointModel>().Where(p => p.UserId == user.id).ToListAsync();
                 int point_sum = 0;
                 foreach (var point in points)
                 {
@@ -164,7 +163,7 @@ namespace HIPER
                 {
                     try
                     {
-                        var goals = await App.client.GetTable<GoalModel>().Where(g => g.UserId == user.Id).Where(g => g.GoalType > 0).Where(g => g.CreatedDate > DateTime.Now.AddYears(-1)).ToListAsync();
+                        var goals = await App.client.GetTable<GoalModel>().Where(g => g.UserId == user.id).Where(g => g.GoalType > 0).Where(g => g.CreatedDate > DateTime.Now.AddYears(-1)).ToListAsync();
                         foreach (var goal in goals)
                         {
                             string challengeId = goal.ChallengeId;
@@ -189,7 +188,7 @@ namespace HIPER
                     var winnerGoal = (await App.client.GetTable<GoalModel>().Where(g => g.ChallengeId == id).Where(g => g.Completed == true).OrderBy(g => g.ClosedDate).ToListAsync()).FirstOrDefault();
                     if (winnerGoal != null)
                     {
-                        var user = (await App.client.GetTable<UserModel>().Where(u => u.Id == winnerGoal.UserId).ToListAsync()).FirstOrDefault();
+                        var user = (await App.client.GetTable<UserModel>().Where(u => u.id == winnerGoal.UserId).ToListAsync()).FirstOrDefault();
                         FeedModel feedItem = new FeedModel();
                         feedItem.IndexDate = winnerGoal.ClosedDate;
                         feedItem.ProfileImageURL = user.ImageUrl;
@@ -212,7 +211,7 @@ namespace HIPER
                 foreach (var id in challengeIds)
                 {
                     var challenge = (await App.client.GetTable<ChallengeModel>().Where(c => c.Id == id).ToListAsync()).FirstOrDefault();
-                    var user = (await App.client.GetTable<UserModel>().Where(u => u.Id == challenge.OwnerId).ToListAsync()).FirstOrDefault();
+                    var user = (await App.client.GetTable<UserModel>().Where(u => u.id == challenge.OwnerId).ToListAsync()).FirstOrDefault();
                     var goal = (await App.client.GetTable<GoalModel>().Where(g => g.ChallengeId == challenge.Id).OrderBy(g => g.CreatedDate).ToListAsync()).FirstOrDefault();
                     FeedModel feedItem = new FeedModel();
                     feedItem.IndexDate = challenge.CreatedDate;

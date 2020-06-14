@@ -10,7 +10,7 @@ namespace HIPER.Controllers
         {
             try { 
                 var today = DateTime.Now.Date;
-                var goals = await App.client.GetTable<GoalModel>().Where(g => g.UserId == App.loggedInUser.Id && !g.Closed).ToListAsync();
+                var goals = await App.client.GetTable<GoalModel>().Where(g => g.UserId == App.loggedInUser.id && !g.Closed).ToListAsync();
 
                 foreach(var goal in goals)
                 {
@@ -33,7 +33,7 @@ namespace HIPER.Controllers
             try
             {
                 var today = DateTime.Now.Date;
-                var goals = await App.client.GetTable<GoalModel>().Where(g => g.UserId == App.loggedInUser.Id && !g.Closed).ToListAsync();
+                var goals = await App.client.GetTable<GoalModel>().Where(g => g.UserId == App.loggedInUser.id && !g.Closed).ToListAsync();
 
                 foreach (var goal in goals)
                 {
@@ -55,7 +55,7 @@ namespace HIPER.Controllers
                                 Description = goal.Description,
                                 TargetValue = goal.TargetValue,
                                 PrivateGoal = goal.PrivateGoal,
-                                UserId = App.loggedInUser.Id,
+                                UserId = App.loggedInUser.id,
                                 CurrentValue = "0",
                                 ClosedDate = DateTime.MaxValue,
                                 LastUpdatedDate = DateTime.Now,
