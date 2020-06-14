@@ -50,7 +50,7 @@ namespace HIPER
                         Identifier = uniqueIdentifier(Constants.UNIQUE_IDENTIFIER_LENGTH),
                         CreatedDate = DateTime.Now,
                         Max_number_users = Constants.MAX_TEAM_MEMBERS,
-                        Administrator_id = App.loggedInUser.Id,
+                        Administrator_id = App.loggedInUser.id,
                         Active = true
                     };
 

@@ -25,7 +25,7 @@
 	<key>CFBundleDisplayName</key>
 	<string>HIPER</string>
 	<key>CFBundleVersion</key>
-	<string>1.0</string>
+	<string>1.161</string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>CFBundleName</key>
@@ -40,5 +40,18 @@
 	<string>This app needs access to your photo library</string>
 	<key>CFBundleIdentifier</key>
 	<string>se.hiper.hiper</string>
+	<key>UIUserInterfaceStyle</key>
+	<string>Light</string>
+	<key>ITSAppUsesNonExemptEncryption</key>
+	<false/>
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSAllowsArbitraryLoads</key>
+		<string>True</string>
+		<key>NSAllowsArbitraryLoadsForMedia</key>
+		<string>True</string>
+		<key>NSAllowsArbitraryLoadsInWebContent</key>
+		<string>True</string>
+	</dict>
 </dict>
 </plist>

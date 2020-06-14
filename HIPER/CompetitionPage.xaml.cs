@@ -46,7 +46,7 @@ namespace HIPER
             List<GoalModel> closedCompetitions = new List<GoalModel>();
             List<GoalModel> competitions = new List<GoalModel>();
 
-            var challenges = await App.client.GetTable<ChallengeModel>().Where(c => c.OwnerId == App.loggedInUser.Id).ToListAsync();
+            var challenges = await App.client.GetTable<ChallengeModel>().Where(c => c.OwnerId == App.loggedInUser.id).ToListAsync();
         
             if (challenges != null)
             {

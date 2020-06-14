@@ -35,7 +35,7 @@ namespace HIPER
                     try
                     {
 
-                        var posts = await App.client.GetTable<PostModel>().Where(p => p.UserId == user.Id).ToListAsync();
+                        var posts = await App.client.GetTable<PostModel>().Where(p => p.UserId == user.id).ToListAsync();
                         foreach (var post in posts)
                         {
                             if (!string.IsNullOrEmpty(post.Post))
@@ -45,7 +45,7 @@ namespace HIPER
                                 feedItem.ProfileImageURL = user.ImageUrl;
                                 feedItem.FeedItemTitle = user.FirstName + " " + user.LastName;
                                 feedItem.FeedItemPost = post.Post;
-                                feedItem.UserId = user.Id;
+                                feedItem.UserId = user.id;
                                 feed.Add(feedItem);
                             }
                         }
@@ -78,7 +78,7 @@ namespace HIPER
                     PostModel postItem = new PostModel()
                     {
                         Post = PostEntry.Text,
-                        UserId = App.loggedInUser.Id,
+                        UserId = App.loggedInUser.id,
                         CreatedDate = DateTime.Now
                     };
 

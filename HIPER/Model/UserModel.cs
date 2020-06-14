@@ -1,12 +1,16 @@
 ﻿using System;
+using System.Runtime.Serialization;
+using Newtonsoft.Json;
 using SQLite;
 
 namespace HIPER.Model
 {
+
     public class UserModel
     {
         [PrimaryKey]
-        public string Id { get; set; }
+        [JsonProperty("id")]
+        public string id { get; set; }
 
         public string TeamId { get; set; }
 
