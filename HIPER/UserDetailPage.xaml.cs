@@ -8,10 +8,9 @@ namespace HIPER
 {
     public partial class UserDetailPage : ContentPage
     {
-        UserModel user;
+        UserModel user = new UserModel();
         List<GoalModel> activeGoals = new List<GoalModel>();
         List<GoalModel> closedGoals = new List<GoalModel>();
-
 
         public UserDetailPage()
         {

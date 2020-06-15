@@ -12,9 +12,9 @@ namespace HIPER
     {
         bool constructorRunning;
         bool IsCompetitionPage;
-        GoalModel goal;
-        UserModel challengeOwner;
-        ChallengeModel challenge;
+        GoalModel goal = new GoalModel();
+        UserModel challengeOwner = new UserModel();
+        ChallengeModel challenge = new ChallengeModel();
         List<LeaderBoardModel> competitors = new List<LeaderBoardModel>();
 
         public GoalDetailPage(GoalModel inputGoal, bool isCompetitionPage)
@@ -295,7 +295,7 @@ namespace HIPER
             }
             catch (Exception ex)
             {
-
+                await DisplayAlert("Error", ex.ToString(), "Ok");
             }
         }
 
@@ -307,9 +307,8 @@ namespace HIPER
  
         void editGoal_Clicked(System.Object sender, System.EventArgs e) {
 
-            //Navigation.PushAsync(new EditGoalPage(goal));
-            Navigation.PushAsync(new TestPage());
-
+            Navigation.PushAsync(new EditGoalPage(goal));
+          
         }
 
         private async void goalCurrentEntry_Unfocused(System.Object sender, Xamarin.Forms.TextChangedEventArgs e)

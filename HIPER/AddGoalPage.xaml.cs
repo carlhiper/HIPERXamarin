@@ -10,21 +10,21 @@ namespace HIPER
 {
     public partial class AddGoalPage : ContentPage
     {
-        UserModel User;
-        List<UserModel> teammembers;
-        ChallengeModel challenge;
+        UserModel User = new UserModel();
+        List<UserModel> teammembers = new List<UserModel>();
+        ChallengeModel challenge = new ChallengeModel();
         
         public AddGoalPage()
         {
-            InitializeComponent();
             this.User = App.loggedInUser;
+            InitializeComponent();
             initPage();
         }
 
         public AddGoalPage(UserModel user)
         {
-            InitializeComponent();
             this.User = user;
+            InitializeComponent();
             initPage();
         }
 

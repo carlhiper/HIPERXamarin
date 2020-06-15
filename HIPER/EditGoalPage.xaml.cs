@@ -10,7 +10,7 @@ namespace HIPER
 {
     public partial class EditGoalPage : ContentPage
     {
-        GoalModel selectedGoal;
+        GoalModel selectedGoal = new GoalModel();
   
         public EditGoalPage(GoalModel inputGoal)
         {

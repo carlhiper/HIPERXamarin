@@ -17,21 +17,6 @@ namespace HIPER
             InitializeComponent();
         }
 
-        void addOwnGoal_Clicked(System.Object sender, System.EventArgs e)
-        {
-            if (activeGoals != null)
-            {
-                if (activeGoals.Count < HIPER.Helpers.Constants.MAX_ACTIVE_GOALS)
-                {
-                    Navigation.PushAsync(new AddGoalPage());
-                }
-                else
-                {
-                    DisplayAlert("Failure", "You have max allowed active goals. Please upgrade to premium to be able to add more goals", "Ok");
-                }
-            }
-        }
-
         protected override void OnAppearing()
         {
             base.OnAppearing();
@@ -127,6 +112,11 @@ namespace HIPER
         void filter_SelectedIndexChanged(System.Object sender, System.EventArgs e)
         {
             createGoalsList(filter.SelectedIndex);
+        }
+
+        void addOwnGoal_Clicked(System.Object sender, System.EventArgs e)
+        {
+            Navigation.PushAsync(new AddGoalPage());
         }
     }
 }

@@ -10,8 +10,7 @@
     <ContentPage.Content>
         <ScrollView>
             <Frame Margin="10">
-                <StackLayout Margin="20"
-                             CompressedLayout.IsHeadless="True">
+                <StackLayout Margin="20">
                     <Label Style="{StaticResource Header}" Text="ADD A GOAL"></Label>
                     <Entry x:Name="goalNameEntry" Placeholder="TITLE" MaxLength="20"></Entry>
                     <Editor x:Name="goalDescriptionEntry" Placeholder="DESCRIPTION" MaxLength="255" HeightRequest="100"></Editor>
