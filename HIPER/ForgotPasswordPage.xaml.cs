@@ -17,6 +17,7 @@ namespace HIPER
         {
             try
             {
+ 
                 var user = (await App.client.GetTable<UserModel>().Where(u => u.Email == emailEntry.Text).ToListAsync()).FirstOrDefault();
 
                 if (user != null)

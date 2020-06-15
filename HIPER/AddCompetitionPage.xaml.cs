@@ -252,12 +252,12 @@ namespace HIPER
 
                 challenge = new ChallengeModel()
                 {
-                    OwnerId = App.loggedInUser.id,
+                    OwnerId = App.loggedInUser.Id,
                     CreatedDate = DateTime.Now
                 };
                 await App.client.GetTable<ChallengeModel>().InsertAsync(challenge);
 
-                var challenges = (await App.client.GetTable<ChallengeModel>().Where(c => c.OwnerId == App.loggedInUser.id).ToListAsync());
+                var challenges = (await App.client.GetTable<ChallengeModel>().Where(c => c.OwnerId == App.loggedInUser.Id).ToListAsync());
 
                 challenges.Sort((x, y) => y.CreatedDate.CompareTo(x.CreatedDate));
                 challenge = challenges[0];
@@ -266,7 +266,7 @@ namespace HIPER
 
                 foreach (UserModel user in challengedUsers)
                 {
-                    CreateGoal(user.id, true, challenge.Id);
+                    CreateGoal(user.Id, true, challenge.Id);
                 }
 
                 await DisplayAlert("Success", "Competition started and sent to selected team members", "Ok");

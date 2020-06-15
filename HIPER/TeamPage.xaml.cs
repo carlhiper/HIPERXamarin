@@ -31,7 +31,7 @@ namespace HIPER
                 if (team != null)
                 {
                     teamStats.IsEnabled = true;
-                    if (team.Administrator_id == App.loggedInUser.id)
+                    if (team.Administrator_id == App.loggedInUser.Id)
                     {
                         buttonGrid.IsVisible = true;
                     }
@@ -40,11 +40,11 @@ namespace HIPER
                         buttonGrid.IsVisible = false;
                     }
 
-                    var teamAdmin = (await App.client.GetTable<UserModel>().Where(u => u.id == team.Administrator_id).ToListAsync()).FirstOrDefault();
+                    var teamAdmin = (await App.client.GetTable<UserModel>().Where(u => u.Id == team.Administrator_id).ToListAsync()).FirstOrDefault();
                     var users = await App.client.GetTable<UserModel>().Where(u => u.TeamId == team.Id).ToListAsync();
                     if (users != null)
                     {
-                        users.RemoveAt(users.FindIndex(a => a.id == App.loggedInUser.id));
+                        users.RemoveAt(users.FindIndex(a => a.Id == App.loggedInUser.Id));
 
                         teamCollectionView.ItemsSource = users;
 
@@ -93,7 +93,7 @@ namespace HIPER
 
         void teamCollectionView_SelectionChanged(System.Object sender, Xamarin.Forms.SelectionChangedEventArgs e)
         {
-            if (App.loggedInUser.id == team.Administrator_id)
+            if (App.loggedInUser.Id == team.Administrator_id)
             {
                 var selectedUser = teamCollectionView.SelectedItem as UserModel;
                 Navigation.PushAsync(new UserDetailPage(selectedUser));
@@ -114,7 +114,7 @@ namespace HIPER
         {
             try
             {
-                if (team.Administrator_id == App.loggedInUser.id)
+                if (team.Administrator_id == App.loggedInUser.Id)
                 {
                     var users = await App.client.GetTable<UserModel>().Where(u => u.TeamId == team.Id).ToListAsync();
                     if (users.Count > 1)

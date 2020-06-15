@@ -1,8 +1,11 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="HIPER.CreateTeamPage">
-        <ContentPage.ToolbarItems>
-        <ToolbarItem x:Name="saveButton" Text="Create" Clicked="saveButton_Clicked"></ToolbarItem> 
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="HIPER.CreateTeamPage">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem x:Name="saveButton" IconImageSource="save.png" Clicked="saveButton_Clicked"></ToolbarItem> 
     </ContentPage.ToolbarItems>
+
     <ContentPage.Content>
         <StackLayout Margin="20"
                      CompressedLayout.IsHeadless="True">

@@ -12,6 +12,8 @@
         <x:String x:Key="arrow_left">arrow_left.png</x:String>
         <x:String x:Key="arrow_right">arrow_right.png</x:String>
         <x:String x:Key="chat">chat.png</x:String>
+        <x:String x:Key="add">add.png</x:String>
+
 
 
         <Style TargetType="Button">

@@ -150,7 +150,7 @@ namespace HIPER
 
                         await App.client.GetTable<GoalModel>().UpdateAsync(g);
 
-                        if (g.UserId == App.loggedInUser.id)
+                        if (g.UserId == App.loggedInUser.Id)
                         {
                             CopyViewToGoal(selectedGoal);
                         }

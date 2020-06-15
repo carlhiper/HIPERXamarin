@@ -65,7 +65,7 @@ namespace HIPER
                     foreach (UserModel u in users)
                     {
                         List<GoalModel> temp_goals = new List<GoalModel>();
-                        List<GoalModel> gs = await App.client.GetTable<GoalModel>().Where(g => g.UserId == u.id).OrderByDescending(g => g.CreatedDate).Take(500).ToListAsync();
+                        List<GoalModel> gs = await App.client.GetTable<GoalModel>().Where(g => g.UserId == u.Id).OrderByDescending(g => g.CreatedDate).Take(500).ToListAsync();
                         if (gs != null)
                         {
                             foreach (GoalModel g_s in gs)
@@ -85,7 +85,7 @@ namespace HIPER
             else
             {
                 // participantsCollectionView.IsVisible = false;
-                goals = await App.client.GetTable<GoalModel>().Where(g => g.UserId == selectedUser.id).Take(500).ToListAsync();
+                goals = await App.client.GetTable<GoalModel>().Where(g => g.UserId == selectedUser.Id).Take(500).ToListAsync();
             }
 
             UpdateStats();

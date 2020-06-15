@@ -35,7 +35,7 @@ namespace HIPER
 
                         foreach (GoalModel g in goals)
                         {
-                            var user = (await App.client.GetTable<UserModel>().Where(u => u.id == g.UserId).ToListAsync()).FirstOrDefault();
+                            var user = (await App.client.GetTable<UserModel>().Where(u => u.Id == g.UserId).ToListAsync()).FirstOrDefault();
 
                             LeaderBoardModel competitor = new LeaderBoardModel()
                             {

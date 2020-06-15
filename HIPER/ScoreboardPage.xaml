@@ -11,13 +11,13 @@
             <converters:ChallengeIdToBoolConverter x:Key="challengeVisibleConverter"/>
         </ResourceDictionary>
     </ContentPage.Resources>
+
     <ContentPage.ToolbarItems>
-        <ToolbarItem x:Name="addGoal" Text="Add goal" Clicked="addGoal_Clicked">
-        </ToolbarItem>
+        <ToolbarItem x:Name="addOwnGoal" IconImageSource="{StaticResource add}" Clicked="addOwnGoal_Clicked"/> 
     </ContentPage.ToolbarItems>
 
-
-    <StackLayout Margin="10"
+    <ContentPage.Content>
+        <StackLayout Margin="10"
                     CompressedLayout.IsHeadless="True">
 
         <Label Text="SCOREBOARD" Style="{StaticResource Header}"></Label>
@@ -43,7 +43,8 @@
                
             x:Name="goalCollectionView"
             SelectionMode="Single"
-            SelectionChanged="goalCollectionView_SelectionChanged">
+            SelectionChanged="goalCollectionView_SelectionChanged"
+            VerticalOptions="FillAndExpand">
                 
             <CollectionView.ItemTemplate>
                 <DataTemplate>
@@ -125,4 +126,6 @@
             </CollectionView.ItemTemplate>
         </CollectionView> 
     </StackLayout>
+    </ContentPage.Content>
+
 </ContentPage>

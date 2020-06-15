@@ -1,150 +1,155 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="HIPER.EditGoalPage">
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="HIPER.EditGoalPage">
     
     <ContentPage.ToolbarItems>
-        <ToolbarItem x:Name="saveGoal" Text="Save" Clicked="saveGoal_Clicked"></ToolbarItem>
-
+        <ToolbarItem x:Name="saveGoal" IconImageSource="save.png" Clicked="saveGoal_Clicked"></ToolbarItem>
     </ContentPage.ToolbarItems>
-    
-    <ScrollView>
-    <StackLayout Margin="20">
-        <Label x:Name="headerText" Text="EDIT GOAL" Margin="10" HorizontalTextAlignment="End" Style="{StaticResource Header}"></Label>
+
+    <ContentPage.Content>
+        <ScrollView>
+        <StackLayout Margin="20">
+            <Label x:Name="headerText" Text="EDIT GOAL" Margin="10" HorizontalTextAlignment="End" Style="{StaticResource Header}"></Label>
             
-        <Grid x:Name="gridTitle">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="100" />
-                <RowDefinition Height="Auto" />
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
-            <Label VerticalOptions="Center" Grid.Row="0" Grid.Column="0" Text="TITLE"/>
-            <Entry x:Name="goalNameEntry" Grid.Row="0" Grid.Column="1" Placeholder="TITLE" MaxLength="20"></Entry>
-            <Label VerticalOptions="Center" Grid.Row="1" Grid.Column="0" Text="DESCRIPTION"/>
-            <Editor x:Name="goalDescriptionEntry" VerticalOptions="Center" HeightRequest="100" Grid.Row="1" Grid.Column="1" Placeholder="DESCRIPTION" MaxLength="255" ></Editor>
-            <!--<Label VerticalOptions="Center" x:Name="privateGoalLabel" Grid.Row="2" Grid.Column="0" Text="PRIVATE GOAL"/>
-            <CheckBox VerticalOptions="Center" HorizontalOptions="Center" Grid.Row="2" Grid.Column="1" x:Name="privateGoalCheckbox" Color="{StaticResource hiperPeach}"></CheckBox>-->
-        </Grid>
+            <Grid x:Name="gridTitle">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="100" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Label VerticalOptions="Center" Grid.Row="0" Grid.Column="0" Text="TITLE"/>
+                <Entry x:Name="goalNameEntry" Grid.Row="0" Grid.Column="1" Placeholder="TITLE" MaxLength="20"></Entry>
+                <Label VerticalOptions="Center" Grid.Row="1" Grid.Column="0" Text="DESCRIPTION"/>
+                <Editor x:Name="goalDescriptionEntry" VerticalOptions="Center" HeightRequest="100" Grid.Row="1" Grid.Column="1" Placeholder="DESCRIPTION" MaxLength="255" ></Editor>
+                <!--<Label VerticalOptions="Center" x:Name="privateGoalLabel" Grid.Row="2" Grid.Column="0" Text="PRIVATE GOAL"/>
+                <CheckBox VerticalOptions="Center" HorizontalOptions="Center" Grid.Row="2" Grid.Column="1" x:Name="privateGoalCheckbox" Color="{StaticResource hiperPeach}"></CheckBox>-->
+            </Grid>
 
 
-        <Label x:Name="aimHighLabel" Text="SINGLE TARGET" HorizontalOptions="Center" TextColor="{StaticResource hiperPeach}" Margin="0,20,0,5"></Label>
-        <Grid x:Name="gridAimHigh">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="40" />
-                <RowDefinition Height="40" />
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
+            <Label x:Name="aimHighLabel" Text="SINGLE TARGET" HorizontalOptions="Center" TextColor="{StaticResource hiperPeach}" Margin="0,20,0,5"></Label>
+            <Grid x:Name="gridAimHigh">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="40" />
+                    <RowDefinition Height="40" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
   
-            <Label VerticalOptions="Center" Grid.Row="0" Grid.Column="0" Text="TARGET"/>
-            <Entry x:Name="goalTargetEntry" Grid.Row="0" Grid.Column="1" Placeholder="TARGET" TextChanged="goalTargetEntry_TextChanged"></Entry>
-            <Label VerticalOptions="Center" Grid.Row="1" Grid.Column="0" Text="CURRENT"/>
-            <Entry x:Name="goalCurrentEntry" Grid.Row="1" Grid.Column="1" Placeholder="CURRENT VALUE" TextChanged="goalCurrentEntry_TextChanged" ></Entry>
-        </Grid>
+                <Label VerticalOptions="Center" Grid.Row="0" Grid.Column="0" Text="TARGET"/>
+                <Entry x:Name="goalTargetEntry" Grid.Row="0" Grid.Column="1" Placeholder="TARGET" TextChanged="goalTargetEntry_TextChanged"></Entry>
+                <Label VerticalOptions="Center" Grid.Row="1" Grid.Column="0" Text="CURRENT"/>
+                <Entry x:Name="goalCurrentEntry" Grid.Row="1" Grid.Column="1" Placeholder="CURRENT VALUE" TextChanged="goalCurrentEntry_TextChanged" ></Entry>
+            </Grid>
 
-        <Label x:Name="gridLabel" Text="STEPS" HorizontalOptions="Center" TextColor="{StaticResource hiperPeach}" Margin="0,20,0,5"></Label>
+            <Label x:Name="gridLabel" Text="STEPS" HorizontalOptions="Center" TextColor="{StaticResource hiperPeach}" Margin="0,20,0,5"></Label>
 
-        <Grid x:Name="selectStepsGrid" Margin="10">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
-            <Label Grid.Column="0" VerticalOptions="Center" HorizontalOptions="Start" Text="NUMBER OF STEPS"></Label>
-            <Picker Grid.Column="1" x:Name="stepbystepPicker" SelectedIndexChanged="stepbystepPicker_SelectedIndexChanged"></Picker>
+            <Grid x:Name="selectStepsGrid" Margin="10">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Label Grid.Column="0" VerticalOptions="Center" HorizontalOptions="Start" Text="NUMBER OF STEPS"></Label>
+                <Picker Grid.Column="1" x:Name="stepbystepPicker" SelectedIndexChanged="stepbystepPicker_SelectedIndexChanged"></Picker>
 
-        </Grid>
+            </Grid>
    
-        <Grid x:Name="gridSteps">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="20" />
-                <ColumnDefinition Width="30" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
-            <Label x:Name="step1label" VerticalOptions="Center" Grid.Row="0" Grid.Column="0" Text="1" />
-            <Entry x:Name="step1entry" Grid.Row="0" Grid.Column="2" Placeholder="STEP DESCRIPTION" MaxLength="255"></Entry>
-            <CheckBox x:Name="step1CB" VerticalOptions="Center" Grid.Row="0" Grid.Column="1" Color="{StaticResource hiperPeach}"></CheckBox>
-            <Label x:Name="step2label" VerticalOptions="Center" Grid.Row="1" Grid.Column="0" Text="2" />
-            <Entry x:Name="step2entry" Grid.Row="1" Grid.Column="2" Placeholder="STEP DESCRIPTION" MaxLength="255"></Entry>
-            <CheckBox x:Name="step2CB" VerticalOptions="Center" HorizontalOptions="Center" Grid.Row="1" Grid.Column="1" Color="{StaticResource hiperPeach}"></CheckBox>
-            <Label x:Name="step3label" VerticalOptions="Center" Grid.Row="2" Grid.Column="0" Text="3" />
-            <Entry x:Name="step3entry" Grid.Row="2" Grid.Column="2" Placeholder="STEP DESCRIPTION" MaxLength="255"></Entry>
-            <CheckBox x:Name="step3CB" VerticalOptions="Center" HorizontalOptions="Center" Grid.Row="2" Grid.Column="1" Color="{StaticResource hiperPeach}"></CheckBox>
-            <Label x:Name="step4label" VerticalOptions="Center" Grid.Row="3" Grid.Column="0" Text="4" IsVisible="false" />
-            <Entry x:Name="step4entry" Grid.Row="3" Grid.Column="2" Placeholder="STEP DESCRIPTION" MaxLength="255" IsVisible="false"></Entry>
-            <CheckBox x:Name="step4CB" VerticalOptions="Center" HorizontalOptions="Center" Grid.Row="3" Grid.Column="1" IsVisible="false" Color="{StaticResource hiperPeach}"></CheckBox>
-            <Label x:Name="step5label" VerticalOptions="Center" Grid.Row="4" Grid.Column="0" Text="5" IsVisible="false"/>
-            <Entry x:Name="step5entry" Grid.Row="4" Grid.Column="2" Placeholder="STEP DESCRIPTION" MaxLength="255" IsVisible="false"></Entry>
-            <CheckBox x:Name="step5CB" VerticalOptions="Center" HorizontalOptions="Center" Grid.Row="4" Grid.Column="1" IsVisible="false" Color="{StaticResource hiperPeach}"></CheckBox>
-            <Label x:Name="step6label" VerticalOptions="Center" Grid.Row="5" Grid.Column="0" Text="6" IsVisible="false"/>
-            <Entry x:Name="step6entry" Grid.Row="5" Grid.Column="2" Placeholder="STEP DESCRIPTION" MaxLength="255" IsVisible="false"></Entry>
-            <CheckBox x:Name="step6CB" VerticalOptions="Center" HorizontalOptions="Center" Grid.Row="5" Grid.Column="1" IsVisible="false" Color="{StaticResource hiperPeach}"></CheckBox>
-            <Label x:Name="step7label" VerticalOptions="Center" Grid.Row="6" Grid.Column="0" Text="7" IsVisible="false" />
-            <Entry x:Name="step7entry" Grid.Row="6" Grid.Column="2" Placeholder="STEP DESCRIPTION" MaxLength="255" IsVisible="false"></Entry>
-            <CheckBox x:Name="step7CB" VerticalOptions="Center" HorizontalOptions="Center" Grid.Row="6" Grid.Column="1" IsVisible="false" Color="{StaticResource hiperPeach}"></CheckBox>
-            <Label x:Name="step8label" VerticalOptions="Center" Grid.Row="7" Grid.Column="0" Text="8" IsVisible="false"/>
-            <Entry x:Name="step8entry" Grid.Row="7" Grid.Column="2" Placeholder="STEP DESCRIPTION" MaxLength="255" IsVisible="false"></Entry>
-            <CheckBox x:Name="step8CB" VerticalOptions="Center" HorizontalOptions="Center" Grid.Row="7" Grid.Column="1" IsVisible="false" Color="{StaticResource hiperPeach}"></CheckBox>
-            <Label x:Name="step9label" VerticalOptions="Center" Grid.Row="8" Grid.Column="0" Text="9" IsVisible="false" />
-            <Entry x:Name="step9entry" Grid.Row="8" Grid.Column="2" Placeholder="STEP DESCRIPTION" MaxLength="255" IsVisible="false"></Entry>
-            <CheckBox x:Name="step9CB" VerticalOptions="Center" HorizontalOptions="Center" Grid.Row="8" Grid.Column="1" IsVisible="false" Color="{StaticResource hiperPeach}"></CheckBox>
-        </Grid>
+            <Grid x:Name="gridSteps">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="20" />
+                    <ColumnDefinition Width="30" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Label x:Name="step1label" VerticalOptions="Center" Grid.Row="0" Grid.Column="0" Text="1" />
+                <Entry x:Name="step1entry" Grid.Row="0" Grid.Column="2" Placeholder="STEP DESCRIPTION" MaxLength="255"></Entry>
+                <CheckBox x:Name="step1CB" VerticalOptions="Center" Grid.Row="0" Grid.Column="1" Color="{StaticResource hiperPeach}"></CheckBox>
+                <Label x:Name="step2label" VerticalOptions="Center" Grid.Row="1" Grid.Column="0" Text="2" />
+                <Entry x:Name="step2entry" Grid.Row="1" Grid.Column="2" Placeholder="STEP DESCRIPTION" MaxLength="255"></Entry>
+                <CheckBox x:Name="step2CB" VerticalOptions="Center" HorizontalOptions="Center" Grid.Row="1" Grid.Column="1" Color="{StaticResource hiperPeach}"></CheckBox>
+                <Label x:Name="step3label" VerticalOptions="Center" Grid.Row="2" Grid.Column="0" Text="3" />
+                <Entry x:Name="step3entry" Grid.Row="2" Grid.Column="2" Placeholder="STEP DESCRIPTION" MaxLength="255"></Entry>
+                <CheckBox x:Name="step3CB" VerticalOptions="Center" HorizontalOptions="Center" Grid.Row="2" Grid.Column="1" Color="{StaticResource hiperPeach}"></CheckBox>
+                <Label x:Name="step4label" VerticalOptions="Center" Grid.Row="3" Grid.Column="0" Text="4" IsVisible="false" />
+                <Entry x:Name="step4entry" Grid.Row="3" Grid.Column="2" Placeholder="STEP DESCRIPTION" MaxLength="255" IsVisible="false"></Entry>
+                <CheckBox x:Name="step4CB" VerticalOptions="Center" HorizontalOptions="Center" Grid.Row="3" Grid.Column="1" IsVisible="false" Color="{StaticResource hiperPeach}"></CheckBox>
+                <Label x:Name="step5label" VerticalOptions="Center" Grid.Row="4" Grid.Column="0" Text="5" IsVisible="false"/>
+                <Entry x:Name="step5entry" Grid.Row="4" Grid.Column="2" Placeholder="STEP DESCRIPTION" MaxLength="255" IsVisible="false"></Entry>
+                <CheckBox x:Name="step5CB" VerticalOptions="Center" HorizontalOptions="Center" Grid.Row="4" Grid.Column="1" IsVisible="false" Color="{StaticResource hiperPeach}"></CheckBox>
+                <Label x:Name="step6label" VerticalOptions="Center" Grid.Row="5" Grid.Column="0" Text="6" IsVisible="false"/>
+                <Entry x:Name="step6entry" Grid.Row="5" Grid.Column="2" Placeholder="STEP DESCRIPTION" MaxLength="255" IsVisible="false"></Entry>
+                <CheckBox x:Name="step6CB" VerticalOptions="Center" HorizontalOptions="Center" Grid.Row="5" Grid.Column="1" IsVisible="false" Color="{StaticResource hiperPeach}"></CheckBox>
+                <Label x:Name="step7label" VerticalOptions="Center" Grid.Row="6" Grid.Column="0" Text="7" IsVisible="false" />
+                <Entry x:Name="step7entry" Grid.Row="6" Grid.Column="2" Placeholder="STEP DESCRIPTION" MaxLength="255" IsVisible="false"></Entry>
+                <CheckBox x:Name="step7CB" VerticalOptions="Center" HorizontalOptions="Center" Grid.Row="6" Grid.Column="1" IsVisible="false" Color="{StaticResource hiperPeach}"></CheckBox>
+                <Label x:Name="step8label" VerticalOptions="Center" Grid.Row="7" Grid.Column="0" Text="8" IsVisible="false"/>
+                <Entry x:Name="step8entry" Grid.Row="7" Grid.Column="2" Placeholder="STEP DESCRIPTION" MaxLength="255" IsVisible="false"></Entry>
+                <CheckBox x:Name="step8CB" VerticalOptions="Center" HorizontalOptions="Center" Grid.Row="7" Grid.Column="1" IsVisible="false" Color="{StaticResource hiperPeach}"></CheckBox>
+                <Label x:Name="step9label" VerticalOptions="Center" Grid.Row="8" Grid.Column="0" Text="9" IsVisible="false" />
+                <Entry x:Name="step9entry" Grid.Row="8" Grid.Column="2" Placeholder="STEP DESCRIPTION" MaxLength="255" IsVisible="false"></Entry>
+                <CheckBox x:Name="step9CB" VerticalOptions="Center" HorizontalOptions="Center" Grid.Row="8" Grid.Column="1" IsVisible="false" Color="{StaticResource hiperPeach}"></CheckBox>
+            </Grid>
 
 
-        <Label Text="DEADLINE" HorizontalOptions="Center" TextColor="{StaticResource hiperPeach}" Margin="0,20,0,5"></Label>
-        <Grid x:Name="gridSingle">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="40" />
-                <RowDefinition Height="40" />
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="20" />
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="150" />
-            </Grid.ColumnDefinitions>  
-            <RadioButton GroupName="deadline" x:Name="repeatableRB1" Grid.Row="0" PropertyChanged="repeatableRB1_PropertyChanged"></RadioButton>
-            <Label VerticalOptions="Center" HorizontalOptions="Start" Grid.Row="0" Grid.Column="1" Text="SINGLE"></Label>
-            <DatePicker VerticalOptions="Center" Grid.Row="0" Grid.Column="2" x:Name="goalDeadlineEntry"></DatePicker>
-            <RadioButton GroupName="deadline" x:Name="repeatableRB2" Grid.Row="1" PropertyChanged="repeatableRB2_PropertyChanged"></RadioButton>
-            <Label VerticalOptions="Center" HorizontalOptions="Start" Grid.Row="1" Grid.Column="1" Text="REPEATING"></Label>
-        </Grid>
-        <Grid x:Name="gridWeekly">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="30" />
-                <RowDefinition Height="30" />
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="20" />
-                <ColumnDefinition Width="20" />
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="150" />
-            </Grid.ColumnDefinitions>  
-            <RadioButton GroupName="repeat" x:Name="repeatableRB21" Grid.Row="0" Grid.Column="1" PropertyChanged="repeatableRB21_PropertyChanged"></RadioButton>
-            <Label VerticalOptions="Center" HorizontalOptions="Start" Grid.Row="0" Grid.Column="2" Text="WEEKLY"></Label>
-            <Picker x:Name="weekdayPicker"  Grid.Row="0" Grid.Column="3"></Picker>
-            <RadioButton GroupName="repeat" x:Name="repeatableRB22" Grid.Row="1" Grid.Column="1" PropertyChanged="repeatableRB22_PropertyChanged"></RadioButton>
-            <Label VerticalOptions="Center" HorizontalOptions="Start" Grid.Row="1" Grid.Column="2" Text="MONTHLY"></Label>
-            <Picker x:Name="dayOfMonthPicker" Grid.Row="1" Grid.Column="3"></Picker>
-        </Grid>
+            <Label Text="DEADLINE" HorizontalOptions="Center" TextColor="{StaticResource hiperPeach}" Margin="0,20,0,5"></Label>
+            <Grid x:Name="gridSingle">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="40" />
+                    <RowDefinition Height="40" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="20" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="150" />
+                </Grid.ColumnDefinitions>  
+                <RadioButton GroupName="deadline" x:Name="repeatableRB1" Grid.Row="0" PropertyChanged="repeatableRB1_PropertyChanged"></RadioButton>
+                <Label VerticalOptions="Center" HorizontalOptions="Start" Grid.Row="0" Grid.Column="1" Text="SINGLE"></Label>
+                <DatePicker VerticalOptions="Center" Grid.Row="0" Grid.Column="2" x:Name="goalDeadlineEntry"></DatePicker>
+                <RadioButton GroupName="deadline" x:Name="repeatableRB2" Grid.Row="1" PropertyChanged="repeatableRB2_PropertyChanged"></RadioButton>
+                <Label VerticalOptions="Center" HorizontalOptions="Start" Grid.Row="1" Grid.Column="1" Text="REPEATING"></Label>
+            </Grid>
+            <Grid x:Name="gridWeekly">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="30" />
+                    <RowDefinition Height="30" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="20" />
+                    <ColumnDefinition Width="20" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="150" />
+                </Grid.ColumnDefinitions>  
+                <RadioButton GroupName="repeat" x:Name="repeatableRB21" Grid.Row="0" Grid.Column="1" PropertyChanged="repeatableRB21_PropertyChanged"></RadioButton>
+                <Label VerticalOptions="Center" HorizontalOptions="Start" Grid.Row="0" Grid.Column="2" Text="WEEKLY"></Label>
+                <Picker x:Name="weekdayPicker"  Grid.Row="0" Grid.Column="3"></Picker>
+                <RadioButton GroupName="repeat" x:Name="repeatableRB22" Grid.Row="1" Grid.Column="1" PropertyChanged="repeatableRB22_PropertyChanged"></RadioButton>
+                <Label VerticalOptions="Center" HorizontalOptions="Start" Grid.Row="1" Grid.Column="2" Text="MONTHLY"></Label>
+                <Picker x:Name="dayOfMonthPicker" Grid.Row="1" Grid.Column="3"></Picker>
+            </Grid>
    
-        <Button x:Name="deleteGoal" Text="DELETE" Clicked="deleteGoal_Clicked" Margin="0,20,0,0"></Button>
-    </StackLayout>
-    </ScrollView>
+            <Button x:Name="deleteGoal" Text="DELETE" Clicked="deleteGoal_Clicked" Margin="0,20,0,0"></Button>
+        </StackLayout>
+        </ScrollView>
+
+    </ContentPage.Content>
+
 </ContentPage>

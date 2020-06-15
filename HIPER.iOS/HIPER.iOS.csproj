@@ -194,6 +194,15 @@
     <BundleResource Include="Resources\chat.png" />
     <BundleResource Include="Resources\chat%402x.png" />
     <BundleResource Include="Resources\chat%403x.png" />
+    <BundleResource Include="Resources\add.png" />
+    <BundleResource Include="Resources\add%402x.png" />
+    <BundleResource Include="Resources\add%403x.png" />
+    <BundleResource Include="Resources\save.png" />
+    <BundleResource Include="Resources\save%402x.png" />
+    <BundleResource Include="Resources\save%403x.png" />
+    <BundleResource Include="Resources\edit.png" />
+    <BundleResource Include="Resources\edit%402x.png" />
+    <BundleResource Include="Resources\edit%403x.png" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="CustomRenderers\" />

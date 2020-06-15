@@ -4,6 +4,7 @@
              x:Class="HIPER.FeedPage"
              xmlns:converters="clr-namespace:HIPER.ViewModel.Converters"
              xmlns:forms="clr-namespace:Microcharts.Forms;assembly=Microcharts.Forms">
+
     <ContentPage.Resources>
         <ResourceDictionary>
             <converters:DateTimeToStringConverter x:Key="converter"/>
@@ -13,6 +14,7 @@
     <ContentPage.ToolbarItems>
         <ToolbarItem x:Name="ChatButton" Text="Chat" IconImageSource="{StaticResource chat}" Clicked="ChatButton_Clicked"/>
     </ContentPage.ToolbarItems>
+
     <ContentPage.Content>
         <StackLayout
             Margin="0"

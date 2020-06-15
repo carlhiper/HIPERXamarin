@@ -50,7 +50,7 @@ namespace HIPER
                         {
                             RegDate = DateTime.Now,
                             Points = Helpers.Constants.POINTS_FOR_ACCEPTED_CHALLENGE,
-                            UserId = App.loggedInUser.id
+                            UserId = App.loggedInUser.Id
                         };
                         await App.client.GetTable<PointModel>().InsertAsync(point);
                     }
@@ -73,7 +73,7 @@ namespace HIPER
                 if (!string.IsNullOrEmpty(goal.ChallengeId))
                 {
                     challenge = (await App.client.GetTable<ChallengeModel>().Where(c => c.Id == goal.ChallengeId).ToListAsync()).FirstOrDefault();
-                    challengeOwner = (await App.client.GetTable<UserModel>().Where(u => u.id == challenge.OwnerId).ToListAsync()).FirstOrDefault();
+                    challengeOwner = (await App.client.GetTable<UserModel>().Where(u => u.Id == challenge.OwnerId).ToListAsync()).FirstOrDefault();
                 }
                 return true;
             }
@@ -122,7 +122,7 @@ namespace HIPER
                 {
                     createdByLabel.Text = "Created by " + challengeOwner.FirstName + " " + challengeOwner.LastName;
                     createdByLabel.IsVisible = true;
-                        if (goal.GoalType == 2 && challengeOwner.id == App.loggedInUser.id && IsCompetitionPage)
+                        if (goal.GoalType == 2 && challengeOwner.Id == App.loggedInUser.Id && IsCompetitionPage)
                         {
                             goalCurrentEntry.IsEnabled = false;
                             completeGoal.IsVisible = false;
@@ -239,7 +239,7 @@ namespace HIPER
             else if (!string.IsNullOrEmpty(goal.ChallengeId))
             {
                 challenge = (await App.client.GetTable<ChallengeModel>().Where(c => c.Id == goal.ChallengeId).ToListAsync()).FirstOrDefault();
-                if ((challenge.OwnerId == App.loggedInUser.id))
+                if ((challenge.OwnerId == App.loggedInUser.Id))
                 {
                     editGoal.IsEnabled = true;
                 }
@@ -271,7 +271,7 @@ namespace HIPER
                     {
                         foreach (GoalModel g in goals)
                         {
-                            var user = (await App.client.GetTable<UserModel>().Where(u => u.id == g.UserId).ToListAsync()).FirstOrDefault();
+                            var user = (await App.client.GetTable<UserModel>().Where(u => u.Id == g.UserId).ToListAsync()).FirstOrDefault();
 
                             LeaderBoardModel competitor = new LeaderBoardModel()
                             {
@@ -307,7 +307,8 @@ namespace HIPER
  
         void editGoal_Clicked(System.Object sender, System.EventArgs e) {
 
-            Navigation.PushAsync(new EditGoalPage(goal));
+            //Navigation.PushAsync(new EditGoalPage(goal));
+            Navigation.PushAsync(new TestPage());
 
         }
 
@@ -337,7 +338,7 @@ namespace HIPER
                     {
                         RegDate = DateTime.Now,
                         Points = Helpers.Constants.POINTS_FOR_COMPLETED_GOAL,
-                        UserId = App.loggedInUser.id
+                        UserId = App.loggedInUser.Id
                     };
                     await App.client.GetTable<PointModel>().InsertAsync(p1);
 
@@ -370,7 +371,7 @@ namespace HIPER
                             {
                                 RegDate = DateTime.Now,
                                 Points = Helpers.Constants.POINTS_FOR_WON_CHALLENGE,
-                                UserId = App.loggedInUser.id
+                                UserId = App.loggedInUser.Id
                             };
                             await App.client.GetTable<PointModel>().InsertAsync(p2);
 

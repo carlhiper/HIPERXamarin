@@ -67,9 +67,9 @@ namespace HIPER
                     await container.CreateIfNotExistsAsync();
 
                     // delete old image file
-                    if (App.loggedInUser.ImageName != null)
+                    if (App.loggedInUser.Imagename != null)
                     {
-                        var oldBlockBlob = container.GetBlockBlobReference(App.loggedInUser.ImageName);
+                        var oldBlockBlob = container.GetBlockBlobReference(App.loggedInUser.Imagename);
                         bool result = await oldBlockBlob.DeleteIfExistsAsync();
                     }
 
@@ -78,7 +78,7 @@ namespace HIPER
                     var blockBlob = container.GetBlockBlobReference($"{name}.jpg");
                     await blockBlob.UploadFromStreamAsync(selectedImage.GetStream());
 
-                    App.loggedInUser.ImageName = $"{name}.jpg";
+                    App.loggedInUser.Imagename = $"{name}.jpg";
                     App.loggedInUser.ImageUrl = blockBlob.Uri.OriginalString;
 
                 }
@@ -131,9 +131,9 @@ namespace HIPER
                 await container.CreateIfNotExistsAsync();
 
                 // delete old image file
-                if (App.loggedInUser.ImageName != null)
+                if (App.loggedInUser.Imagename != null)
                 {
-                    var oldBlockBlob = container.GetBlockBlobReference(App.loggedInUser.ImageName);
+                    var oldBlockBlob = container.GetBlockBlobReference(App.loggedInUser.Imagename);
                     bool result = await oldBlockBlob.DeleteIfExistsAsync();
                 }
 
@@ -142,7 +142,7 @@ namespace HIPER
                 var blockBlob = container.GetBlockBlobReference($"{name}.jpg");
                 await blockBlob.UploadFromStreamAsync(stream);
 
-                App.loggedInUser.ImageName = $"{name}.jpg";
+                App.loggedInUser.Imagename = $"{name}.jpg";
                 App.loggedInUser.ImageUrl = blockBlob.Uri.OriginalString;
             }
             catch(Exception ex)

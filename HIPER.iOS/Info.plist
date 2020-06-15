@@ -25,13 +25,11 @@
 	<key>CFBundleDisplayName</key>
 	<string>HIPER</string>
 	<key>CFBundleVersion</key>
-	<string>1.161</string>
+	<string>1.171</string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>CFBundleName</key>
 	<string>HIPER</string>
-	<key>XSAppIconAssets</key>
-	<string>Assets.xcassets/AppIcon.appiconset</string>
 	<key>CFBundleShortVersionString</key>
 	<string>1.0</string>
 	<key>NSCameraUsageDescription</key>
@@ -53,5 +51,7 @@
 		<key>NSAllowsArbitraryLoadsInWebContent</key>
 		<string>True</string>
 	</dict>
+	<key>XSAppIconAssets</key>
+	<string>Assets.xcassets/AppIcon.appiconset</string>
 </dict>
 </plist>
