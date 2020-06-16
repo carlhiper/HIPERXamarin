@@ -114,9 +114,15 @@ namespace HIPER
             createGoalsList(filter.SelectedIndex);
         }
 
-        void addOwnGoal_Clicked(System.Object sender, System.EventArgs e)
+        private async void addOwnGoal_Clicked(System.Object sender, System.EventArgs e)
         {
-            Navigation.PushAsync(new AddGoalPage());
+            try
+            {
+                await Navigation.PushAsync(new AddGoalPage());
+            }catch(Exception ex)
+            {
+                await DisplayAlert("Error", ex.ToString(), "Ok");
+            }
         }
     }
 }

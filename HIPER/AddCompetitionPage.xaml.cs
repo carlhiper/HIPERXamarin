@@ -16,17 +16,16 @@ namespace HIPER
 
         public AddCompetitionPage()
         {
-            InitializeComponent();
             this.user = App.loggedInUser;
-            initPage();
-            GetCompetitors();
+            InitializeComponent();
         }
 
 
         protected override void OnAppearing()
         {
+            initPage();
+            GetCompetitors();
             base.OnAppearing();
-
         }
 
         private void initPage()

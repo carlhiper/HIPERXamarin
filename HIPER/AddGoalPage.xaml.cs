@@ -13,25 +13,27 @@ namespace HIPER
         UserModel User = new UserModel();
         List<UserModel> teammembers = new List<UserModel>();
         ChallengeModel challenge = new ChallengeModel();
+        [Xamarin.Forms.Internals.Preserve]
+        readonly RadioButton rb = new RadioButton();
         
         public AddGoalPage()
         {
             this.User = App.loggedInUser;
             InitializeComponent();
-            initPage();
+            rb.IsVisible = false;
         }
 
         public AddGoalPage(UserModel user)
         {
             this.User = user;
             InitializeComponent();
-            initPage();
+            rb.IsVisible = false;
         }
 
         protected override void OnAppearing()
         {
             base.OnAppearing();
-
+            initPage();
         }
 
         private void initPage()

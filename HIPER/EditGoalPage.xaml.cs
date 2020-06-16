@@ -11,12 +11,25 @@ namespace HIPER
     public partial class EditGoalPage : ContentPage
     {
         GoalModel selectedGoal = new GoalModel();
-  
+
+        [Xamarin.Forms.Internals.Preserve]
+        RadioButton rb = new RadioButton();
+
+        public EditGoalPage()
+        {
+            rb.IsVisible = false;
+        }
+
         public EditGoalPage(GoalModel inputGoal)
         {
             InitializeComponent();
-
             this.selectedGoal = inputGoal;
+            rb.IsVisible = false;
+        }
+
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
 
             weekdayPicker.ItemsSource = App.weekdays;
             dayOfMonthPicker.ItemsSource = App.daysofmonth;
@@ -27,7 +40,7 @@ namespace HIPER
             goalDeadlineEntry.Date = selectedGoal.Deadline;
             goalTargetEntry.Text = selectedGoal.TargetValue;
             goalCurrentEntry.Text = selectedGoal.CurrentValue;
-//            privateGoalCheckbox.IsChecked = selectedGoal.PrivateGoal;
+            //            privateGoalCheckbox.IsChecked = selectedGoal.PrivateGoal;
 
             repeatableRB1.IsChecked = (selectedGoal.RepeatType == 0) ? true : false;
             repeatableRB2.IsChecked = (selectedGoal.RepeatType == 1) ? true : false;
@@ -124,6 +137,7 @@ namespace HIPER
             {
                 headerText.Text = "EDIT GOAL";
             }
+
         }
 
         private async void saveGoal_Clicked(System.Object sender, System.EventArgs e)

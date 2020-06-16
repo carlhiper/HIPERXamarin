@@ -69,7 +69,7 @@ namespace HIPER
                 if (index >= App.donutChartColors.Count)
                     index = 0;
             }
-            chartViewProgress.Chart = new RadialGaugeChart() { Entries = progressEntries, MaxValue = 100, LabelTextSize=20 };
+            chartViewProgress.Chart = new RadialGaugeChart() { Entries = progressEntries, MaxValue = 100, LabelTextSize=28 };
         }
 
         private async void GetAlerts()
@@ -142,7 +142,7 @@ namespace HIPER
                 if (index >= App.donutChartColors.Count)
                     index = 0;
             }
-            chartViewPoints.Chart = new PointChart() { Entries = pointsEntries, LabelTextSize=20, ValueLabelOrientation = Orientation.Horizontal };
+            chartViewPoints.Chart = new PointChart() { Entries = pointsEntries, LabelTextSize=28, ValueLabelOrientation = Orientation.Horizontal };
         }
 
         private async void createFeedList()
@@ -240,9 +240,9 @@ namespace HIPER
             createFeedList();
         }
 
-        void ChatButton_Clicked(System.Object sender, System.EventArgs e)
+        private async void ChatButton_Clicked(System.Object sender, System.EventArgs e)
         {
-            Navigation.PushAsync(new PostPage());
+            await Navigation.PushAsync(new PostPage());
         }
 
         void buttonYear_Clicked(System.Object sender, System.EventArgs e)

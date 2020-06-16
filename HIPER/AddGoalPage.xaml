@@ -15,16 +15,7 @@
                     <Entry x:Name="goalNameEntry" Placeholder="TITLE" MaxLength="20"></Entry>
                     <Editor x:Name="goalDescriptionEntry" Placeholder="DESCRIPTION" MaxLength="255" HeightRequest="100"></Editor>
             
-                    <!--<Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="40" />
-                        </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*" />
-                        </Grid.ColumnDefinitions>
-                        <Label VerticalOptions="Center" Grid.Row="0" Grid.Column="0" Text="IS THE GOAL PRIVATE?"/>
-                        <CheckBox VerticalOptions="Center" HorizontalOptions="Center" Grid.Row="0" Grid.Column="1" x:Name="privateGoalCheckbox" Color="{StaticResource hiperPeach}" CheckedChanged="privateGoalCheckbox_CheckedChanged"></CheckBox>
-                    </Grid>-->
+      
                     <Label Text="CHOOSE A TARGET" HorizontalOptions="Center" Margin="0,20,0,10" TextColor="{StaticResource hiperPeach}"></Label>
                     <Grid>
                         <Grid.RowDefinitions>

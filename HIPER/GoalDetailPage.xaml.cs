@@ -305,10 +305,13 @@ namespace HIPER
         }
 
  
-        void editGoal_Clicked(System.Object sender, System.EventArgs e) {
-
-            Navigation.PushAsync(new EditGoalPage(goal));
-          
+        private async void editGoal_Clicked(System.Object sender, System.EventArgs e) {
+            try { 
+                await Navigation.PushAsync(new EditGoalPage(goal));
+            }catch(Exception ex)
+            {
+                await DisplayAlert("Error", ex.ToString(), "Ok");
+            }
         }
 
         private async void goalCurrentEntry_Unfocused(System.Object sender, Xamarin.Forms.TextChangedEventArgs e)
