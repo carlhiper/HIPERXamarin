@@ -13,11 +13,8 @@ namespace HIPER
             createFeedList();
         }
 
-     
-
         private async void createFeedList()
         {
-
             List<FeedModel> feed = new List<FeedModel>();
             List<UserModel> users = new List<UserModel>();
 
@@ -35,7 +32,7 @@ namespace HIPER
                     try
                     {
 
-                        var posts = await App.client.GetTable<PostModel>().Where(p => p.UserId == user.id).ToListAsync();
+                        var posts = await App.client.GetTable<PostModel>().Where(p => p.UserId == user.Id).ToListAsync();
                         foreach (var post in posts)
                         {
                             if (!string.IsNullOrEmpty(post.Post))
@@ -45,7 +42,7 @@ namespace HIPER
                                 feedItem.ProfileImageURL = user.ImageUrl;
                                 feedItem.FeedItemTitle = user.FirstName + " " + user.LastName;
                                 feedItem.FeedItemPost = post.Post;
-                                feedItem.UserId = user.id;
+                                feedItem.UserId = user.Id;
                                 feed.Add(feedItem);
                             }
                         }
@@ -78,7 +75,7 @@ namespace HIPER
                     PostModel postItem = new PostModel()
                     {
                         Post = PostEntry.Text,
-                        UserId = App.loggedInUser.id,
+                        UserId = App.loggedInUser.Id,
                         CreatedDate = DateTime.Now
                     };
 

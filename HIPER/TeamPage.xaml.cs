@@ -23,33 +23,33 @@ namespace HIPER
 
             try
             {
-                userName.Text = App.loggedInUser.FirstName + " " + App.loggedInUser.LastName;
-                company.Text = App.loggedInUser.Company;
-                email.Text = App.loggedInUser.Email;
-                profileImage.Source = App.loggedInUser.ImageUrl;
                 team = (await App.client.GetTable<TeamModel>().Where(t => t.Id == App.loggedInUser.TeamId).ToListAsync()).FirstOrDefault();
                 if (team != null)
                 {
                     teamStats.IsEnabled = true;
-                    if (team.Administrator_id == App.loggedInUser.id)
+                    if (team.Administrator_id == App.loggedInUser.Id)
                     {
-                        buttonGrid.IsVisible = true;
+                        teamStats.IsVisible = true;
+                        competitionButton.IsVisible = true;
                     }
                     else
                     {
-                        buttonGrid.IsVisible = false;
+                        teamStats.IsVisible = false;
+                        competitionButton.IsVisible = false;
                     }
 
-                    var teamAdmin = (await App.client.GetTable<UserModel>().Where(u => u.id == team.Administrator_id).ToListAsync()).FirstOrDefault();
+                    var teamAdmin = (await App.client.GetTable<UserModel>().Where(u => u.Id == team.Administrator_id).ToListAsync()).FirstOrDefault();
                     var users = await App.client.GetTable<UserModel>().Where(u => u.TeamId == team.Id).ToListAsync();
                     if (users != null)
                     {
-                        users.RemoveAt(users.FindIndex(a => a.id == App.loggedInUser.id));
+                        users.RemoveAt(users.FindIndex(a => a.Id == App.loggedInUser.Id));
 
                         teamCollectionView.ItemsSource = users;
 
-                        teamNameLabel.Text = "TEAM " + team.Name.ToUpper();
-                        teamIdentifierLabel.Text = "Identifier: " + team.Identifier + "   Admin: " + teamAdmin.FirstName + " " + teamAdmin.LastName;
+                        teamNameLabel.Text = team.Name.ToUpper();
+                        teamAdminLabel.Text = "Administrator: " + teamAdmin.FirstName + " " + teamAdmin.LastName;
+                        teamIdentifierLabel.Text = "Identifier: " + team.Identifier;
+                        registerredLabel.Text = "Registerred: " + String.Format("{0:yyyy-MM-dd}", team.CreatedDate);
 
                         createTeam.IsEnabled = false;
                         joinTeam.IsEnabled = false;
@@ -65,10 +65,13 @@ namespace HIPER
                     createTeam.IsEnabled = true;
                     joinTeam.IsEnabled = true;
                     leaveTeam.IsEnabled = false;
+                    competitionButton.IsEnabled = false;
                     teamStats.IsVisible = false;
                     createTeam.IsVisible = true;
                     joinTeam.IsVisible = true;
                     leaveTeam.IsVisible = false;
+                    competitionButton.IsVisible = false;
+                    membersButton.IsVisible = false;
                 }
             }
             catch (NullReferenceException nre)
@@ -79,21 +82,14 @@ namespace HIPER
             {
 
             }
+
+            CheckChat();
         }
 
-        void editProfileButton_Clicked(System.Object sender, System.EventArgs e)
-        {
-            Navigation.PushAsync(new EditUserPage());
-        }
-
-        void viewStatsButton_Clicked(System.Object sender, System.EventArgs e)
-        {
-            Navigation.PushAsync(new StatisticsPage(App.loggedInUser));
-        }
 
         void teamCollectionView_SelectionChanged(System.Object sender, Xamarin.Forms.SelectionChangedEventArgs e)
         {
-            if (App.loggedInUser.id == team.Administrator_id)
+            if (App.loggedInUser.Id == team.Administrator_id)
             {
                 var selectedUser = teamCollectionView.SelectedItem as UserModel;
                 Navigation.PushAsync(new UserDetailPage(selectedUser));
@@ -114,7 +110,7 @@ namespace HIPER
         {
             try
             {
-                if (team.Administrator_id == App.loggedInUser.id)
+                if (team.Administrator_id == App.loggedInUser.Id)
                 {
                     var users = await App.client.GetTable<UserModel>().Where(u => u.TeamId == team.Id).ToListAsync();
                     if (users.Count > 1)
@@ -164,6 +160,37 @@ namespace HIPER
             }
         }
 
+        private async void CheckChat()
+        {
+            if (App.loggedInUser.TeamId != null)
+            {
+                ChatButton.IsEnabled = true;
+                var users = await App.client.GetTable<UserModel>().Where(u => u.TeamId == App.loggedInUser.TeamId).ToListAsync();
+                List<PostModel> postCollection = new List<PostModel>();
+                foreach (var user in users)
+                {
+                    var post = (await App.client.GetTable<PostModel>().Where(p => p.UserId == user.Id).OrderByDescending(p => p.CreatedDate).ToListAsync()).FirstOrDefault();
+                    if (post != null)
+                    {
+                        postCollection.Add(post);
+                    }
+                }
+                postCollection.Sort((x, y) => y.CreatedDate.CompareTo(x.CreatedDate));
+                if (postCollection[0].CreatedDate > App.loggedInUser.LastViewedPostDate)
+                {
+                    ChatButton.IconImageSource = "chat_ex.png";
+                }
+                else
+                {
+                    ChatButton.IconImageSource = "chat.png";
+                }
+            }
+            else
+            {
+                ChatButton.IsEnabled = false;
+            }
+        }
+
         void teamStats_Clicked(System.Object sender, System.EventArgs e)
         {
             if(team != null)
@@ -173,6 +200,11 @@ namespace HIPER
         void competitionButton_Clicked(System.Object sender, System.EventArgs e)
         {
             Navigation.PushAsync(new CompetitionPage());
+        }
+
+        private async void ChatButton_Clicked(System.Object sender, System.EventArgs e)
+        {
+            await Navigation.PushAsync(new PostPage());
         }
     }
 }

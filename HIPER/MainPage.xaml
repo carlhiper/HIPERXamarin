@@ -5,33 +5,52 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d" x:Class="HIPER.MainPage">
 
+    <AbsoluteLayout>
+        <StackLayout VerticalOptions="CenterAndExpand"
+                    Margin="20"
+                    x:Name="mainLayout"
+                    AbsoluteLayout.LayoutBounds="0,0,1,1"
+                    AbsoluteLayout.LayoutFlags="All">
 
-    <StackLayout VerticalOptions="CenterAndExpand"
-                 Margin="20"
-                 CompressedLayout.IsHeadless="True">
-        <!-- Place new controls here -->
-        <Label Text="HIPER" FontSize="60" FontFamily="FUTURA BOOK" TextColor="{StaticResource hiperPeach}"
-               HorizontalOptions="Center" />
-        <Entry x:Name="loginNameEntry"
-               Placeholder="EMAIL"
-               Keyboard="Email"></Entry>
-        <Entry x:Name="passwordEntry"
-               Placeholder="PASSWORD"
-               IsPassword="True"></Entry>
-        <Button x:Name="loginButton"
-               Text="LOGIN"
-               Clicked="loginButton_Clicked"></Button>
-        <Button x:Name="createUserButton"
-                Text="CREATE USER"
-                Clicked="createUserButton_Clicked"
-                ></Button>
-        <Button x:Name="forgotPasswordButton"
-                Text="Forgot password?"
-                BackgroundColor="Transparent"
-                TextColor="{StaticResource hiperPeach}"
-                FontSize="Small"
-                WidthRequest="200"
-                HorizontalOptions="End"
-                Clicked="forgotPasswordButton_Clicked"></Button>
-    </StackLayout>
+            <Label Text="HIPER" FontSize="60" FontFamily="FUTURA BOOK" TextColor="{StaticResource hiperPeach}"
+                   HorizontalOptions="Center" />
+            <Entry x:Name="loginNameEntry"
+                   Placeholder="EMAIL"
+                   Keyboard="Email"></Entry>
+            <Entry x:Name="passwordEntry"
+                   Placeholder="PASSWORD"
+                   IsPassword="True"></Entry>
+            <Button x:Name="loginButton"
+                   Text="LOGIN"
+                   Clicked="loginButton_Clicked"></Button>
+            <Button x:Name="createUserButton"
+                    Text="CREATE USER"
+                    Clicked="createUserButton_Clicked"
+                    ></Button>
+            <Button x:Name="forgotPasswordButton"
+                    Text="Forgot password?"
+                    BackgroundColor="Transparent"
+                    TextColor="{StaticResource hiperPeach}"
+                    FontSize="Small"
+                    WidthRequest="200"
+                    HorizontalOptions="End"
+                    Clicked="forgotPasswordButton_Clicked"></Button>
+        </StackLayout>
+        <StackLayout
+            x:Name="aiLayout"
+            IsVisible="False"
+            AbsoluteLayout.LayoutBounds="0,0,1,1"
+            AbsoluteLayout.LayoutFlags="All"
+            BackgroundColor="Gray" Opacity="0.5">
+
+            <ActivityIndicator
+                x:Name="ai"
+                IsRunning="False"
+                HorizontalOptions="CenterAndExpand"
+                VerticalOptions="CenterAndExpand"
+                Color="Black"/>
+        </StackLayout>
+
+    </AbsoluteLayout>
+
 </ContentPage>

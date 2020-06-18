@@ -21,15 +21,21 @@ namespace HIPER
             InitializeComponent();
             
         }
-        protected override void OnAppearing()
+        protected async override void OnAppearing()
         {
             base.OnAppearing();
 
             if (!string.IsNullOrEmpty(App.loggedInUser.Email))
             {
-                loginNameEntry.Text = App.loggedInUser.Email;
-                passwordEntry.Text = App.loggedInUser.UserPassword;
+                await Navigation.PushAsync(new HomePage());
+
             }
+
+            //if (!string.IsNullOrEmpty(App.loggedInUser.Email))
+            //{
+            //    loginNameEntry.Text = App.loggedInUser.Email;
+            //    passwordEntry.Text = App.loggedInUser.UserPassword;
+            //}
         }
 
         void createUserButton_Clicked(System.Object sender, System.EventArgs e)
@@ -39,10 +45,11 @@ namespace HIPER
 
         private async void loginButton_Clicked(System.Object sender, System.EventArgs e)
         {
-
+            ai.IsRunning = true;
+            aiLayout.IsVisible = true;
+        
             try
             {
-
                 bool isLoginNameEntryEmpty = string.IsNullOrEmpty(loginNameEntry.Text);
                 bool isPasswordEntryEmpty = string.IsNullOrEmpty(passwordEntry.Text);
 
@@ -72,14 +79,13 @@ namespace HIPER
                         await DisplayAlert("Error", "Failed to login", "Ok");
                     }
                 }
-
-
             }
             catch(Exception ex)
             {
                 
             }
-    
+            aiLayout.IsVisible = false;
+            ai.IsRunning = false;
         }
 
         void forgotPasswordButton_Clicked(System.Object sender, System.EventArgs e)

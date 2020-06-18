@@ -8,7 +8,7 @@ using Xamarin.Forms;
 
 namespace HIPER
 {
-    public partial class AddCompetitionPage: ContentPage
+    public partial class AddCompetitionPage : ContentPage
     {
         UserModel user;
         List<UserModel> teammembers;
@@ -16,17 +16,16 @@ namespace HIPER
 
         public AddCompetitionPage()
         {
-            InitializeComponent();
             this.user = App.loggedInUser;
-            initPage();
-            GetCompetitors();
+            InitializeComponent();
         }
 
 
         protected override void OnAppearing()
         {
+            initPage();
+            GetCompetitors();
             base.OnAppearing();
-
         }
 
         private void initPage()
@@ -43,7 +42,7 @@ namespace HIPER
             challengeCollectionView.HeightRequest = 20;
         }
 
- 
+
         private async void CreateGoal(string userId, bool accepted, string challengeId)
         {
             var startDate = DateHandling.GetStartDate(repeatableRB2.IsChecked && repeatableRB21.IsChecked, repeatableRB2.IsChecked && repeatableRB22.IsChecked, weekdayPicker.SelectedIndex, dayOfMonthPicker.SelectedIndex);
@@ -229,7 +228,7 @@ namespace HIPER
             }
             catch (Exception ex) { }
             challengeCollectionView.IsVisible = true;
-            challengeCollectionView.HeightRequest = 20*teammembers.Count;
+            challengeCollectionView.HeightRequest = 20 * teammembers.Count;
         }
 
 
@@ -252,12 +251,12 @@ namespace HIPER
 
                 challenge = new ChallengeModel()
                 {
-                    OwnerId = App.loggedInUser.id,
+                    OwnerId = App.loggedInUser.Id,
                     CreatedDate = DateTime.Now
                 };
                 await App.client.GetTable<ChallengeModel>().InsertAsync(challenge);
 
-                var challenges = (await App.client.GetTable<ChallengeModel>().Where(c => c.OwnerId == App.loggedInUser.id).ToListAsync());
+                var challenges = (await App.client.GetTable<ChallengeModel>().Where(c => c.OwnerId == App.loggedInUser.Id).ToListAsync());
 
                 challenges.Sort((x, y) => y.CreatedDate.CompareTo(x.CreatedDate));
                 challenge = challenges[0];
@@ -266,12 +265,12 @@ namespace HIPER
 
                 foreach (UserModel user in challengedUsers)
                 {
-                    CreateGoal(user.id, true, challenge.Id);
+                    CreateGoal(user.Id, true, challenge.Id);
                 }
 
                 await DisplayAlert("Success", "Competition started and sent to selected team members", "Ok");
                 await Navigation.PopAsync();
-    
+
             }
             catch (NullReferenceException nre)
             {

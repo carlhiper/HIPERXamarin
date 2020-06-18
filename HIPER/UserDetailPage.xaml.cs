@@ -8,10 +8,9 @@ namespace HIPER
 {
     public partial class UserDetailPage : ContentPage
     {
-        UserModel user;
+        UserModel user = new UserModel();
         List<GoalModel> activeGoals = new List<GoalModel>();
         List<GoalModel> closedGoals = new List<GoalModel>();
-
 
         public UserDetailPage()
         {
@@ -63,7 +62,7 @@ namespace HIPER
             
                 if (completedSwitch.IsToggled)
                 {
-                    closedGoals = await App.client.GetTable<GoalModel>().Where(g => g.UserId == user.id && (g.Closed || g.ClosedDate < DateTime.Now)).OrderByDescending(g => g.ClosedDate).ToListAsync();
+                    closedGoals = await App.client.GetTable<GoalModel>().Where(g => g.UserId == user.Id && (g.Closed || g.ClosedDate < DateTime.Now)).OrderByDescending(g => g.ClosedDate).ToListAsync();
 
                     //Sorting
                     if (filter == 0)
@@ -95,7 +94,7 @@ namespace HIPER
                 }
                 else
                 {
-                    activeGoals = await App.client.GetTable<GoalModel>().Where(g => g.UserId == user.id && (!g.Closed && !g.Completed && g.ClosedDate > DateTime.Now)).OrderByDescending(g => g.CreatedDate).ToListAsync();
+                    activeGoals = await App.client.GetTable<GoalModel>().Where(g => g.UserId == user.Id && (!g.Closed && !g.Completed && g.ClosedDate > DateTime.Now)).OrderByDescending(g => g.CreatedDate).ToListAsync();
 
                     //Sorting
                     if (filter == 0)

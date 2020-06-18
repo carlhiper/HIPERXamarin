@@ -35,11 +35,12 @@ namespace HIPER
         {
             if (App.loggedInUser.TeamId != null)
             {
+                ChatButton.IsEnabled = true;
                 var users = await App.client.GetTable<UserModel>().Where(u => u.TeamId == App.loggedInUser.TeamId).ToListAsync();
                 List<PostModel> postCollection = new List<PostModel>();
-                foreach(var user in users)
+                foreach (var user in users)
                 {
-                    var post = (await App.client.GetTable<PostModel>().Where(p => p.UserId == user.id).OrderByDescending(p => p.CreatedDate).ToListAsync()).FirstOrDefault();
+                    var post = (await App.client.GetTable<PostModel>().Where(p => p.UserId == user.Id).OrderByDescending(p => p.CreatedDate).ToListAsync()).FirstOrDefault();
                     if (post != null)
                     {
                         postCollection.Add(post);
@@ -55,13 +56,17 @@ namespace HIPER
                     ChatButton.IconImageSource = "chat.png";
                 }
             }
+            else
+            {
+                ChatButton.IsEnabled = false;
+            }
         }
 
         private async void PopulateProgressChart()
         {
             progressEntries.Clear();
             int index = 0;
-            var activeGoals = await App.client.GetTable<GoalModel>().Where(g => g.UserId == App.loggedInUser.id && (!g.Closed && !g.Completed && g.ClosedDate > DateTime.Now)).OrderByDescending(g => g.CreatedDate).ToListAsync();
+            var activeGoals = await App.client.GetTable<GoalModel>().Where(g => g.UserId == App.loggedInUser.Id && (!g.Closed && !g.Completed && g.ClosedDate > DateTime.Now)).OrderByDescending(g => g.CreatedDate).ToListAsync();
             foreach (var goal in activeGoals)
             {
                 progressEntries.Add(new ChartEntry((int)(goal.Progress * 100)) { Label = goal.Title, ValueLabel = ((int)(goal.Progress * 100)).ToString("D") + "%", Color = SKColor.Parse(App.donutChartColors[index]) });
@@ -69,13 +74,21 @@ namespace HIPER
                 if (index >= App.donutChartColors.Count)
                     index = 0;
             }
-            chartViewProgress.Chart = new RadialGaugeChart() { Entries = progressEntries, MaxValue = 100, LabelTextSize=20 };
+            if (activeGoals.Count == 0)
+            {
+                progressEntries.Add(new ChartEntry(25) { Label = "My next goal!", ValueLabel = (25).ToString("D") + "%", Color = SKColor.Parse(App.donutChartColors[index]) });
+                chartViewProgress.Chart = new RadialGaugeChart() { Entries = progressEntries, MaxValue = 100, LabelTextSize = 24 };
+            }
+            else
+            {
+                chartViewProgress.Chart = new RadialGaugeChart() { Entries = progressEntries, MaxValue = 100, LabelTextSize = 24 };
+            }
         }
 
         private async void GetAlerts()
         {
-            var alertGoals = await App.client.GetTable<GoalModel>().Where(g => g.UserId == App.loggedInUser.id && (!g.Closed && !g.Completed && g.ClosedDate > DateTime.Now)).OrderBy(g => g.Deadline).Take(3).ToListAsync();
-        
+            var alertGoals = await App.client.GetTable<GoalModel>().Where(g => g.UserId == App.loggedInUser.Id && (!g.Closed && !g.Completed && g.ClosedDate > DateTime.Now)).OrderBy(g => g.Deadline).Take(3).ToListAsync();
+
             if (alertGoals.Count == 3)
             {
                 Label1.Text = "-> " + alertGoals[0].Title + " ends " + GetDifference(alertGoals[0].Deadline.Date);
@@ -126,23 +139,31 @@ namespace HIPER
 
             pointsEntries.Clear();
             int index = 0;
-            var users = await App.client.GetTable<UserModel>().Where(u => u.TeamId == App.loggedInUser.TeamId).OrderBy(u => u.FirstName).ToListAsync();
-            foreach (var user in users)
+            var users = await App.client.GetTable<UserModel>().Where(u => u.TeamId != null).Where(u => u.TeamId == App.loggedInUser.TeamId).OrderBy(u => u.FirstName).ToListAsync();
+            if (users.Count > 0)
             {
-                var points = await App.client.GetTable<PointModel>().Where(p => p.UserId == user.id).ToListAsync();
-                int point_sum = 0;
-                foreach (var point in points)
+                foreach (var user in users)
                 {
-                    if (point.RegDate > comparisonDate)
-                        point_sum += point.Points;
-                }
+                    var points = await App.client.GetTable<PointModel>().Where(p => p.UserId == user.Id).ToListAsync();
+                    int point_sum = 0;
+                    foreach (var point in points)
+                    {
+                        if (point.RegDate > comparisonDate)
+                            point_sum += point.Points;
+                    }
 
-                pointsEntries.Add(new ChartEntry(point_sum) { Label = user.FirstName.Substring(0,1) + "." + user.LastName.Substring(0,1), ValueLabel = point_sum.ToString("D"), Color = SKColor.Parse(App.donutChartColors[index]) });
-                index++;
-                if (index >= App.donutChartColors.Count)
-                    index = 0;
+                    pointsEntries.Add(new ChartEntry(point_sum) { Label = user.FirstName.Substring(0, 1) + "." + user.LastName.Substring(0, 1), ValueLabel = point_sum.ToString("D"), Color = SKColor.Parse(App.donutChartColors[index]) });
+                    index++;
+                    if (index >= App.donutChartColors.Count)
+                        index = 0;
+                }
+                chartViewPoints.Chart = new PointChart() { Entries = pointsEntries, LabelTextSize = 24, ValueLabelOrientation = Orientation.Horizontal };
             }
-            chartViewPoints.Chart = new PointChart() { Entries = pointsEntries, LabelTextSize=20, ValueLabelOrientation = Orientation.Horizontal };
+            else
+            {
+                pointsEntries.Add(new ChartEntry(10) { Label = App.loggedInUser.FirstName.Substring(0, 1) + "." + App.loggedInUser.LastName.Substring(0, 1), ValueLabel = (10).ToString("D"), Color = SKColor.Parse(App.donutChartColors[index]) });
+                chartViewPoints.Chart = new PointChart() { Entries = pointsEntries, LabelTextSize = 24, ValueLabelOrientation = Orientation.Horizontal };
+            }
         }
 
         private async void createFeedList()
@@ -152,7 +173,13 @@ namespace HIPER
 
             if (App.loggedInUser.TeamId == null)
             {
-                ;
+                FeedModel feedItem = new FeedModel();
+                feedItem.FeedItemTitle = "News!";
+                feedItem.FeedItemPost = "This is where you will find your latest team information and see how you compare with your team mates.";
+                feedItem.IndexDate = DateTime.Now;
+                feed.Add(feedItem);
+                feedCollectionView.ItemsSource = feed;
+
             }
             else
             {
@@ -163,11 +190,11 @@ namespace HIPER
                 {
                     try
                     {
-                        var goals = await App.client.GetTable<GoalModel>().Where(g => g.UserId == user.id).Where(g => g.GoalType > 0).Where(g => g.CreatedDate > DateTime.Now.AddYears(-1)).ToListAsync();
+                        var goals = await App.client.GetTable<GoalModel>().Where(g => g.UserId == user.Id).Where(g => g.GoalType > 0).Where(g => g.CreatedDate > DateTime.Now.AddYears(-1)).ToListAsync();
                         foreach (var goal in goals)
                         {
                             string challengeId = goal.ChallengeId;
-                            if( challengeId != null)
+                            if (challengeId != null)
                             {
                                 if (!challengeIds.Contains(challengeId))
                                 {
@@ -188,7 +215,7 @@ namespace HIPER
                     var winnerGoal = (await App.client.GetTable<GoalModel>().Where(g => g.ChallengeId == id).Where(g => g.Completed == true).OrderBy(g => g.ClosedDate).ToListAsync()).FirstOrDefault();
                     if (winnerGoal != null)
                     {
-                        var user = (await App.client.GetTable<UserModel>().Where(u => u.id == winnerGoal.UserId).ToListAsync()).FirstOrDefault();
+                        var user = (await App.client.GetTable<UserModel>().Where(u => u.Id == winnerGoal.UserId).ToListAsync()).FirstOrDefault();
                         FeedModel feedItem = new FeedModel();
                         feedItem.IndexDate = winnerGoal.ClosedDate;
                         feedItem.ProfileImageURL = user.ImageUrl;
@@ -211,7 +238,7 @@ namespace HIPER
                 foreach (var id in challengeIds)
                 {
                     var challenge = (await App.client.GetTable<ChallengeModel>().Where(c => c.Id == id).ToListAsync()).FirstOrDefault();
-                    var user = (await App.client.GetTable<UserModel>().Where(u => u.id == challenge.OwnerId).ToListAsync()).FirstOrDefault();
+                    var user = (await App.client.GetTable<UserModel>().Where(u => u.Id == challenge.OwnerId).ToListAsync()).FirstOrDefault();
                     var goal = (await App.client.GetTable<GoalModel>().Where(g => g.ChallengeId == challenge.Id).OrderBy(g => g.CreatedDate).ToListAsync()).FirstOrDefault();
                     FeedModel feedItem = new FeedModel();
                     feedItem.IndexDate = challenge.CreatedDate;
@@ -240,9 +267,9 @@ namespace HIPER
             createFeedList();
         }
 
-        void ChatButton_Clicked(System.Object sender, System.EventArgs e)
+        private async void ChatButton_Clicked(System.Object sender, System.EventArgs e)
         {
-            Navigation.PushAsync(new PostPage());
+            await Navigation.PushAsync(new PostPage());
         }
 
         void buttonYear_Clicked(System.Object sender, System.EventArgs e)

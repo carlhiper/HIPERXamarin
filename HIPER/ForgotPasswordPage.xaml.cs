@@ -13,10 +13,16 @@ namespace HIPER
             InitializeComponent();
         }
 
-        private async void showPasswordButton_Clicked(System.Object sender, System.EventArgs e)
+    
+
+        private async void showButton_Clicked(System.Object sender, System.EventArgs e)
         {
+            ai.IsRunning = true;
+            aiLayout.IsVisible = true;
+
             try
             {
+
                 var user = (await App.client.GetTable<UserModel>().Where(u => u.Email == emailEntry.Text).ToListAsync()).FirstOrDefault();
 
                 if (user != null)
@@ -35,6 +41,9 @@ namespace HIPER
             {
                 await DisplayAlert("Connection error", ex.ToString(), "Ok");
             }
+            aiLayout.IsVisible = false;
+            ai.IsRunning = false;
+
         }
     }
 }
