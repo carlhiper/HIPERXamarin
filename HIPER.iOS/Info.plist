@@ -25,7 +25,7 @@
 	<key>CFBundleDisplayName</key>
 	<string>HIPER</string>
 	<key>CFBundleVersion</key>
-	<string>1.185</string>
+	<string>1.186</string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>CFBundleName</key>
@@ -52,6 +52,6 @@
 		<string>True</string>
 	</dict>
 	<key>XSAppIconAssets</key>
-	<string>Assets.xcassets/AppIcon.appiconset</string>
+	<string>Assets.xcassets/AppIcon-1.appiconset</string>
 </dict>
 </plist>
