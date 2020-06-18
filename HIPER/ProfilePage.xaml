@@ -1,0 +1,58 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="HIPER.ProfilePage">
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem x:Name="ChatButton" Text="Chat" IconImageSource="{StaticResource chat}" Clicked="ChatButton_Clicked"/>
+    </ContentPage.ToolbarItems>
+
+    <ContentPage.Content>
+        <StackLayout Margin="10">
+          <Label Margin="20,20,20,20" Text="MY PROFILE" Style="{StaticResource Header}"></Label>
+                <StackLayout Padding="0">
+                    <Grid Padding="0" Margin="20,10,10,10">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                            <ColumnDefinition Width="180"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Label x:Name="userName" Text="NAME" FontAttributes="Bold"></Label>
+                        <Label x:Name="company" Grid.Row="1" Text="COMPANY"></Label>
+                        <Label x:Name="email" Grid.Row="2" FontAttributes="Italic" Text="EMAIL"></Label>
+                        <Label x:Name="subscription" Grid.Row="3" FontAttributes="Italic" Text="Subscription: Free"></Label>
+                        <Label x:Name="registeredDate" Grid.Row="4" FontAttributes="Italic" Text="Registerred: "></Label>
+                        <Frame CornerRadius="80"
+                               IsClippedToBounds="True"
+                               HorizontalOptions="Center"
+                               VerticalOptions="Center"
+                               Padding="0"
+                               Margin="0"
+                               Grid.Column="1"
+                               Grid.RowSpan="5"
+                               BorderColor="gray">
+                            <Image x:Name="profileImage"
+                                   Aspect="AspectFill"
+                                   WidthRequest="160"
+                                   HeightRequest="160"></Image>
+                        </Frame>
+                    </Grid>
+                    <StackLayout Padding="0" Margin="50,10,50,0">
+                        <Button  x:Name="editProfileButton" Clicked="editProfileButton_Clicked"
+                                 Text="EDIT PROFILE"></Button>
+                        <Button  x:Name="viewStatsButton" Clicked="viewStatsButton_Clicked"
+                                 Text="PERFORMANCE REPORT"></Button>
+                        <Button  x:Name="logoutButton" Style="{StaticResource Minimal}" HorizontalOptions="EndAndExpand" Clicked="logoutButton_Clicked"
+                                 Text="Logout"></Button>
+              
+                    </StackLayout>
+                 </StackLayout>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

@@ -117,5 +117,10 @@ namespace HIPER
         {
             createGoalsList(filter.SelectedIndex);
         }
+
+        private async void AddNewCompetitionButton_Clicked(System.Object sender, System.EventArgs e)
+        {
+            await Navigation.PushAsync(new AddCompetitionPage());
+        }
     }
 }

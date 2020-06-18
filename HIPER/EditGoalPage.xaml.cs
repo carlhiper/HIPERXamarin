@@ -203,12 +203,12 @@ namespace HIPER
             selectedGoal.LastUpdatedDate = DateTime.Now;
             selectedGoal.Title = goalNameEntry.Text;
             selectedGoal.Description = goalDescriptionEntry.Text;
-          //  selectedGoal.PrivateGoal = privateGoalCheckbox.IsChecked;
+            //  selectedGoal.PrivateGoal = privateGoalCheckbox.IsChecked;
             selectedGoal.RepeatWeekly = weekdayPicker.SelectedIndex;
             selectedGoal.RepeatMonthly = dayOfMonthPicker.SelectedIndex;
             selectedGoal.RepeatType = repeatableRB1.IsChecked ? 0 : 1;
             selectedGoal.WeeklyOrMonthly = repeatableRB21.IsChecked ? 0 : 1;
-    
+
             if (selectedGoal.TargetType == 1)
             {
                 selectedGoal.StepByStepAmount = stepbystepPicker.SelectedIndex;

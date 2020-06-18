@@ -60,7 +60,8 @@ namespace HIPER
                         await Navigation.PopAsync();
                     }
                 }
-            }catch(Exception ex)
+            }
+            catch (Exception ex)
             {
 
             }
@@ -101,27 +102,27 @@ namespace HIPER
             }
 
             if (string.IsNullOrEmpty(goal.TeamId))
-                
 
-            if (string.IsNullOrEmpty(goal.ChallengeId))
-            {
-                leaderboardCollectionView.IsVisible = false;
-                leaderBoardLabel.IsVisible = false;
-                cardFrame.BorderColor = Color.FromHex(HIPER.Helpers.Constants.HIPER_PEACH);
-                challengeImage.IsVisible = false;
-                createdByLabel.Text = "";
-                createdByLabel.IsVisible = false;
-            }
-            else
-            {
-                leaderboardCollectionView.IsVisible = true;
-                leaderBoardLabel.IsVisible = true;
-                cardFrame.BorderColor = Color.FromHex(HIPER.Helpers.Constants.HIPER_PEACH);
-                challengeImage.IsVisible = true;
-                if (challengeOwner != null)
+
+                if (string.IsNullOrEmpty(goal.ChallengeId))
                 {
-                    createdByLabel.Text = "Created by " + challengeOwner.FirstName + " " + challengeOwner.LastName;
-                    createdByLabel.IsVisible = true;
+                    leaderboardCollectionView.IsVisible = false;
+                    leaderBoardLabel.IsVisible = false;
+                    cardFrame.BorderColor = Color.FromHex(HIPER.Helpers.Constants.HIPER_PEACH);
+                    challengeImage.IsVisible = false;
+                    createdByLabel.Text = "";
+                    createdByLabel.IsVisible = false;
+                }
+                else
+                {
+                    leaderboardCollectionView.IsVisible = true;
+                    leaderBoardLabel.IsVisible = true;
+                    cardFrame.BorderColor = Color.FromHex(HIPER.Helpers.Constants.HIPER_PEACH);
+                    challengeImage.IsVisible = true;
+                    if (challengeOwner != null)
+                    {
+                        createdByLabel.Text = "Created by " + challengeOwner.FirstName + " " + challengeOwner.LastName;
+                        createdByLabel.IsVisible = true;
                         if (goal.GoalType == 2 && challengeOwner.Id == App.loggedInUser.Id && IsCompetitionPage)
                         {
                             goalCurrentEntry.IsEnabled = false;
@@ -266,7 +267,7 @@ namespace HIPER
                     competitors.Clear();
                     leaderboardCollectionView.ItemsSource = null;
                     var goals = await App.client.GetTable<GoalModel>().Where(g => g.ChallengeId == goal.ChallengeId).Where(g => g.Deadline == goal.Deadline).ToListAsync();
-                    
+
                     if (goals != null)
                     {
                         foreach (GoalModel g in goals)
@@ -304,11 +305,14 @@ namespace HIPER
             return base.OnBackButtonPressed();
         }
 
- 
-        private async void editGoal_Clicked(System.Object sender, System.EventArgs e) {
-            try { 
+
+        private async void editGoal_Clicked(System.Object sender, System.EventArgs e)
+        {
+            try
+            {
                 await Navigation.PushAsync(new EditGoalPage(goal));
-            }catch(Exception ex)
+            }
+            catch (Exception ex)
             {
                 await DisplayAlert("Error", ex.ToString(), "Ok");
             }
@@ -385,7 +389,8 @@ namespace HIPER
 
 
                 }
-            }catch(Exception ex)
+            }
+            catch (Exception ex)
             {
                 await DisplayAlert("Error", ex.ToString(), "Ok");
             }

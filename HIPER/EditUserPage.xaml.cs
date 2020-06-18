@@ -37,7 +37,8 @@ namespace HIPER
 
         private async void saveProfile_Clicked(System.Object sender, System.EventArgs e)
         {
-            try {
+            try
+            {
 
 
                 if (passwordEntry.Text.Length < 8)
@@ -45,7 +46,7 @@ namespace HIPER
                     await DisplayAlert("Error", "The password need to be at least 8 characters", "Ok");
                     return;
                 }
-                else if(string.IsNullOrEmpty(emailEntry.Text))
+                else if (string.IsNullOrEmpty(emailEntry.Text))
                 {
                     await DisplayAlert("Error", "You need to fill in your email", "Ok");
                     return;
@@ -88,11 +89,11 @@ namespace HIPER
                 await DisplayAlert("Success", "Profile updated", "Ok");
                 await Navigation.PopAsync();
             }
-            catch(NullReferenceException nre)
+            catch (NullReferenceException nre)
             {
                 await DisplayAlert("Failure!", "Something went wrong, please try again", "Ok");
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 await DisplayAlert("Failure!", "Something went wrong, please try again", "Ok");
             }
@@ -102,7 +103,8 @@ namespace HIPER
         {
             await CrossMedia.Current.Initialize();
 
-            if (!CrossMedia.Current.IsPickPhotoSupported) {
+            if (!CrossMedia.Current.IsPickPhotoSupported)
+            {
                 await DisplayAlert("Error", "This is not supported on your device", "Ok");
                 return;
             }
@@ -112,9 +114,8 @@ namespace HIPER
                 PhotoSize = PhotoSize.Medium
             };
             var selectedImageFile = await CrossMedia.Current.PickPhotoAsync(mediaOptions);
-            if(selectedImageFile == null)
+            if (selectedImageFile == null)
             {
-                await DisplayAlert("Error", "There was an error trying to get your image file", "Ok");
                 return;
             }
             selectedImage = selectedImageFile;
@@ -145,9 +146,9 @@ namespace HIPER
                 App.loggedInUser.Imagename = $"{name}.jpg";
                 App.loggedInUser.ImageUrl = blockBlob.Uri.OriginalString;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                
+
             }
         }
     }

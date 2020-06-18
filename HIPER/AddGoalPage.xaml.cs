@@ -15,7 +15,7 @@ namespace HIPER
         ChallengeModel challenge = new ChallengeModel();
         [Xamarin.Forms.Internals.Preserve]
         readonly RadioButton rb = new RadioButton();
-        
+
         public AddGoalPage()
         {
             this.User = App.loggedInUser;
@@ -147,7 +147,7 @@ namespace HIPER
                 Description = goalDescriptionEntry.Text,
                 Deadline = deadLineDate,
                 TargetValue = goalTargetEntry.Text,
-             //   PrivateGoal = privateGoalCheckbox.IsChecked,
+                //   PrivateGoal = privateGoalCheckbox.IsChecked,
                 UserId = userId,
                 GoalAccepted = accepted,
                 ChallengeId = challengeId,
@@ -317,18 +317,16 @@ namespace HIPER
             {
                 challengeCollectionView.HeightRequest = 20;
                 challengeCollectionView.IsVisible = false;
-
             }
             else
             {
-         //       privateGoalCheckbox.IsChecked = false;
                 try
                 {
-                    if (teammembers == null)
+                    if (teammembers.Count == 0)
                     {
                         teammembers = await App.client.GetTable<UserModel>().Where(u => u.TeamId == App.loggedInUser.TeamId).ToListAsync();
                         teammembers.RemoveAt(teammembers.FindIndex(a => a.Id == App.loggedInUser.Id));
-                       
+
                     }
                     challengeCollectionView.ItemsSource = teammembers;
                 }
@@ -338,12 +336,5 @@ namespace HIPER
                 challengeCollectionView.HeightRequest = teammembers.Count * 20;
             }
         }
-
-        //void privateGoalCheckbox_CheckedChanged(System.Object sender, Xamarin.Forms.CheckedChangedEventArgs e)
-        //{
-        //    if (privateGoalCheckbox.IsChecked)
-        //        challengeCheckbox.IsChecked = false;
-
-        //}
     }
 }

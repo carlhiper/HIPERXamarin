@@ -12,13 +12,12 @@ namespace HIPER
             InitializeComponent();
             UpdateScoreboard.checkDeadlines();
             UpdateScoreboard.checkRepeatGoals();
+            NavigationPage.SetHasBackButton(this, false);
         }
 
         protected override void OnAppearing()
         {
             base.OnAppearing();
-
-
         }
     }
 }

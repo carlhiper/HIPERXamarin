@@ -8,7 +8,7 @@ using Xamarin.Forms;
 
 namespace HIPER
 {
-    public partial class AddCompetitionPage: ContentPage
+    public partial class AddCompetitionPage : ContentPage
     {
         UserModel user;
         List<UserModel> teammembers;
@@ -42,7 +42,7 @@ namespace HIPER
             challengeCollectionView.HeightRequest = 20;
         }
 
- 
+
         private async void CreateGoal(string userId, bool accepted, string challengeId)
         {
             var startDate = DateHandling.GetStartDate(repeatableRB2.IsChecked && repeatableRB21.IsChecked, repeatableRB2.IsChecked && repeatableRB22.IsChecked, weekdayPicker.SelectedIndex, dayOfMonthPicker.SelectedIndex);
@@ -228,7 +228,7 @@ namespace HIPER
             }
             catch (Exception ex) { }
             challengeCollectionView.IsVisible = true;
-            challengeCollectionView.HeightRequest = 20*teammembers.Count;
+            challengeCollectionView.HeightRequest = 20 * teammembers.Count;
         }
 
 
@@ -270,7 +270,7 @@ namespace HIPER
 
                 await DisplayAlert("Success", "Competition started and sent to selected team members", "Ok");
                 await Navigation.PopAsync();
-    
+
             }
             catch (NullReferenceException nre)
             {

@@ -9,7 +9,7 @@ using Xamarin.Forms;
 
 namespace HIPER
 {
- 
+
     public partial class StatisticsPage : ContentPage
     {
         int recurrentGoalStartIndex = 0;
@@ -167,16 +167,16 @@ namespace HIPER
 
             if (selectedTeam == null)
             {
-     
+
                 ReccurrentGoalList = recurrentGoals.Where(g => g.RecurrentId == recurrentId).ToList();
             }
             else
             {
                 //Get all goal in recurrentGoals, that have the same challengeId
                 var temp_goal = recurrentGoals.Where(t_g => t_g.RecurrentId == recurrentId).FirstOrDefault();
-                ReccurrentGoalList = recurrentGoals.Where(t_g => t_g.ChallengeId == temp_goal.ChallengeId).ToList(); 
+                ReccurrentGoalList = recurrentGoals.Where(t_g => t_g.ChallengeId == temp_goal.ChallengeId).ToList();
             }
-            
+
             ReccurrentGoalList.Sort((x, y) => y.CreatedDate.CompareTo(x.CreatedDate));
 
             if (selectedTeam == null)
@@ -207,7 +207,7 @@ namespace HIPER
                         if (g.Deadline == goal.Deadline)
                             sum += int.Parse(goal.CurrentValue);
                     }
-               //     g.CurrentValue = sum.ToString();
+                    //     g.CurrentValue = sum.ToString();
                     GoalModel goalboal = new GoalModel()
                     {
                         CurrentValue = sum.ToString(),
@@ -271,7 +271,7 @@ namespace HIPER
             }
             if (count > 0)
             {
-                chartViewRecurrentGoals.Chart = new BarChart() { Entries = recurrentGoalEntries, LabelTextSize=24 };
+                chartViewRecurrentGoals.Chart = new BarChart() { Entries = recurrentGoalEntries, LabelTextSize = 24 };
                 chartViewRecurrentGoalsAck.Chart = new LineChart() { Entries = recurrentGoalEntriesAck, LabelTextSize = 24 };
             }
         }
@@ -308,12 +308,12 @@ namespace HIPER
                 foreach (Teammember member in Teammembers)
                 {
                     int g_nbr = GoalStats.GetNbrCompletedGoals(member.Goals, selectedMonth);
-                    teamComparisonEntries.Add(new ChartEntry(g_nbr) { Label = member.FirstName + " " + member.LastName, ValueLabel = g_nbr.ToString("D"), Color = SKColor.Parse(App.donutChartColors[index])});
+                    teamComparisonEntries.Add(new ChartEntry(g_nbr) { Label = member.FirstName + " " + member.LastName, ValueLabel = g_nbr.ToString("D"), Color = SKColor.Parse(App.donutChartColors[index]) });
                     index++;
                     if (index >= App.donutChartColors.Count)
                         index = 0;
                 }
-                chartViewTeamComparison.Chart = new DonutChart() { Entries = teamComparisonEntries, LabelTextSize=28 };
+                chartViewTeamComparison.Chart = new DonutChart() { Entries = teamComparisonEntries, LabelTextSize = 24 };
             }
         }
 
@@ -322,26 +322,26 @@ namespace HIPER
         void PopulateStandardCharts()
         {
             goalsCompletedEntries.Clear();
-            goalsCompletedEntries.Add(new ChartEntry(GoalStats.GetNbrCompletedGoals(goals, selectedMonth+4)) { Label = GoalStats.GetShortMonthName(selectedMonth+4), ValueLabel = GoalStats.GetNbrCompletedGoals(goals, selectedMonth + 4).ToString(), Color = SKColor.Parse("#FF7562") });
-            goalsCompletedEntries.Add(new ChartEntry(GoalStats.GetNbrCompletedGoals(goals, selectedMonth+3)) { Label = GoalStats.GetShortMonthName(selectedMonth+3), ValueLabel = GoalStats.GetNbrCompletedGoals(goals, selectedMonth + 3).ToString(), Color = SKColor.Parse("#FF7562") });
-            goalsCompletedEntries.Add(new ChartEntry(GoalStats.GetNbrCompletedGoals(goals, selectedMonth+2)) { Label = GoalStats.GetShortMonthName(selectedMonth+2), ValueLabel = GoalStats.GetNbrCompletedGoals(goals, selectedMonth + 2).ToString(), Color = SKColor.Parse("#FF7562") });
-            goalsCompletedEntries.Add(new ChartEntry(GoalStats.GetNbrCompletedGoals(goals, selectedMonth+1)) { Label = GoalStats.GetShortMonthName(selectedMonth+1), ValueLabel = GoalStats.GetNbrCompletedGoals(goals, selectedMonth + 1).ToString(), Color = SKColor.Parse("#FF7562") });
+            goalsCompletedEntries.Add(new ChartEntry(GoalStats.GetNbrCompletedGoals(goals, selectedMonth + 4)) { Label = GoalStats.GetShortMonthName(selectedMonth + 4), ValueLabel = GoalStats.GetNbrCompletedGoals(goals, selectedMonth + 4).ToString(), Color = SKColor.Parse("#FF7562") });
+            goalsCompletedEntries.Add(new ChartEntry(GoalStats.GetNbrCompletedGoals(goals, selectedMonth + 3)) { Label = GoalStats.GetShortMonthName(selectedMonth + 3), ValueLabel = GoalStats.GetNbrCompletedGoals(goals, selectedMonth + 3).ToString(), Color = SKColor.Parse("#FF7562") });
+            goalsCompletedEntries.Add(new ChartEntry(GoalStats.GetNbrCompletedGoals(goals, selectedMonth + 2)) { Label = GoalStats.GetShortMonthName(selectedMonth + 2), ValueLabel = GoalStats.GetNbrCompletedGoals(goals, selectedMonth + 2).ToString(), Color = SKColor.Parse("#FF7562") });
+            goalsCompletedEntries.Add(new ChartEntry(GoalStats.GetNbrCompletedGoals(goals, selectedMonth + 1)) { Label = GoalStats.GetShortMonthName(selectedMonth + 1), ValueLabel = GoalStats.GetNbrCompletedGoals(goals, selectedMonth + 1).ToString(), Color = SKColor.Parse("#FF7562") });
             goalsCompletedEntries.Add(new ChartEntry(GoalStats.GetNbrCompletedGoals(goals, selectedMonth)) { Label = GoalStats.GetShortMonthName(selectedMonth), ValueLabel = GoalStats.GetNbrCompletedGoals(goals, selectedMonth).ToString(), Color = SKColor.Parse("#FF7562") });
 
-            chartViewCompleted.Chart = new LineChart() { Entries = goalsCompletedEntries, LabelTextSize=28, ValueLabelOrientation=Orientation.Horizontal };
+            chartViewCompleted.Chart = new LineChart() { Entries = goalsCompletedEntries, LabelTextSize = 24, ValueLabelOrientation = Orientation.Horizontal };
 
             goalsCompletionEntries.Clear();
-            goalsCompletionEntries.Add(new ChartEntry(GoalStats.GetGoalCompletionRatio(goals, selectedMonth + 4)*100) { Label = GoalStats.GetShortMonthName(selectedMonth + 4), ValueLabel = (GoalStats.GetGoalCompletionRatio(goals, selectedMonth + 4)).ToString("F1") + "%", Color = SKColor.Parse("#FF7562") });
-            goalsCompletionEntries.Add(new ChartEntry(GoalStats.GetGoalCompletionRatio(goals, selectedMonth + 3)*100) { Label = GoalStats.GetShortMonthName(selectedMonth + 3), ValueLabel = (GoalStats.GetGoalCompletionRatio(goals, selectedMonth + 3)).ToString("F1") + "%", Color = SKColor.Parse("#FF7562") });
-            goalsCompletionEntries.Add(new ChartEntry(GoalStats.GetGoalCompletionRatio(goals, selectedMonth + 2)*100) { Label = GoalStats.GetShortMonthName(selectedMonth + 2), ValueLabel = (GoalStats.GetGoalCompletionRatio(goals, selectedMonth + 2)).ToString("F1") + "%", Color = SKColor.Parse("#FF7562") });
-            goalsCompletionEntries.Add(new ChartEntry(GoalStats.GetGoalCompletionRatio(goals, selectedMonth + 1)*100) { Label = GoalStats.GetShortMonthName(selectedMonth + 1), ValueLabel = (GoalStats.GetGoalCompletionRatio(goals, selectedMonth + 1)).ToString("F1") + "%", Color = SKColor.Parse("#FF7562") });
-            goalsCompletionEntries.Add(new ChartEntry(GoalStats.GetGoalCompletionRatio(goals, selectedMonth)*100) { Label = GoalStats.GetShortMonthName(selectedMonth), ValueLabel = (GoalStats.GetGoalCompletionRatio(goals, selectedMonth)).ToString("F1") + "%", Color = SKColor.Parse("#FF7562") });
+            goalsCompletionEntries.Add(new ChartEntry(GoalStats.GetGoalCompletionRatio(goals, selectedMonth + 4) * 100) { Label = GoalStats.GetShortMonthName(selectedMonth + 4), ValueLabel = (GoalStats.GetGoalCompletionRatio(goals, selectedMonth + 4)).ToString("F1") + "%", Color = SKColor.Parse("#FF7562") });
+            goalsCompletionEntries.Add(new ChartEntry(GoalStats.GetGoalCompletionRatio(goals, selectedMonth + 3) * 100) { Label = GoalStats.GetShortMonthName(selectedMonth + 3), ValueLabel = (GoalStats.GetGoalCompletionRatio(goals, selectedMonth + 3)).ToString("F1") + "%", Color = SKColor.Parse("#FF7562") });
+            goalsCompletionEntries.Add(new ChartEntry(GoalStats.GetGoalCompletionRatio(goals, selectedMonth + 2) * 100) { Label = GoalStats.GetShortMonthName(selectedMonth + 2), ValueLabel = (GoalStats.GetGoalCompletionRatio(goals, selectedMonth + 2)).ToString("F1") + "%", Color = SKColor.Parse("#FF7562") });
+            goalsCompletionEntries.Add(new ChartEntry(GoalStats.GetGoalCompletionRatio(goals, selectedMonth + 1) * 100) { Label = GoalStats.GetShortMonthName(selectedMonth + 1), ValueLabel = (GoalStats.GetGoalCompletionRatio(goals, selectedMonth + 1)).ToString("F1") + "%", Color = SKColor.Parse("#FF7562") });
+            goalsCompletionEntries.Add(new ChartEntry(GoalStats.GetGoalCompletionRatio(goals, selectedMonth) * 100) { Label = GoalStats.GetShortMonthName(selectedMonth), ValueLabel = (GoalStats.GetGoalCompletionRatio(goals, selectedMonth)).ToString("F1") + "%", Color = SKColor.Parse("#FF7562") });
 
-            chartViewCompletionRatio.Chart = new LineChart() { Entries = goalsCompletionEntries, LabelTextSize = 28, ValueLabelOrientation = Orientation.Horizontal };
+            chartViewCompletionRatio.Chart = new LineChart() { Entries = goalsCompletionEntries, LabelTextSize = 24, ValueLabelOrientation = Orientation.Horizontal };
         }
 
 
-    
+
 
         void prevButton_Clicked(System.Object sender, System.EventArgs e)
         {

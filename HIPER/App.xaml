@@ -55,6 +55,13 @@
             <Setter Property="Margin" Value="20"></Setter>
             <Setter Property="HorizontalOptions" Value="Center"></Setter>
         </Style>
+        <Style x:Key="SubHeader" TargetType="Label">
+            <Setter Property="TextColor" Value="{StaticResource hiperPeach}" ></Setter>
+            <Setter Property="FontFamily" Value="FUTURA BOOK"></Setter>
+            <Setter Property="FontSize" Value="Small"></Setter>
+            <Setter Property="Margin" Value="20"></Setter>
+            <Setter Property="HorizontalOptions" Value="Center"></Setter>
+        </Style>
         <Style TargetType="Frame">
             <Setter Property="BorderColor" Value="{StaticResource hiperPeach}"></Setter>
             <Setter Property="Padding" Value="5"></Setter>
