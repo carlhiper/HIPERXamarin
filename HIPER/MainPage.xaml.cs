@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using HIPER.Model;
+using Microsoft.AppCenter.Crashes;
 using SQLite;
 using Xamarin.Forms;
 
@@ -21,7 +22,7 @@ namespace HIPER
             InitializeComponent();
             
         }
-        protected override void OnAppearing()
+        protected async override void OnAppearing()
         {
             base.OnAppearing();
 
@@ -29,6 +30,8 @@ namespace HIPER
             {
                 loginNameEntry.Text = App.loggedInUser.Email;
                 passwordEntry.Text = App.loggedInUser.UserPassword;
+                await Navigation.PushAsync(new HomePage());
+
             }
         }
 
@@ -39,10 +42,11 @@ namespace HIPER
 
         private async void loginButton_Clicked(System.Object sender, System.EventArgs e)
         {
-
+            ai.IsRunning = true;
+            aiLayout.IsVisible = true;
+        
             try
             {
-
                 bool isLoginNameEntryEmpty = string.IsNullOrEmpty(loginNameEntry.Text);
                 bool isPasswordEntryEmpty = string.IsNullOrEmpty(passwordEntry.Text);
 
@@ -72,14 +76,16 @@ namespace HIPER
                         await DisplayAlert("Error", "Failed to login", "Ok");
                     }
                 }
-
-
             }
             catch(Exception ex)
             {
-                
+                var properties = new Dictionary<string, string> {
+                { "MainPage", "Login button" }};
+                Crashes.TrackError(ex, properties);
+
             }
-    
+            aiLayout.IsVisible = false;
+            ai.IsRunning = false;
         }
 
         void forgotPasswordButton_Clicked(System.Object sender, System.EventArgs e)

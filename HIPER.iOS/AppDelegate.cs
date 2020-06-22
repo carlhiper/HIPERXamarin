@@ -32,6 +32,28 @@ namespace HIPER.iOS
             string folderPath = Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal), "..", "Library");
             string fullPath = Path.Combine(folderPath, dbName);
 
+            UINavigationBar.Appearance.TintColor = new UIColor(red: 1.00f, green: 0.46f, blue: 0.39f, alpha: 1.00f);
+
+            // Color of the selected tab icon:
+            UITabBar.Appearance.SelectedImageTintColor = new UIColor(red: 1.00f, green: 0.46f, blue: 0.39f, alpha: 1.00f);
+
+            // Color of the selected tab text color:
+            UITabBarItem.Appearance.SetTitleTextAttributes(
+                new UITextAttributes()
+                {
+                    TextColor = new UIColor(red: 0.00f, green: 0.00f, blue: 0.00f, alpha: 1.00f)
+                },
+                UIControlState.Selected);
+
+            // Color of the unselected tab icon & text:
+            UITabBarItem.Appearance.SetTitleTextAttributes(
+                new UITextAttributes()
+                {
+                    TextColor = UIColor.FromRGB(0, 0, 0)
+                },
+                UIControlState.Normal);
+
+
             LoadApplication(new App(fullPath));
 
             return base.FinishedLaunching(app, options);

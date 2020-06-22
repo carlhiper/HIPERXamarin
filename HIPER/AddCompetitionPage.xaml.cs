@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using HIPER.Helpers;
 using HIPER.Model;
+using Microsoft.AppCenter.Crashes;
 using SQLite;
 using Xamarin.Forms;
 
 namespace HIPER
 {
-    public partial class AddCompetitionPage: ContentPage
+    public partial class AddCompetitionPage : ContentPage
     {
         UserModel user;
         List<UserModel> teammembers;
@@ -16,17 +17,16 @@ namespace HIPER
 
         public AddCompetitionPage()
         {
-            InitializeComponent();
             this.user = App.loggedInUser;
-            initPage();
-            GetCompetitors();
+            InitializeComponent();
         }
 
 
         protected override void OnAppearing()
         {
+            initPage();
+            GetCompetitors();
             base.OnAppearing();
-
         }
 
         private void initPage()
@@ -43,7 +43,7 @@ namespace HIPER
             challengeCollectionView.HeightRequest = 20;
         }
 
- 
+
         private async void CreateGoal(string userId, bool accepted, string challengeId)
         {
             var startDate = DateHandling.GetStartDate(repeatableRB2.IsChecked && repeatableRB21.IsChecked, repeatableRB2.IsChecked && repeatableRB22.IsChecked, weekdayPicker.SelectedIndex, dayOfMonthPicker.SelectedIndex);
@@ -227,9 +227,13 @@ namespace HIPER
                 }
                 challengeCollectionView.ItemsSource = teammembers;
             }
-            catch (Exception ex) { }
+            catch (Exception ex) {
+                var properties = new Dictionary<string, string> {
+                { "AddCompetitionPage", "checkDeadlines" }};
+                Crashes.TrackError(ex, properties);
+            }
             challengeCollectionView.IsVisible = true;
-            challengeCollectionView.HeightRequest = 20*teammembers.Count;
+            challengeCollectionView.HeightRequest = 20 * teammembers.Count;
         }
 
 
@@ -271,15 +275,14 @@ namespace HIPER
 
                 await DisplayAlert("Success", "Competition started and sent to selected team members", "Ok");
                 await Navigation.PopAsync();
-    
-            }
-            catch (NullReferenceException nre)
-            {
-                await DisplayAlert("Error", "Something went wrong, please try again", "Ok");
+
             }
             catch (Exception ex)
             {
                 await DisplayAlert("Error", "Something went wrong, please try again", "Ok");
+                var properties = new Dictionary<string, string> {
+                { "UpdateScoreboard", "startCompetition_Clicked" }};
+                Crashes.TrackError(ex, properties);
             }
         }
     }

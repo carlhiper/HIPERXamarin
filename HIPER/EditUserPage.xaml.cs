@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using HIPER.Model;
+using Microsoft.AppCenter.Crashes;
 using Microsoft.WindowsAzure.Storage;
 using Plugin.Media;
 using Plugin.Media.Abstractions;
@@ -37,7 +38,8 @@ namespace HIPER
 
         private async void saveProfile_Clicked(System.Object sender, System.EventArgs e)
         {
-            try {
+            try
+            {
 
 
                 if (passwordEntry.Text.Length < 8)
@@ -45,7 +47,7 @@ namespace HIPER
                     await DisplayAlert("Error", "The password need to be at least 8 characters", "Ok");
                     return;
                 }
-                else if(string.IsNullOrEmpty(emailEntry.Text))
+                else if (string.IsNullOrEmpty(emailEntry.Text))
                 {
                     await DisplayAlert("Error", "You need to fill in your email", "Ok");
                     return;
@@ -67,9 +69,9 @@ namespace HIPER
                     await container.CreateIfNotExistsAsync();
 
                     // delete old image file
-                    if (App.loggedInUser.ImageName != null)
+                    if (App.loggedInUser.Imagename != null)
                     {
-                        var oldBlockBlob = container.GetBlockBlobReference(App.loggedInUser.ImageName);
+                        var oldBlockBlob = container.GetBlockBlobReference(App.loggedInUser.Imagename);
                         bool result = await oldBlockBlob.DeleteIfExistsAsync();
                     }
 
@@ -78,7 +80,7 @@ namespace HIPER
                     var blockBlob = container.GetBlockBlobReference($"{name}.jpg");
                     await blockBlob.UploadFromStreamAsync(selectedImage.GetStream());
 
-                    App.loggedInUser.ImageName = $"{name}.jpg";
+                    App.loggedInUser.Imagename = $"{name}.jpg";
                     App.loggedInUser.ImageUrl = blockBlob.Uri.OriginalString;
 
                 }
@@ -88,13 +90,13 @@ namespace HIPER
                 await DisplayAlert("Success", "Profile updated", "Ok");
                 await Navigation.PopAsync();
             }
-            catch(NullReferenceException nre)
+            catch (Exception ex)
             {
                 await DisplayAlert("Failure!", "Something went wrong, please try again", "Ok");
-            }
-            catch(Exception ex)
-            {
-                await DisplayAlert("Failure!", "Something went wrong, please try again", "Ok");
+                var properties = new Dictionary<string, string> {
+                { "EditUserPage", "SaveProfile" }};
+                Crashes.TrackError(ex, properties);
+
             }
         }
 
@@ -102,7 +104,8 @@ namespace HIPER
         {
             await CrossMedia.Current.Initialize();
 
-            if (!CrossMedia.Current.IsPickPhotoSupported) {
+            if (!CrossMedia.Current.IsPickPhotoSupported)
+            {
                 await DisplayAlert("Error", "This is not supported on your device", "Ok");
                 return;
             }
@@ -112,9 +115,8 @@ namespace HIPER
                 PhotoSize = PhotoSize.Medium
             };
             var selectedImageFile = await CrossMedia.Current.PickPhotoAsync(mediaOptions);
-            if(selectedImageFile == null)
+            if (selectedImageFile == null)
             {
-                await DisplayAlert("Error", "There was an error trying to get your image file", "Ok");
                 return;
             }
             selectedImage = selectedImageFile;
@@ -131,9 +133,9 @@ namespace HIPER
                 await container.CreateIfNotExistsAsync();
 
                 // delete old image file
-                if (App.loggedInUser.ImageName != null)
+                if (App.loggedInUser.Imagename != null)
                 {
-                    var oldBlockBlob = container.GetBlockBlobReference(App.loggedInUser.ImageName);
+                    var oldBlockBlob = container.GetBlockBlobReference(App.loggedInUser.Imagename);
                     bool result = await oldBlockBlob.DeleteIfExistsAsync();
                 }
 
@@ -142,12 +144,15 @@ namespace HIPER
                 var blockBlob = container.GetBlockBlobReference($"{name}.jpg");
                 await blockBlob.UploadFromStreamAsync(stream);
 
-                App.loggedInUser.ImageName = $"{name}.jpg";
+                App.loggedInUser.Imagename = $"{name}.jpg";
                 App.loggedInUser.ImageUrl = blockBlob.Uri.OriginalString;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                
+                var properties = new Dictionary<string, string> {
+                { "Edit user", "Upload image" }};
+                Crashes.TrackError(ex, properties);
+
             }
         }
     }

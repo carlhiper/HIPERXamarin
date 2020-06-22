@@ -11,16 +11,17 @@
             <converters:ChallengeIdToBoolConverter x:Key="challengeVisibleConverter"/>
         </ResourceDictionary>
     </ContentPage.Resources>
+
     <ContentPage.ToolbarItems>
-        <ToolbarItem x:Name="addGoal" Text="Add goal" Clicked="addGoal_Clicked">
-        </ToolbarItem>
+        <ToolbarItem x:Name="ChatButton" Text="Chat" IconImageSource="{StaticResource chat}" Clicked="ChatButton_Clicked"/>
     </ContentPage.ToolbarItems>
 
 
-    <StackLayout Margin="10"
+    <ContentPage.Content>
+        <StackLayout Margin="10"
                     CompressedLayout.IsHeadless="True">
 
-        <Label Text="SCOREBOARD" Style="{StaticResource Header}"></Label>
+        <Label Text="MY GOALS" Style="{StaticResource Header}"></Label>
                     
         <Grid Padding="20">
             <Grid.RowDefinitions>
@@ -39,11 +40,52 @@
             <Picker Grid.Column="3" x:Name="filter" VerticalOptions="End" HorizontalOptions="FillAndExpand" Title="Filter" SelectedIndexChanged="filter_SelectedIndexChanged" FontSize="Small"></Picker>
         </Grid>
 
+
+        <ContentView>
+            <Frame BorderColor="LightGray"
+                   >
+                 <Grid Padding="10">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="35" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="100" />
+                        <ColumnDefinition Width="35"/>
+                    </Grid.ColumnDefinitions>
+                     <Button Text="Click here to add a goal!"
+                             Style="{StaticResource Minimal}"
+                             FontAttributes="Bold"
+                             TextColor="Gray"
+                             FontSize="Micro"
+                             x:Name="AddNewGoalButton"
+                             Clicked="AddNewGoalButton_Clicked"/>
+                            
+
+                        <!--<Label Grid.Row="0"
+                        Grid.Column="0" 
+                        Text="Click here to add new goal!"
+                        TextColor="Gray"
+                        FontAttributes="Bold" />-->
+                    <ProgressBar
+                        VerticalOptions="Center"
+                        Grid.Column="2"
+                        Grid.Row="0"
+                        Progress="0.5"
+                        ProgressColor="Gray"/>
+                </Grid>
+         
+            </Frame>
+        </ContentView>
         <CollectionView
                
             x:Name="goalCollectionView"
             SelectionMode="Single"
-            SelectionChanged="goalCollectionView_SelectionChanged">
+            SelectionChanged="goalCollectionView_SelectionChanged"
+            VerticalOptions="FillAndExpand">
                 
             <CollectionView.ItemTemplate>
                 <DataTemplate>
@@ -125,4 +167,6 @@
             </CollectionView.ItemTemplate>
         </CollectionView> 
     </StackLayout>
+    </ContentPage.Content>
+
 </ContentPage>

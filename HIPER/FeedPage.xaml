@@ -3,7 +3,9 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="HIPER.FeedPage"
              xmlns:converters="clr-namespace:HIPER.ViewModel.Converters"
-             xmlns:forms="clr-namespace:Microcharts.Forms;assembly=Microcharts.Forms">
+             xmlns:forms="clr-namespace:Microcharts.Forms;assembly=Microcharts.Forms"
+             NavigationPage.BackButtonTitle="Test">
+
     <ContentPage.Resources>
         <ResourceDictionary>
             <converters:DateTimeToStringConverter x:Key="converter"/>
@@ -13,129 +15,128 @@
     <ContentPage.ToolbarItems>
         <ToolbarItem x:Name="ChatButton" Text="Chat" IconImageSource="{StaticResource chat}" Clicked="ChatButton_Clicked"/>
     </ContentPage.ToolbarItems>
+
     <ContentPage.Content>
-        <StackLayout
-            Margin="0"
-            CompressedLayout.IsHeadless="True">
-            <Label Margin="20"
-                   Style="{StaticResource Header}"
-                   Text="DASHBOARD"></Label>
-            <Label Text="GOAL PROGRESS" Margin="3" TextColor="{StaticResource hiperPeach}" HorizontalTextAlignment="Center" FontSize="Small"></Label>         
-            <forms:ChartView x:Name="chartViewProgress" HeightRequest="150" BackgroundColor="White" ></forms:ChartView>
+        <ScrollView>
+            <StackLayout
+                Margin="10"
+                CompressedLayout.IsHeadless="True">
+                <Label Margin="20"
+                       Style="{StaticResource Header}"
+                       Text="DASHBOARD"></Label>
+                <Label Text="GOAL PROGRESS" Margin="3" TextColor="{StaticResource hiperPeach}" HorizontalTextAlignment="Center" FontSize="Small"></Label>         
+                <forms:ChartView x:Name="chartViewProgress" HeightRequest="150" BackgroundColor="White" ></forms:ChartView>
 
 
-            <Grid HeightRequest="100" Margin="10">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                </Grid.RowDefinitions>
-                <Label Grid.Row="0" x:Name="Label1" FontSize="Micro" Text=""/>
-                <Label Grid.Row="1" x:Name="Label2" FontSize="Micro" Text=""/>
-                <Label Grid.Row="2" x:Name="Label3" FontSize="Micro" Text=""/>
-            </Grid>
+                <Grid Margin="10" Padding="5" BackgroundColor="LightGray">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Label Grid.Row="0" x:Name="Label1" FontSize="Micro" Text="-> This is where you can track your progress"/>
+                    <Label Grid.Row="1" x:Name="Label2" FontSize="Micro" Text="and compare with your team mates!"/>
+                    <Label Grid.Row="2" x:Name="Label3" FontSize="Micro" Text="-> Get started by creating a goal or a team!"/>
+                </Grid>
 
       
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="20"/>
-                </Grid.RowDefinitions>
-                <Label Grid.Column="1" Text="POINTS LEADERBOARD" Margin="3" TextColor="{StaticResource hiperPeach}" HorizontalTextAlignment="Center" FontSize="Small"></Label>         
-                <Grid Grid.Column="2">
+                <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="20"/>
+                        <RowDefinition Height="24"/>
                     </Grid.RowDefinitions>
-                    <Button x:Name="buttonYear" Text="y" Style="{StaticResource Minimal}" Grid.Column="1" Clicked="buttonYear_Clicked"/>
-                    <Button x:Name="buttonMonth" Text="m" Style="{StaticResource Minimal}" Grid.Column="2" Clicked="buttonMonth_Clicked"/>
+                    <Label Grid.Column="1" Text="POINTS LEADERBOARD" Margin="3" TextColor="{StaticResource hiperPeach}" HorizontalTextAlignment="Center" FontSize="Small"></Label>         
+                    <Grid Grid.Column="2">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="20"/>
+                        </Grid.RowDefinitions>
+                        <Button x:Name="buttonYear" Text="y" Style="{StaticResource Minimal}" Grid.Column="1" Clicked="buttonYear_Clicked"/>
+                        <Button x:Name="buttonMonth" Text="m" Style="{StaticResource Minimal}" Grid.Column="2" Clicked="buttonMonth_Clicked"/>
+                    </Grid>
                 </Grid>
-            </Grid>
 
-            <forms:ChartView x:Name="chartViewPoints" HeightRequest="150" BackgroundColor="White" ></forms:ChartView>
+                <forms:ChartView x:Name="chartViewPoints" HeightRequest="150" BackgroundColor="White" ></forms:ChartView>
 
-            <CollectionView                
-                x:Name="feedCollectionView"
-                SelectionMode="None"
-                BackgroundColor="WhiteSmoke">
+                <CollectionView                
+                    x:Name="feedCollectionView"
+                    SelectionMode="None"
+                    BackgroundColor="WhiteSmoke"
+                    HeightRequest="300">
 
-                <CollectionView.ItemTemplate>
-                    <DataTemplate>
-                        <ContentView Padding="3,0,3,0">
-                            <Frame Style="{StaticResource Feed}">
-                                <Grid Padding="2">
-                                <Grid.RowDefinitions>
-                                        <RowDefinition Height="15"/>
-                                        <RowDefinition Height="13" />
-                                        <RowDefinition Height="Auto" />
-                                    </Grid.RowDefinitions>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <ContentView Padding="3,0,3,0">
+                                <Frame Style="{StaticResource Feed}">
+                                    <Grid Padding="2">
+                                    <Grid.RowDefinitions>
+                                            <RowDefinition Height="15"/>
+                                            <RowDefinition Height="Auto" />
+                                     
+                                        </Grid.RowDefinitions>
 
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="Auto" />
-                                        <ColumnDefinition Width="Auto" />
-                                        <ColumnDefinition Width="Auto" />
-                                        <ColumnDefinition Width="*" />
-                                        <ColumnDefinition Width="100"/>
-                                    </Grid.ColumnDefinitions>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="150"/>
+                                        </Grid.ColumnDefinitions>
 
-                                    <Frame
-                                        Grid.Row="0"
-                                        Grid.RowSpan="3"
-                                        Grid.Column="0"
-                                        CornerRadius="15"
-                                        HorizontalOptions="Start"
-                                        VerticalOptions="Start"
-                                        Padding="0" 
-                                        BorderColor="Gray"
-                                        IsClippedToBounds="True">
-                                        <Image WidthRequest="30"
-                                                HeightRequest="30"
-                                                Aspect="AspectFill"
-                                                Source="{Binding ProfileImageURL}">
-                                        </Image>
-                                    </Frame>
+                                        <Frame
+                                            Grid.Row="0"
+                                            Grid.RowSpan="3"
+                                            Grid.Column="0"
+                                            CornerRadius="15"
+                                            HorizontalOptions="Start"
+                                            VerticalOptions="Start"
+                                            Padding="0" 
+                                            BorderColor="Gray"
+                                            IsClippedToBounds="True">
+                                            <Image WidthRequest="30"
+                                                    HeightRequest="30"
+                                                    Aspect="AspectFill"
+                                                    Source="{Binding ProfileImageURL}">
+                                            </Image>
+                                        </Frame>
  
-                                    <Label Grid.Row="0"
-                                        Grid.Column="1"
-                                        VerticalTextAlignment="End"
-                                        Text="{Binding FeedItemTitle}" 
-                                        FontAttributes="Bold"
-                                        FontSize="Micro"/>
+                                        <Label Grid.Row="0"
+                                            Grid.Column="1"
+                                            VerticalTextAlignment="End"
+                                            Text="{Binding FeedItemTitle}" 
+                                            FontAttributes="Bold"
+                                            FontSize="Micro"/>
 
-                                     <Label Grid.Row="0"
-                                        Grid.Column="5"
-                                        VerticalTextAlignment="Start"
-                                        HorizontalTextAlignment="End"
-                                        FontSize="10"
-                                        Text="{Binding IndexDate,Converter={StaticResource converter}}"/>
+                                         <Label Grid.Row="0"
+                                            Grid.Column="2"
+                                            VerticalTextAlignment="Start"
+                                            HorizontalTextAlignment="End"
+                                            FontSize="10"
+                                            Text="{Binding IndexDate,Converter={StaticResource converter}}"/>
           
-                                    <Label Grid.Row="1"
-                                        Grid.Column="1"
-                                        Grid.ColumnSpan="5"
-                                        Text="{Binding FeedItemPost}"
-                                        FontAttributes="None"
-                                        FontSize="Micro"
-                                        VerticalOptions="End" />
-                                </Grid>
-                            </Frame>
-                        </ContentView>
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
-            </CollectionView>
-
-   
-   
-        </StackLayout>
+                                        <Label Grid.Row="1"
+                                            Grid.Column="1"
+                                            Grid.ColumnSpan="2"
+                                            Text="{Binding FeedItemPost}"
+                                            FontAttributes="None"
+                                            FontSize="Micro"
+                                            VerticalOptions="End" />
+                                    </Grid>
+                                </Frame>
+                            </ContentView>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </StackLayout>
+        </ScrollView>
     </ContentPage.Content>
 </ContentPage>

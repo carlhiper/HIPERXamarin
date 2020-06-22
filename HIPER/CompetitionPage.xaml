@@ -11,14 +11,9 @@
             <converters:ChallengeIdToBoolConverter x:Key="challengeVisibleConverter"/>
         </ResourceDictionary>
     </ContentPage.Resources>
-    <ContentPage.ToolbarItems>
-        <ToolbarItem x:Name="addGoal" Text="Add competition" Clicked="addGoal_Clicked">
-        </ToolbarItem>
-    </ContentPage.ToolbarItems>
 
 
-    <StackLayout Margin="10"
-                    CompressedLayout.IsHeadless="True">
+    <StackLayout Margin="10">
 
         <Label Text="COMPETITIONS" Style="{StaticResource Header}"></Label>
                     
@@ -38,6 +33,53 @@
             <Label Grid.Column="2" Text="Closed" VerticalOptions="End" HorizontalOptions="Start"></Label>
             <Picker Grid.Column="3" x:Name="filter" VerticalOptions="End" HorizontalOptions="FillAndExpand" Title="Filter" SelectedIndexChanged="filter_SelectedIndexChanged" FontSize="Small"></Picker>
         </Grid>
+
+        
+        <ContentView>
+            <Frame BorderColor="LightGray"
+                   >
+                 <Grid Padding="10">
+                   <Grid.RowDefinitions>
+                        <RowDefinition Height="35" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="100" />
+                        <ColumnDefinition Width="35"/>
+                    </Grid.ColumnDefinitions>
+                     <Button Text="Click here to add a goal!"
+                             Style="{StaticResource Minimal}"
+                             FontAttributes="Bold"
+                             TextColor="Gray"
+                             FontSize="Micro"
+                             x:Name="AddNewCompetitionButton"
+                             Clicked="AddNewCompetitionButton_Clicked"/>
+
+
+                        <!--<Label Grid.Row="0"
+                        Grid.Column="0" 
+                        Text="Click here to add new goal!"
+                        TextColor="Gray"
+                        FontAttributes="Bold" />-->
+                    <ProgressBar
+                        VerticalOptions="Center"
+                        Grid.Column="2"
+                        Grid.Row="0"
+                        Progress="0.5"
+                        ProgressColor="Gray"/>
+                    <Label Grid.Row="1"
+                        Grid.ColumnSpan="3"
+                        Grid.Column="0" 
+                        Text=""
+                        FontAttributes="None" 
+                        VerticalOptions="End" />
+                </Grid>
+         
+            </Frame>
+        </ContentView>
 
         <CollectionView
                

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using HIPER.Helpers;
 using HIPER.Model;
+using Microsoft.AppCenter.Crashes;
 using SQLite;
 using Xamarin.Forms;
 
@@ -10,28 +11,30 @@ namespace HIPER
 {
     public partial class AddGoalPage : ContentPage
     {
-        UserModel user;
-        List<UserModel> teammembers;
-        ChallengeModel challenge;
-        
+        UserModel User = new UserModel();
+        List<UserModel> teammembers = new List<UserModel>();
+        ChallengeModel challenge = new ChallengeModel();
+        [Xamarin.Forms.Internals.Preserve]
+        readonly RadioButton rb = new RadioButton();
+
         public AddGoalPage()
         {
+            this.User = App.loggedInUser;
             InitializeComponent();
-            this.user = App.loggedInUser;
-            initPage();
+            rb.IsVisible = false;
         }
 
         public AddGoalPage(UserModel user)
         {
+            this.User = user;
             InitializeComponent();
-            this.user = user;
-            initPage();
+            rb.IsVisible = false;
         }
 
         protected override void OnAppearing()
         {
             base.OnAppearing();
-
+            initPage();
         }
 
         private void initPage()
@@ -46,7 +49,7 @@ namespace HIPER
             step1entry.IsVisible = false;
             step1label.IsVisible = false;
 
-            if (App.loggedInUser.Id != user.Id || string.IsNullOrEmpty(user.TeamId))
+            if (App.loggedInUser.Id != User.Id || string.IsNullOrEmpty(User.TeamId))
             {
                 challengeCheckbox.IsVisible = false;
                 challengeCollectionView.IsVisible = false;
@@ -110,19 +113,16 @@ namespace HIPER
                 }
                 else
                 {
-                    CreateGoal(user.Id, true, null);
+                    CreateGoal(User.Id, true, null);
                     await DisplayAlert("Success", "Goal saved", "Ok");
                     await Navigation.PopAsync();
                 }
 
             }
-            catch (NullReferenceException nre)
-            {
-                await DisplayAlert("Goal not saved!", "Something went wrong, please try again", "Ok");
-            }
             catch (Exception ex)
             {
                 await DisplayAlert("Goal not saved!", "Something went wrong, please try again", "Ok");
+                Crashes.TrackError(ex);
             }
         }
 
@@ -145,7 +145,7 @@ namespace HIPER
                 Description = goalDescriptionEntry.Text,
                 Deadline = deadLineDate,
                 TargetValue = goalTargetEntry.Text,
-             //   PrivateGoal = privateGoalCheckbox.IsChecked,
+                //   PrivateGoal = privateGoalCheckbox.IsChecked,
                 UserId = userId,
                 GoalAccepted = accepted,
                 ChallengeId = challengeId,
@@ -195,8 +195,18 @@ namespace HIPER
             //{
             //    goal.RepeatMonthly = DateTime.DaysInMonth(DateTime.Now.Year, DateTime.Now.Month);
             //}
+            try
+            {
+                await App.client.GetTable<GoalModel>().InsertAsync(goal);
+            }
+            catch (Exception ex)
+            {
+                var properties = new Dictionary<string, string> {
+                { "AddGoalPage", "CreateGoal" }};
+                Crashes.TrackError(ex, properties);
 
-            await App.client.GetTable<GoalModel>().InsertAsync(goal);
+            }
+
         }
 
         private void radioButtonController()
@@ -315,33 +325,28 @@ namespace HIPER
             {
                 challengeCollectionView.HeightRequest = 20;
                 challengeCollectionView.IsVisible = false;
-
             }
             else
             {
-         //       privateGoalCheckbox.IsChecked = false;
                 try
                 {
-                    if (teammembers == null)
+                    if (teammembers.Count == 0)
                     {
                         teammembers = await App.client.GetTable<UserModel>().Where(u => u.TeamId == App.loggedInUser.TeamId).ToListAsync();
                         teammembers.RemoveAt(teammembers.FindIndex(a => a.Id == App.loggedInUser.Id));
-                       
+
                     }
                     challengeCollectionView.ItemsSource = teammembers;
                 }
-                catch (Exception ex) { }
+                catch (Exception ex) {
+                    var properties = new Dictionary<string, string> {
+                    { "AddGoalPage", "challengeCheckbox_checkchanged" }};
+                    Crashes.TrackError(ex, properties);
+                }
                 challengeCollectionView.IsVisible = true;
 
                 challengeCollectionView.HeightRequest = teammembers.Count * 20;
             }
         }
-
-        //void privateGoalCheckbox_CheckedChanged(System.Object sender, Xamarin.Forms.CheckedChangedEventArgs e)
-        //{
-        //    if (privateGoalCheckbox.IsChecked)
-        //        challengeCheckbox.IsChecked = false;
-
-        //}
     }
 }

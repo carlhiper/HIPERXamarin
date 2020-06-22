@@ -5,6 +5,7 @@ using Xamarin.Forms;
 using HIPER.Controllers;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AppCenter.Crashes;
 
 namespace HIPER
 {
@@ -12,9 +13,9 @@ namespace HIPER
     {
         bool constructorRunning;
         bool IsCompetitionPage;
-        GoalModel goal;
-        UserModel challengeOwner;
-        ChallengeModel challenge;
+        GoalModel goal = new GoalModel();
+        UserModel challengeOwner = new UserModel();
+        ChallengeModel challenge = new ChallengeModel();
         List<LeaderBoardModel> competitors = new List<LeaderBoardModel>();
 
         public GoalDetailPage(GoalModel inputGoal, bool isCompetitionPage)
@@ -60,8 +61,12 @@ namespace HIPER
                         await Navigation.PopAsync();
                     }
                 }
-            }catch(Exception ex)
+            }
+            catch (Exception ex)
             {
+                var properties = new Dictionary<string, string> {
+                        { "Goal detail page", "Accept challenge" }};
+                Crashes.TrackError(ex, properties);
 
             }
         }
@@ -79,6 +84,10 @@ namespace HIPER
             }
             catch (Exception ex)
             {
+        
+                var properties = new Dictionary<string, string> {
+                        { "GoalDetailPage", "Get challenge owner" }};
+                Crashes.TrackError(ex, properties);
                 return false;
             }
         }
@@ -101,27 +110,27 @@ namespace HIPER
             }
 
             if (string.IsNullOrEmpty(goal.TeamId))
-                
 
-            if (string.IsNullOrEmpty(goal.ChallengeId))
-            {
-                leaderboardCollectionView.IsVisible = false;
-                leaderBoardLabel.IsVisible = false;
-                cardFrame.BorderColor = Color.FromHex(HIPER.Helpers.Constants.HIPER_PEACH);
-                challengeImage.IsVisible = false;
-                createdByLabel.Text = "";
-                createdByLabel.IsVisible = false;
-            }
-            else
-            {
-                leaderboardCollectionView.IsVisible = true;
-                leaderBoardLabel.IsVisible = true;
-                cardFrame.BorderColor = Color.FromHex(HIPER.Helpers.Constants.HIPER_PEACH);
-                challengeImage.IsVisible = true;
-                if (challengeOwner != null)
+
+                if (string.IsNullOrEmpty(goal.ChallengeId))
                 {
-                    createdByLabel.Text = "Created by " + challengeOwner.FirstName + " " + challengeOwner.LastName;
-                    createdByLabel.IsVisible = true;
+                    leaderboardCollectionView.IsVisible = false;
+                    leaderBoardLabel.IsVisible = false;
+                    cardFrame.BorderColor = Color.FromHex(HIPER.Helpers.Constants.HIPER_PEACH);
+                    challengeImage.IsVisible = false;
+                    createdByLabel.Text = "";
+                    createdByLabel.IsVisible = false;
+                }
+                else
+                {
+                    leaderboardCollectionView.IsVisible = true;
+                    leaderBoardLabel.IsVisible = true;
+                    cardFrame.BorderColor = Color.FromHex(HIPER.Helpers.Constants.HIPER_PEACH);
+                    challengeImage.IsVisible = true;
+                    if (challengeOwner != null)
+                    {
+                        createdByLabel.Text = "Created by " + challengeOwner.FirstName + " " + challengeOwner.LastName;
+                        createdByLabel.IsVisible = true;
                         if (goal.GoalType == 2 && challengeOwner.Id == App.loggedInUser.Id && IsCompetitionPage)
                         {
                             goalCurrentEntry.IsEnabled = false;
@@ -266,7 +275,7 @@ namespace HIPER
                     competitors.Clear();
                     leaderboardCollectionView.ItemsSource = null;
                     var goals = await App.client.GetTable<GoalModel>().Where(g => g.ChallengeId == goal.ChallengeId).Where(g => g.Deadline == goal.Deadline).ToListAsync();
-                    
+
                     if (goals != null)
                     {
                         foreach (GoalModel g in goals)
@@ -295,6 +304,10 @@ namespace HIPER
             }
             catch (Exception ex)
             {
+                await DisplayAlert("Error", ex.ToString(), "Ok");
+                var properties = new Dictionary<string, string> {
+                        { "GoalDetailPage", "On appearing" }};
+                Crashes.TrackError(ex, properties);
 
             }
         }
@@ -304,11 +317,20 @@ namespace HIPER
             return base.OnBackButtonPressed();
         }
 
- 
-        void editGoal_Clicked(System.Object sender, System.EventArgs e) {
 
-            Navigation.PushAsync(new EditGoalPage(goal));
-
+        private async void editGoal_Clicked(System.Object sender, System.EventArgs e)
+        {
+            try
+            {
+                await Navigation.PushAsync(new EditGoalPage(goal));
+            }
+            catch (Exception ex)
+            {
+                await DisplayAlert("Error", ex.ToString(), "Ok");
+                var properties = new Dictionary<string, string> {
+                        { "GoalDetailPage", "Edit goal clicked" }};
+                Crashes.TrackError(ex, properties);
+            }
         }
 
         private async void goalCurrentEntry_Unfocused(System.Object sender, Xamarin.Forms.TextChangedEventArgs e)
@@ -382,9 +404,13 @@ namespace HIPER
 
 
                 }
-            }catch(Exception ex)
+            }
+            catch (Exception ex)
             {
                 await DisplayAlert("Error", ex.ToString(), "Ok");
+                var properties = new Dictionary<string, string> {
+                        { "GoalDetailPage", "Complete goal clicked" }};
+                Crashes.TrackError(ex, properties);
             }
         }
 
@@ -393,16 +419,27 @@ namespace HIPER
             bool delete = await DisplayAlert("Wait", "Are you sure you want to close this goal?", "Yes", "No");
             if (delete)
             {
-                if (goal.RepeatType == 0)
-                {
-                    goal.Closed = true;
-                }
-                goal.LastUpdatedDate = DateTime.Now;
-                goal.ClosedDate = DateTime.Now;
 
-                await App.client.GetTable<GoalModel>().UpdateAsync(goal);
-                await DisplayAlert("Goal closed", "", "Ok");
-                await Navigation.PopAsync();
+                try
+                {
+                    if (goal.RepeatType == 0)
+                    {
+                        goal.Closed = true;
+                    }
+                    goal.LastUpdatedDate = DateTime.Now;
+                    goal.ClosedDate = DateTime.Now;
+
+                    await App.client.GetTable<GoalModel>().UpdateAsync(goal);
+                    await DisplayAlert("Goal closed", "", "Ok");
+                    await Navigation.PopAsync();
+
+                }
+                catch (Exception ex)
+                {
+                    var properties = new Dictionary<string, string> {
+                        { "GoalDetailPage", "Close goal" }};
+                    Crashes.TrackError(ex, properties);
+                }
             }
         }
 
@@ -439,6 +476,9 @@ namespace HIPER
             }
             catch (Exception ex)
             {
+                var properties = new Dictionary<string, string> {
+                        { "GoalDetailPage", "Update goal and leaderboard" }};
+                Crashes.TrackError(ex, properties);
                 return false;
             }
         }

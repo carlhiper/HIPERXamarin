@@ -12,6 +12,18 @@
         <x:String x:Key="arrow_left">arrow_left.png</x:String>
         <x:String x:Key="arrow_right">arrow_right.png</x:String>
         <x:String x:Key="chat">chat.png</x:String>
+        <x:String x:Key="add">add.png</x:String>
+
+        <x:String x:Key="profile">profile.png</x:String>
+        <x:String x:Key="team">team.png</x:String>
+        <x:String x:Key="dashboard">dashboard.png</x:String>
+        <x:String x:Key="goals">goals.png</x:String>
+        <x:String x:Key="veryhappy">veryhappy.png</x:String>
+        <x:String x:Key="verysad">verysad.png</x:String>
+        <x:String x:Key="happy">happy.png</x:String>
+        <x:String x:Key="sad">sad.png</x:String>
+        <x:String x:Key="pleased">pleased.png</x:String>
+
 
 
         <Style TargetType="Button">
@@ -50,6 +62,13 @@
             <Setter Property="TextColor" Value="{StaticResource hiperPeach}" ></Setter>
             <Setter Property="FontFamily" Value="FUTURA BOOK"></Setter>
             <Setter Property="FontSize" Value="Medium"></Setter>
+            <Setter Property="Margin" Value="20"></Setter>
+            <Setter Property="HorizontalOptions" Value="Center"></Setter>
+        </Style>
+        <Style x:Key="SubHeader" TargetType="Label">
+            <Setter Property="TextColor" Value="{StaticResource hiperPeach}" ></Setter>
+            <Setter Property="FontFamily" Value="FUTURA BOOK"></Setter>
+            <Setter Property="FontSize" Value="Small"></Setter>
             <Setter Property="Margin" Value="20"></Setter>
             <Setter Property="HorizontalOptions" Value="Center"></Setter>
         </Style>

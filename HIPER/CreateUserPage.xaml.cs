@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using HIPER.Model;
+using Microsoft.AppCenter.Crashes;
 using SQLite;
 using Xamarin.Forms;
 
@@ -42,18 +43,28 @@ namespace HIPER
                         Company = companyEntry.Text,
                         Email = emailEntry.Text,
                         UserPassword = passwordEntry.Text,
-                        CreatedDate = DateTime.Now
+                        CreatedDate = DateTime.Now,
+                        LastViewedPostDate = DateTime.Now,
+                        Number_logins = 0,
+                        Id = null,
+                        Imagename = null,
+                        ImageUrl = null,
+                        Rating = 0,
+                        TeamId = null
                     };
 
                     // Save on Azure
                     await App.client.GetTable<UserModel>().InsertAsync(user);
-                    await DisplayAlert("Success", "user successfully created. Please login.", "Ok");
+                    await DisplayAlert("Success", "User successfully created. Please login.", "Ok");
                     await Navigation.PopAsync();
                 }catch(Exception ex)
                 {
-                    await DisplayAlert("Error", "Something went wrong", "Ok");
+                    await DisplayAlert("Error", ex.ToString(), "Ok");
+                    var properties = new Dictionary<string, string> {
+                    { "CreateUserPage", "saveButton_Clicked" }};
+                    Crashes.TrackError(ex, properties);
+
                 }
- 
             }
         }
     }

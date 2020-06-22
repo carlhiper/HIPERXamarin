@@ -36,6 +36,8 @@
     <WarningLevel>4</WarningLevel>
     <MtouchLink>None</MtouchLink>
     <MtouchArch>x86_64</MtouchArch>
+    <CodesignKey>iPhone Distribution: Carl Windfeldt (TGDB9UA3VV)</CodesignKey>
+    <CodesignProvision>Hiper_PP_Store</CodesignProvision>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|iPhone' ">
     <DebugSymbols>true</DebugSymbols>
@@ -49,7 +51,7 @@
     <CodesignKey>iPhone Developer</CodesignKey>
     <MtouchDebug>true</MtouchDebug>
     <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
-    <MtouchLink>None</MtouchLink>
+    <MtouchLink>Full</MtouchLink>
     <MtouchInterpreter>-all</MtouchInterpreter>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhone' ">
@@ -59,8 +61,28 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <MtouchArch>ARM64</MtouchArch>
-    <CodesignKey>iPhone Developer</CodesignKey>
+    <CodesignKey>iPhone Distribution: Carl Windfeldt (TGDB9UA3VV)</CodesignKey>
     <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
+    <CodesignProvision>Hiper_PP_Store</CodesignProvision>
+    <MtouchLink>SdkOnly</MtouchLink>
+    <MtouchExtraArgs>--optimize=experimental-xforms-product-type</MtouchExtraArgs>
+    <MtouchInterpreter>-all</MtouchInterpreter>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'AppStore|iPhone' ">
+    <Optimize>false</Optimize>
+    <OutputPath>bin\iPhone\AppStore</OutputPath>
+    <DefineConstants></DefineConstants>
+    <WarningLevel>4</WarningLevel>
+    <CodesignKey>iPhone Distribution: Carl Windfeldt (TGDB9UA3VV)</CodesignKey>
+    <MtouchNoSymbolStrip>false</MtouchNoSymbolStrip>
+    <MtouchVerbosity></MtouchVerbosity>
+    <MtouchFloat32>false</MtouchFloat32>
+    <MtouchEnableSGenConc>true</MtouchEnableSGenConc>
+    <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
+    <MtouchArch>ARM64</MtouchArch>
+    <CodesignProvision>Hiper_PP_Store</CodesignProvision>
+<MtouchExtraArgs>--optimize=experimental-xforms-product-type</MtouchExtraArgs>
+<MtouchLink>Full</MtouchLink>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Main.cs" />
@@ -75,57 +97,24 @@
     <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Contents.json">
       <Visible>false</Visible>
     </ImageAsset>
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon1024.png">
-      <Visible>false</Visible>
-    </ImageAsset>
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon180.png">
-      <Visible>false</Visible>
-    </ImageAsset>
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon167.png">
-      <Visible>false</Visible>
-    </ImageAsset>
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon152.png">
-      <Visible>false</Visible>
-    </ImageAsset>
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon120.png">
-      <Visible>false</Visible>
-    </ImageAsset>
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon87.png">
-      <Visible>false</Visible>
-    </ImageAsset>
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon80.png">
-      <Visible>false</Visible>
-    </ImageAsset>
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon76.png">
-      <Visible>false</Visible>
-    </ImageAsset>
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon60.png">
-      <Visible>false</Visible>
-    </ImageAsset>
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon58.png">
-      <Visible>false</Visible>
-    </ImageAsset>
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon40.png">
-      <Visible>false</Visible>
-    </ImageAsset>
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon29.png">
-      <Visible>false</Visible>
-    </ImageAsset>
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon20.png">
-      <Visible>false</Visible>
-    </ImageAsset>
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\icon16.png" />
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\icon32.png" />
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\icon64.png" />
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\icon256.png" />
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\icon512.png" />
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\icon55.png" />
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\icon48.png" />
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\icon172.png" />
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\icon196.png" />
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\icon216.png" />
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\icon88.png" />
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\icon100.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\40.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\60.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\58.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\87.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\80.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\120.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\120-1.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\180.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\20.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\40-1.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\29.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\58-1.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\40-2.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\80-1.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\76.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\152.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\167.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\appstore2.png" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -139,7 +128,6 @@
     <PackageReference Include="Microsoft.Azure.Mobile.Client">
       <Version>4.1.2</Version>
     </PackageReference>
-    <PackageReference Include="Xamarin.Forms" Version="4.6.0.800" />
     <PackageReference Include="Xamarin.Essentials" Version="1.5.3.2" />
     <PackageReference Include="sqlite-net-pcl">
       <Version>1.7.335</Version>
@@ -153,6 +141,9 @@
     <PackageReference Include="Microcharts.Forms">
       <Version>0.8.5-pre</Version>
     </PackageReference>
+    <PackageReference Include="Xamarin.Forms">
+      <Version>4.6.0.847</Version>
+    </PackageReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <ItemGroup>
@@ -160,10 +151,6 @@
       <Project>{95EF0524-2664-48B3-AF22-5A469890F4E3}</Project>
       <Name>HIPER</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <ITunesArtwork Include="iTunesArtwork" />
-    <ITunesArtwork Include="iTunesArtwork%402x" />
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\ok.png" />
@@ -202,8 +189,48 @@
     <BundleResource Include="Resources\chat.png" />
     <BundleResource Include="Resources\chat%402x.png" />
     <BundleResource Include="Resources\chat%403x.png" />
+    <BundleResource Include="Resources\add.png" />
+    <BundleResource Include="Resources\add%402x.png" />
+    <BundleResource Include="Resources\add%403x.png" />
+    <BundleResource Include="Resources\save.png" />
+    <BundleResource Include="Resources\save%402x.png" />
+    <BundleResource Include="Resources\save%403x.png" />
+    <BundleResource Include="Resources\edit.png" />
+    <BundleResource Include="Resources\edit%402x.png" />
+    <BundleResource Include="Resources\edit%403x.png" />
+    <BundleResource Include="Resources\dashboard.png" />
+    <BundleResource Include="Resources\dashboard%402x.png" />
+    <BundleResource Include="Resources\dashboard%403x.png" />
+    <BundleResource Include="Resources\goals.png" />
+    <BundleResource Include="Resources\goals%402x.png" />
+    <BundleResource Include="Resources\goals%403x.png" />
+    <BundleResource Include="Resources\happy.png" />
+    <BundleResource Include="Resources\happy%402x.png" />
+    <BundleResource Include="Resources\happy%403x.png" />
+    <BundleResource Include="Resources\pleased.png" />
+    <BundleResource Include="Resources\pleased%402x.png" />
+    <BundleResource Include="Resources\pleased%403x.png" />
+    <BundleResource Include="Resources\profile.png" />
+    <BundleResource Include="Resources\profile%402x.png" />
+    <BundleResource Include="Resources\profile%403x.png" />
+    <BundleResource Include="Resources\sad.png" />
+    <BundleResource Include="Resources\sad%402x.png" />
+    <BundleResource Include="Resources\sad%403x.png" />
+    <BundleResource Include="Resources\team.png" />
+    <BundleResource Include="Resources\team%402x.png" />
+    <BundleResource Include="Resources\team%403x.png" />
+    <BundleResource Include="Resources\veryhappy.png" />
+    <BundleResource Include="Resources\veryhappy%402x.png" />
+    <BundleResource Include="Resources\veryhappy%403x.png" />
+    <BundleResource Include="Resources\verysad.png" />
+    <BundleResource Include="Resources\verysad%402x.png" />
+    <BundleResource Include="Resources\verysad%403x.png" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="CustomRenderers\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ITunesArtwork Include="iTunesArtwork%402x" />
+    <ITunesArtwork Include="iTunesArtwork" />
   </ItemGroup>
 </Project>

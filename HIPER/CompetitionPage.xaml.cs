@@ -15,9 +15,9 @@ namespace HIPER
             InitializeComponent();
         }
 
-        void addGoal_Clicked(System.Object sender, System.EventArgs e)
+        private async void addGoal_Clicked(System.Object sender, System.EventArgs e)
         {
-            Navigation.PushAsync(new AddCompetitionPage());
+            await Navigation.PushAsync(new AddCompetitionPage());
         }
 
         protected override void OnAppearing()
@@ -29,10 +29,10 @@ namespace HIPER
             filter.ItemsSource = App.filterOptions;
         }
 
-        void competitionCollectionView_SelectionChanged(System.Object sender, Xamarin.Forms.SelectionChangedEventArgs e)
+        private async void competitionCollectionView_SelectionChanged(System.Object sender, Xamarin.Forms.SelectionChangedEventArgs e)
         {
             var selectedGoal = competitionCollectionView.SelectedItem as GoalModel;
-            Navigation.PushAsync(new GoalDetailPage(selectedGoal, true));
+            await Navigation.PushAsync(new GoalDetailPage(selectedGoal, true));
         }
 
         private void showClosedSwitch_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
@@ -116,6 +116,11 @@ namespace HIPER
         void filter_SelectedIndexChanged(System.Object sender, System.EventArgs e)
         {
             createGoalsList(filter.SelectedIndex);
+        }
+
+        private async void AddNewCompetitionButton_Clicked(System.Object sender, System.EventArgs e)
+        {
+            await Navigation.PushAsync(new AddCompetitionPage());
         }
     }
 }

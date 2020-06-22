@@ -1,33 +1,26 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="HIPER.AddGoalPage">
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="HIPER.AddGoalPage">
+
     <ContentPage.ToolbarItems>
-        <ToolbarItem x:Name="saveGoal" Text="Save" Clicked="saveGoal_Clicked">
-        </ToolbarItem>
+        <ToolbarItem x:Name="saveGoal" IconImageSource="save.png" Clicked="saveGoal_Clicked"/>
     </ContentPage.ToolbarItems>
+
     <ContentPage.Content>
         <ScrollView>
             <Frame Margin="10">
-                <StackLayout Margin="20"
-                             CompressedLayout.IsHeadless="True">
+                <StackLayout Margin="20">
                     <Label Style="{StaticResource Header}" Text="ADD A GOAL"></Label>
                     <Entry x:Name="goalNameEntry" Placeholder="TITLE" MaxLength="20"></Entry>
                     <Editor x:Name="goalDescriptionEntry" Placeholder="DESCRIPTION" MaxLength="255" HeightRequest="100"></Editor>
             
-                    <!--<Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="40" />
-                        </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*" />
-                        </Grid.ColumnDefinitions>
-                        <Label VerticalOptions="Center" Grid.Row="0" Grid.Column="0" Text="IS THE GOAL PRIVATE?"/>
-                        <CheckBox VerticalOptions="Center" HorizontalOptions="Center" Grid.Row="0" Grid.Column="1" x:Name="privateGoalCheckbox" Color="{StaticResource hiperPeach}" CheckedChanged="privateGoalCheckbox_CheckedChanged"></CheckBox>
-                    </Grid>-->
+      
                     <Label Text="CHOOSE A TARGET" HorizontalOptions="Center" Margin="0,20,0,10" TextColor="{StaticResource hiperPeach}"></Label>
                     <Grid>
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="30" />
-                            <RowDefinition Height="30" />
+                            <RowDefinition Height="40" />
+                            <RowDefinition Height="40" />
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="20" />
@@ -106,8 +99,8 @@
                     </Grid>
                     <Grid>
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="30" />
-                            <RowDefinition Height="30" />
+                            <RowDefinition Height="40" />
+                            <RowDefinition Height="40" />
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="20" />
