@@ -12,22 +12,22 @@ namespace HIPER.ViewModel.Converters
             int indicator = (int)value;
             if(indicator == 5)
             {
-                return "arrow_up.png";
+                return "veryhappy.png";
             }else if (indicator == 4)
             {
-                return "arrow_neutral_up.png";
+                return "happy.png";
             }
             else if (indicator == 3)
             {
-                return "arrow_neutral.png";
+                return "pleased.png";
             }
             else if (indicator == 2)
             {
-                return "arrow_neutral_down.png";
+                return "sad.png";
             }
             else if (indicator == 1)
             {
-                return "arrow_down.png";
+                return "verysad.png";
             }
             else { return null; }
 
