@@ -16,11 +16,11 @@
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
                             <Grid.RowDefinitions>
-                                <RowDefinition Height="20"/>
+                                <RowDefinition Height="34"/>
                             </Grid.RowDefinitions>
-                            <Button x:Name="prevButton" Grid.Column="0" Style="{StaticResource Key=Minimal}" ImageSource="{StaticResource arrow_left}" VerticalOptions="Start" Clicked="prevButton_Clicked"/>
-                            <Label x:Name="monthLabel" Grid.Column="1"  Text="" TextColor="{StaticResource hiperPeach}" HorizontalTextAlignment="Center"></Label>
-                            <Button x:Name="nextButton" Grid.Column="2" Style="{StaticResource Key=Minimal}" ImageSource="{StaticResource arrow_right}" VerticalOptions="Center" Clicked="nextButton_Clicked"/>
+                            <ImageButton x:Name="prevButton" Grid.Column="0" BackgroundColor="Transparent" Source="{StaticResource arrow_left}" VerticalOptions="Start" Clicked="prevButton_Clicked"/>
+                            <Label x:Name="monthLabel" Grid.Column="1"  Text="" TextColor="{StaticResource hiperPeach}" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"></Label>
+                            <ImageButton x:Name="nextButton" Grid.Column="2" BackgroundColor="Transparent" Source="{StaticResource arrow_right}" VerticalOptions="Center" Clicked="nextButton_Clicked"/>
                         </Grid>
                     
                         <Grid Margin="20">
@@ -64,8 +64,7 @@
                         <Label Text="RECURRENT GOALS" Margin="10" TextColor="{StaticResource hiperPeach}" HorizontalTextAlignment="Center"></Label>         
                         <Grid>
                             <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="34"/>
                             </Grid.RowDefinitions>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="50"></ColumnDefinition>
@@ -73,8 +72,8 @@
                                 <ColumnDefinition Width="*"></ColumnDefinition>
                                 <ColumnDefinition Width="Auto"></ColumnDefinition>
                             </Grid.ColumnDefinitions>
-                            <Button x:Name="buttonLeft" ImageSource="{StaticResource arrow_left}" Style="{StaticResource Key=Minimal}" Grid.Column="0" Clicked="buttonLeft_Clicked"></Button>
-                            <Button x:Name="buttonRight" ImageSource="{StaticResource arrow_right}" Style="{StaticResource Key=Minimal}" Grid.Column="1" Clicked="buttonRight_Clicked"></Button>
+                            <ImageButton x:Name="buttonLeft" Source="{StaticResource arrow_left}" BackgroundColor="Transparent" Grid.Column="0" Grid.Row="0" Clicked="buttonLeft_Clicked"></ImageButton>
+                            <ImageButton x:Name="buttonRight" Source="{StaticResource arrow_right}" BackgroundColor="Transparent" Grid.Column="1" Grid.Row="0" Clicked="buttonRight_Clicked"></ImageButton>
                             <Picker Grid.Column="3" x:Name="pickRecurrentGoal" Title="" HorizontalOptions="Center" SelectedIndexChanged="pickRecurrentGoal_SelectedIndexChanged" FontSize="Small" WidthRequest="200"></Picker>
                             <!--<ListView x:Name="participantsCollectionView"
                                         Grid.Row="1"

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using HIPER.Model;
+using Microsoft.AppCenter.Crashes;
 using SQLite;
 using Xamarin.Forms;
 
@@ -27,15 +28,11 @@ namespace HIPER
 
             if (!string.IsNullOrEmpty(App.loggedInUser.Email))
             {
+                loginNameEntry.Text = App.loggedInUser.Email;
+                passwordEntry.Text = App.loggedInUser.UserPassword;
                 await Navigation.PushAsync(new HomePage());
 
             }
-
-            //if (!string.IsNullOrEmpty(App.loggedInUser.Email))
-            //{
-            //    loginNameEntry.Text = App.loggedInUser.Email;
-            //    passwordEntry.Text = App.loggedInUser.UserPassword;
-            //}
         }
 
         void createUserButton_Clicked(System.Object sender, System.EventArgs e)
@@ -82,7 +79,10 @@ namespace HIPER
             }
             catch(Exception ex)
             {
-                
+                var properties = new Dictionary<string, string> {
+                { "MainPage", "Login button" }};
+                Crashes.TrackError(ex, properties);
+
             }
             aiLayout.IsVisible = false;
             ai.IsRunning = false;

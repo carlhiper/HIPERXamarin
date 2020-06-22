@@ -198,6 +198,33 @@
     <BundleResource Include="Resources\edit.png" />
     <BundleResource Include="Resources\edit%402x.png" />
     <BundleResource Include="Resources\edit%403x.png" />
+    <BundleResource Include="Resources\dashboard.png" />
+    <BundleResource Include="Resources\dashboard%402x.png" />
+    <BundleResource Include="Resources\dashboard%403x.png" />
+    <BundleResource Include="Resources\goals.png" />
+    <BundleResource Include="Resources\goals%402x.png" />
+    <BundleResource Include="Resources\goals%403x.png" />
+    <BundleResource Include="Resources\happy.png" />
+    <BundleResource Include="Resources\happy%402x.png" />
+    <BundleResource Include="Resources\happy%403x.png" />
+    <BundleResource Include="Resources\pleased.png" />
+    <BundleResource Include="Resources\pleased%402x.png" />
+    <BundleResource Include="Resources\pleased%403x.png" />
+    <BundleResource Include="Resources\profile.png" />
+    <BundleResource Include="Resources\profile%402x.png" />
+    <BundleResource Include="Resources\profile%403x.png" />
+    <BundleResource Include="Resources\sad.png" />
+    <BundleResource Include="Resources\sad%402x.png" />
+    <BundleResource Include="Resources\sad%403x.png" />
+    <BundleResource Include="Resources\team.png" />
+    <BundleResource Include="Resources\team%402x.png" />
+    <BundleResource Include="Resources\team%403x.png" />
+    <BundleResource Include="Resources\veryhappy.png" />
+    <BundleResource Include="Resources\veryhappy%402x.png" />
+    <BundleResource Include="Resources\veryhappy%403x.png" />
+    <BundleResource Include="Resources\verysad.png" />
+    <BundleResource Include="Resources\verysad%402x.png" />
+    <BundleResource Include="Resources\verysad%403x.png" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="CustomRenderers\" />

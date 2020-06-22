@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using HIPER.Helpers;
 using HIPER.Model;
+using Microsoft.AppCenter.Crashes;
 using SQLite;
 using Xamarin.Forms;
 
@@ -226,7 +227,11 @@ namespace HIPER
                 }
                 challengeCollectionView.ItemsSource = teammembers;
             }
-            catch (Exception ex) { }
+            catch (Exception ex) {
+                var properties = new Dictionary<string, string> {
+                { "AddCompetitionPage", "checkDeadlines" }};
+                Crashes.TrackError(ex, properties);
+            }
             challengeCollectionView.IsVisible = true;
             challengeCollectionView.HeightRequest = 20 * teammembers.Count;
         }
@@ -272,13 +277,12 @@ namespace HIPER
                 await Navigation.PopAsync();
 
             }
-            catch (NullReferenceException nre)
-            {
-                await DisplayAlert("Error", "Something went wrong, please try again", "Ok");
-            }
             catch (Exception ex)
             {
                 await DisplayAlert("Error", "Something went wrong, please try again", "Ok");
+                var properties = new Dictionary<string, string> {
+                { "UpdateScoreboard", "startCompetition_Clicked" }};
+                Crashes.TrackError(ex, properties);
             }
         }
     }

@@ -4,6 +4,7 @@ using System.Linq;
 using HIPER.Helpers;
 using HIPER.Model;
 using Microcharts;
+using Microsoft.AppCenter.Crashes;
 using SkiaSharp;
 using Xamarin.Forms;
 
@@ -57,29 +58,40 @@ namespace HIPER
 
             if (selectedTeam != null)
             {
-                header.Text = "TEAM PERFORMANCE";
-                goals = new List<GoalModel>();
-                users = await App.client.GetTable<UserModel>().Where(u => u.TeamId == selectedTeam.Id).ToListAsync();
-                if (users != null)
+                try
                 {
-                    foreach (UserModel u in users)
+                    header.Text = "TEAM PERFORMANCE";
+                    goals = new List<GoalModel>();
+                    users = await App.client.GetTable<UserModel>().Where(u => u.TeamId == selectedTeam.Id).ToListAsync();
+                    if (users != null)
                     {
-                        List<GoalModel> temp_goals = new List<GoalModel>();
-                        List<GoalModel> gs = await App.client.GetTable<GoalModel>().Where(g => g.UserId == u.Id).OrderByDescending(g => g.CreatedDate).Take(500).ToListAsync();
-                        if (gs != null)
+                        foreach (UserModel u in users)
                         {
-                            foreach (GoalModel g_s in gs)
+                            List<GoalModel> temp_goals = new List<GoalModel>();
+                            List<GoalModel> gs = await App.client.GetTable<GoalModel>().Where(g => g.UserId == u.Id).OrderByDescending(g => g.CreatedDate).Take(500).ToListAsync();
+                            if (gs != null)
                             {
-                                goals.Add(g_s);
-                                temp_goals.Add(g_s);
+                                foreach (GoalModel g_s in gs)
+                                {
+                                    goals.Add(g_s);
+                                    temp_goals.Add(g_s);
+                                }
                             }
+                            Teammember t = new Teammember();
+                            t.FirstName = u.FirstName;
+                            t.LastName = u.LastName;
+                            t.Goals = temp_goals;
+                            Teammembers.Add(t);
                         }
-                        Teammember t = new Teammember();
-                        t.FirstName = u.FirstName;
-                        t.LastName = u.LastName;
-                        t.Goals = temp_goals;
-                        Teammembers.Add(t);
                     }
+
+                }
+                catch (Exception ex)
+                {
+                    var properties = new Dictionary<string, string> {
+                    { "Statistics page", "OnAppearing" }};
+                    Crashes.TrackError(ex, properties);
+
                 }
             }
             else

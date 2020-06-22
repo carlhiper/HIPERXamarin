@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using HIPER.Model;
+using Microsoft.AppCenter.Crashes;
 using Xamarin.Forms;
 
 namespace HIPER
@@ -49,6 +50,9 @@ namespace HIPER
                     }
                     catch (Exception ex)
                     {
+                        var properties = new Dictionary<string, string> {
+                        { "Post page", "Create feed list" }};
+                        Crashes.TrackError(ex, properties);
 
                     }
                 }
@@ -91,6 +95,9 @@ namespace HIPER
             }
             catch (Exception ex)
             {
+                var properties = new Dictionary<string, string> {
+                { "Post page", "Post button clicked" }};
+                Crashes.TrackError(ex, properties);
 
             }
             PostEntry.Text = "";

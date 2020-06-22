@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using HIPER.Model;
+using Microsoft.AppCenter.Crashes;
 using SQLite;
 using Xamarin.Forms;
 
@@ -59,6 +60,10 @@ namespace HIPER
                 }catch(Exception ex)
                 {
                     await DisplayAlert("Error", ex.ToString(), "Ok");
+                    var properties = new Dictionary<string, string> {
+                    { "CreateUserPage", "saveButton_Clicked" }};
+                    Crashes.TrackError(ex, properties);
+
                 }
             }
         }

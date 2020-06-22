@@ -5,6 +5,7 @@ using Xamarin.Forms;
 using HIPER.Controllers;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AppCenter.Crashes;
 
 namespace HIPER
 {
@@ -63,6 +64,9 @@ namespace HIPER
             }
             catch (Exception ex)
             {
+                var properties = new Dictionary<string, string> {
+                        { "Goal detail page", "Accept challenge" }};
+                Crashes.TrackError(ex, properties);
 
             }
         }
@@ -80,6 +84,10 @@ namespace HIPER
             }
             catch (Exception ex)
             {
+        
+                var properties = new Dictionary<string, string> {
+                        { "GoalDetailPage", "Get challenge owner" }};
+                Crashes.TrackError(ex, properties);
                 return false;
             }
         }
@@ -297,6 +305,10 @@ namespace HIPER
             catch (Exception ex)
             {
                 await DisplayAlert("Error", ex.ToString(), "Ok");
+                var properties = new Dictionary<string, string> {
+                        { "GoalDetailPage", "On appearing" }};
+                Crashes.TrackError(ex, properties);
+
             }
         }
 
@@ -315,6 +327,9 @@ namespace HIPER
             catch (Exception ex)
             {
                 await DisplayAlert("Error", ex.ToString(), "Ok");
+                var properties = new Dictionary<string, string> {
+                        { "GoalDetailPage", "Edit goal clicked" }};
+                Crashes.TrackError(ex, properties);
             }
         }
 
@@ -393,6 +408,9 @@ namespace HIPER
             catch (Exception ex)
             {
                 await DisplayAlert("Error", ex.ToString(), "Ok");
+                var properties = new Dictionary<string, string> {
+                        { "GoalDetailPage", "Complete goal clicked" }};
+                Crashes.TrackError(ex, properties);
             }
         }
 
@@ -401,16 +419,27 @@ namespace HIPER
             bool delete = await DisplayAlert("Wait", "Are you sure you want to close this goal?", "Yes", "No");
             if (delete)
             {
-                if (goal.RepeatType == 0)
-                {
-                    goal.Closed = true;
-                }
-                goal.LastUpdatedDate = DateTime.Now;
-                goal.ClosedDate = DateTime.Now;
 
-                await App.client.GetTable<GoalModel>().UpdateAsync(goal);
-                await DisplayAlert("Goal closed", "", "Ok");
-                await Navigation.PopAsync();
+                try
+                {
+                    if (goal.RepeatType == 0)
+                    {
+                        goal.Closed = true;
+                    }
+                    goal.LastUpdatedDate = DateTime.Now;
+                    goal.ClosedDate = DateTime.Now;
+
+                    await App.client.GetTable<GoalModel>().UpdateAsync(goal);
+                    await DisplayAlert("Goal closed", "", "Ok");
+                    await Navigation.PopAsync();
+
+                }
+                catch (Exception ex)
+                {
+                    var properties = new Dictionary<string, string> {
+                        { "GoalDetailPage", "Close goal" }};
+                    Crashes.TrackError(ex, properties);
+                }
             }
         }
 
@@ -447,6 +476,9 @@ namespace HIPER
             }
             catch (Exception ex)
             {
+                var properties = new Dictionary<string, string> {
+                        { "GoalDetailPage", "Update goal and leaderboard" }};
+                Crashes.TrackError(ex, properties);
                 return false;
             }
         }

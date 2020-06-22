@@ -4,6 +4,7 @@ using HIPER.Model;
 using System.Linq;
 
 using Xamarin.Forms;
+using Microsoft.AppCenter.Crashes;
 
 namespace HIPER
 {
@@ -60,7 +61,9 @@ namespace HIPER
             catch(Exception ex)
             {
 
-
+                var properties = new Dictionary<string, string> {
+                        { "Leaderboard page", "On appearing" }};
+                Crashes.TrackError(ex, properties);
             }
         }
     }

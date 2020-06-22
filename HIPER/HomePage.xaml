@@ -3,16 +3,18 @@
 <TabbedPage xmlns="http://xamarin.com/schemas/2014/forms"
             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
             xmlns:local="clr-namespace:HIPER"
-            x:Class="HIPER.HomePage">
+            x:Class="HIPER.HomePage"
+            BarBackgroundColor="WhiteSmoke"
+            BarTextColor="DarkGray">
     <TabbedPage.ToolbarItems>
         <ToolbarItem>
             
         </ToolbarItem>
     </TabbedPage.ToolbarItems>
 
-    <local:ScoreboardPage Title="MY GOALS"></local:ScoreboardPage>
-    <local:FeedPage Title="DASHBOARD"></local:FeedPage>
-    <local:TeamPage Title="TEAM"></local:TeamPage>
-    <local:ProfilePage Title="ME"></local:ProfilePage>
+    <local:ScoreboardPage Title="MY GOALS" IconImageSource="{StaticResource goals}" ></local:ScoreboardPage>
+    <local:FeedPage Title="DASHBOARD" IconImageSource="{StaticResource dashboard}"></local:FeedPage>
+    <local:TeamPage Title="TEAM" IconImageSource="{StaticResource team}"></local:TeamPage>
+    <local:ProfilePage Title="ME" IconImageSource="{StaticResource profile}"></local:ProfilePage>
 
 </TabbedPage>

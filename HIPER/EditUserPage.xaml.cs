@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using HIPER.Model;
+using Microsoft.AppCenter.Crashes;
 using Microsoft.WindowsAzure.Storage;
 using Plugin.Media;
 using Plugin.Media.Abstractions;
@@ -89,13 +90,13 @@ namespace HIPER
                 await DisplayAlert("Success", "Profile updated", "Ok");
                 await Navigation.PopAsync();
             }
-            catch (NullReferenceException nre)
-            {
-                await DisplayAlert("Failure!", "Something went wrong, please try again", "Ok");
-            }
             catch (Exception ex)
             {
                 await DisplayAlert("Failure!", "Something went wrong, please try again", "Ok");
+                var properties = new Dictionary<string, string> {
+                { "EditUserPage", "SaveProfile" }};
+                Crashes.TrackError(ex, properties);
+
             }
         }
 
@@ -148,6 +149,9 @@ namespace HIPER
             }
             catch (Exception ex)
             {
+                var properties = new Dictionary<string, string> {
+                { "Edit user", "Upload image" }};
+                Crashes.TrackError(ex, properties);
 
             }
         }

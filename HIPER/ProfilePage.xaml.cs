@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using HIPER.Model;
+using Microsoft.AppCenter.Crashes;
 using Xamarin.Forms;
 
 namespace HIPER
@@ -28,33 +29,43 @@ namespace HIPER
 
         private async void CheckChat()
         {
-            if (App.loggedInUser.TeamId != null)
+            try
             {
-                ChatButton.IsEnabled = true;
-                var users = await App.client.GetTable<UserModel>().Where(u => u.TeamId == App.loggedInUser.TeamId).ToListAsync();
-                List<PostModel> postCollection = new List<PostModel>();
-                foreach (var user in users)
+                if (App.loggedInUser.TeamId != null)
                 {
-                    var post = (await App.client.GetTable<PostModel>().Where(p => p.UserId == user.Id).OrderByDescending(p => p.CreatedDate).ToListAsync()).FirstOrDefault();
-                    if (post != null)
+                    ChatButton.IsEnabled = true;
+                    var users = await App.client.GetTable<UserModel>().Where(u => u.TeamId == App.loggedInUser.TeamId).ToListAsync();
+                    List<PostModel> postCollection = new List<PostModel>();
+                    foreach (var user in users)
                     {
-                        postCollection.Add(post);
+                        var post = (await App.client.GetTable<PostModel>().Where(p => p.UserId == user.Id).OrderByDescending(p => p.CreatedDate).ToListAsync()).FirstOrDefault();
+                        if (post != null)
+                        {
+                            postCollection.Add(post);
+                        }
                     }
-                }
-                postCollection.Sort((x, y) => y.CreatedDate.CompareTo(x.CreatedDate));
-                if (postCollection[0].CreatedDate > App.loggedInUser.LastViewedPostDate)
-                {
-                    ChatButton.IconImageSource = "chat_ex.png";
+                    postCollection.Sort((x, y) => y.CreatedDate.CompareTo(x.CreatedDate));
+                    if (postCollection[0].CreatedDate > App.loggedInUser.LastViewedPostDate)
+                    {
+                        ChatButton.IconImageSource = "chat_ex.png";
+                    }
+                    else
+                    {
+                        ChatButton.IconImageSource = "chat.png";
+                    }
                 }
                 else
                 {
-                    ChatButton.IconImageSource = "chat.png";
+                    ChatButton.IsEnabled = false;
                 }
+
             }
-            else
-            {
-                ChatButton.IsEnabled = false;
+            catch (Exception ex) {
+                var properties = new Dictionary<string, string> {
+                { "Profilepage", "Check chat" }};
+                Crashes.TrackError(ex, properties);
             }
+
         }
 
         void viewStatsButton_Clicked(System.Object sender, System.EventArgs e)

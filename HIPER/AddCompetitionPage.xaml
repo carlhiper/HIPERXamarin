@@ -11,8 +11,7 @@
 
         <ScrollView  >
            <Frame Margin="10">
-         <StackLayout Margin="20"
-                         CompressedLayout.IsHeadless="True">
+         <StackLayout Margin="20">
                 <Label Style="{StaticResource Header}" Text="COMPETITION"></Label>
                 <Entry x:Name="goalNameEntry" Placeholder="TITLE" MaxLength="20"></Entry>
                 <Editor x:Name="goalDescriptionEntry" Placeholder="DESCRIBE GOAL AND FIRST PRIZE" MaxLength="255" HeightRequest="100"></Editor>
@@ -42,8 +41,8 @@
                 <Label Text="CHOOSE A TARGET" HorizontalOptions="Center" Margin="0,20,0,10" TextColor="{StaticResource hiperPeach}"></Label>
                 <Grid>
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="30" />
-                        <RowDefinition Height="30" />
+                        <RowDefinition Height="40" />
+                        <RowDefinition Height="40" />
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="20" />
@@ -122,8 +121,8 @@
                 </Grid>
                 <Grid>
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="30" />
-                        <RowDefinition Height="30" />
+                        <RowDefinition Height="40" />
+                        <RowDefinition Height="40" />
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="20" />
