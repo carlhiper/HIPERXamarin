@@ -4,6 +4,7 @@ using System.Linq;
 using HIPER.Model;
 using Xamarin.Forms;
 using HIPER.Helpers;
+using Microsoft.AppCenter.Crashes;
 
 namespace HIPER
 {
@@ -70,11 +71,11 @@ namespace HIPER
 
                 }
             }
-            catch (NullReferenceException nre)
-            {
-            }
             catch (Exception ex)
             {
+                var properties = new Dictionary<string, string> {
+                { "CreateTeamPage", "saveButton_Clicked" }};
+                Crashes.TrackError(ex, properties);
 
             }
         }

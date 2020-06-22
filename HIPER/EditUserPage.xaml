@@ -11,8 +11,7 @@
         <Frame Margin="10">
 
             <StackLayout
-                Margin="20,0"
-                CompressedLayout.IsHeadless="True">
+                Margin="20,0">
                 <Label Text="EDIT YOUR PROFILE" Style="{StaticResource Header}"></Label>
 
                 <Grid>

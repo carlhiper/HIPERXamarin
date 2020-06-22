@@ -46,8 +46,7 @@
                    >
                  <Grid Padding="10">
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="23" />
-                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="35" />
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
 
@@ -61,9 +60,10 @@
                              Style="{StaticResource Minimal}"
                              FontAttributes="Bold"
                              TextColor="Gray"
+                             FontSize="Micro"
                              x:Name="AddNewGoalButton"
                              Clicked="AddNewGoalButton_Clicked"/>
-
+                            
 
                         <!--<Label Grid.Row="0"
                         Grid.Column="0" 
@@ -76,12 +76,6 @@
                         Grid.Row="0"
                         Progress="0.5"
                         ProgressColor="Gray"/>
-                    <Label Grid.Row="1"
-                        Grid.ColumnSpan="3"
-                        Grid.Column="0" 
-                        Text=""
-                        FontAttributes="None" 
-                        VerticalOptions="End" />
                 </Grid>
          
             </Frame>

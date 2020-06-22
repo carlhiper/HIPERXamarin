@@ -3,7 +3,9 @@
 <TabbedPage xmlns="http://xamarin.com/schemas/2014/forms"
             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
             xmlns:local="clr-namespace:HIPER"
-            x:Class="HIPER.HomePage">
+            x:Class="HIPER.HomePage"
+            BarBackgroundColor="WhiteSmoke"
+            BarTextColor="DarkGray">
     <TabbedPage.ToolbarItems>
         <ToolbarItem>
             

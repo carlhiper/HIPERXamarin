@@ -5,13 +5,13 @@ using Xamarin.Forms;
 using Microcharts;
 using SkiaSharp;
 using System.Linq;
+using Microsoft.AppCenter.Crashes;
 
 namespace HIPER
 {
     public partial class FeedPage : ContentPage
     {
         bool PointsChartYearly = false;
-        //List<GoalModel> activeGoals = new List<GoalModel>();
         private readonly List<ChartEntry> progressEntries = new List<ChartEntry>();
         private readonly List<ChartEntry> pointsEntries = new List<ChartEntry>();
 
@@ -33,32 +33,42 @@ namespace HIPER
 
         private async void CheckChat()
         {
-            if (App.loggedInUser.TeamId != null)
+            try
             {
-                ChatButton.IsEnabled = true;
-                var users = await App.client.GetTable<UserModel>().Where(u => u.TeamId == App.loggedInUser.TeamId).ToListAsync();
-                List<PostModel> postCollection = new List<PostModel>();
-                foreach (var user in users)
+                if (App.loggedInUser.TeamId != null)
                 {
-                    var post = (await App.client.GetTable<PostModel>().Where(p => p.UserId == user.Id).OrderByDescending(p => p.CreatedDate).ToListAsync()).FirstOrDefault();
-                    if (post != null)
+                    ChatButton.IsEnabled = true;
+                    var users = await App.client.GetTable<UserModel>().Where(u => u.TeamId == App.loggedInUser.TeamId).ToListAsync();
+                    List<PostModel> postCollection = new List<PostModel>();
+                    foreach (var user in users)
                     {
-                        postCollection.Add(post);
+                        var post = (await App.client.GetTable<PostModel>().Where(p => p.UserId == user.Id).OrderByDescending(p => p.CreatedDate).ToListAsync()).FirstOrDefault();
+                        if (post != null)
+                        {
+                            postCollection.Add(post);
+                        }
                     }
-                }
-                postCollection.Sort((x, y) => y.CreatedDate.CompareTo(x.CreatedDate));
-                if (postCollection[0].CreatedDate > App.loggedInUser.LastViewedPostDate)
-                {
-                    ChatButton.IconImageSource = "chat_ex.png";
+                    postCollection.Sort((x, y) => y.CreatedDate.CompareTo(x.CreatedDate));
+                    if (postCollection[0].CreatedDate > App.loggedInUser.LastViewedPostDate)
+                    {
+                        ChatButton.IconImageSource = "chat_ex.png";
+                    }
+                    else
+                    {
+                        ChatButton.IconImageSource = "chat.png";
+                    }
                 }
                 else
                 {
-                    ChatButton.IconImageSource = "chat.png";
+                    ChatButton.IsEnabled = false;
                 }
+
             }
-            else
+            catch (Exception ex)
             {
-                ChatButton.IsEnabled = false;
+                var properties = new Dictionary<string, string> {
+                { "Feedpage", "check chat" }};
+                Crashes.TrackError(ex, properties);
             }
         }
 
@@ -205,7 +215,9 @@ namespace HIPER
                     }
                     catch (Exception ex)
                     {
-
+                        var properties = new Dictionary<string, string> {
+                        { "Feedpage", "Create feed list" }};
+                        Crashes.TrackError(ex, properties);
                     }
                 }
 
@@ -237,25 +249,35 @@ namespace HIPER
 
                 foreach (var id in challengeIds)
                 {
-                    var challenge = (await App.client.GetTable<ChallengeModel>().Where(c => c.Id == id).ToListAsync()).FirstOrDefault();
-                    var user = (await App.client.GetTable<UserModel>().Where(u => u.Id == challenge.OwnerId).ToListAsync()).FirstOrDefault();
-                    var goal = (await App.client.GetTable<GoalModel>().Where(g => g.ChallengeId == challenge.Id).OrderBy(g => g.CreatedDate).ToListAsync()).FirstOrDefault();
-                    FeedModel feedItem = new FeedModel();
-                    feedItem.IndexDate = challenge.CreatedDate;
-                    feedItem.ProfileImageURL = user.ImageUrl;
-
-                    if (goal.GoalType == 1)
+                    try
                     {
-                        feedItem.FeedItemTitle = "New challenge!";
-                        feedItem.FeedItemPost = user.FirstName + " created the challenge \"" + goal.Title + "\"! ";
-                    }
-                    else if (goal.GoalType == 2)
-                    {
-                        feedItem.FeedItemTitle = "New competition!";
-                        feedItem.FeedItemPost = user.FirstName + " created the competition \"" + goal.Title + "\"! ";
-                    }
+                        var challenge = (await App.client.GetTable<ChallengeModel>().Where(c => c.Id == id).ToListAsync()).FirstOrDefault();
+                        var user = (await App.client.GetTable<UserModel>().Where(u => u.Id == challenge.OwnerId).ToListAsync()).FirstOrDefault();
+                        var goal = (await App.client.GetTable<GoalModel>().Where(g => g.ChallengeId == challenge.Id).OrderBy(g => g.CreatedDate).ToListAsync()).FirstOrDefault();
+                        FeedModel feedItem = new FeedModel();
+                        feedItem.IndexDate = challenge.CreatedDate;
+                        feedItem.ProfileImageURL = user.ImageUrl;
 
-                    feed.Add(feedItem);
+                        if (goal.GoalType == 1)
+                        {
+                            feedItem.FeedItemTitle = "New challenge!";
+                            feedItem.FeedItemPost = user.FirstName + " created the challenge \"" + goal.Title + "\"! ";
+                        }
+                        else if (goal.GoalType == 2)
+                        {
+                            feedItem.FeedItemTitle = "New competition!";
+                            feedItem.FeedItemPost = user.FirstName + " created the competition \"" + goal.Title + "\"! ";
+                        }
+
+                        feed.Add(feedItem);
+                    }
+                    catch(Exception ex)
+                    {
+                        var properties = new Dictionary<string, string> {
+                        { "Feedpage", "create feed 2" }};
+                        Crashes.TrackError(ex, properties);
+                    }
+          
                 }
                 feed.Sort((x, y) => y.IndexDate.CompareTo(x.IndexDate));
                 feedCollectionView.ItemsSource = feed;

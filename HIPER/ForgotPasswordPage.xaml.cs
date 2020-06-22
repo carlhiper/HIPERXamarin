@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using HIPER.Model;
 using Xamarin.Forms;
 using System.Linq;
+using Microsoft.AppCenter.Crashes;
 
 namespace HIPER
 {
@@ -40,6 +41,10 @@ namespace HIPER
             catch (Exception ex)
             {
                 await DisplayAlert("Connection error", ex.ToString(), "Ok");
+                var properties = new Dictionary<string, string> {
+                        { "Forgot password", "Show button" }};
+                Crashes.TrackError(ex, properties);
+
             }
             aiLayout.IsVisible = false;
             ai.IsRunning = false;

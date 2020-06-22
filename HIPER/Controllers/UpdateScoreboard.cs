@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using HIPER.Model;
+using Microsoft.AppCenter.Crashes;
 
 namespace HIPER.Controllers
 {
@@ -23,7 +25,9 @@ namespace HIPER.Controllers
                 }
             }catch(Exception ex)
             {
-
+                var properties = new Dictionary<string, string> {
+                { "UpdateScoreboard", "checkDeadlines" }};
+                Crashes.TrackError(ex, properties);
             }
         }
 
@@ -108,12 +112,11 @@ namespace HIPER.Controllers
                     }
                 }
             }
-            catch(NullReferenceException nre)
-            {
-            }
             catch(Exception ex)
             {
-
+                var properties = new Dictionary<string, string> {
+                { "UpdateScoreboard", "checkRepeatGoals" }};
+                Crashes.TrackError(ex, properties);
 
             }
         }

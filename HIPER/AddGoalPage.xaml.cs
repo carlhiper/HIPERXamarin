@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using HIPER.Helpers;
 using HIPER.Model;
+using Microsoft.AppCenter.Crashes;
 using SQLite;
 using Xamarin.Forms;
 
@@ -118,13 +119,10 @@ namespace HIPER
                 }
 
             }
-            catch (NullReferenceException nre)
-            {
-                await DisplayAlert("Goal not saved!", "Something went wrong, please try again", "Ok");
-            }
             catch (Exception ex)
             {
                 await DisplayAlert("Goal not saved!", "Something went wrong, please try again", "Ok");
+                Crashes.TrackError(ex);
             }
         }
 
@@ -197,8 +195,18 @@ namespace HIPER
             //{
             //    goal.RepeatMonthly = DateTime.DaysInMonth(DateTime.Now.Year, DateTime.Now.Month);
             //}
+            try
+            {
+                await App.client.GetTable<GoalModel>().InsertAsync(goal);
+            }
+            catch (Exception ex)
+            {
+                var properties = new Dictionary<string, string> {
+                { "AddGoalPage", "CreateGoal" }};
+                Crashes.TrackError(ex, properties);
 
-            await App.client.GetTable<GoalModel>().InsertAsync(goal);
+            }
+
         }
 
         private void radioButtonController()
@@ -330,7 +338,11 @@ namespace HIPER
                     }
                     challengeCollectionView.ItemsSource = teammembers;
                 }
-                catch (Exception ex) { }
+                catch (Exception ex) {
+                    var properties = new Dictionary<string, string> {
+                    { "AddGoalPage", "challengeCheckbox_checkchanged" }};
+                    Crashes.TrackError(ex, properties);
+                }
                 challengeCollectionView.IsVisible = true;
 
                 challengeCollectionView.HeightRequest = teammembers.Count * 20;

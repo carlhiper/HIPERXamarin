@@ -13,8 +13,7 @@
     </ContentPage.Resources>
 
 
-    <StackLayout Margin="10"
-                    CompressedLayout.IsHeadless="True">
+    <StackLayout Margin="10">
 
         <Label Text="COMPETITIONS" Style="{StaticResource Header}"></Label>
                     
@@ -40,9 +39,8 @@
             <Frame BorderColor="LightGray"
                    >
                  <Grid Padding="10">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="23" />
-                        <RowDefinition Height="Auto" />
+                   <Grid.RowDefinitions>
+                        <RowDefinition Height="35" />
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
 
@@ -52,10 +50,11 @@
                         <ColumnDefinition Width="100" />
                         <ColumnDefinition Width="35"/>
                     </Grid.ColumnDefinitions>
-                     <Button Text="Start a new competition!"
+                     <Button Text="Click here to add a goal!"
                              Style="{StaticResource Minimal}"
                              FontAttributes="Bold"
                              TextColor="Gray"
+                             FontSize="Micro"
                              x:Name="AddNewCompetitionButton"
                              Clicked="AddNewCompetitionButton_Clicked"/>
 

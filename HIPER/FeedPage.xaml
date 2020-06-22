@@ -50,7 +50,7 @@
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="20"/>
+                        <RowDefinition Height="24"/>
                     </Grid.RowDefinitions>
                     <Label Grid.Column="1" Text="POINTS LEADERBOARD" Margin="3" TextColor="{StaticResource hiperPeach}" HorizontalTextAlignment="Center" FontSize="Small"></Label>         
                     <Grid Grid.Column="2">
