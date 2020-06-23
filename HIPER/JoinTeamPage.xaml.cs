@@ -38,6 +38,17 @@ namespace HIPER
                         {
                             App.loggedInUser.TeamId = team.Id;
                             await App.client.GetTable<UserModel>().UpdateAsync(App.loggedInUser);
+
+                            // Create entry in Teams database
+                            TeamsModel teamsModelObj = new TeamsModel()
+                            {
+                                TeamId = team.Id,
+                                UserId = App.loggedInUser.Id,
+                                LastViewedPostDate = DateTime.Now.Date
+                            };
+                            await App.client.GetTable<TeamsModel>().InsertAsync(teamsModelObj);
+
+
                             await Navigation.PopAsync();
                         }
                         else

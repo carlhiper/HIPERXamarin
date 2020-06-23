@@ -49,7 +49,7 @@ namespace HIPER
             if (showClosedSwitch.IsToggled)
             {
                 DateTime earliestDate = DateTime.Now.AddMonths(-15);
-                closedGoals = await App.client.GetTable<GoalModel>().Where(g => g.UserId == App.loggedInUser.Id && (g.Closed || g.ClosedDate < DateTime.Now) && (g.ClosedDate > earliestDate)).OrderByDescending(g => g.ClosedDate).Take(500).ToListAsync();
+                closedGoals = await App.client.GetTable<GoalModel>().Where(g => g.UserId == App.loggedInUser.Id && (g.Closed || g.ClosedDate < DateTime.Now) && (g.ClosedDate > earliestDate)).OrderByDescending(g => g.ClosedDate).Where(g2 => g2.TeamId == App.loggedInUser.TeamId).Take(500).ToListAsync();
 
                 //Sorting
                 if (filter == 0)
@@ -81,7 +81,7 @@ namespace HIPER
             }
             else
             {
-                activeGoals = await App.client.GetTable<GoalModel>().Where(g => g.UserId == App.loggedInUser.Id && (!g.Closed && !g.Completed && g.ClosedDate > DateTime.Now)).OrderByDescending(g => g.CreatedDate).ToListAsync();
+                activeGoals = await App.client.GetTable<GoalModel>().Where(g => g.UserId == App.loggedInUser.Id && (!g.Closed && !g.Completed && g.ClosedDate > DateTime.Now)).Where(g2 => g2.TeamId == App.loggedInUser.TeamId).OrderByDescending(g => g.CreatedDate).ToListAsync();
 
                 //Sorting
                 if (filter == 0)
@@ -155,11 +155,21 @@ namespace HIPER
                 if (App.loggedInUser.TeamId != null)
                 {
                     ChatButton.IsEnabled = true;
-                    var users = await App.client.GetTable<UserModel>().Where(u => u.TeamId == App.loggedInUser.TeamId).ToListAsync();
+                    List<UserModel> users = new List<UserModel>();
+                    var teammembers = await App.client.GetTable<TeamsModel>().Where(t => t.TeamId == App.loggedInUser.TeamId).ToListAsync();
+                    if (teammembers.Count > 0)
+                    {
+                        foreach (var member in teammembers)
+                        {
+                            var user = (await App.client.GetTable<UserModel>().Where(u => u.Id == member.UserId).ToListAsync()).FirstOrDefault();
+                            users.Add(user);
+                        }
+                    }
+                    //var users = await App.client.GetTable<UserModel>().Where(u => u.TeamId == App.loggedInUser.TeamId).ToListAsync();
                     List<PostModel> postCollection = new List<PostModel>();
                     foreach (var user in users)
                     {
-                        var post = (await App.client.GetTable<PostModel>().Where(p => p.UserId == user.Id).OrderByDescending(p => p.CreatedDate).ToListAsync()).FirstOrDefault();
+                        var post = (await App.client.GetTable<PostModel>().Where(p => p.UserId == user.Id).Where(p2 => p2.TeamId == App.loggedInUser.TeamId).OrderByDescending(p => p.CreatedDate).ToListAsync()).FirstOrDefault();
                         if (post != null)
                         {
                             postCollection.Add(post);
@@ -186,7 +196,6 @@ namespace HIPER
                 var properties = new Dictionary<string, string> {
                 { "Scoreboard page", "Check chat" }};
                 Crashes.TrackError(ex, properties);
-
             }
         }
     }

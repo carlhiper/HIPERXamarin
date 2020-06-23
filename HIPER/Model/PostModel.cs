@@ -17,6 +17,9 @@ namespace HIPER.Model
         public string UserId { get; set; }
 
         [DataMember]
+        public string TeamId { get; set; }
+
+        [DataMember]
         public string Post { get; set; }
 
         [DataMember]

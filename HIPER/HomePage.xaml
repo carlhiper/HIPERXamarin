@@ -6,13 +6,14 @@
             x:Class="HIPER.HomePage"
             BarBackgroundColor="WhiteSmoke"
             BarTextColor="DarkGray">
+
     <TabbedPage.ToolbarItems>
         <ToolbarItem>
             
         </ToolbarItem>
     </TabbedPage.ToolbarItems>
 
-    <local:ScoreboardPage Title="MY GOALS" IconImageSource="{StaticResource goals}" ></local:ScoreboardPage>
+    <local:ScoreboardPage Title="MY GOALS" IconImageSource="{StaticResource goals}"></local:ScoreboardPage>
     <local:FeedPage Title="DASHBOARD" IconImageSource="{StaticResource dashboard}"></local:FeedPage>
     <local:TeamPage Title="TEAM" IconImageSource="{StaticResource team}"></local:TeamPage>
     <local:ProfilePage Title="ME" IconImageSource="{StaticResource profile}"></local:ProfilePage>

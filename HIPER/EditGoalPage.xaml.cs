@@ -197,10 +197,10 @@ namespace HIPER
                 selectedGoal.Deadline = DateTime.Parse(goalDeadlineEntry.Date.ToString());
             }
 
+            selectedGoal.TeamId = App.loggedInUser.TeamId;
             selectedGoal.LastUpdatedDate = DateTime.Now;
             selectedGoal.Title = goalNameEntry.Text;
             selectedGoal.Description = goalDescriptionEntry.Text;
-            //  selectedGoal.PrivateGoal = privateGoalCheckbox.IsChecked;
             selectedGoal.RepeatWeekly = weekdayPicker.SelectedIndex;
             selectedGoal.RepeatMonthly = dayOfMonthPicker.SelectedIndex;
             selectedGoal.RepeatType = repeatableRB1.IsChecked ? 0 : 1;

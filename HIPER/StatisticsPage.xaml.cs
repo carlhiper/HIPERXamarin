@@ -62,13 +62,25 @@ namespace HIPER
                 {
                     header.Text = "TEAM PERFORMANCE";
                     goals = new List<GoalModel>();
-                    users = await App.client.GetTable<UserModel>().Where(u => u.TeamId == selectedTeam.Id).ToListAsync();
+
+                    var teammembers = await App.client.GetTable<TeamsModel>().Where(t => t.TeamId == App.loggedInUser.TeamId).ToListAsync();
+                    List<UserModel> users = new List<UserModel>();
+                    if (teammembers.Count > 0)
+                    {
+                        foreach (var member in teammembers)
+                        {
+                            var user = (await App.client.GetTable<UserModel>().Where(u => u.Id == member.UserId).ToListAsync()).FirstOrDefault();
+                            users.Add(user);
+                        }
+                    }
+
+                    //users = await App.client.GetTable<UserModel>().Where(u => u.TeamId == selectedTeam.Id).ToListAsync();
                     if (users != null)
                     {
                         foreach (UserModel u in users)
                         {
                             List<GoalModel> temp_goals = new List<GoalModel>();
-                            List<GoalModel> gs = await App.client.GetTable<GoalModel>().Where(g => g.UserId == u.Id).OrderByDescending(g => g.CreatedDate).Take(500).ToListAsync();
+                            List<GoalModel> gs = await App.client.GetTable<GoalModel>().Where(g => g.UserId == u.Id).Where(g2 => g2.TeamId == App.loggedInUser.TeamId).OrderByDescending(g => g.CreatedDate).Take(500).ToListAsync();
                             if (gs != null)
                             {
                                 foreach (GoalModel g_s in gs)
@@ -97,7 +109,7 @@ namespace HIPER
             else
             {
                 // participantsCollectionView.IsVisible = false;
-                goals = await App.client.GetTable<GoalModel>().Where(g => g.UserId == selectedUser.Id).Take(500).ToListAsync();
+                goals = await App.client.GetTable<GoalModel>().Where(g => g.UserId == selectedUser.Id).Where(g2 => g2.TeamId == App.loggedInUser.TeamId).Take(500).ToListAsync();
             }
 
             UpdateStats();

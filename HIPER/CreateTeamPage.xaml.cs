@@ -66,9 +66,17 @@ namespace HIPER
                     App.loggedInUser.TeamId = updatedTeam.Id;
                     await App.client.GetTable<UserModel>().UpdateAsync(App.loggedInUser);
 
+                    // Create entry in Teams database
+                    TeamsModel teamsModelObj = new TeamsModel()
+                    {
+                        TeamId = updatedTeam.Id,
+                        UserId = App.loggedInUser.Id,
+                        LastViewedPostDate = DateTime.Now.Date
+                    };
+                    await App.client.GetTable<TeamsModel>().InsertAsync(teamsModelObj);
+
                     await DisplayAlert("Success", "Team created", "Ok");
                     await Navigation.PopAsync();
-
                 }
             }
             catch (Exception ex)

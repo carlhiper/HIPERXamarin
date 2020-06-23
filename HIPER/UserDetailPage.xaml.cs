@@ -32,6 +32,8 @@ namespace HIPER
             companyLabel.Text = user.Company;
             emailLabel.Text = user.Email;
             profileImage.Source = user.ImageUrl;
+            registeredDate.Text = "Registerred: " + String.Format("{0:yyyy-MM-dd}", user.CreatedDate);
+
 
             filterPicker.ItemsSource = App.filterOptions;
             createGoalsList(1);
@@ -64,7 +66,7 @@ namespace HIPER
                 {
                     if (completedSwitch.IsToggled)
                     {
-                        closedGoals = await App.client.GetTable<GoalModel>().Where(g => g.UserId == user.Id && (g.Closed || g.ClosedDate < DateTime.Now)).OrderByDescending(g => g.ClosedDate).ToListAsync();
+                        closedGoals = await App.client.GetTable<GoalModel>().Where(g => g.UserId == user.Id && (g.Closed || g.ClosedDate < DateTime.Now)).OrderByDescending(g => g.ClosedDate).Where(g2 => g2.TeamId == App.loggedInUser.Id).ToListAsync();
 
                         //Sorting
                         if (filter == 0)
@@ -96,7 +98,7 @@ namespace HIPER
                     }
                     else
                     {
-                        activeGoals = await App.client.GetTable<GoalModel>().Where(g => g.UserId == user.Id && (!g.Closed && !g.Completed && g.ClosedDate > DateTime.Now)).OrderByDescending(g => g.CreatedDate).ToListAsync();
+                        activeGoals = await App.client.GetTable<GoalModel>().Where(g => g.UserId == user.Id && (!g.Closed && !g.Completed && g.ClosedDate > DateTime.Now)).OrderByDescending(g => g.CreatedDate).Where(g2 => g2.TeamId == App.loggedInUser.TeamId).ToListAsync();
 
                         //Sorting
                         if (filter == 0)

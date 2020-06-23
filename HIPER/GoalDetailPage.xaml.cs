@@ -51,7 +51,8 @@ namespace HIPER
                         {
                             RegDate = DateTime.Now,
                             Points = Helpers.Constants.POINTS_FOR_ACCEPTED_CHALLENGE,
-                            UserId = App.loggedInUser.Id
+                            UserId = App.loggedInUser.Id,
+                            TeamId = App.loggedInUser.TeamId
                         };
                         await App.client.GetTable<PointModel>().InsertAsync(point);
                     }
@@ -100,6 +101,7 @@ namespace HIPER
             goalTargetLabel.Text = goal.TargetValue;
             goalCurrentEntry.Text = goal.CurrentValue;
             deadlineLabel.Text = goal.Deadline.ToLongDateString();
+      
 
             if (goal.Completed || goal.Closed)
             {
@@ -109,41 +111,39 @@ namespace HIPER
                 closeGoal.IsVisible = false;
             }
 
-            if (string.IsNullOrEmpty(goal.TeamId))
 
-
-                if (string.IsNullOrEmpty(goal.ChallengeId))
+            if (string.IsNullOrEmpty(goal.ChallengeId))
+            {
+                leaderboardCollectionView.IsVisible = false;
+                leaderBoardLabel.IsVisible = false;
+                cardFrame.BorderColor = Color.FromHex(HIPER.Helpers.Constants.HIPER_PEACH);
+                challengeImage.IsVisible = false;
+                createdByLabel.Text = "";
+                createdByLabel.IsVisible = false;
+            }
+            else
+            {
+                leaderboardCollectionView.IsVisible = true;
+                leaderBoardLabel.IsVisible = true;
+                cardFrame.BorderColor = Color.FromHex(HIPER.Helpers.Constants.HIPER_PEACH);
+                challengeImage.IsVisible = true;
+                if (challengeOwner != null)
                 {
-                    leaderboardCollectionView.IsVisible = false;
-                    leaderBoardLabel.IsVisible = false;
-                    cardFrame.BorderColor = Color.FromHex(HIPER.Helpers.Constants.HIPER_PEACH);
-                    challengeImage.IsVisible = false;
-                    createdByLabel.Text = "";
-                    createdByLabel.IsVisible = false;
+                    createdByLabel.Text = "Created by " + challengeOwner.FirstName + " " + challengeOwner.LastName;
+                    createdByLabel.IsVisible = true;
+                    if (goal.GoalType == 2 && challengeOwner.Id == App.loggedInUser.Id && IsCompetitionPage)
+                    {
+                        goalCurrentEntry.IsEnabled = false;
+                        completeGoal.IsVisible = false;
+                        closeGoal.IsVisible = false;
+                    }
                 }
                 else
                 {
-                    leaderboardCollectionView.IsVisible = true;
-                    leaderBoardLabel.IsVisible = true;
-                    cardFrame.BorderColor = Color.FromHex(HIPER.Helpers.Constants.HIPER_PEACH);
-                    challengeImage.IsVisible = true;
-                    if (challengeOwner != null)
-                    {
-                        createdByLabel.Text = "Created by " + challengeOwner.FirstName + " " + challengeOwner.LastName;
-                        createdByLabel.IsVisible = true;
-                        if (goal.GoalType == 2 && challengeOwner.Id == App.loggedInUser.Id && IsCompetitionPage)
-                        {
-                            goalCurrentEntry.IsEnabled = false;
-                            completeGoal.IsVisible = false;
-                            closeGoal.IsVisible = false;
-                        }
-                    }
-                    else
-                    {
-                        createdByLabel.Text = "";
-                        createdByLabel.IsVisible = false;
-                    }
+                    createdByLabel.Text = "";
+                    createdByLabel.IsVisible = false;
                 }
+            }
 
             if (goal.RepeatType == 1)
             {
@@ -347,6 +347,7 @@ namespace HIPER
                 if (complete)
                 {
                     goal.Completed = true;
+                    goal.TeamId = App.loggedInUser.TeamId;
                     goal.LastUpdatedDate = DateTime.Now;
                     goal.ClosedDate = DateTime.Now;
                     if (goal.RepeatType == 0)
@@ -359,7 +360,9 @@ namespace HIPER
                     {
                         RegDate = DateTime.Now,
                         Points = Helpers.Constants.POINTS_FOR_COMPLETED_GOAL,
-                        UserId = App.loggedInUser.Id
+                        UserId = App.loggedInUser.Id,
+                        TeamId = App.loggedInUser.TeamId
+
                     };
                     await App.client.GetTable<PointModel>().InsertAsync(p1);
 
@@ -392,7 +395,9 @@ namespace HIPER
                             {
                                 RegDate = DateTime.Now,
                                 Points = Helpers.Constants.POINTS_FOR_WON_CHALLENGE,
-                                UserId = App.loggedInUser.Id
+                                UserId = App.loggedInUser.Id,
+                                TeamId = App.loggedInUser.TeamId
+
                             };
                             await App.client.GetTable<PointModel>().InsertAsync(p2);
 
@@ -428,6 +433,7 @@ namespace HIPER
                     }
                     goal.LastUpdatedDate = DateTime.Now;
                     goal.ClosedDate = DateTime.Now;
+                    goal.TeamId = App.loggedInUser.TeamId;
 
                     await App.client.GetTable<GoalModel>().UpdateAsync(goal);
                     await DisplayAlert("Goal closed", "", "Ok");

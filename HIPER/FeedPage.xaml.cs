@@ -38,11 +38,21 @@ namespace HIPER
                 if (App.loggedInUser.TeamId != null)
                 {
                     ChatButton.IsEnabled = true;
-                    var users = await App.client.GetTable<UserModel>().Where(u => u.TeamId == App.loggedInUser.TeamId).ToListAsync();
+                    List<UserModel> users = new List<UserModel>();
+                    var teammembers = await App.client.GetTable<TeamsModel>().Where(t => t.TeamId == App.loggedInUser.TeamId).ToListAsync();
+                    if (teammembers.Count > 0)
+                    {
+                        foreach (var member in teammembers)
+                        {
+                            var user = (await App.client.GetTable<UserModel>().Where(u => u.Id == member.UserId).ToListAsync()).FirstOrDefault();
+                            users.Add(user);
+                        }
+                    }
+                    //var users = await App.client.GetTable<UserModel>().Where(u => u.TeamId == App.loggedInUser.TeamId).ToListAsync();
                     List<PostModel> postCollection = new List<PostModel>();
                     foreach (var user in users)
                     {
-                        var post = (await App.client.GetTable<PostModel>().Where(p => p.UserId == user.Id).OrderByDescending(p => p.CreatedDate).ToListAsync()).FirstOrDefault();
+                        var post = (await App.client.GetTable<PostModel>().Where(p => p.UserId == user.Id).Where(p2 => p2.TeamId == App.loggedInUser.TeamId).OrderByDescending(p => p.CreatedDate).ToListAsync()).FirstOrDefault();
                         if (post != null)
                         {
                             postCollection.Add(post);
@@ -67,16 +77,17 @@ namespace HIPER
             catch (Exception ex)
             {
                 var properties = new Dictionary<string, string> {
-                { "Feedpage", "check chat" }};
+                { "Feed page", "Check chat" }};
                 Crashes.TrackError(ex, properties);
             }
         }
+
 
         private async void PopulateProgressChart()
         {
             progressEntries.Clear();
             int index = 0;
-            var activeGoals = await App.client.GetTable<GoalModel>().Where(g => g.UserId == App.loggedInUser.Id && (!g.Closed && !g.Completed && g.ClosedDate > DateTime.Now)).OrderByDescending(g => g.CreatedDate).ToListAsync();
+            var activeGoals = await App.client.GetTable<GoalModel>().Where(g => g.UserId == App.loggedInUser.Id && (!g.Closed && !g.Completed && g.ClosedDate > DateTime.Now)).OrderByDescending(g => g.CreatedDate).Where(g2 => g2.TeamId == App.loggedInUser.TeamId).ToListAsync();
             foreach (var goal in activeGoals)
             {
                 progressEntries.Add(new ChartEntry((int)(goal.Progress * 100)) { Label = goal.Title, ValueLabel = ((int)(goal.Progress * 100)).ToString("D") + "%", Color = SKColor.Parse(App.donutChartColors[index]) });
@@ -97,7 +108,7 @@ namespace HIPER
 
         private async void GetAlerts()
         {
-            var alertGoals = await App.client.GetTable<GoalModel>().Where(g => g.UserId == App.loggedInUser.Id && (!g.Closed && !g.Completed && g.ClosedDate > DateTime.Now)).OrderBy(g => g.Deadline).Take(3).ToListAsync();
+            var alertGoals = await App.client.GetTable<GoalModel>().Where(g => g.UserId == App.loggedInUser.Id && (!g.Closed && !g.Completed && g.ClosedDate > DateTime.Now)).OrderBy(g => g.Deadline).Where(g2 => g2.TeamId == App.loggedInUser.TeamId).Take(3).ToListAsync();
 
             if (alertGoals.Count == 3)
             {
@@ -136,6 +147,7 @@ namespace HIPER
 
         private async void PopulateTeamPointsChart()
         {
+            List<UserModel> users = new List<UserModel>();
             var months = 0;
             var firstDayOfThisMonth = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
             var firstDayOfThisYear = new DateTime(DateTime.Now.Year, 1, 1);
@@ -149,12 +161,23 @@ namespace HIPER
 
             pointsEntries.Clear();
             int index = 0;
-            var users = await App.client.GetTable<UserModel>().Where(u => u.TeamId != null).Where(u => u.TeamId == App.loggedInUser.TeamId).OrderBy(u => u.FirstName).ToListAsync();
+
+            var teammembers = await App.client.GetTable<TeamsModel>().Where(t => t.TeamId == App.loggedInUser.TeamId).ToListAsync();
+            if (teammembers.Count > 0)
+            {
+                foreach (var member in teammembers)
+                {
+                    var user = (await App.client.GetTable<UserModel>().Where(u => u.Id == member.UserId).ToListAsync()).FirstOrDefault();
+                    users.Add(user);
+                }
+            }
+
+          //  var users = await App.client.GetTable<UserModel>().Where(u => u.TeamId != null).Where(u => u.TeamId == App.loggedInUser.TeamId).OrderBy(u => u.FirstName).ToListAsync();
             if (users.Count > 0)
             {
                 foreach (var user in users)
                 {
-                    var points = await App.client.GetTable<PointModel>().Where(p => p.UserId == user.Id).ToListAsync();
+                    var points = await App.client.GetTable<PointModel>().Where(p => p.UserId == user.Id).Where(p2 => p2.TeamId == App.loggedInUser.TeamId).ToListAsync();
                     int point_sum = 0;
                     foreach (var point in points)
                     {
@@ -200,7 +223,7 @@ namespace HIPER
                 {
                     try
                     {
-                        var goals = await App.client.GetTable<GoalModel>().Where(g => g.UserId == user.Id).Where(g => g.GoalType > 0).Where(g => g.CreatedDate > DateTime.Now.AddYears(-1)).ToListAsync();
+                        var goals = await App.client.GetTable<GoalModel>().Where(g => g.UserId == user.Id).Where(g => g.GoalType > 0).Where(g => g.CreatedDate > DateTime.Now.AddYears(-1)).Where(g2 => g2.TeamId == App.loggedInUser.TeamId).ToListAsync();
                         foreach (var goal in goals)
                         {
                             string challengeId = goal.ChallengeId;

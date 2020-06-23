@@ -52,7 +52,7 @@ namespace HIPER
             {
                 foreach (var c in challenges)
                 {
-                    var goal = (await App.client.GetTable<GoalModel>().Where(g => g.ChallengeId == c.Id).ToListAsync()).FirstOrDefault();
+                    var goal = (await App.client.GetTable<GoalModel>().Where(g => g.ChallengeId == c.Id).Where(g2 => g2.TeamId == App.loggedInUser.TeamId).ToListAsync()).FirstOrDefault();
                     if (goal != null)
                         if (goal.GoalType == 2)
                             competitions.Add(goal);

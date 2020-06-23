@@ -12,6 +12,7 @@ namespace HIPER
     public partial class AddGoalPage : ContentPage
     {
         UserModel User = new UserModel();
+        List<TeamsModel> teamsModelObj = new List<TeamsModel>();
         List<UserModel> teammembers = new List<UserModel>();
         ChallengeModel challenge = new ChallengeModel();
         [Xamarin.Forms.Internals.Preserve]
@@ -105,7 +106,8 @@ namespace HIPER
                     {
                         RegDate = DateTime.Now,
                         Points = Helpers.Constants.POINTS_FOR_CREATED_CHALLENGE,
-                        UserId = App.loggedInUser.Id
+                        UserId = App.loggedInUser.Id,
+                        TeamId = App.loggedInUser.TeamId
                     };
                     await App.client.GetTable<PointModel>().InsertAsync(point);
                     await Navigation.PopAsync();
@@ -145,8 +147,8 @@ namespace HIPER
                 Description = goalDescriptionEntry.Text,
                 Deadline = deadLineDate,
                 TargetValue = goalTargetEntry.Text,
-                //   PrivateGoal = privateGoalCheckbox.IsChecked,
                 UserId = userId,
+                TeamId = App.loggedInUser.TeamId,
                 GoalAccepted = accepted,
                 ChallengeId = challengeId,
                 CurrentValue = "0",
@@ -332,7 +334,18 @@ namespace HIPER
                 {
                     if (teammembers.Count == 0)
                     {
-                        teammembers = await App.client.GetTable<UserModel>().Where(u => u.TeamId == App.loggedInUser.TeamId).ToListAsync();
+                        teamsModelObj = await App.client.GetTable<TeamsModel>().Where(t => t.TeamId == App.loggedInUser.TeamId).ToListAsync();
+
+                        if (teamsModelObj.Count > 0)
+                        {
+                            foreach (var member in teamsModelObj)
+                            {
+                                var user = (await App.client.GetTable<UserModel>().Where(u => u.Id == member.UserId).ToListAsync()).FirstOrDefault();
+                                teammembers.Add(user);
+                            }
+                        }
+
+                        //  teammembers = await App.client.GetTable<UserModel>().Where(u => u.TeamId == App.loggedInUser.TeamId).ToListAsync();
                         teammembers.RemoveAt(teammembers.FindIndex(a => a.Id == App.loggedInUser.Id));
 
                     }

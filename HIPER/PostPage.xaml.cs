@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using HIPER.Model;
 using Microsoft.AppCenter.Crashes;
 using Xamarin.Forms;
@@ -19,21 +20,30 @@ namespace HIPER
             List<FeedModel> feed = new List<FeedModel>();
             List<UserModel> users = new List<UserModel>();
 
-
             if (App.loggedInUser.TeamId == null)
             {
                 ;
             }
             else
             {
-                users = await App.client.GetTable<UserModel>().Where(u => u.TeamId == App.loggedInUser.TeamId).ToListAsync();
+
+                var teammembers = await App.client.GetTable<TeamsModel>().Where(t => t.TeamId == App.loggedInUser.TeamId).ToListAsync();
+                if (teammembers.Count > 0)
+                {
+                    foreach (var member in teammembers)
+                    {
+                        var user = (await App.client.GetTable<UserModel>().Where(u => u.Id == member.UserId).ToListAsync()).FirstOrDefault();
+                        users.Add(user);
+                    }
+                }
+                //users = await App.client.GetTable<UserModel>().Where(u => u.TeamId == App.loggedInUser.TeamId).ToListAsync();
 
                 foreach (UserModel user in users)
                 {
                     try
                     {
 
-                        var posts = await App.client.GetTable<PostModel>().Where(p => p.UserId == user.Id).ToListAsync();
+                        var posts = await App.client.GetTable<PostModel>().Where(p => p.UserId == user.Id).Where(t => t.TeamId == App.loggedInUser.TeamId).ToListAsync();
                         foreach (var post in posts)
                         {
                             if (!string.IsNullOrEmpty(post.Post))
@@ -57,13 +67,20 @@ namespace HIPER
                     }
                 }
 
-                feed.Sort((x, y) => y.IndexDate.CompareTo(x.IndexDate));
-                feedCollectionView.ItemsSource = feed;
+                if (feed.Count > 0)
+                {
+                    feed.Sort((x, y) => y.IndexDate.CompareTo(x.IndexDate));
+                    feedCollectionView.ItemsSource = feed;
 
-                //Update last viewed post date
-                App.loggedInUser.LastViewedPostDate = feed[0].IndexDate;
-                await App.client.GetTable<UserModel>().UpdateAsync(App.loggedInUser);
+                    //Update last viewed post date
+                    App.loggedInUser.LastViewedPostDate = feed[0].IndexDate;
+                    await App.client.GetTable<UserModel>().UpdateAsync(App.loggedInUser);
 
+                    //Update TeamsModel with new date
+                    var teamsModelObj = (await App.client.GetTable<TeamsModel>().Where(t => t.TeamId == App.loggedInUser.TeamId).Where(u => u.UserId == App.loggedInUser.Id).ToListAsync()).FirstOrDefault();
+                    teamsModelObj.LastViewedPostDate = App.loggedInUser.LastViewedPostDate;
+                    await App.client.GetTable<TeamsModel>().UpdateAsync(teamsModelObj);
+                }
             }
         }
 
@@ -80,7 +97,8 @@ namespace HIPER
                     {
                         Post = PostEntry.Text,
                         UserId = App.loggedInUser.Id,
-                        CreatedDate = DateTime.Now
+                        CreatedDate = DateTime.Now,
+                        TeamId = App.loggedInUser.TeamId
                     };
 
                     // Save on Azure
