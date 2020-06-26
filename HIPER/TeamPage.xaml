@@ -7,19 +7,20 @@
 
     <ContentPage.Content>
         <ScrollView>
-            <StackLayout Margin="10">
-                <Label Margin="20,20,20,0" Text="MY TEAM" Style="{StaticResource Header}"></Label>
-                <Grid Margin="10, 10, 10, 10">
+            <StackLayout Margin="0">
+                <!--<Label Margin="20,20,20,0" Text="MY TEAM" Style="{StaticResource Header}"></Label>-->
+                <Grid Margin="0"
+                      Padding="5">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="40"/>
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="40"/>
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="36"/>
+                        <RowDefinition Height="40"/>
                     </Grid.RowDefinitions>
                     <ImageButton Grid.Column="0" x:Name="arrow_left" Source="{StaticResource arrow_left}" Clicked="arrow_left_Clicked"/>
-                    <Label Grid.Column="1" x:Name="teamNameLabel" Margin="0" Text="" Style="{StaticResource SubHeader}" VerticalTextAlignment="Center" FontSize="Large"/>
+                    <Label Grid.Column="1" x:Name="teamNameLabel" TextColor="{StaticResource hiperPeach}" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" FontSize="Title"/>
                     <ImageButton Grid.Column="2" x:Name="arrow_right" Source="{StaticResource arrow_right}" Clicked="arrow_right_Clicked"/>
 
                 </Grid>

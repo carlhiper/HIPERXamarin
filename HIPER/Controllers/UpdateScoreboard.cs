@@ -60,6 +60,7 @@ namespace HIPER.Controllers
                                 TargetValue = goal.TargetValue,
                                 PrivateGoal = goal.PrivateGoal,
                                 UserId = App.loggedInUser.Id,
+                                TeamId = App.loggedInUser.TeamId,
                                 CurrentValue = "0",
                                 ClosedDate = DateTime.MaxValue,
                                 LastUpdatedDate = DateTime.Now,

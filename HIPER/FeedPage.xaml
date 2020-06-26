@@ -18,9 +18,25 @@
 
     <ContentPage.Content>
         <ScrollView>
+
             <StackLayout
-                Margin="10"
+                Margin="0"
                 CompressedLayout.IsHeadless="True">
+                <Grid Margin="0"
+                      Padding="5"
+                      BackgroundColor="{StaticResource hiperPeach}">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="40"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="40"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="40"/>
+                    </Grid.RowDefinitions>
+                    <!--<ImageButton Grid.Column="0" x:Name="arrow_left" Source="{StaticResource arrow_left}" Clicked="arrow_left_Clicked"/>-->
+                    <Label Grid.Column="1" x:Name="teamNameLabel" Style="{StaticResource TeamHeader}" VerticalTextAlignment="Center"/>
+                    <!--<ImageButton Grid.Column="2" x:Name="arrow_right" Source="{StaticResource arrow_right}" Clicked="arrow_right_Clicked"/>-->
+                </Grid>
                 <Label Margin="20"
                        Style="{StaticResource Header}"
                        Text="DASHBOARD"></Label>

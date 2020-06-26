@@ -58,10 +58,18 @@
            <Setter Property="FontSize" Value="Small"/>
          </Style>
 
+        <Style x:Key="TeamHeader" TargetType="Label">
+            <Setter Property="TextColor" Value="White" ></Setter>
+            <Setter Property="FontFamily" Value="FUTURA BOOK"></Setter>
+            <Setter Property="FontSize" Value="Title"></Setter>
+            <Setter Property="Margin" Value="0"></Setter>
+            <Setter Property="HorizontalOptions" Value="Center"></Setter>
+        </Style>
+   
         <Style x:Key="Header" TargetType="Label">
             <Setter Property="TextColor" Value="{StaticResource hiperPeach}" ></Setter>
             <Setter Property="FontFamily" Value="FUTURA BOOK"></Setter>
-            <Setter Property="FontSize" Value="Medium"></Setter>
+            <Setter Property="FontSize" Value="Large"></Setter>
             <Setter Property="Margin" Value="20"></Setter>
             <Setter Property="HorizontalOptions" Value="Center"></Setter>
         </Style>

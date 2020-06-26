@@ -52,7 +52,6 @@ namespace HIPER
                         }
                     }
                 }
-   
             }
             catch(Exception ex)
             {

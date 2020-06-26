@@ -28,7 +28,24 @@ namespace HIPER
             PopulateProgressChart();
             PopulateTeamPointsChart();
             GetAlerts();
+            GetTeamName();
             CheckChat();
+        }
+
+        private async void GetTeamName()
+        {
+            try
+            {
+                string teamName = (await App.client.GetTable<TeamModel>().Where(t => t.Id == App.loggedInUser.TeamId).ToListAsync()).FirstOrDefault().Name;
+                teamNameLabel.Text = teamName.ToUpper();
+
+            }
+            catch (Exception ex)
+            {
+                var properties = new Dictionary<string, string> {
+                { "Dashboard page", "Get team name" }};
+                Crashes.TrackError(ex, properties);
+            }
         }
 
         private async void CheckChat()

@@ -27,7 +27,25 @@ namespace HIPER
 
             filter.ItemsSource = App.filterOptions;
 
+            GetTeamName();
+
             CheckChat();
+        }
+
+
+        private async void GetTeamName()
+        {
+            try
+            {
+                string teamName = (await App.client.GetTable<TeamModel>().Where(t => t.Id == App.loggedInUser.TeamId).ToListAsync()).FirstOrDefault().Name;
+                teamNameLabel.Text = teamName.ToUpper();
+
+            }catch(Exception ex)
+            {
+                var properties = new Dictionary<string, string> {
+                { "Scoreboard page", "Get team name" }};
+                Crashes.TrackError(ex, properties);
+            } 
         }
 
         void goalCollectionView_SelectionChanged(System.Object sender, Xamarin.Forms.SelectionChangedEventArgs e)
@@ -198,5 +216,6 @@ namespace HIPER
                 Crashes.TrackError(ex, properties);
             }
         }
+
     }
 }

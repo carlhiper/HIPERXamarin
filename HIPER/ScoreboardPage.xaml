@@ -18,8 +18,24 @@
 
 
     <ContentPage.Content>
-        <StackLayout Margin="10"
+        <StackLayout Margin="0"
                     CompressedLayout.IsHeadless="True">
+
+        <Grid Margin="0"
+              Padding="5"
+              BackgroundColor="{StaticResource hiperPeach}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="40"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="40"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="40"/>
+            </Grid.RowDefinitions>
+            <!--<ImageButton Grid.Column="0" x:Name="arrow_left" Source="{StaticResource arrow_left}" Clicked="arrow_left_Clicked"/>-->
+            <Label Grid.Column="1" x:Name="teamNameLabel" Style="{StaticResource TeamHeader}" VerticalTextAlignment="Center"/>
+            <!--<ImageButton Grid.Column="2" x:Name="arrow_right" Source="{StaticResource arrow_right}" Clicked="arrow_right_Clicked"/>-->
+        </Grid>
 
         <Label Text="MY GOALS" Style="{StaticResource Header}"></Label>
                     
@@ -42,8 +58,8 @@
 
 
         <ContentView>
-            <Frame BorderColor="LightGray"
-                   >
+            <Frame BorderColor="CornflowerBlue"
+                   BackgroundColor="AliceBlue">
                  <Grid Padding="10">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="35" />
@@ -60,17 +76,17 @@
                              Style="{StaticResource Minimal}"
                              FontAttributes="Bold"
                              TextColor="Gray"
-                             FontSize="Micro"
+                             FontSize="Small"
                              x:Name="AddNewGoalButton"
                              Clicked="AddNewGoalButton_Clicked"/>
                             
 
-                        <!--<Label Grid.Row="0"
+                 <!--<Label Grid.Row="0"
                         Grid.Column="0" 
                         Text="Click here to add new goal!"
                         TextColor="Gray"
                         FontAttributes="Bold" />-->
-                    <ProgressBar
+                     <ProgressBar
                         VerticalOptions="Center"
                         Grid.Column="2"
                         Grid.Row="0"
@@ -93,7 +109,7 @@
                        <Frame BorderColor="{Binding GoalAccepted, Converter={StaticResource frameColorConverter}}">
                             <Grid Padding="10">
                                 <Grid.RowDefinitions>
-                                    <RowDefinition Height="23" />
+                                    <RowDefinition Height="Auto" />
                                     <RowDefinition Height="Auto" />
                                     <RowDefinition Height="Auto" />
                                 </Grid.RowDefinitions>
@@ -102,14 +118,14 @@
                                     <ColumnDefinition Width="Auto" />
                                     <ColumnDefinition Width="*" />
                                     <ColumnDefinition Width="100" />
-                                    <ColumnDefinition Width="35"/>
+                                    <ColumnDefinition Width="40"/>
                                 </Grid.ColumnDefinitions>
 
                                 <Image
                                     Source="{StaticResource challenge}"
                                     Aspect="AspectFit"
                                     HorizontalOptions="Start"
-                                    HeightRequest="25"
+                                    HeightRequest="30"
                                     Grid.Column="0"
                                     Grid.Row="0"
                                     IsVisible="{Binding ChallengeId, Converter={StaticResource challengeVisibleConverter}}">
@@ -130,7 +146,9 @@
                                     Grid.Row="0"
                                     Grid.Column="3"
                                     VerticalOptions="Start"
-                                    HorizontalOptions="End"></Image>
+                                    HorizontalOptions="End"
+                                    HeightRequest="30"
+                                    WidthRequest="30"></Image>
                                 <Label Grid.Row="1"
                                     Grid.ColumnSpan="3"
                                     Grid.Column="0" 
@@ -141,7 +159,8 @@
                                     Source="{StaticResource recurrent}"
                                     Aspect="AspectFit"
                                     HorizontalOptions="End"
-                                    HeightRequest="25"
+                                    HeightRequest="30"
+                                    WidthRequest="30"
                                     Grid.Column="3"
                                     Grid.Row="1"
                                     IsVisible="{Binding RepeatType}"/>
@@ -155,7 +174,8 @@
                                     Source="{StaticResource ok}"
                                     Aspect="AspectFit"
                                     HorizontalOptions="End"
-                                    HeightRequest="20"
+                                    HeightRequest="30"
+                                     WidthRequest="30"
                                     Grid.Column="3"
                                     Grid.Row="2"
                                     IsVisible="{Binding Completed}">
