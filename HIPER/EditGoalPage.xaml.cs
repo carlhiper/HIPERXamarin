@@ -40,9 +40,8 @@ namespace HIPER
             goalDescriptionEntry.Text = selectedGoal.Description;
             goalDeadlineEntry.Date = selectedGoal.Deadline;
             goalTargetEntry.Text = selectedGoal.TargetValue;
-            goalCurrentEntry.Text = selectedGoal.CurrentValue;
-            //            privateGoalCheckbox.IsChecked = selectedGoal.PrivateGoal;
-
+            //goalCurrentEntry.Text = selectedGoal.CurrentValue;
+            
             repeatableRB1.IsChecked = (selectedGoal.RepeatType == 0) ? true : false;
             repeatableRB2.IsChecked = (selectedGoal.RepeatType == 1) ? true : false;
             repeatableRB21.IsChecked = (selectedGoal.WeeklyOrMonthly == 0) ? true : false;
@@ -54,6 +53,7 @@ namespace HIPER
             if (selectedGoal.TargetType == 1)
             {
                 gridSteps.IsVisible = true;
+                selectStepsGrid.IsVisible = true;
                 gridLabel.IsVisible = true;
                 aimHighLabel.IsVisible = false;
                 gridAimHigh.IsVisible = false;
@@ -118,10 +118,11 @@ namespace HIPER
             else
             {
                 gridSteps.IsVisible = false;
+                selectStepsGrid.IsVisible = false;
                 gridLabel.IsVisible = false;
                 aimHighLabel.IsVisible = true;
                 gridAimHigh.IsVisible = true;
-                goalCurrentEntry.IsEnabled = false;
+        //        goalCurrentEntry.IsEnabled = false;
             }
 
             if (!string.IsNullOrEmpty(selectedGoal.ChallengeId))

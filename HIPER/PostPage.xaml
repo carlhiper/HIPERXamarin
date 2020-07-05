@@ -15,6 +15,21 @@
         <StackLayout
             Margin="0"
             CompressedLayout.IsHeadless="True">
+
+            <Grid Margin="0"
+                  Padding="5"
+                  BackgroundColor="{StaticResource hiperPeach}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="40"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="40"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="40"/>
+                </Grid.RowDefinitions>
+                <Label Grid.Column="1" x:Name="teamNameLabel" Style="{StaticResource TeamHeader}" VerticalTextAlignment="Center"/>
+            </Grid>
+
             <Label Margin="20"
                    Style="{StaticResource Header}"
                    Text="WALL"></Label>

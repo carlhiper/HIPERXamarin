@@ -12,7 +12,8 @@ namespace HIPER
     public partial class AddCompetitionPage : ContentPage
     {
         UserModel user;
-        List<UserModel> teammembers;
+        List<TeamsModel> teamsModelObj = new List<TeamsModel>();
+        List<UserModel> teammembers = new List<UserModel>();
         ChallengeModel challenge;
 
         public AddCompetitionPage()
@@ -64,6 +65,7 @@ namespace HIPER
                 Deadline = deadLineDate,
                 TargetValue = goalTargetEntry.Text,
                 UserId = userId,
+                TeamId = App.loggedInUser.TeamId,
                 GoalAccepted = accepted,
                 ChallengeId = challengeId,
                 CurrentValue = "0",
@@ -221,19 +223,29 @@ namespace HIPER
         {
             try
             {
-                if (teammembers == null)
+                if (teammembers.Count == 0)
                 {
-                    teammembers = await App.client.GetTable<UserModel>().Where(u => u.TeamId == App.loggedInUser.TeamId).ToListAsync();
+                    teamsModelObj = await App.client.GetTable<TeamsModel>().Where(t => t.TeamId == App.loggedInUser.TeamId).ToListAsync();
+
+                    if (teamsModelObj.Count > 0)
+                    {
+                        foreach (var member in teamsModelObj)
+                        {
+                            var user = (await App.client.GetTable<UserModel>().Where(u => u.Id == member.UserId).ToListAsync()).FirstOrDefault();
+                            teammembers.Add(user);
+                        }
+                    }
+
                 }
                 challengeCollectionView.ItemsSource = teammembers;
+                challengeCollectionView.IsVisible = true;
+                challengeCollectionView.HeightRequest = 20 * teammembers.Count;
             }
             catch (Exception ex) {
                 var properties = new Dictionary<string, string> {
                 { "AddCompetitionPage", "checkDeadlines" }};
                 Crashes.TrackError(ex, properties);
             }
-            challengeCollectionView.IsVisible = true;
-            challengeCollectionView.HeightRequest = 20 * teammembers.Count;
         }
 
 

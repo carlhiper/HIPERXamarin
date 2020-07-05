@@ -13,6 +13,7 @@ namespace HIPER
         {
             InitializeComponent();
             createFeedList();
+            GetTeamName();
         }
 
         private async void createFeedList()
@@ -83,6 +84,23 @@ namespace HIPER
                 }
             }
         }
+
+        private async void GetTeamName()
+        {
+            try
+            {
+                string teamName = (await App.client.GetTable<TeamModel>().Where(t => t.Id == App.loggedInUser.TeamId).ToListAsync()).FirstOrDefault().Name;
+                teamNameLabel.Text = teamName.ToUpper();
+
+            }
+            catch (Exception ex)
+            {
+                var properties = new Dictionary<string, string> {
+                { "Scoreboard page", "Get team name" }};
+                Crashes.TrackError(ex, properties);
+            }
+        }
+
 
         private async void PostButton_Clicked(System.Object sender, System.EventArgs e)
         {

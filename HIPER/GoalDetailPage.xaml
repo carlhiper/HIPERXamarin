@@ -12,7 +12,7 @@
 
                     <Image Source="{StaticResource challenge}" HeightRequest="40" x:Name="challengeImage"></Image>
                     <Label x:Name="headerText" Text="GOAL TITLE" Margin="10,0,10,5" HorizontalTextAlignment="Center" Style="{StaticResource Header}"></Label>
-                    <Label x:Name="createdByLabel" Text="Created by " FontSize="Small" FontAttributes="Italic" HorizontalTextAlignment="Center"></Label>
+                    <Label x:Name="createdByLabel" Text=" " FontSize="Small" FontAttributes="Italic" HorizontalTextAlignment="Center"></Label>
                     <Label x:Name="goalDescriptionLabel" HorizontalTextAlignment="Center" Margin="0,15,0,0"></Label>
                     <Label x:Name="aimHighLabel" Text="SINGLE TARGET" HorizontalOptions="Center" TextColor="{StaticResource hiperPeach}" Margin="0,20,0,5"></Label>
  
@@ -28,8 +28,8 @@
   
                         <Label Grid.Row="0" Grid.Column="0" Text="TARGET"/>
                         <Label x:Name="goalTargetLabel" Grid.Row="0" Grid.Column="1" HorizontalTextAlignment="Center"></Label>
-                        <Label Grid.Row="1" Grid.Column="0" Text="CURRENT"/>
-                        <Entry VerticalOptions="Start" x:Name="goalCurrentEntry" HorizontalTextAlignment="Center" Grid.Row="1" Grid.Column="1" Placeholder="CURRENT VALUE" Unfocused="goalCurrentEntry_Unfocused"></Entry>
+                        <Label x:Name="goalCurrentLabel" Grid.Row="1" Grid.Column="0" Text="CURRENT"/>
+                        <Entry x:Name="goalCurrentEntry" VerticalOptions="Start" HorizontalTextAlignment="Center" Grid.Row="1" Grid.Column="1" Placeholder="CURRENT VALUE" Unfocused="goalCurrentEntry_Unfocused"></Entry>
                     </Grid>
 
                     <Label x:Name="stepsLabel" Text="STEPS" HorizontalOptions="Center" TextColor="{StaticResource hiperPeach}" Margin="0,20,0,5"></Label>

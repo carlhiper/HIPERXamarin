@@ -212,7 +212,7 @@ namespace HIPER
             else
             {
                 pointsEntries.Add(new ChartEntry(10) { Label = App.loggedInUser.FirstName.Substring(0, 1) + "." + App.loggedInUser.LastName.Substring(0, 1), ValueLabel = (10).ToString("D"), Color = SKColor.Parse(App.donutChartColors[index]) });
-                chartViewPoints.Chart = new PointChart() { Entries = pointsEntries, LabelTextSize = 24, ValueLabelOrientation = Orientation.Horizontal };
+                chartViewPoints.Chart = new PointChart() { Entries = pointsEntries, LabelTextSize = 24, ValueLabelOrientation = Orientation.Horizontal  };
             }
         }
 

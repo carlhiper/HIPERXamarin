@@ -345,7 +345,6 @@ namespace HIPER
                             }
                         }
 
-                        //  teammembers = await App.client.GetTable<UserModel>().Where(u => u.TeamId == App.loggedInUser.TeamId).ToListAsync();
                         teammembers.RemoveAt(teammembers.FindIndex(a => a.Id == App.loggedInUser.Id));
 
                     }

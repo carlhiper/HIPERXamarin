@@ -44,13 +44,13 @@
   
                 <Label VerticalOptions="Center" Grid.Row="0" Grid.Column="0" Text="TARGET"/>
                 <Entry x:Name="goalTargetEntry" Grid.Row="0" Grid.Column="1" Placeholder="TARGET" TextChanged="goalTargetEntry_TextChanged"></Entry>
-                <Label VerticalOptions="Center" Grid.Row="1" Grid.Column="0" Text="CURRENT"/>
-                <Entry x:Name="goalCurrentEntry" Grid.Row="1" Grid.Column="1" Placeholder="CURRENT VALUE" TextChanged="goalCurrentEntry_TextChanged" ></Entry>
+                <!--<Label VerticalOptions="Center" Grid.Row="1" Grid.Column="0" Text="CURRENT"/>-->
+                <!--<Entry x:Name="goalCurrentEntry" Grid.Row="1" Grid.Column="1" Placeholder="CURRENT VALUE" TextChanged="goalCurrentEntry_TextChanged" ></Entry>-->
             </Grid>
 
             <Label x:Name="gridLabel" Text="STEPS" HorizontalOptions="Center" TextColor="{StaticResource hiperPeach}" Margin="0,20,0,5"></Label>
 
-            <Grid x:Name="selectStepsGrid" Margin="10">
+            <Grid x:Name="selectStepsGrid">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>

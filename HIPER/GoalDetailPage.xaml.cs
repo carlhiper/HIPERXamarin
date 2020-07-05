@@ -133,6 +133,8 @@ namespace HIPER
                     createdByLabel.IsVisible = true;
                     if (goal.GoalType == 2 && challengeOwner.Id == App.loggedInUser.Id && IsCompetitionPage)
                     {
+                        goalCurrentEntry.IsVisible = false;
+                        goalCurrentLabel.IsVisible = false;
                         goalCurrentEntry.IsEnabled = false;
                         completeGoal.IsVisible = false;
                         closeGoal.IsVisible = false;

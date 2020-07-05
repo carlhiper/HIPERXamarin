@@ -36,8 +36,8 @@
 
         
         <ContentView>
-            <Frame BorderColor="LightGray"
-                   >
+            <Frame BorderColor="CornflowerBlue"
+                   BackgroundColor="AliceBlue">
                  <Grid Padding="10">
                    <Grid.RowDefinitions>
                         <RowDefinition Height="35" />
@@ -50,7 +50,7 @@
                         <ColumnDefinition Width="100" />
                         <ColumnDefinition Width="35"/>
                     </Grid.ColumnDefinitions>
-                     <Button Text="Click here to add a goal!"
+                     <Button Text="Click here to add a competition!"
                              Style="{StaticResource Minimal}"
                              FontAttributes="Bold"
                              TextColor="Gray"
@@ -58,12 +58,6 @@
                              x:Name="AddNewCompetitionButton"
                              Clicked="AddNewCompetitionButton_Clicked"/>
 
-
-                        <!--<Label Grid.Row="0"
-                        Grid.Column="0" 
-                        Text="Click here to add new goal!"
-                        TextColor="Gray"
-                        FontAttributes="Bold" />-->
                     <ProgressBar
                         VerticalOptions="Center"
                         Grid.Column="2"
