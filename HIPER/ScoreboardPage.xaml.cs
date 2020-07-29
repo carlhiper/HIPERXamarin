@@ -216,6 +216,5 @@ namespace HIPER
                 Crashes.TrackError(ex, properties);
             }
         }
-
     }
 }

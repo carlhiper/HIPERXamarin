@@ -20,18 +20,31 @@ namespace HIPER
         public MainPage()
         {
             InitializeComponent();
-            
         }
+
         protected async override void OnAppearing()
         {
             base.OnAppearing();
 
-            if (!string.IsNullOrEmpty(App.loggedInUser.Email))
+            using (SQLiteConnection conn = new SQLiteConnection(App.DatabaseLocation))
             {
-                loginNameEntry.Text = App.loggedInUser.Email;
-                passwordEntry.Text = App.loggedInUser.UserPassword;
-                await Navigation.PushAsync(new HomePage());
+                try
+                {
+                    conn.CreateTable<UserModel>();
+                    var stored_user = conn.Table<UserModel>().ToList().FirstOrDefault();
+                    if (stored_user != null)
+                    {
+                        if (!string.IsNullOrEmpty(stored_user.Id))
+                        {
+                            App.loggedInUser = stored_user;
+                            await Navigation.PushAsync(new HomePage());
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
 
+                }
             }
         }
 
@@ -63,7 +76,18 @@ namespace HIPER
                         App.loggedInUser = user;
                         if (user.UserPassword == passwordEntry.Text)
                         {
+                            using (SQLiteConnection conn = new SQLiteConnection(App.DatabaseLocation))
+                            {
+                                try
+                                {
+                                    conn.CreateTable<UserModel>();
+                                    conn.Insert(user);
+                                }
+                                catch (Exception ex)
+                                {
 
+                                }
+                            }
                             await Navigation.PushAsync(new HomePage());
                         }
                         else

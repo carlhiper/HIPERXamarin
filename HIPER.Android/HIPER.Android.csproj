@@ -86,6 +86,9 @@
     <PackageReference Include="Xamarin.Forms">
       <Version>4.6.0.847</Version>
     </PackageReference>
+    <PackageReference Include="Microsoft.Azure.Mobile.Client.SQLiteStore">
+      <Version>4.1.2</Version>
+    </PackageReference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MainActivity.cs" />

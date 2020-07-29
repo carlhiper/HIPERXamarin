@@ -6,6 +6,8 @@ using HIPER.Model;
 using System.Collections.Generic;
 using Microsoft.AppCenter;
 using Microsoft.AppCenter.Crashes;
+using Microsoft.WindowsAzure.MobileServices.Sync;
+using Microsoft.WindowsAzure.MobileServices.SQLiteStore;
 
 namespace HIPER
 {
@@ -13,8 +15,9 @@ namespace HIPER
     {
         public static string DatabaseLocation = string.Empty;
 
-        //public static MobileServiceClient client =new MobileServiceClient("https://hiper-app-webapp.azurewebsites.net");
         public static MobileServiceClient client = new MobileServiceClient(Helpers.Constants.AZURE_WEB_SERVICE);
+
+        public static IMobileServiceSyncTable<UserModel> UserTable;
 
         public static UserModel loggedInUser = new UserModel();
 
@@ -48,6 +51,13 @@ namespace HIPER
             MainPage = new NavigationPage(new MainPage());
 
             DatabaseLocation = databaseLocation;
+
+            //var store = new MobileServiceSQLiteStore(databaseLocation);
+            //store.DefineTable<UserModel>();
+
+            //client.SyncContext.InitializeAsync(store);
+
+            //UserTable = client.GetSyncTable<UserModel>();
         }
 
         protected override void OnStart()

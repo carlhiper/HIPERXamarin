@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using HIPER.Model;
 using Microsoft.AppCenter.Crashes;
+using SQLite;
 using Xamarin.Forms;
 
 namespace HIPER
@@ -98,9 +99,24 @@ namespace HIPER
 
             if (logOut)
             {
-                App.loggedInUser.Email = "";
-                App.loggedInUser.UserPassword = "";
+                //App.loggedInUser.Id = "";
+                //App.loggedInUser.Email = "";
+                //App.loggedInUser.UserPassword = "";
+
+                //App.loggedInUser = null;
+                using (SQLiteConnection conn = new SQLiteConnection(App.DatabaseLocation))
+                {
+                    try
+                    {
+                        conn.Delete(App.loggedInUser);
+                    }
+                    catch (Exception ex)
+                    {
+
+                    }
+                }
                 await Navigation.PopAsync();
+
             }
         }
     }
