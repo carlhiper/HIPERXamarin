@@ -44,7 +44,7 @@
                 <forms:ChartView x:Name="chartViewProgress" HeightRequest="150" BackgroundColor="White" ></forms:ChartView>
 
 
-                <Grid Margin="10" Padding="5" BackgroundColor="LightGray">
+                <Grid Margin="10" Padding="5" BackgroundColor="WhiteSmoke">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
@@ -59,7 +59,7 @@
                 </Grid>
 
       
-                <Grid>
+                <Grid x:Name="gridPoints">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="Auto"/>

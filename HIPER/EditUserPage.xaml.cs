@@ -85,6 +85,17 @@ namespace HIPER
 
                 }
 
+                using (SQLiteConnection conn = new SQLiteConnection(App.DatabaseLocation))
+                {
+                    try
+                    {
+                        conn.Update(App.loggedInUser);
+                    }
+                    catch (Exception ex)
+                    {
+
+                    }
+                }
 
                 await App.client.GetTable<UserModel>().UpdateAsync(App.loggedInUser);
                 await DisplayAlert("Success", "Profile updated", "Ok");

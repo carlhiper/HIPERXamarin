@@ -23,6 +23,9 @@ namespace HIPER
         {
             base.OnAppearing();
 
+            ai.IsRunning = true;
+            aiLayout.IsVisible = true;
+
             createGoalsList(filter.SelectedIndex);
 
             filter.ItemsSource = App.filterOptions;
@@ -30,6 +33,9 @@ namespace HIPER
             GetTeamName();
 
             CheckChat();
+
+            aiLayout.IsVisible = false;
+            ai.IsRunning = false;
         }
 
 

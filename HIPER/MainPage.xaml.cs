@@ -20,32 +20,33 @@ namespace HIPER
         public MainPage()
         {
             InitializeComponent();
+            NavigationPage.SetHasBackButton(this, false);
         }
 
-        protected async override void OnAppearing()
+        protected override void OnAppearing()
         {
             base.OnAppearing();
 
-            using (SQLiteConnection conn = new SQLiteConnection(App.DatabaseLocation))
-            {
-                try
-                {
-                    conn.CreateTable<UserModel>();
-                    var stored_user = conn.Table<UserModel>().ToList().FirstOrDefault();
-                    if (stored_user != null)
-                    {
-                        if (!string.IsNullOrEmpty(stored_user.Id))
-                        {
-                            App.loggedInUser = stored_user;
-                            await Navigation.PushAsync(new HomePage());
-                        }
-                    }
-                }
-                catch (Exception ex)
-                {
+            //using (SQLiteConnection conn = new SQLiteConnection(App.DatabaseLocation))
+            //{
+            //    try
+            //    {
+            //        conn.CreateTable<UserModel>();
+            //        var stored_user = conn.Table<UserModel>().ToList().FirstOrDefault();
+            //        if (stored_user != null)
+            //        {
+            //            if (!string.IsNullOrEmpty(stored_user.Id))
+            //            {
+            //                App.loggedInUser = stored_user;
+            //                await Navigation.PushAsync(new HomePage());
+            //            }
+            //        }
+            //    }
+            //    catch (Exception ex)
+            //    {
 
-                }
-            }
+            //    }
+            //}
         }
 
         void createUserButton_Clicked(System.Object sender, System.EventArgs e)
@@ -55,8 +56,6 @@ namespace HIPER
 
         private async void loginButton_Clicked(System.Object sender, System.EventArgs e)
         {
-            ai.IsRunning = true;
-            aiLayout.IsVisible = true;
         
             try
             {
@@ -108,8 +107,6 @@ namespace HIPER
                 Crashes.TrackError(ex, properties);
 
             }
-            aiLayout.IsVisible = false;
-            ai.IsRunning = false;
         }
 
         void forgotPasswordButton_Clicked(System.Object sender, System.EventArgs e)

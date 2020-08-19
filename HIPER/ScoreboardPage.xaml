@@ -18,110 +18,111 @@
 
 
     <ContentPage.Content>
-        <StackLayout Margin="0"
+        <AbsoluteLayout>
+            <StackLayout Margin="0"
                     CompressedLayout.IsHeadless="True">
 
-        <Grid Margin="0"
+                <Grid Margin="0"
               Padding="5"
               BackgroundColor="{StaticResource hiperPeach}">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="40"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="40"/>
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="40"/>
-            </Grid.RowDefinitions>
-            <!--<ImageButton Grid.Column="0" x:Name="arrow_left" Source="{StaticResource arrow_left}" Clicked="arrow_left_Clicked"/>-->
-            <Label Grid.Column="1" x:Name="teamNameLabel" Style="{StaticResource TeamHeader}" VerticalTextAlignment="Center"/>
-            <!--<ImageButton Grid.Column="2" x:Name="arrow_right" Source="{StaticResource arrow_right}" Clicked="arrow_right_Clicked"/>-->
-        </Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="40"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="40"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="40"/>
+                    </Grid.RowDefinitions>
+                    <!--<ImageButton Grid.Column="0" x:Name="arrow_left" Source="{StaticResource arrow_left}" Clicked="arrow_left_Clicked"/>-->
+                    <Label Grid.Column="1" x:Name="teamNameLabel" Style="{StaticResource TeamHeader}" VerticalTextAlignment="Center"/>
+                    <!--<ImageButton Grid.Column="2" x:Name="arrow_right" Source="{StaticResource arrow_right}" Clicked="arrow_right_Clicked"/>-->
+                </Grid>
 
-        <Label Text="MY GOALS" Style="{StaticResource Header}"></Label>
-                    
-        <Grid Padding="20">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="35" />
-            </Grid.RowDefinitions>
+                <Label Text="MY GOALS" Style="{StaticResource Header}"></Label>
 
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="50" />
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="120" />
-            </Grid.ColumnDefinitions>
-            <Label Grid.Column="0" Text="Active" VerticalOptions="End" HorizontalOptions="End"></Label>
-            <Switch Grid.Column="1" x:Name="showClosedSwitch" OnColor="LightGray" ThumbColor="{StaticResource hiperPeach}" PropertyChanged="showClosedSwitch_PropertyChanged" VerticalOptions="End"></Switch> 
-            <Label Grid.Column="2" Text="Closed" VerticalOptions="End" HorizontalOptions="Start"></Label>
-            <Picker Grid.Column="3" x:Name="filter" VerticalOptions="End" HorizontalOptions="FillAndExpand" Title="Filter" SelectedIndexChanged="filter_SelectedIndexChanged" FontSize="Small"></Picker>
-        </Grid>
-
-
-        <ContentView>
-            <Frame BorderColor="CornflowerBlue"
-                   BackgroundColor="AliceBlue">
-                 <Grid Padding="10">
+                <Grid Padding="20">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="35" />
-                        <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
 
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="50" />
                         <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="100" />
-                        <ColumnDefinition Width="35"/>
+                        <ColumnDefinition Width="120" />
                     </Grid.ColumnDefinitions>
-                     <Button Text="Click here to add a goal!"
+                    <Label Grid.Column="0" Text="Active" VerticalOptions="End" HorizontalOptions="End"></Label>
+                    <Switch Grid.Column="1" x:Name="showClosedSwitch" OnColor="LightGray" ThumbColor="{StaticResource hiperPeach}" PropertyChanged="showClosedSwitch_PropertyChanged" VerticalOptions="End"></Switch>
+                    <Label Grid.Column="2" Text="Closed" VerticalOptions="End" HorizontalOptions="Start"></Label>
+                    <Picker Grid.Column="3" x:Name="filter" VerticalOptions="End" HorizontalOptions="FillAndExpand" Title="Filter" SelectedIndexChanged="filter_SelectedIndexChanged" FontSize="Small"></Picker>
+                </Grid>
+
+
+                <ContentView>
+                    <Frame BorderColor="CornflowerBlue"
+                   BackgroundColor="AliceBlue">
+                        <Grid Padding="10">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="35" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="100" />
+                                <ColumnDefinition Width="35"/>
+                            </Grid.ColumnDefinitions>
+                            <Button Text="Click here to add a goal!"
                              Style="{StaticResource Minimal}"
                              FontAttributes="Bold"
                              TextColor="Gray"
                              FontSize="Small"
                              x:Name="AddNewGoalButton"
                              Clicked="AddNewGoalButton_Clicked"/>
-                            
 
-                 <!--<Label Grid.Row="0"
+
+                            <!--<Label Grid.Row="0"
                         Grid.Column="0" 
                         Text="Click here to add new goal!"
                         TextColor="Gray"
                         FontAttributes="Bold" />-->
-                     <ProgressBar
+                            <ProgressBar
                         VerticalOptions="Center"
                         Grid.Column="2"
                         Grid.Row="0"
                         Progress="0.5"
                         ProgressColor="Gray"/>
-                </Grid>
-         
-            </Frame>
-        </ContentView>
-        <CollectionView
+                        </Grid>
+
+                    </Frame>
+                </ContentView>
+                <CollectionView
                
             x:Name="goalCollectionView"
             SelectionMode="Single"
             SelectionChanged="goalCollectionView_SelectionChanged"
             VerticalOptions="FillAndExpand">
-                
-            <CollectionView.ItemTemplate>
-                <DataTemplate>
-                    <ContentView>
-                       <Frame BorderColor="{Binding GoalAccepted, Converter={StaticResource frameColorConverter}}">
-                            <Grid Padding="10">
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="Auto" />
-                                    <RowDefinition Height="Auto" />
-                                    <RowDefinition Height="Auto" />
-                                </Grid.RowDefinitions>
 
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto" />
-                                    <ColumnDefinition Width="*" />
-                                    <ColumnDefinition Width="100" />
-                                    <ColumnDefinition Width="40"/>
-                                </Grid.ColumnDefinitions>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <ContentView>
+                                <Frame BorderColor="{Binding GoalAccepted, Converter={StaticResource frameColorConverter}}">
+                                    <Grid Padding="10">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="Auto" />
+                                        </Grid.RowDefinitions>
 
-                                <Image
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="100" />
+                                            <ColumnDefinition Width="40"/>
+                                        </Grid.ColumnDefinitions>
+
+                                        <Image
                                     Source="{StaticResource challenge}"
                                     Aspect="AspectFit"
                                     HorizontalOptions="Start"
@@ -129,19 +130,19 @@
                                     Grid.Column="0"
                                     Grid.Row="0"
                                     IsVisible="{Binding ChallengeId, Converter={StaticResource challengeVisibleConverter}}">
-                                </Image>
-                                <Label Grid.Row="0"
+                                        </Image>
+                                        <Label Grid.Row="0"
                                     Grid.Column="1" 
                                     Text="{Binding Title}" 
                                     FontAttributes="Bold" />
-                                <ProgressBar
+                                        <ProgressBar
                                     VerticalOptions="Center"
                                     Grid.Column="2"
                                     Grid.Row="0"
                                     Progress="{Binding Progress}"
                                     ProgressColor="{StaticResource hiperPeach}"
                                     ></ProgressBar>
-                                <Image
+                                        <Image
                                     Source="{Binding PerformanceIndicator, Converter={StaticResource converter}}"
                                     Grid.Row="0"
                                     Grid.Column="3"
@@ -149,13 +150,13 @@
                                     HorizontalOptions="End"
                                     HeightRequest="30"
                                     WidthRequest="30"></Image>
-                                <Label Grid.Row="1"
+                                        <Label Grid.Row="1"
                                     Grid.ColumnSpan="3"
                                     Grid.Column="0" 
                                     Text="{Binding Description}"
                                     FontAttributes="None" 
                                     VerticalOptions="End" />
-                                 <Image
+                                        <Image
                                     Source="{StaticResource recurrent}"
                                     Aspect="AspectFit"
                                     HorizontalOptions="End"
@@ -164,13 +165,13 @@
                                     Grid.Column="3"
                                     Grid.Row="1"
                                     IsVisible="{Binding RepeatType}"/>
-                                <Label Grid.Row="2"
+                                        <Label Grid.Row="2"
                                     Grid.Column="0"
                                     Grid.ColumnSpan="3"
                                     Text="{Binding Deadline, StringFormat='Deadline: {0:yyyy-MM-dd}'}"
                                     FontAttributes="Italic" 
                                     VerticalOptions="End" />
-                                 <Image
+                                        <Image
                                     Source="{StaticResource ok}"
                                     Aspect="AspectFit"
                                     HorizontalOptions="End"
@@ -179,14 +180,30 @@
                                     Grid.Column="3"
                                     Grid.Row="2"
                                     IsVisible="{Binding Completed}">
-                                </Image>
-                            </Grid>
-                        </Frame>
-                    </ContentView>
-                </DataTemplate>
-            </CollectionView.ItemTemplate>
-        </CollectionView> 
-    </StackLayout>
+                                        </Image>
+                                    </Grid>
+                                </Frame>
+                            </ContentView>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </StackLayout>
+            <StackLayout
+            x:Name="aiLayout"
+            IsVisible="False"
+            AbsoluteLayout.LayoutBounds="0,0,1,1"
+            AbsoluteLayout.LayoutFlags="All"
+            BackgroundColor="Gray" Opacity="0.5">
+
+            <ActivityIndicator
+                x:Name="ai"
+                IsRunning="False"
+                HorizontalOptions="CenterAndExpand"
+                VerticalOptions="CenterAndExpand"
+                Color="Black"/>
+        </StackLayout>
+
+        </AbsoluteLayout>
     </ContentPage.Content>
 
 </ContentPage>

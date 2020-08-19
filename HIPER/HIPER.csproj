@@ -26,10 +26,10 @@
     <PackageReference Include="sqlite-net-pcl" Version="1.7.335" />
     <PackageReference Include="Xam.Plugin.Media" Version="5.0.1" />
     <PackageReference Include="WindowsAzure.Storage" Version="9.3.3" />
-    <PackageReference Include="Microcharts.Forms" Version="0.8.5-pre" />
-    <PackageReference Include="Microsoft.AppCenter.Analytics" Version="3.2.2" />
-    <PackageReference Include="Microsoft.AppCenter.Crashes" Version="3.2.2" />
-    <PackageReference Include="Xamarin.Forms" Version="4.6.0.847" />
+    <PackageReference Include="Microcharts.Forms" Version="0.9.5.5" />
+    <PackageReference Include="Microsoft.AppCenter.Analytics" Version="3.4.0" />
+    <PackageReference Include="Microsoft.AppCenter.Crashes" Version="3.4.0" />
+    <PackageReference Include="Xamarin.Forms" Version="4.7.0.1239" />
     <PackageReference Include="Microsoft.Azure.Mobile.Client.SQLiteStore" Version="4.1.2" />
   </ItemGroup>
   <ItemGroup>

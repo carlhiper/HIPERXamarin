@@ -13,6 +13,8 @@ namespace HIPER
 {
      public partial class App : Application
     {
+        public static bool Thinking = true;
+
         public static string DatabaseLocation = string.Empty;
 
         public static MobileServiceClient client = new MobileServiceClient(Helpers.Constants.AZURE_WEB_SERVICE);
@@ -41,14 +43,16 @@ namespace HIPER
         {
             InitializeComponent();
 
-            MainPage = new NavigationPage(new MainPage());
+            MainPage = new NavigationPage(new InitPage()); 
+            //MainPage = new NavigationPage(new MainPage());
         }
 
         public App(string databaseLocation)
         {
             InitializeComponent();
 
-            MainPage = new NavigationPage(new MainPage());
+            MainPage = new NavigationPage(new InitPage());
+            //MainPage = new NavigationPage(new MainPage());
 
             DatabaseLocation = databaseLocation;
 

@@ -18,6 +18,8 @@ namespace HIPER
         public FeedPage()
         {
             InitializeComponent();
+            gridPoints.IsVisible = false;
+            chartViewPoints.IsVisible = false;
         }
 
         protected override void OnAppearing()
@@ -38,7 +40,6 @@ namespace HIPER
             {
                 string teamName = (await App.client.GetTable<TeamModel>().Where(t => t.Id == App.loggedInUser.TeamId).ToListAsync()).FirstOrDefault().Name;
                 teamNameLabel.Text = teamName.ToUpper();
-
             }
             catch (Exception ex)
             {
@@ -114,7 +115,7 @@ namespace HIPER
             }
             if (activeGoals.Count == 0)
             {
-                progressEntries.Add(new ChartEntry(25) { Label = "My next goal!", ValueLabel = (25).ToString("D") + "%", Color = SKColor.Parse(App.donutChartColors[index]) });
+                progressEntries.Add(new ChartEntry(25) { Label = "My demo goal!", ValueLabel = (25).ToString("D") + "%", Color = SKColor.Parse(App.donutChartColors[index]) });
                 chartViewProgress.Chart = new RadialGaugeChart() { Entries = progressEntries, MaxValue = 100, LabelTextSize = 24 };
             }
             else
@@ -125,28 +126,32 @@ namespace HIPER
 
         private async void GetAlerts()
         {
+            
             var alertGoals = await App.client.GetTable<GoalModel>().Where(g => g.UserId == App.loggedInUser.Id && (!g.Closed && !g.Completed && g.ClosedDate > DateTime.Now)).OrderBy(g => g.Deadline).Where(g2 => g2.TeamId == App.loggedInUser.TeamId).Take(3).ToListAsync();
 
             if (alertGoals.Count == 3)
             {
-                Label1.Text = "-> " + alertGoals[0].Title + " ends " + GetDifference(alertGoals[0].Deadline.Date);
-                Label2.Text = "-> " + alertGoals[1].Title + " ends " + GetDifference(alertGoals[1].Deadline.Date);
-                Label3.Text = "-> " + alertGoals[2].Title + " ends " + GetDifference(alertGoals[2].Deadline.Date);
+                Label1.Text = "-> " + alertGoals[0].Title + " ends" + GetDifference(alertGoals[0].Deadline.Date);
+                Label2.Text = "-> " + alertGoals[1].Title + " ends" + GetDifference(alertGoals[1].Deadline.Date);
+                Label3.Text = "-> " + alertGoals[2].Title + " ends" + GetDifference(alertGoals[2].Deadline.Date);
             }
             else if (alertGoals.Count == 2)
             {
-                Label1.Text = alertGoals[0].Title + " ends " + GetDifference(alertGoals[0].Deadline.Date);
-                Label2.Text = alertGoals[1].Title + " ends " + GetDifference(alertGoals[1].Deadline.Date);
-                Label3.IsVisible = false;
+                Label1.Text = "-> " + alertGoals[0].Title + " ends" + GetDifference(alertGoals[0].Deadline.Date);
+                Label2.Text = "-> " + alertGoals[1].Title + " ends" + GetDifference(alertGoals[1].Deadline.Date);
+                Label3.Text = "";
             }
             else if (alertGoals.Count == 1)
             {
-                Label1.Text = alertGoals[0].Title + " ends" + GetDifference(alertGoals[0].Deadline.Date);
-                Label2.IsVisible = false;
-                Label3.IsVisible = false;
+                Label1.Text = "-> " + alertGoals[0].Title + " ends" + GetDifference(alertGoals[0].Deadline.Date);
+                Label2.Text = "";
+                Label3.Text = "";
             }
             else
             {
+                Label1.Text = "-> My demo goal ends in 6 days";
+                Label2.Text = "";
+                Label3.Text = "";
 
             }
         }
@@ -155,11 +160,11 @@ namespace HIPER
         {
             DateTimeOffset today = (DateTimeOffset)DateTime.Now.Date;
             var difference = (DateTimeOffset)Deadline.Date - today;
-
-            if (difference.TotalDays < 1)
+            var days = (int) Math.Truncate(difference.TotalDays);
+            if (days < 1)
                 return " today!";
             else
-                return " in " + difference.TotalDays.ToString() + " days.";
+                return " in " + days.ToString() + " days.";
         }
 
         private async void PopulateTeamPointsChart()

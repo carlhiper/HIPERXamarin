@@ -99,11 +99,6 @@ namespace HIPER
 
             if (logOut)
             {
-                //App.loggedInUser.Id = "";
-                //App.loggedInUser.Email = "";
-                //App.loggedInUser.UserPassword = "";
-
-                //App.loggedInUser = null;
                 using (SQLiteConnection conn = new SQLiteConnection(App.DatabaseLocation))
                 {
                     try
@@ -115,8 +110,8 @@ namespace HIPER
 
                     }
                 }
-                await Navigation.PopAsync();
-
+                //await Navigation.PopAsync();
+                await Navigation.PushAsync(new MainPage());
             }
         }
     }
