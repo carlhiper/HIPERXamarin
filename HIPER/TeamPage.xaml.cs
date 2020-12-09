@@ -354,6 +354,7 @@ namespace HIPER
                 //App.loggedInUser.LastViewedPostDate = teamsModelObj[IndexOfViewedTeam].LastViewedPostDate;
                 await App.client.GetTable<UserModel>().UpdateAsync(App.loggedInUser);
                 await LoadTeamView();
+                CheckChat();
             }
         }
 
@@ -369,6 +370,7 @@ namespace HIPER
                // App.loggedInUser.LastViewedPostDate = teamsModelObj[IndexOfViewedTeam].LastViewedPostDate;
                 await App.client.GetTable<UserModel>().UpdateAsync(App.loggedInUser);
                 await LoadTeamView();
+                CheckChat();
             }
         }
     }

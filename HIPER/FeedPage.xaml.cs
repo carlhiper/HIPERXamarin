@@ -57,6 +57,8 @@ namespace HIPER
                 {
                     ChatButton.IsEnabled = true;
                     List<UserModel> users = new List<UserModel>();
+
+                    // This needs to be checked to get correct number of team members 
                     var teammembers = await App.client.GetTable<TeamsModel>().Where(t => t.TeamId == App.loggedInUser.TeamId).ToListAsync();
                     if (teammembers.Count > 0)
                     {
@@ -66,7 +68,6 @@ namespace HIPER
                             users.Add(user);
                         }
                     }
-                    //var users = await App.client.GetTable<UserModel>().Where(u => u.TeamId == App.loggedInUser.TeamId).ToListAsync();
                     List<PostModel> postCollection = new List<PostModel>();
                     foreach (var user in users)
                     {
@@ -90,7 +91,6 @@ namespace HIPER
                 {
                     ChatButton.IsEnabled = false;
                 }
-
             }
             catch (Exception ex)
             {
