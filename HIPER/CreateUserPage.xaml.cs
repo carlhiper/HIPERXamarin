@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using HIPER.Helpers;
 using HIPER.Model;
 using Microsoft.AppCenter.Crashes;
 using SQLite;
@@ -53,8 +54,12 @@ namespace HIPER
                         TeamId = null
                     };
 
+                    // Save to Firestore
+                    Firestore.InsertUser(user);
+
+
                     // Save on Azure
-                    await App.client.GetTable<UserModel>().InsertAsync(user);
+                    // await App.client.GetTable<UserModel>().InsertAsync(user);
                     await DisplayAlert("Success", "User successfully created. Please login.", "Ok");
                     await Navigation.PopAsync();
                 }catch(Exception ex)

@@ -257,7 +257,8 @@ namespace HIPER
                             teamIdentifierLabel.Text = "";
                         }
 
-                        await App.client.GetTable<UserModel>().UpdateAsync(App.loggedInUser);
+                        //await App.client.GetTable<UserModel>().UpdateAsync(App.loggedInUser);
+                        await Firestore.UpdateUser(App.loggedInUser);
 
                         await LoadTeamView();
 
@@ -289,6 +290,7 @@ namespace HIPER
                         foreach (var member in teammembers)
                         {
                             var user = (await App.client.GetTable<UserModel>().Where(u => u.Id == member.UserId).ToListAsync()).FirstOrDefault();
+                            
                             users.Add(user);
                         }
                     }

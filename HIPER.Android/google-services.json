@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "964097033514",
+    "project_id": "hiperapp-27e40",
+    "storage_bucket": "hiperapp-27e40.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:964097033514:android:54706d7cd2347c41340a53",
+        "android_client_info": {
+          "package_name": "com.hiper.hiper"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "964097033514-g6ipgp98sqtmm4rkic0ca0u31uuo4o7p.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA07Rb4h2tqV71e7fdLyI-6kDuNAu57rb0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "964097033514-g6ipgp98sqtmm4rkic0ca0u31uuo4o7p.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "964097033514-eu7s6rc9io18jdv1kchhkuke2ucts8qc.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "se.hiper.hiper"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

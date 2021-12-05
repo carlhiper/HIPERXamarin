@@ -6,6 +6,7 @@ using Xamarin.Forms;
 using HIPER.Controllers;
 using System.Linq;
 using Microsoft.AppCenter.Crashes;
+using HIPER.Helpers;
 
 namespace HIPER
 {
@@ -186,6 +187,7 @@ namespace HIPER
                         foreach (var member in teammembers)
                         {
                             var user = (await App.client.GetTable<UserModel>().Where(u => u.Id == member.UserId).ToListAsync()).FirstOrDefault();
+                           
                             users.Add(user);
                         }
                     }
@@ -213,7 +215,6 @@ namespace HIPER
                 {
                     ChatButton.IsEnabled = false;
                 }
-
             }
             catch (Exception ex)
             {

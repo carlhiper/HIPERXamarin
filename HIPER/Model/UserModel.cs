@@ -53,5 +53,9 @@ namespace HIPER.Model
 
         [DataMember]
         public DateTime LastViewedPostDate { get; set; }
+
+        [MaxLength(40)]
+        [DataMember]
+        public string UserId { get; set; }
     }
 }

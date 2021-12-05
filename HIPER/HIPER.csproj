@@ -3,6 +3,8 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <ProduceReferenceAssembly>true</ProduceReferenceAssembly>
+    <Configurations>Debug;AppStore;Release</Configurations>
+    <Platforms>AnyCPU;iPhone</Platforms>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -13,10 +15,10 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'AppStore|iPhone' ">
     <DebugType></DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\iPhone\AppStore</OutputPath>
+    <OutputPath>bin\iPhone\AppStore\netstandard2.0</OutputPath>
     <DefineConstants></DefineConstants>
     <WarningLevel>4</WarningLevel>
-    <IntermediateOutputPath>obj\iPhone\AppStore</IntermediateOutputPath>
+    <IntermediateOutputPath>obj\iPhone\AppStore\netstandard2.0</IntermediateOutputPath>
     <NoWarn></NoWarn>
     <NoStdLib>false</NoStdLib>
   </PropertyGroup>

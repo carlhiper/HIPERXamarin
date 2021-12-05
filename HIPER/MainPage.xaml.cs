@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using HIPER.Helpers;
 using HIPER.Model;
 using Microsoft.AppCenter.Crashes;
 using SQLite;
@@ -68,36 +69,43 @@ namespace HIPER
                 }
                 else
                 {
-                    var user = (await App.client.GetTable<UserModel>().Where(u => u.Email == loginNameEntry.Text).ToListAsync()).FirstOrDefault();
+                    //Authenticate
+                    bool result = await Auth.LoginUser(loginNameEntry.Text, passwordEntry.Text);
 
-                    if (user != null)
-                    {
-                        App.loggedInUser = user;
-                        if (user.UserPassword == passwordEntry.Text)
-                        {
-                            using (SQLiteConnection conn = new SQLiteConnection(App.DatabaseLocation))
-                            {
-                                try
-                                {
-                                    conn.CreateTable<UserModel>();
-                                    conn.Insert(user);
-                                }
-                                catch (Exception ex)
-                                {
+                    //Navigate
+                    if (result)
+                        await Navigation.PushAsync(new HomePage());
 
-                                }
-                            }
-                            await Navigation.PushAsync(new HomePage());
-                        }
-                        else
-                        {
-                            await DisplayAlert("Error", "Email or password are incorrect", "Ok");
-                        }
-                    }
-                    else
-                    {
-                        await DisplayAlert("Error", "Failed to login", "Ok");
-                    }
+                   
+                    //var user = (await App.client.GetTable<UserModel>().Where(u => u.Email == loginNameEntry.Text).ToListAsync()).FirstOrDefault();
+                    //if (user != null)
+                    //{
+                    //    App.loggedInUser = user;
+                    //    if (user.UserPassword == passwordEntry.Text)
+                    //    {
+                    //        using (SQLiteConnection conn = new SQLiteConnection(App.DatabaseLocation))
+                    //        {
+                    //            try
+                    //            {
+                    //                conn.CreateTable<UserModel>();
+                    //                conn.Insert(user);
+                    //            }
+                    //            catch (Exception ex)
+                    //            {
+
+                    //            }
+                    //        }
+                    //        await Navigation.PushAsync(new HomePage());
+                    //    }
+                    //    else
+                    //    {
+                    //        await DisplayAlert("Error", "Email or password are incorrect", "Ok");
+                    //    }
+                    //}
+                    //else
+                    //{
+                    //    await DisplayAlert("Error", "Failed to login", "Ok");
+                    //}
                 }
             }
             catch(Exception ex)

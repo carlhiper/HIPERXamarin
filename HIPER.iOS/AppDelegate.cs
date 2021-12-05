@@ -26,7 +26,9 @@ namespace HIPER.iOS
         {
             global::Xamarin.Forms.Forms.SetFlags("FastRenderers_Experimental");
             global::Xamarin.Forms.Forms.Init();
-            CurrentPlatform.Init(); 
+            CurrentPlatform.Init();
+
+            Firebase.Core.App.Configure();
 
             string dbName = "hiper_db.sqlite";
             string folderPath = Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal), "..", "Library");
