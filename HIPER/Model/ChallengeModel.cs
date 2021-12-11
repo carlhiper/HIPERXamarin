@@ -19,3 +19,11 @@ namespace HIPER.Model
 
     }
 }
+
+//CREATE TABLE ChallengeModel
+//(
+//	id NVARCHAR(36) PRIMARY KEY,
+//    ownerId NVARCHAR(256),
+//	initialGoalId NVARCHAR(256),
+//	createdDate DATETIMEOFFSET
+//);

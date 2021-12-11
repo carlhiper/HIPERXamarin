@@ -27,3 +27,12 @@ namespace HIPER.Model
 
     }
 }
+
+//CREATE TABLE PostModel
+//(
+//	id NVARCHAR(36) PRIMARY KEY,
+//    userId NVARCHAR(256),
+//	teamId NVARCHAR(256),
+//	post NVARCHAR(256),
+//	createdDate DATETIMEOFFSET
+//);

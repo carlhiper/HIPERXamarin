@@ -47,9 +47,9 @@
                             <Label Grid.Row="4" Grid.Column="0" Text="Goals completed ratio: "/>
                             <Label x:Name="completionRatioLabel" Grid.Row="4" Grid.Column="1"/>
                         </Grid>
-                        <Label Text="GOALS COMPLETED" Margin="10" TextColor="{StaticResource hiperPeach}" HorizontalTextAlignment="Center"></Label>         
+                        <Label Text="OBJECTIVES COMPLETED" Margin="10" TextColor="{StaticResource hiperPeach}" HorizontalTextAlignment="Center"></Label>         
                         <forms:ChartView x:Name="chartViewCompleted" HeightRequest="175" BackgroundColor="LightGray" ></forms:ChartView>
-                        <Label Text="GOALS COMPLETION RATIO" Margin="10" TextColor="{StaticResource hiperPeach}" HorizontalTextAlignment="Center"></Label>         
+                        <Label Text="OBJECTIVES COMPLETION RATIO" Margin="10" TextColor="{StaticResource hiperPeach}" HorizontalTextAlignment="Center"></Label>         
                         <forms:ChartView x:Name="chartViewCompletionRatio" HeightRequest="175" BackgroundColor="LightGray" ></forms:ChartView>
                         <Label x:Name="labelTeamComparison" Text="TEAM COMPARISON" Margin="10,10,10,5" TextColor="{StaticResource hiperPeach}" HorizontalTextAlignment="Center"></Label>         
                         <Label x:Name="labelTeamComparisonGoals" Text="Completed goals" Margin="0" TextColor="{StaticResource hiperPeach}" HorizontalTextAlignment="Center"></Label>         

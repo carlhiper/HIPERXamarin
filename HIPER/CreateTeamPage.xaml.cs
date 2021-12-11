@@ -77,6 +77,7 @@ namespace HIPER
 
                     await DisplayAlert("Success", "Team created", "Ok");
                     await Navigation.PopAsync();
+                    
                 }
             }
             catch (Exception ex)

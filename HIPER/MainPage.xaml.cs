@@ -2,9 +2,6 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using HIPER.Helpers;
 using HIPER.Model;
 using Microsoft.AppCenter.Crashes;
 using SQLite;
@@ -24,30 +21,30 @@ namespace HIPER
             NavigationPage.SetHasBackButton(this, false);
         }
 
-        protected override void OnAppearing()
+        protected override async void OnAppearing()
         {
             base.OnAppearing();
 
-            //using (SQLiteConnection conn = new SQLiteConnection(App.DatabaseLocation))
-            //{
-            //    try
-            //    {
-            //        conn.CreateTable<UserModel>();
-            //        var stored_user = conn.Table<UserModel>().ToList().FirstOrDefault();
-            //        if (stored_user != null)
-            //        {
-            //            if (!string.IsNullOrEmpty(stored_user.Id))
-            //            {
-            //                App.loggedInUser = stored_user;
-            //                await Navigation.PushAsync(new HomePage());
-            //            }
-            //        }
-            //    }
-            //    catch (Exception ex)
-            //    {
+            using (SQLiteConnection conn = new SQLiteConnection(App.DatabaseLocation))
+            {
+                try
+                {
+                    conn.CreateTable<UserModel>();
+                    var stored_user = conn.Table<UserModel>().ToList().FirstOrDefault();
+                    if (stored_user != null)
+                    {
+                        if (!string.IsNullOrEmpty(stored_user.Id))
+                        {
+                            App.loggedInUser = stored_user;
+                            await Navigation.PushAsync(new HomePage());
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
 
-            //    }
-            //}
+                }
+            }
         }
 
         void createUserButton_Clicked(System.Object sender, System.EventArgs e)
@@ -70,50 +67,49 @@ namespace HIPER
                 else
                 {
                     //Authenticate
-                    bool result = await Auth.LoginUser(loginNameEntry.Text, passwordEntry.Text);
+                    //bool result = await Auth.LoginUser(loginNameEntry.Text, passwordEntry.Text);
 
                     //Navigate
-                    if (result)
-                        await Navigation.PushAsync(new HomePage());
+                    //if (result)
+                      //  await Navigation.PushAsync(new HomePage());
 
-                   
-                    //var user = (await App.client.GetTable<UserModel>().Where(u => u.Email == loginNameEntry.Text).ToListAsync()).FirstOrDefault();
-                    //if (user != null)
-                    //{
-                    //    App.loggedInUser = user;
-                    //    if (user.UserPassword == passwordEntry.Text)
-                    //    {
-                    //        using (SQLiteConnection conn = new SQLiteConnection(App.DatabaseLocation))
-                    //        {
-                    //            try
-                    //            {
-                    //                conn.CreateTable<UserModel>();
-                    //                conn.Insert(user);
-                    //            }
-                    //            catch (Exception ex)
-                    //            {
+                    
+                    var user = (await App.client.GetTable<UserModel>().Where(u => u.Email == loginNameEntry.Text).ToListAsync()).FirstOrDefault();
+                    if (user != null)
+                    {
+                        App.loggedInUser = user;
+                        if (user.UserPassword == passwordEntry.Text)
+                        {
+                            using (SQLiteConnection conn = new SQLiteConnection(App.DatabaseLocation))
+                            {
+                                try
+                                {
+                                    conn.CreateTable<UserModel>();
+                                    conn.Insert(user);
+                                }
+                                catch (Exception ex)
+                                {
 
-                    //            }
-                    //        }
-                    //        await Navigation.PushAsync(new HomePage());
-                    //    }
-                    //    else
-                    //    {
-                    //        await DisplayAlert("Error", "Email or password are incorrect", "Ok");
-                    //    }
-                    //}
-                    //else
-                    //{
-                    //    await DisplayAlert("Error", "Failed to login", "Ok");
-                    //}
+                                }
+                            }
+                            await Navigation.PushAsync(new HomePage());
+                        }
+                        else
+                        {
+                            await DisplayAlert("Error", "Email or password are incorrect", "Ok");
+                        }
+                    }
+                    else
+                    {
+                        await DisplayAlert("Error", "Failed to login", "Ok");
                 }
+            }
             }
             catch(Exception ex)
             {
                 var properties = new Dictionary<string, string> {
                 { "MainPage", "Login button" }};
                 Crashes.TrackError(ex, properties);
-
             }
         }
 

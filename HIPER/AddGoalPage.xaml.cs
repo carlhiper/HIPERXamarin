@@ -116,7 +116,7 @@ namespace HIPER
                 else
                 {
                     CreateGoal(User.Id, true, null);
-                    await DisplayAlert("Success", "Goal saved", "Ok");
+                    await DisplayAlert("Success", "Objective saved", "Ok");
                     await Navigation.PopAsync();
                 }
 

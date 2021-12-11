@@ -7,6 +7,7 @@ using HIPER.Controllers;
 using System.Linq;
 using Microsoft.AppCenter.Crashes;
 using HIPER.Helpers;
+using System.Threading.Tasks;
 
 namespace HIPER
 {
@@ -14,6 +15,12 @@ namespace HIPER
     {
         List<GoalModel> activeGoals = new List<GoalModel>();
         List<GoalModel> closedGoals = new List<GoalModel>();
+
+        TeamModel viewedTeam = new TeamModel();
+        int IndexOfViewedTeam = 0;
+        List<TeamModel> teams = new List<TeamModel>();
+        List<TeamsModel> teamsModelObj = new List<TeamsModel>();
+        int index = 0;
 
         public ScoreboardPage()
         {
@@ -30,9 +37,8 @@ namespace HIPER
             createGoalsList(filter.SelectedIndex);
 
             filter.ItemsSource = App.filterOptions;
-
-            GetTeamName();
-
+            GetTeamInfo();
+            UpdateButtons();
             CheckChat();
 
             aiLayout.IsVisible = false;
@@ -40,10 +46,11 @@ namespace HIPER
         }
 
 
-        private async void GetTeamName()
+        private async void GetTeamInfo()
         {
             try
             {
+                await LoadTeams();
                 string teamName = (await App.client.GetTable<TeamModel>().Where(t => t.Id == App.loggedInUser.TeamId).ToListAsync()).FirstOrDefault().Name;
                 teamNameLabel.Text = teamName.ToUpper();
 
@@ -172,6 +179,89 @@ namespace HIPER
             await Navigation.PushAsync(new PostPage());
 
         }
+
+        private async Task LoadTeams()
+        {
+            try
+            {
+                teamsModelObj = await App.client.GetTable<TeamsModel>().Where(t => t.UserId == App.loggedInUser.Id).ToListAsync();
+                if (teamsModelObj.Count > 0)
+                {
+                    teams.Clear();
+                    index = 0;
+                    foreach (var t in teamsModelObj)
+                    {
+                        var t_n = (await App.client.GetTable<TeamModel>().Where(t_id => t_id.Id == t.TeamId).ToListAsync()).FirstOrDefault();
+                        if (t_n != null)
+                        {
+                            teams.Add(t_n);
+                            if (App.loggedInUser.TeamId == t.TeamId)
+                                IndexOfViewedTeam = index;
+                            index++;
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                var properties = new Dictionary<string, string> {
+                    { "Team page", "LoadTeams" }};
+                Crashes.TrackError(ex, properties);
+            }
+        }
+
+        private void UpdateButtons()
+        {
+            if (teams.Count > 1)
+            {
+                left_arrow.IsVisible = true;
+                right_arrow.IsVisible = true;
+            }
+            else
+            {
+                left_arrow.IsVisible = false;
+                right_arrow.IsVisible = false;
+            }
+        }
+
+        private async void left_arrow_Clicked(System.Object sender, System.EventArgs e)
+        {
+            if (teams.Count > 1)
+            {
+                IndexOfViewedTeam--;
+                if (IndexOfViewedTeam < 0)
+                    IndexOfViewedTeam = teams.Count - 1;
+                viewedTeam = teams[IndexOfViewedTeam];
+                App.loggedInUser.TeamId = viewedTeam.Id;
+                //App.loggedInUser.LastViewedPostDate = teamsModelObj[IndexOfViewedTeam].LastViewedPostDate;
+                await App.client.GetTable<UserModel>().UpdateAsync(App.loggedInUser);
+                GetTeamInfo();
+                createGoalsList(filter.SelectedIndex);
+                UpdateButtons();
+                CheckChat();
+            }
+        }
+
+        private async void right_arrow_Clicked(System.Object sender, System.EventArgs e)
+        {
+            await LoadTeams();
+            if (teams.Count > 1)
+            {
+                IndexOfViewedTeam++;
+                if (IndexOfViewedTeam >= teams.Count)
+                    IndexOfViewedTeam = 0;
+                viewedTeam = teams[IndexOfViewedTeam];
+                App.loggedInUser.TeamId = viewedTeam.Id;
+                // App.loggedInUser.LastViewedPostDate = teamsModelObj[IndexOfViewedTeam].LastViewedPostDate;
+                await App.client.GetTable<UserModel>().UpdateAsync(App.loggedInUser);
+                GetTeamInfo();
+                createGoalsList(filter.SelectedIndex);
+                UpdateButtons();
+                CheckChat();
+            }
+        }
+
+
 
         private async void CheckChat()
         {

@@ -29,3 +29,13 @@ namespace HIPER.Model
 
     }
 }
+
+//CREATE TABLE FeedModel
+//(
+//	feedItemTitle NVARCHAR(256),
+//	feedItemPost NVARCHAR(256),
+//	feedItemIndicator NVARCHAR(256),
+//	profileImageURL NVARCHAR(256),
+//	indexDate DATETIMEOFFSET,
+//    userId NVARCHAR(256),
+//);

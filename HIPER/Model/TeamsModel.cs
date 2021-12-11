@@ -22,3 +22,11 @@ namespace HIPER.Model
 
     }
 }
+
+//CREATE TABLE TeamsModel
+//(
+//	id NVARCHAR(36) PRIMARY KEY,
+//    teamId NVARCHAR(256),
+//	userId NVARCHAR(256),
+//	lastViewedPostDate DATETIMEOFFSET
+//);

@@ -27,6 +27,7 @@ namespace HIPER
         UserModel selectedUser;
         TeamModel selectedTeam;
         int selectedMonth;
+        string teamName;
 
         private struct Teammember
         {
@@ -60,7 +61,7 @@ namespace HIPER
             {
                 try
                 {
-                    header.Text = "TEAM PERFORMANCE";
+                    header.Text = selectedTeam.Name.ToUpper() + " PERFORMANCE";
                     goals = new List<GoalModel>();
 
                     var teammembers = await App.client.GetTable<TeamsModel>().Where(t => t.TeamId == App.loggedInUser.TeamId).ToListAsync();
@@ -110,6 +111,9 @@ namespace HIPER
             {
                 // participantsCollectionView.IsVisible = false;
                 goals = await App.client.GetTable<GoalModel>().Where(g => g.UserId == selectedUser.Id).Where(g2 => g2.TeamId == App.loggedInUser.TeamId).Take(500).ToListAsync();
+                teamName = (await App.client.GetTable<TeamModel>().Where(t => t.Id == App.loggedInUser.TeamId).ToListAsync()).FirstOrDefault().Name;
+                if (teamName != null)
+                    header.Text = "PERFORMANCE IN " + teamName.ToUpper();
             }
 
             UpdateStats();
@@ -130,6 +134,8 @@ namespace HIPER
 
             GetRecurrentGoals();
         }
+
+  
 
         private void GetRecurrentGoals()
         {

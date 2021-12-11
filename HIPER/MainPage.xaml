@@ -23,7 +23,7 @@
                    Text="LOGIN"
                    Clicked="loginButton_Clicked"></Button>
             <Button x:Name="createUserButton"
-                    Text="CREATE USER"
+                    Text="CREATE NEW USER"
                     Clicked="createUserButton_Clicked"
                     ></Button>
             <Button x:Name="forgotPasswordButton"

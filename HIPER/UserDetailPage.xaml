@@ -57,8 +57,8 @@
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
-                <Button x:Name="addGoalButton" Grid.Column="0" Text="ASSIGN GOAL" Clicked="addGoalButton_Clicked"/>
-                <Button x:Name="removeFromTeam" Grid.Column="1" Text="KICK OUT" Clicked="removeFromTeam_Clicked"/>
+                <Button x:Name="addGoalButton" Grid.Column="0" Text="ASSIGN OBJECTIVE" Clicked="addGoalButton_Clicked"/>
+                <Button x:Name="removeFromTeam" Grid.Column="1" Text="REMOVE FROM TEAM" Clicked="removeFromTeam_Clicked"/>
             </Grid>
 
             <Grid Padding="10" Margin="0,10,0,0">

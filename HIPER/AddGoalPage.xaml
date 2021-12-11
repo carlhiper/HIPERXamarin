@@ -11,12 +11,12 @@
         <ScrollView>
             <Frame Margin="10">
                 <StackLayout Margin="20">
-                    <Label Style="{StaticResource Header}" Text="ADD A GOAL"></Label>
+                    <Label Style="{StaticResource Header}" Text="ADD AN OBJECTIVE"></Label>
                     <Entry x:Name="goalNameEntry" Placeholder="TITLE" MaxLength="20"></Entry>
                     <Editor x:Name="goalDescriptionEntry" Placeholder="DESCRIPTION" MaxLength="255" HeightRequest="100"></Editor>
             
       
-                    <Label Text="CHOOSE A TARGET" HorizontalOptions="Center" Margin="0,20,0,10" TextColor="{StaticResource hiperPeach}"></Label>
+                    <Label Text="KEY RESULTS" HorizontalOptions="Center" Margin="0,20,0,10" TextColor="{StaticResource hiperPeach}"></Label>
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="40" />
@@ -28,10 +28,10 @@
                             <ColumnDefinition Width="150" />
                         </Grid.ColumnDefinitions>  
                         <RadioButton GroupName="target" x:Name="targetRB1" Grid.Row="0" PropertyChanged="targetRB1_PropertyChanged"></RadioButton>
-                        <Label VerticalOptions="Center" HorizontalOptions="Start" Grid.Row="0" Grid.Column="1" Text="SINGLE TARGET"></Label>
+                        <Label VerticalOptions="Center" HorizontalOptions="Start" Grid.Row="0" Grid.Column="1" Text="ONE NUMERIC"></Label>
                         <Entry x:Name="goalTargetEntry" Grid.Row="0" Grid.Column="2" Placeholder="TARGET"></Entry>
                         <RadioButton GroupName="target" x:Name="targetRB2" Grid.Row="1" PropertyChanged="targetRB2_PropertyChanged"></RadioButton>
-                        <Label VerticalOptions="Center" HorizontalOptions="Start" Grid.Row="1" Grid.Column="1" Text="STEP BY STEP"></Label>
+                        <Label VerticalOptions="Center" HorizontalOptions="Start" Grid.Row="1" Grid.Column="1" Text="MULTIPLE"></Label>
                         <Picker Grid.Row="1" Grid.Column="2" x:Name="stepbystepPicker" SelectedIndexChanged="stepbystepPicker_SelectedIndexChanged"></Picker>
                     </Grid>
                     <Grid x:Name="gridSteps">
@@ -80,7 +80,7 @@
                         <Entry x:Name="step9entry" Grid.Row="8" Grid.Column="2" Placeholder="STEP DESCRIPTION" MaxLength="255" IsVisible="false"></Entry>
                         <CheckBox x:Name="step9CB" VerticalOptions="Center" HorizontalOptions="Center" Grid.Row="8" Grid.Column="1" IsVisible="false" Color="{StaticResource hiperPeach}"></CheckBox>
                     </Grid>
-                    <Label Text="SET THE DEADLINE" HorizontalOptions="Center" Margin="0,0,0,10" TextColor="{StaticResource hiperPeach}"></Label>
+                    <Label Text="DEADLINE" HorizontalOptions="Center" Margin="0,0,0,10" TextColor="{StaticResource hiperPeach}"></Label>
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="40" />

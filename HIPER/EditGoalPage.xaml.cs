@@ -131,7 +131,7 @@ namespace HIPER
             }
             else
             {
-                headerText.Text = "EDIT GOAL";
+                headerText.Text = "EDIT OBJECTIVE";
             }
 
         }

@@ -10,6 +10,7 @@ namespace HIPER.Helpers
         public const int MAX_TEAM_MEMBERS = 5;
 
         public const string BLOBSTORAGE_IMAGES = "DefaultEndpointsProtocol=https;AccountName=hiperimagestorage;AccountKey=IayenlXv3jbB7XVIlgiWC1xyIVUSWZcme4AWFxNR0vFPo+eI7xPzUKqegTtspMUarqBv1jUzWHesPFqciPVxMQ==;EndpointSuffix=core.windows.net";
+        public const string BLOBSTORAGE_IMAGES2 = "DefaultEndpointsProtocol=https;AccountName=hiperimagestorage;AccountKey=EFWl7QurTMHtiHtsJjvFQXmS71gYmUgsQ1FInEhV5UQBWa03FThYp+Jtv2O3TfZnqMiYuUI1IJuaxBepXYiOwA==;EndpointSuffix=core.windows.net";
         public const string AZURE_WEB_SERVICE = "https://hiper-eu.azurewebsites.net";
 
         public const string HIPER_PEACH = "#ff7562";

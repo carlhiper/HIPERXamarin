@@ -44,3 +44,18 @@ namespace HIPER.Model
         public bool Active { get; set; }
     }
 }
+
+
+//CREATE TABLE TeamModel
+//(
+//	id NVARCHAR(36) PRIMARY KEY,
+//    name NVARCHAR(256),
+//	identifier NVARCHAR(256),
+//	password NVARCHAR(256),
+//	company NVARCHAR(256),
+//	organisation_number NVARCHAR(256),
+//	createdDate DATETIMEOFFSET,
+//    max_number_users INT,
+//    administrator_id NVARCHAR(256),
+//	active BIT
+//);

@@ -35,7 +35,7 @@
       
                 <StackLayout  Padding="0" Margin="50,10,50,0">
                     <Button x:Name="teamStats" Grid.Row="0" Text="PERFORMANCE REPORT" HorizontalOptions="FillAndExpand" Clicked="teamStats_Clicked"></Button>
-                    <Button x:Name="competitionButton" Grid.Row="1" Text="COMPETITIONS" HorizontalOptions="FillAndExpand" Clicked="competitionButton_Clicked"></Button>
+                    <!--<Button x:Name="competitionButton" Grid.Row="1" Text="COMPETITIONS" HorizontalOptions="FillAndExpand" Clicked="competitionButton_Clicked"></Button>-->
                     <Button x:Name="createTeam" Clicked="createTeam_Clicked" Grid.Row="2" Text="CREATE TEAM" HorizontalOptions="FillAndExpand"></Button>
                     <Button x:Name="joinTeam" Clicked="joinTeam_Clicked" Grid.Row="3" Text="JOIN TEAM" HorizontalOptions="FillAndExpand"></Button>
                     <Button x:Name="leaveTeam"  Clicked="leaveTeam_Clicked" Grid.Row="4" Text="LEAVE TEAM" HorizontalOptions="FillAndExpand"></Button>

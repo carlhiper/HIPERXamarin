@@ -25,3 +25,12 @@ namespace HIPER.Model
 
     }
 }
+
+//CREATE TABLE PointModel
+//(
+//	id NVARCHAR(36) PRIMARY KEY,
+//    userId NVARCHAR(256),
+//	points INT,
+//    teamId NVARCHAR(256),
+//	regDate DATETIMEOFFSET
+//);

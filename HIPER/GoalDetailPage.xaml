@@ -14,7 +14,7 @@
                     <Label x:Name="headerText" Text="GOAL TITLE" Margin="10,0,10,5" HorizontalTextAlignment="Center" Style="{StaticResource Header}"></Label>
                     <Label x:Name="createdByLabel" Text=" " FontSize="Small" FontAttributes="Italic" HorizontalTextAlignment="Center"></Label>
                     <Label x:Name="goalDescriptionLabel" HorizontalTextAlignment="Center" Margin="0,15,0,0"></Label>
-                    <Label x:Name="aimHighLabel" Text="SINGLE TARGET" HorizontalOptions="Center" TextColor="{StaticResource hiperPeach}" Margin="0,20,0,5"></Label>
+                    <Label x:Name="aimHighLabel" Text="KEY RESULT" HorizontalOptions="Center" TextColor="{StaticResource hiperPeach}" Margin="0,20,0,5"></Label>
  
                     <Grid x:Name="gridAimHigh">
                         <Grid.RowDefinitions>
@@ -118,8 +118,8 @@
                             </DataTemplate>
                         </CollectionView.ItemTemplate>
                     </CollectionView>
-                    <Button x:Name="completeGoal" Text="COMPLETED" Clicked="completeGoal_Clicked" Margin="0,20,0,0"></Button>
-                    <Button x:Name="closeGoal" Text="CLOSE" Clicked="closeGoal_Clicked"></Button>
+                    <Button x:Name="completeGoal" Text="OBJECTIVE COMPLETED" Clicked="completeGoal_Clicked" Margin="0,20,0,0"></Button>
+                    <Button x:Name="closeGoal" Text="ABORT OBJECTIVE" Clicked="closeGoal_Clicked"></Button>
                 </StackLayout>
             </ContentView>
         </Frame>

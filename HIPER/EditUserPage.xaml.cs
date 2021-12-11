@@ -63,9 +63,9 @@ namespace HIPER
                 if (selectedImage != null)
                 {
 
-                    var account = CloudStorageAccount.Parse(Helpers.Constants.BLOBSTORAGE_IMAGES);
+                    var account = CloudStorageAccount.Parse(Helpers.Constants.BLOBSTORAGE_IMAGES2);
                     var client = account.CreateCloudBlobClient();
-                    var container = client.GetContainerReference("imagecontainer");
+                    var container = client.GetContainerReference("hiperblob");
                     await container.CreateIfNotExistsAsync();
 
                     // delete old image file
@@ -82,7 +82,6 @@ namespace HIPER
 
                     App.loggedInUser.Imagename = $"{name}.jpg";
                     App.loggedInUser.ImageUrl = blockBlob.Uri.OriginalString;
-
                 }
 
                 using (SQLiteConnection conn = new SQLiteConnection(App.DatabaseLocation))
@@ -138,7 +137,7 @@ namespace HIPER
         {
             try
             {
-                var account = CloudStorageAccount.Parse(Helpers.Constants.BLOBSTORAGE_IMAGES);
+                var account = CloudStorageAccount.Parse(Helpers.Constants.BLOBSTORAGE_IMAGES2);
                 var client = account.CreateCloudBlobClient();
                 var container = client.GetContainerReference("imagecontainer");
                 await container.CreateIfNotExistsAsync();

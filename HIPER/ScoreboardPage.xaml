@@ -24,7 +24,8 @@
 
                 <Grid Margin="0"
               Padding="5"
-              BackgroundColor="{StaticResource hiperPeach}">
+              BackgroundColor="White"
+                      >
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="40"/>
                         <ColumnDefinition Width="*"/>
@@ -33,12 +34,12 @@
                     <Grid.RowDefinitions>
                         <RowDefinition Height="40"/>
                     </Grid.RowDefinitions>
-                    <!--<ImageButton Grid.Column="0" x:Name="arrow_left" Source="{StaticResource arrow_left}" Clicked="arrow_left_Clicked"/>-->
-                    <Label Grid.Column="1" x:Name="teamNameLabel" Style="{StaticResource TeamHeader}" VerticalTextAlignment="Center"/>
-                    <!--<ImageButton Grid.Column="2" x:Name="arrow_right" Source="{StaticResource arrow_right}" Clicked="arrow_right_Clicked"/>-->
+                    <ImageButton Grid.Column="0" x:Name="left_arrow" Source="{StaticResource arrow_left}" Clicked="left_arrow_Clicked"/>
+                    <Label Grid.Column="1" x:Name="teamNameLabel" Style="{StaticResource TeamHeader}" VerticalTextAlignment="Center" TextColor="{StaticResource hiperPeach}"/>
+                    <ImageButton Grid.Column="2" x:Name="right_arrow" Source="{StaticResource arrow_right}" Clicked="right_arrow_Clicked"/>
                 </Grid>
 
-                <Label Text="MY GOALS" Style="{StaticResource Header}"></Label>
+                <Label Text="MY OBJECTIVES" Style="{StaticResource Header}"></Label>
 
                 <Grid Padding="20">
                     <Grid.RowDefinitions>
@@ -59,7 +60,10 @@
 
 
                 <ContentView>
-                    <Frame BorderColor="CornflowerBlue"
+                    <StackLayout  Padding="0" Margin="100,0,100,0">
+                        <Button x:Name="AddNewGoalButton"  Clicked="AddNewGoalButton_Clicked" Text="+" HorizontalOptions="FillAndExpand" FontSize="62" BackgroundColor="White" TextColor="{StaticResource hiperPeach}"></Button>
+                    </StackLayout>
+                    <!--<Frame BorderColor="CornflowerBlue"
                    BackgroundColor="AliceBlue">
                         <Grid Padding="10">
                             <Grid.RowDefinitions>
@@ -73,7 +77,7 @@
                                 <ColumnDefinition Width="100" />
                                 <ColumnDefinition Width="35"/>
                             </Grid.ColumnDefinitions>
-                            <Button Text="Click here to add a goal!"
+                            <Button Text="Click to add an objective!"
                              Style="{StaticResource Minimal}"
                              FontAttributes="Bold"
                              TextColor="Gray"
@@ -82,11 +86,11 @@
                              Clicked="AddNewGoalButton_Clicked"/>
 
 
-                            <!--<Label Grid.Row="0"
+                            <Label Grid.Row="0"
                         Grid.Column="0" 
                         Text="Click here to add new goal!"
                         TextColor="Gray"
-                        FontAttributes="Bold" />-->
+                        FontAttributes="Bold" />
                             <ProgressBar
                         VerticalOptions="Center"
                         Grid.Column="2"
@@ -95,9 +99,9 @@
                         ProgressColor="Gray"/>
                         </Grid>
 
-                    </Frame>
+                    </Frame>-->
                 </ContentView>
-                <CollectionView
+            <CollectionView
                
             x:Name="goalCollectionView"
             SelectionMode="Single"

@@ -10,7 +10,7 @@
     <ContentPage.Content>
         <ScrollView>
         <StackLayout Margin="20">
-            <Label x:Name="headerText" Text="EDIT GOAL" Margin="10" HorizontalTextAlignment="End" Style="{StaticResource Header}"></Label>
+            <Label x:Name="headerText" Text="EDIT OBJECTIVE" Margin="10" HorizontalTextAlignment="End" Style="{StaticResource Header}"></Label>
             
             <Grid x:Name="gridTitle">
                 <Grid.RowDefinitions>
@@ -48,7 +48,7 @@
                 <!--<Entry x:Name="goalCurrentEntry" Grid.Row="1" Grid.Column="1" Placeholder="CURRENT VALUE" TextChanged="goalCurrentEntry_TextChanged" ></Entry>-->
             </Grid>
 
-            <Label x:Name="gridLabel" Text="STEPS" HorizontalOptions="Center" TextColor="{StaticResource hiperPeach}" Margin="0,20,0,5"></Label>
+            <Label x:Name="gridLabel" Text="KEY RESULTS" HorizontalOptions="Center" TextColor="{StaticResource hiperPeach}" Margin="0,20,0,5"></Label>
 
             <Grid x:Name="selectStepsGrid">
                 <Grid.RowDefinitions>
@@ -58,7 +58,7 @@
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
-                <Label Grid.Column="0" VerticalOptions="Center" HorizontalOptions="Start" Text="NUMBER OF STEPS"></Label>
+                <Label Grid.Column="0" VerticalOptions="Center" HorizontalOptions="Start" Text="TARGETS"></Label>
                 <Picker Grid.Column="1" x:Name="stepbystepPicker" SelectedIndexChanged="stepbystepPicker_SelectedIndexChanged"></Picker>
 
             </Grid>

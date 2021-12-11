@@ -74,12 +74,12 @@ namespace HIPER
                     if (viewedTeam.Administrator_id == App.loggedInUser.Id)
                     {
                         teamStats.IsVisible = true;
-                        competitionButton.IsVisible = true;
+                        //competitionButton.IsVisible = true;
                     }
                     else
                     {
                         teamStats.IsVisible = false;
-                        competitionButton.IsVisible = false;
+                        //competitionButton.IsVisible = false;
                     }
 
                     var teamAdmin = (await App.client.GetTable<UserModel>().Where(u => u.Id == viewedTeam.Administrator_id).ToListAsync()).FirstOrDefault();
@@ -111,9 +111,9 @@ namespace HIPER
                 else
                 {
                     teamStats.IsEnabled = false;
-                    competitionButton.IsEnabled = false;
+                    //competitionButton.IsEnabled = false;
                     teamStats.IsVisible = false;
-                    competitionButton.IsVisible = false;
+                    //competitionButton.IsVisible = false;
                     membersButton.IsVisible = false;
                 }
             }
@@ -142,7 +142,7 @@ namespace HIPER
                 arrow_right.IsVisible = false;
             }
 
-            if (teams.Count > 0)
+            if (teams.Count > 1)
             {
                 leaveTeam.IsVisible = true;
             }
@@ -257,8 +257,8 @@ namespace HIPER
                             teamIdentifierLabel.Text = "";
                         }
 
-                        //await App.client.GetTable<UserModel>().UpdateAsync(App.loggedInUser);
-                        await Firestore.UpdateUser(App.loggedInUser);
+                        await App.client.GetTable<UserModel>().UpdateAsync(App.loggedInUser);
+                        //await Firestore.UpdateUser(App.loggedInUser);
 
                         await LoadTeamView();
 

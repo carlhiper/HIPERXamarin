@@ -27,7 +27,7 @@ namespace HIPER.Droid
 
             CurrentPlatform.Init();
 
-            string dbName = "travel_db.sqlite";
+            string dbName = "hiper_db.sqlite";
             string folderPath = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal);
             string fullPath = Path.Combine(folderPath, dbName);
 

@@ -54,8 +54,23 @@ namespace HIPER.Model
         [DataMember]
         public DateTime LastViewedPostDate { get; set; }
 
-        [MaxLength(40)]
-        [DataMember]
-        public string UserId { get; set; }
     }
 }
+
+
+//CREATE TABLE UserModel
+//(
+//	id NVARCHAR(36) PRIMARY KEY,
+//  teamId NVARCHAR(256),
+//	firstname NVARCHAR(256),
+//	lastname NVARCHAR(256),
+//	email NVARCHAR(256),
+//	userPassword NVARCHAR(256),
+//	company NVARCHAR(256),
+//	createdDate DATETIMEOFFSET,
+//  number_logins INT,
+//  rating FLOAT,
+//  imageUrl NVARCHAR(256),
+//	imagename NVARCHAR(256),
+//	lastViewedPostDate DATETIMEOFFSET
+//);

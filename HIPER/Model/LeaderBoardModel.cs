@@ -14,3 +14,12 @@ namespace HIPER.Model
         public bool Accepted { get; set; }
     }
 }
+
+//CREATE TABLE ChallengeModel
+//(
+//	placing INT,
+//    name NVARCHAR(256),
+//	progress FLOAT,
+//    completed BIT,
+//    accepted BIT
+//);
