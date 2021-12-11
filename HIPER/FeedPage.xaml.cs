@@ -14,7 +14,7 @@ namespace HIPER
         bool PointsChartYearly = false;
         private readonly List<ChartEntry> progressEntries = new List<ChartEntry>();
         private readonly List<ChartEntry> pointsEntries = new List<ChartEntry>();
-
+        //gittest
         public FeedPage()
         {
             InitializeComponent();
