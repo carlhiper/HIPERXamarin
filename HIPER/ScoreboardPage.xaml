@@ -18,14 +18,13 @@
 
 
     <ContentPage.Content>
-        <AbsoluteLayout>
+        <ScrollView>
             <StackLayout Margin="0"
                     CompressedLayout.IsHeadless="True">
 
                 <Grid Margin="0"
-              Padding="5"
-              BackgroundColor="White"
-                      >
+                    Padding="5"
+                    BackgroundColor="White">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="40"/>
                         <ColumnDefinition Width="*"/>
@@ -57,12 +56,9 @@
                     <Label Grid.Column="2" Text="Closed" VerticalOptions="End" HorizontalOptions="Start"></Label>
                     <Picker Grid.Column="3" x:Name="filter" VerticalOptions="End" HorizontalOptions="FillAndExpand" Title="Filter" SelectedIndexChanged="filter_SelectedIndexChanged" FontSize="Small"></Picker>
                 </Grid>
-
-
-                <ContentView>
-                    <StackLayout  Padding="0" Margin="100,0,100,0">
-                        <Button x:Name="AddNewGoalButton"  Clicked="AddNewGoalButton_Clicked" Text="+" HorizontalOptions="FillAndExpand" FontSize="62" BackgroundColor="White" TextColor="{StaticResource hiperPeach}"></Button>
-                    </StackLayout>
+                <StackLayout  Padding="0" Margin="100,0,100,0">
+                    <Button x:Name="AddNewGoalButton"  Clicked="AddNewGoalButton_Clicked" Text="+" HorizontalOptions="FillAndExpand" FontSize="62" BackgroundColor="White" TextColor="{StaticResource hiperPeach}"></Button>
+                </StackLayout>
                     <!--<Frame BorderColor="CornflowerBlue"
                    BackgroundColor="AliceBlue">
                         <Grid Padding="10">
@@ -100,13 +96,27 @@
                         </Grid>
 
                     </Frame>-->
-                </ContentView>
+            <StackLayout
+                x:Name="aiLayout"
+                IsVisible="False"
+                AbsoluteLayout.LayoutBounds="0,0,1,1"
+                AbsoluteLayout.LayoutFlags="All"
+                BackgroundColor="Gray" Opacity="0.5">
+
+                <ActivityIndicator
+                    x:Name="ai"
+                    IsRunning="False"
+                    HorizontalOptions="CenterAndExpand"
+                    VerticalOptions="CenterAndExpand"
+                    Color="Black"/>
+            </StackLayout>
+
             <CollectionView
                
-            x:Name="goalCollectionView"
-            SelectionMode="Single"
-            SelectionChanged="goalCollectionView_SelectionChanged"
-            VerticalOptions="FillAndExpand">
+                x:Name="goalCollectionView"
+                SelectionMode="Single"
+                SelectionChanged="goalCollectionView_SelectionChanged"
+                VerticalOptions="FillAndExpand">
 
                     <CollectionView.ItemTemplate>
                         <DataTemplate>
@@ -192,22 +202,6 @@
                     </CollectionView.ItemTemplate>
                 </CollectionView>
             </StackLayout>
-            <StackLayout
-            x:Name="aiLayout"
-            IsVisible="False"
-            AbsoluteLayout.LayoutBounds="0,0,1,1"
-            AbsoluteLayout.LayoutFlags="All"
-            BackgroundColor="Gray" Opacity="0.5">
-
-            <ActivityIndicator
-                x:Name="ai"
-                IsRunning="False"
-                HorizontalOptions="CenterAndExpand"
-                VerticalOptions="CenterAndExpand"
-                Color="Black"/>
-        </StackLayout>
-
-        </AbsoluteLayout>
+        </ScrollView>
     </ContentPage.Content>
-
 </ContentPage>

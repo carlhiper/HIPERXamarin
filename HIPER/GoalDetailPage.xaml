@@ -32,7 +32,7 @@
                         <Entry x:Name="goalCurrentEntry" VerticalOptions="Start" HorizontalTextAlignment="Center" Grid.Row="1" Grid.Column="1" Placeholder="CURRENT VALUE" Unfocused="goalCurrentEntry_Unfocused"></Entry>
                     </Grid>
 
-                    <Label x:Name="stepsLabel" Text="STEPS" HorizontalOptions="Center" TextColor="{StaticResource hiperPeach}" Margin="0,20,0,5"></Label>
+                    <Label x:Name="stepsLabel" Text="KEY RESULTS" HorizontalOptions="Center" TextColor="{StaticResource hiperPeach}" Margin="0,20,0,5"></Label>
     
                     <Grid x:Name="gridSteps">
                         <Grid.RowDefinitions>

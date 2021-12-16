@@ -23,13 +23,13 @@
 	<key>CFBundleDisplayName</key>
 	<string>HIPER</string>
 	<key>CFBundleVersion</key>
-	<string>1.201</string>
+	<string>1.202</string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>CFBundleName</key>
 	<string>HIPER</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.0</string>
+	<string>1.202</string>
 	<key>NSCameraUsageDescription</key>
 	<string>This app needs access to the camera</string>
 	<key>NSPhotoLibraryUsageDescription</key>
